@@ -35,6 +35,27 @@ public class Node
     {
         return "";
     }
+    
+    /**
+     * Get the number of children.
+     * 
+     * @return
+     */
+    public int childNodeCount()
+    {
+    	return 0;
+    }
+
+    /**
+     * Get the child node at a given index.
+     * 
+     * @param index
+     * @return
+     */
+    public Node getChildNode(int index)
+    {
+    	return null;
+    }
 
     /**
      * This method begins the incremental rendering process.  
