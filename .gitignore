@@ -1,0 +1,15 @@
+*.swp
+*.swz
+*.pyc
+*.pyo
+*.log
+*.bak
+*.pid
+*.log
+._*.h
+._*.m
+._*.*
+tags.*
+iphone/build/*
+android/bin/*
+android/test/bin/*
