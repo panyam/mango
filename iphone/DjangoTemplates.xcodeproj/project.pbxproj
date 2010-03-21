@@ -1,0 +1,773 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10418C5811184B4B00F3361F /* Variable.h in Headers */ = {isa = PBXBuildFile; fileRef = 10418C5611184B4B00F3361F /* Variable.h */; };
+		10418C5911184B4B00F3361F /* Variable.m in Sources */ = {isa = PBXBuildFile; fileRef = 10418C5711184B4B00F3361F /* Variable.m */; };
+		1071742811152262006E210B /* libDjangoTemplates.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */; };
+		1072EA6E1129E45C00892585 /* ObjectLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1072EA6C1129E45C00892585 /* ObjectLibrary.h */; };
+		1072EA6F1129E45C00892585 /* ObjectLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1072EA6D1129E45C00892585 /* ObjectLibrary.m */; };
+		10734A371115B4AD00FC3D5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10734A361115B4AD00FC3D5D /* main.m */; };
+		1074BAA6112BC2A200E66083 /* DTForwardDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 1074BAA5112BC2A200E66083 /* DTForwardDefs.h */; };
+		10750039112B83AC0031A423 /* DTPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 10750038112B83AC0031A423 /* DTPublic.h */; };
+		10750043112B84620031A423 /* TokenLists.m in Sources */ = {isa = PBXBuildFile; fileRef = 10750042112B84620031A423 /* TokenLists.m */; };
+		1075FFB0112B5C440031A423 /* CycleTagNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFAA112B5C440031A423 /* CycleTagNode.h */; };
+		1075FFB1112B5C440031A423 /* CycleTagNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFAB112B5C440031A423 /* CycleTagNode.m */; };
+		1075FFB2112B5C440031A423 /* ForTagNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFAC112B5C440031A423 /* ForTagNode.h */; };
+		1075FFB3112B5C440031A423 /* ForTagNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFAD112B5C440031A423 /* ForTagNode.m */; };
+		1075FFB4112B5C440031A423 /* TagNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFAE112B5C440031A423 /* TagNode.h */; };
+		1075FFB5112B5C440031A423 /* TagNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFAF112B5C440031A423 /* TagNode.m */; };
+		1075FFC9112B60020031A423 /* AddFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFC7112B60020031A423 /* AddFilter.m */; };
+		1075FFCA112B60020031A423 /* CutFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFC8112B60020031A423 /* CutFilter.m */; };
+		1075FFCE112B603D0031A423 /* CapFirstFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFCD112B603D0031A423 /* CapFirstFilter.m */; };
+		1075FFD1112B60610031A423 /* FilterLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFCF112B60610031A423 /* FilterLibrary.h */; };
+		1075FFD2112B60610031A423 /* FilterLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFD0112B60610031A423 /* FilterLibrary.m */; };
+		1075FFD5112B606F0031A423 /* TagLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFD3112B606F0031A423 /* TagLibrary.h */; };
+		1075FFD6112B606F0031A423 /* TagLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFD4112B606F0031A423 /* TagLibrary.m */; };
+		1075FFDA112B60AD0031A423 /* Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 1075FFD8112B60AD0031A423 /* Stack.h */; };
+		1075FFDB112B60AD0031A423 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 1075FFD9112B60AD0031A423 /* Stack.m */; };
+		10762639112AC2F900B71025 /* AddFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762634112AC2F900B71025 /* AddFilter.h */; };
+		1076263A112AC2F900B71025 /* CapFirstFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762635112AC2F900B71025 /* CapFirstFilter.h */; };
+		1076263B112AC2F900B71025 /* CutFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762636112AC2F900B71025 /* CutFilter.h */; };
+		1076263C112AC2F900B71025 /* Filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762637112AC2F900B71025 /* Filter.h */; };
+		1076263D112AC2F900B71025 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762638112AC2F900B71025 /* Filter.m */; };
+		10762679112AC38200B71025 /* FilterNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1076266B112AC38200B71025 /* FilterNode.h */; };
+		1076267A112AC38200B71025 /* FilterNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1076266C112AC38200B71025 /* FilterNode.m */; };
+		1076267B112AC38200B71025 /* FreeTextNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1076266D112AC38200B71025 /* FreeTextNode.h */; };
+		1076267C112AC38200B71025 /* FreeTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1076266E112AC38200B71025 /* FreeTextNode.m */; };
+		1076267D112AC38200B71025 /* Node.h in Headers */ = {isa = PBXBuildFile; fileRef = 1076266F112AC38200B71025 /* Node.h */; };
+		1076267E112AC38200B71025 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762670112AC38200B71025 /* Node.m */; };
+		10762681112AC38200B71025 /* Tokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762673112AC38200B71025 /* Tokenizer.h */; };
+		10762682112AC38200B71025 /* Tokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762674112AC38200B71025 /* Tokenizer.m */; };
+		10762683112AC38200B71025 /* TokenLists.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762675112AC38200B71025 /* TokenLists.h */; };
+		10762684112AC38200B71025 /* TokenTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762676112AC38200B71025 /* TokenTypes.h */; };
+		10762685112AC38200B71025 /* VariableNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762677112AC38200B71025 /* VariableNode.h */; };
+		10762686112AC38200B71025 /* VariableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762678112AC38200B71025 /* VariableNode.m */; };
+		1076268D112AC3BA00B71025 /* CompareUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762687112AC3BA00B71025 /* CompareUtils.h */; };
+		1076268E112AC3BA00B71025 /* CompareUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762688112AC3BA00B71025 /* CompareUtils.m */; };
+		1076268F112AC3BA00B71025 /* Pair.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762689112AC3BA00B71025 /* Pair.h */; };
+		10762690112AC3BA00B71025 /* Pair.m in Sources */ = {isa = PBXBuildFile; fileRef = 1076268A112AC3BA00B71025 /* Pair.m */; };
+		10762691112AC3BA00B71025 /* ParseUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 1076268B112AC3BA00B71025 /* ParseUtils.h */; };
+		10762692112AC3BA00B71025 /* ParseUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1076268C112AC3BA00B71025 /* ParseUtils.m */; };
+		10762695112AC3C800B71025 /* Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 10762693112AC3C800B71025 /* Parser.h */; };
+		10762696112AC3C800B71025 /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 10762694112AC3C800B71025 /* Parser.m */; };
+		107AD4BA111776F3007A8881 /* Template.h in Headers */ = {isa = PBXBuildFile; fileRef = 107AD4B4111776F3007A8881 /* Template.h */; };
+		107AD4BB111776F3007A8881 /* Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 107AD4B5111776F3007A8881 /* Template.m */; };
+		10854D7111241A9B002CEC88 /* TemplateContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 10854D7011241A9B002CEC88 /* TemplateContext.m */; };
+		108D49C41119B1360070DC54 /* TemplateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 108D49C31119B1360070DC54 /* TemplateTests.m */; };
+		10A42CD611159970006283CC /* TokenizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A42CD511159970006283CC /* TokenizerTests.m */; };
+		10A42D5D1115A8DB006283CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10734A361115B4AD00FC3D5D /* main.m */; };
+		10A42D7B1115A985006283CC /* libDjangoTemplates.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */; };
+		10B6CC5911201DDA0078910E /* ParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6CC5811201DDA0078910E /* ParserTests.m */; };
+		AA747D9F0F9514B9006C5449 /* DjangoTemplates_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		107173F81115207B006E210B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = DjangoTemplates;
+		};
+		10A42D5E1115A8E7006283CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = DjangoTemplates;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		10418C5611184B4B00F3361F /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = Classes/Variable.h; sourceTree = "<group>"; };
+		10418C5711184B4B00F3361F /* Variable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Variable.m; path = Classes/Variable.m; sourceTree = "<group>"; };
+		107173DB11151F3D006E210B /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		107173DC11151F3D006E210B /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		1072EA6C1129E45C00892585 /* ObjectLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectLibrary.h; path = Classes/ObjectLibrary.h; sourceTree = "<group>"; };
+		1072EA6D1129E45C00892585 /* ObjectLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectLibrary.m; path = Classes/ObjectLibrary.m; sourceTree = "<group>"; };
+		10734A361115B4AD00FC3D5D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Harness/main.m; sourceTree = "<group>"; };
+		1074BAA5112BC2A200E66083 /* DTForwardDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DTForwardDefs.h; path = Classes/DTForwardDefs.h; sourceTree = "<group>"; };
+		10750038112B83AC0031A423 /* DTPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DTPublic.h; path = Classes/DTPublic.h; sourceTree = "<group>"; };
+		10750042112B84620031A423 /* TokenLists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenLists.m; path = Classes/parser/TokenLists.m; sourceTree = "<group>"; };
+		1075FFAA112B5C440031A423 /* CycleTagNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CycleTagNode.h; path = Classes/tags/CycleTagNode.h; sourceTree = "<group>"; };
+		1075FFAB112B5C440031A423 /* CycleTagNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CycleTagNode.m; path = Classes/tags/CycleTagNode.m; sourceTree = "<group>"; };
+		1075FFAC112B5C440031A423 /* ForTagNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForTagNode.h; path = Classes/tags/ForTagNode.h; sourceTree = "<group>"; };
+		1075FFAD112B5C440031A423 /* ForTagNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForTagNode.m; path = Classes/tags/ForTagNode.m; sourceTree = "<group>"; };
+		1075FFAE112B5C440031A423 /* TagNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagNode.h; path = Classes/tags/TagNode.h; sourceTree = "<group>"; };
+		1075FFAF112B5C440031A423 /* TagNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagNode.m; path = Classes/tags/TagNode.m; sourceTree = "<group>"; };
+		1075FFC7112B60020031A423 /* AddFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddFilter.m; path = Classes/filters/AddFilter.m; sourceTree = "<group>"; };
+		1075FFC8112B60020031A423 /* CutFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CutFilter.m; path = Classes/filters/CutFilter.m; sourceTree = "<group>"; };
+		1075FFCD112B603D0031A423 /* CapFirstFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CapFirstFilter.m; path = Classes/filters/CapFirstFilter.m; sourceTree = "<group>"; };
+		1075FFCF112B60610031A423 /* FilterLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterLibrary.h; path = Classes/filters/FilterLibrary.h; sourceTree = "<group>"; };
+		1075FFD0112B60610031A423 /* FilterLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterLibrary.m; path = Classes/filters/FilterLibrary.m; sourceTree = "<group>"; };
+		1075FFD3112B606F0031A423 /* TagLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagLibrary.h; path = Classes/tags/TagLibrary.h; sourceTree = "<group>"; };
+		1075FFD4112B606F0031A423 /* TagLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagLibrary.m; path = Classes/tags/TagLibrary.m; sourceTree = "<group>"; };
+		1075FFD8112B60AD0031A423 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stack.h; path = Classes/utils/Stack.h; sourceTree = "<group>"; };
+		1075FFD9112B60AD0031A423 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stack.m; path = Classes/utils/Stack.m; sourceTree = "<group>"; };
+		10762634112AC2F900B71025 /* AddFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddFilter.h; path = Classes/filters/AddFilter.h; sourceTree = "<group>"; };
+		10762635112AC2F900B71025 /* CapFirstFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CapFirstFilter.h; path = Classes/filters/CapFirstFilter.h; sourceTree = "<group>"; };
+		10762636112AC2F900B71025 /* CutFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CutFilter.h; path = Classes/filters/CutFilter.h; sourceTree = "<group>"; };
+		10762637112AC2F900B71025 /* Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Filter.h; path = Classes/filters/Filter.h; sourceTree = "<group>"; };
+		10762638112AC2F900B71025 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Filter.m; path = Classes/filters/Filter.m; sourceTree = "<group>"; };
+		1076266B112AC38200B71025 /* FilterNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterNode.h; path = Classes/parser/FilterNode.h; sourceTree = "<group>"; };
+		1076266C112AC38200B71025 /* FilterNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterNode.m; path = Classes/parser/FilterNode.m; sourceTree = "<group>"; };
+		1076266D112AC38200B71025 /* FreeTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeTextNode.h; path = Classes/parser/FreeTextNode.h; sourceTree = "<group>"; };
+		1076266E112AC38200B71025 /* FreeTextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FreeTextNode.m; path = Classes/parser/FreeTextNode.m; sourceTree = "<group>"; };
+		1076266F112AC38200B71025 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node.h; path = Classes/parser/Node.h; sourceTree = "<group>"; };
+		10762670112AC38200B71025 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Node.m; path = Classes/parser/Node.m; sourceTree = "<group>"; };
+		10762673112AC38200B71025 /* Tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tokenizer.h; path = Classes/parser/Tokenizer.h; sourceTree = "<group>"; };
+		10762674112AC38200B71025 /* Tokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tokenizer.m; path = Classes/parser/Tokenizer.m; sourceTree = "<group>"; };
+		10762675112AC38200B71025 /* TokenLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenLists.h; path = Classes/parser/TokenLists.h; sourceTree = "<group>"; };
+		10762676112AC38200B71025 /* TokenTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenTypes.h; path = Classes/parser/TokenTypes.h; sourceTree = "<group>"; };
+		10762677112AC38200B71025 /* VariableNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VariableNode.h; path = Classes/parser/VariableNode.h; sourceTree = "<group>"; };
+		10762678112AC38200B71025 /* VariableNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VariableNode.m; path = Classes/parser/VariableNode.m; sourceTree = "<group>"; };
+		10762687112AC3BA00B71025 /* CompareUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompareUtils.h; path = Classes/utils/CompareUtils.h; sourceTree = "<group>"; };
+		10762688112AC3BA00B71025 /* CompareUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CompareUtils.m; path = Classes/utils/CompareUtils.m; sourceTree = "<group>"; };
+		10762689112AC3BA00B71025 /* Pair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pair.h; path = Classes/utils/Pair.h; sourceTree = "<group>"; };
+		1076268A112AC3BA00B71025 /* Pair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pair.m; path = Classes/utils/Pair.m; sourceTree = "<group>"; };
+		1076268B112AC3BA00B71025 /* ParseUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseUtils.h; path = Classes/utils/ParseUtils.h; sourceTree = "<group>"; };
+		1076268C112AC3BA00B71025 /* ParseUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParseUtils.m; path = Classes/utils/ParseUtils.m; sourceTree = "<group>"; };
+		10762693112AC3C800B71025 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = Classes/parser/Parser.h; sourceTree = "<group>"; };
+		10762694112AC3C800B71025 /* Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Parser.m; path = Classes/parser/Parser.m; sourceTree = "<group>"; };
+		107AD4B4111776F3007A8881 /* Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Template.h; path = Classes/Template.h; sourceTree = "<group>"; };
+		107AD4B5111776F3007A8881 /* Template.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Template.m; path = Classes/Template.m; sourceTree = "<group>"; };
+		10854D6F11241A9B002CEC88 /* TemplateContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TemplateContext.h; path = Classes/TemplateContext.h; sourceTree = "<group>"; };
+		10854D7011241A9B002CEC88 /* TemplateContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemplateContext.m; path = Classes/TemplateContext.m; sourceTree = "<group>"; };
+		108D49C21119B1360070DC54 /* TemplateTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TemplateTests.h; path = Tests/TemplateTests.h; sourceTree = "<group>"; };
+		108D49C31119B1360070DC54 /* TemplateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemplateTests.m; path = Tests/TemplateTests.m; sourceTree = "<group>"; };
+		10A42CD411159970006283CC /* TokenizerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenizerTests.h; path = Tests/TokenizerTests.h; sourceTree = "<group>"; };
+		10A42CD511159970006283CC /* TokenizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenizerTests.m; path = Tests/TokenizerTests.m; sourceTree = "<group>"; };
+		10A42D571115A8A4006283CC /* Harness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harness.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10A42D591115A8A4006283CC /* Harness-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Harness-Info.plist"; sourceTree = "<group>"; };
+		10B6CC5711201DDA0078910E /* ParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserTests.h; path = Tests/ParserTests.h; sourceTree = "<group>"; };
+		10B6CC5811201DDA0078910E /* ParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserTests.m; path = Tests/ParserTests.m; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DjangoTemplates_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libDjangoTemplates.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDjangoTemplates.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		107173D811151F3D006E210B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1071742811152262006E210B /* libDjangoTemplates.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A42D551115A8A4006283CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A42D7B1115A985006283CC /* libDjangoTemplates.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libDjangoTemplates.a */,
+				107173DB11151F3D006E210B /* UnitTests.octest */,
+				10A42D571115A8A4006283CC /* Harness.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* DjangoTemplates */ = {
+			isa = PBXGroup;
+			children = (
+				10A42D2511159F50006283CC /* Harness */,
+				1071743E111522DD006E210B /* Classes */,
+				107173CF11151F1D006E210B /* Tests */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+				107173DC11151F3D006E210B /* UnitTests-Info.plist */,
+				10A42D591115A8A4006283CC /* Harness-Info.plist */,
+			);
+			name = DjangoTemplates;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		107173CF11151F1D006E210B /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				10B6CC5711201DDA0078910E /* ParserTests.h */,
+				10B6CC5811201DDA0078910E /* ParserTests.m */,
+				10A42CD411159970006283CC /* TokenizerTests.h */,
+				10A42CD511159970006283CC /* TokenizerTests.m */,
+				108D49C21119B1360070DC54 /* TemplateTests.h */,
+				108D49C31119B1360070DC54 /* TemplateTests.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		1071743E111522DD006E210B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1074BAA5112BC2A200E66083 /* DTForwardDefs.h */,
+				10750038112B83AC0031A423 /* DTPublic.h */,
+				107625D1112A9C4400B71025 /* utils */,
+				107625B3112A9A5900B71025 /* tags */,
+				107625B2112A9A5200B71025 /* resolvers */,
+				107625B1112A9A4C00B71025 /* parser */,
+				107625B0112A9A3500B71025 /* filters */,
+				1072EA6C1129E45C00892585 /* ObjectLibrary.h */,
+				1072EA6D1129E45C00892585 /* ObjectLibrary.m */,
+				10418C5611184B4B00F3361F /* Variable.h */,
+				10418C5711184B4B00F3361F /* Variable.m */,
+				107AD4B4111776F3007A8881 /* Template.h */,
+				107AD4B5111776F3007A8881 /* Template.m */,
+				10854D6F11241A9B002CEC88 /* TemplateContext.h */,
+				10854D7011241A9B002CEC88 /* TemplateContext.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		107625B0112A9A3500B71025 /* filters */ = {
+			isa = PBXGroup;
+			children = (
+				1075FFCF112B60610031A423 /* FilterLibrary.h */,
+				1075FFD0112B60610031A423 /* FilterLibrary.m */,
+				1075FFCD112B603D0031A423 /* CapFirstFilter.m */,
+				1075FFC7112B60020031A423 /* AddFilter.m */,
+				1075FFC8112B60020031A423 /* CutFilter.m */,
+				10762634112AC2F900B71025 /* AddFilter.h */,
+				10762635112AC2F900B71025 /* CapFirstFilter.h */,
+				10762636112AC2F900B71025 /* CutFilter.h */,
+				10762637112AC2F900B71025 /* Filter.h */,
+				10762638112AC2F900B71025 /* Filter.m */,
+			);
+			name = filters;
+			sourceTree = "<group>";
+		};
+		107625B1112A9A4C00B71025 /* parser */ = {
+			isa = PBXGroup;
+			children = (
+				10750042112B84620031A423 /* TokenLists.m */,
+				10762693112AC3C800B71025 /* Parser.h */,
+				10762694112AC3C800B71025 /* Parser.m */,
+				1076266B112AC38200B71025 /* FilterNode.h */,
+				1076266C112AC38200B71025 /* FilterNode.m */,
+				1076266D112AC38200B71025 /* FreeTextNode.h */,
+				1076266E112AC38200B71025 /* FreeTextNode.m */,
+				1076266F112AC38200B71025 /* Node.h */,
+				10762670112AC38200B71025 /* Node.m */,
+				10762673112AC38200B71025 /* Tokenizer.h */,
+				10762674112AC38200B71025 /* Tokenizer.m */,
+				10762675112AC38200B71025 /* TokenLists.h */,
+				10762676112AC38200B71025 /* TokenTypes.h */,
+				10762677112AC38200B71025 /* VariableNode.h */,
+				10762678112AC38200B71025 /* VariableNode.m */,
+			);
+			name = parser;
+			sourceTree = "<group>";
+		};
+		107625B2112A9A5200B71025 /* resolvers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = resolvers;
+			sourceTree = "<group>";
+		};
+		107625B3112A9A5900B71025 /* tags */ = {
+			isa = PBXGroup;
+			children = (
+				1075FFD3112B606F0031A423 /* TagLibrary.h */,
+				1075FFD4112B606F0031A423 /* TagLibrary.m */,
+				1075FFAA112B5C440031A423 /* CycleTagNode.h */,
+				1075FFAB112B5C440031A423 /* CycleTagNode.m */,
+				1075FFAC112B5C440031A423 /* ForTagNode.h */,
+				1075FFAD112B5C440031A423 /* ForTagNode.m */,
+				1075FFAE112B5C440031A423 /* TagNode.h */,
+				1075FFAF112B5C440031A423 /* TagNode.m */,
+			);
+			name = tags;
+			sourceTree = "<group>";
+		};
+		107625D1112A9C4400B71025 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				1075FFD8112B60AD0031A423 /* Stack.h */,
+				1075FFD9112B60AD0031A423 /* Stack.m */,
+				10762687112AC3BA00B71025 /* CompareUtils.h */,
+				10762688112AC3BA00B71025 /* CompareUtils.m */,
+				10762689112AC3BA00B71025 /* Pair.h */,
+				1076268A112AC3BA00B71025 /* Pair.m */,
+				1076268B112AC3BA00B71025 /* ParseUtils.h */,
+				1076268C112AC3BA00B71025 /* ParseUtils.m */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		10A42D2511159F50006283CC /* Harness */ = {
+			isa = PBXGroup;
+			children = (
+				10734A361115B4AD00FC3D5D /* main.m */,
+			);
+			name = Harness;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA747D9F0F9514B9006C5449 /* DjangoTemplates_Prefix.pch in Headers */,
+				107AD4BA111776F3007A8881 /* Template.h in Headers */,
+				10418C5811184B4B00F3361F /* Variable.h in Headers */,
+				1072EA6E1129E45C00892585 /* ObjectLibrary.h in Headers */,
+				10762639112AC2F900B71025 /* AddFilter.h in Headers */,
+				1076263A112AC2F900B71025 /* CapFirstFilter.h in Headers */,
+				1076263B112AC2F900B71025 /* CutFilter.h in Headers */,
+				1076263C112AC2F900B71025 /* Filter.h in Headers */,
+				10762679112AC38200B71025 /* FilterNode.h in Headers */,
+				1076267B112AC38200B71025 /* FreeTextNode.h in Headers */,
+				1076267D112AC38200B71025 /* Node.h in Headers */,
+				10762681112AC38200B71025 /* Tokenizer.h in Headers */,
+				10762683112AC38200B71025 /* TokenLists.h in Headers */,
+				10762684112AC38200B71025 /* TokenTypes.h in Headers */,
+				10762685112AC38200B71025 /* VariableNode.h in Headers */,
+				1076268D112AC3BA00B71025 /* CompareUtils.h in Headers */,
+				1076268F112AC3BA00B71025 /* Pair.h in Headers */,
+				10762691112AC3BA00B71025 /* ParseUtils.h in Headers */,
+				10762695112AC3C800B71025 /* Parser.h in Headers */,
+				1075FFB0112B5C440031A423 /* CycleTagNode.h in Headers */,
+				1075FFB2112B5C440031A423 /* ForTagNode.h in Headers */,
+				1075FFB4112B5C440031A423 /* TagNode.h in Headers */,
+				1075FFD1112B60610031A423 /* FilterLibrary.h in Headers */,
+				1075FFD5112B606F0031A423 /* TagLibrary.h in Headers */,
+				1075FFDA112B60AD0031A423 /* Stack.h in Headers */,
+				10750039112B83AC0031A423 /* DTPublic.h in Headers */,
+				1074BAA6112BC2A200E66083 /* DTForwardDefs.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		107173DA11151F3D006E210B /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 107173DF11151F3E006E210B /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				107173D611151F3D006E210B /* Resources */,
+				107173D711151F3D006E210B /* Sources */,
+				107173D811151F3D006E210B /* Frameworks */,
+				107173D911151F3D006E210B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				107173F91115207B006E210B /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 107173DB11151F3D006E210B /* UnitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		10A42D561115A8A4006283CC /* Harness */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10A42D5C1115A8A6006283CC /* Build configuration list for PBXNativeTarget "Harness" */;
+			buildPhases = (
+				10A42D531115A8A4006283CC /* Resources */,
+				10A42D541115A8A4006283CC /* Sources */,
+				10A42D551115A8A4006283CC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10A42D5F1115A8E7006283CC /* PBXTargetDependency */,
+			);
+			name = Harness;
+			productName = Harness;
+			productReference = 10A42D571115A8A4006283CC /* Harness.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2AAC07D0554694100DB518D /* DjangoTemplates */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "DjangoTemplates" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DjangoTemplates;
+			productName = DjangoTemplates;
+			productReference = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "DjangoTemplates" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* DjangoTemplates */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* DjangoTemplates */,
+				107173DA11151F3D006E210B /* UnitTests */,
+				10A42D561115A8A4006283CC /* Harness */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		107173D611151F3D006E210B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A42D531115A8A4006283CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		107173D911151F3D006E210B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		107173D711151F3D006E210B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10734A371115B4AD00FC3D5D /* main.m in Sources */,
+				10A42CD611159970006283CC /* TokenizerTests.m in Sources */,
+				108D49C41119B1360070DC54 /* TemplateTests.m in Sources */,
+				10B6CC5911201DDA0078910E /* ParserTests.m in Sources */,
+				10854D7111241A9B002CEC88 /* TemplateContext.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10A42D541115A8A4006283CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10A42D5D1115A8DB006283CC /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				107AD4BB111776F3007A8881 /* Template.m in Sources */,
+				10418C5911184B4B00F3361F /* Variable.m in Sources */,
+				1072EA6F1129E45C00892585 /* ObjectLibrary.m in Sources */,
+				1076263D112AC2F900B71025 /* Filter.m in Sources */,
+				1076267A112AC38200B71025 /* FilterNode.m in Sources */,
+				1076267C112AC38200B71025 /* FreeTextNode.m in Sources */,
+				1076267E112AC38200B71025 /* Node.m in Sources */,
+				10762682112AC38200B71025 /* Tokenizer.m in Sources */,
+				10762686112AC38200B71025 /* VariableNode.m in Sources */,
+				1076268E112AC3BA00B71025 /* CompareUtils.m in Sources */,
+				10762690112AC3BA00B71025 /* Pair.m in Sources */,
+				10762692112AC3BA00B71025 /* ParseUtils.m in Sources */,
+				10762696112AC3C800B71025 /* Parser.m in Sources */,
+				1075FFB1112B5C440031A423 /* CycleTagNode.m in Sources */,
+				1075FFB3112B5C440031A423 /* ForTagNode.m in Sources */,
+				1075FFB5112B5C440031A423 /* TagNode.m in Sources */,
+				1075FFC9112B60020031A423 /* AddFilter.m in Sources */,
+				1075FFCA112B60020031A423 /* CutFilter.m in Sources */,
+				1075FFCE112B603D0031A423 /* CapFirstFilter.m in Sources */,
+				1075FFD2112B60610031A423 /* FilterLibrary.m in Sources */,
+				1075FFD6112B606F0031A423 /* TagLibrary.m in Sources */,
+				1075FFDB112B60AD0031A423 /* Stack.m in Sources */,
+				10750043112B84620031A423 /* TokenLists.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		107173F91115207B006E210B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC07D0554694100DB518D /* DjangoTemplates */;
+			targetProxy = 107173F81115207B006E210B /* PBXContainerItemProxy */;
+		};
+		10A42D5F1115A8E7006283CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC07D0554694100DB518D /* DjangoTemplates */;
+			targetProxy = 10A42D5E1115A8E7006283CC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		107173DD11151F3E006E210B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sri Panyam (675548EZJC)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+				PROVISIONING_PROFILE = "4C362CC8-61FB-4959-960B-764C80D6CCEE";
+				TEST_HOST = "";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		107173DE11151F3E006E210B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		10A42D5A1115A8A5006283CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Harness-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Harness;
+				SDKROOT = iphoneos3.1.2;
+			};
+			name = Debug;
+		};
+		10A42D5B1115A8A5006283CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Harness-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Harness;
+				SDKROOT = iphoneos3.1.2;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sri Panyam (675548EZJC)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/DjangoTemplates.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DjangoTemplates_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = DjangoTemplates;
+				PROVISIONING_PROFILE = "4C362CC8-61FB-4959-960B-764C80D6CCEE";
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
+				VALID_ARCHS = "i386 armv6 armv7";
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/DjangoTemplates.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DjangoTemplates_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = DjangoTemplates;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphonesimulator3.1.2;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphonesimulator3.1.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		107173DF11151F3E006E210B /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				107173DD11151F3E006E210B /* Debug */,
+				107173DE11151F3E006E210B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10A42D5C1115A8A6006283CC /* Build configuration list for PBXNativeTarget "Harness" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10A42D5A1115A8A5006283CC /* Debug */,
+				10A42D5B1115A8A5006283CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "DjangoTemplates" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "DjangoTemplates" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
