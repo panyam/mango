@@ -1,6 +1,7 @@
 package com.panyam.mango.templates.tags;
 
 import java.io.*;
+import java.util.*;
 import java.net.*;
 
 import com.panyam.mango.templates.*;
@@ -121,7 +122,9 @@ public class ExtendsTagNode extends TagNode
 	protected Variable sourceVar;
 	protected String prevSource;	// previous value of the source in case it has changed then we do a reload
 	protected TemplateLoader templateLoader;
-	protected Node loadedNode;
+	protected Node loadedNode;	// parent node being extended
+	protected Map<String, BlockTagNode> blocks;	// Blocks in this extensin that will be overriding the parents
+    private final static String []ENDEXTENDS = new String[] { "endextends", null };
 
 	public ExtendsTagNode() 
 	{
@@ -169,6 +172,7 @@ public class ExtendsTagNode extends TagNode
      */
     public boolean initWithParser(Parser parser, TemplateLoader loader) throws ParserException
     {
+    	blocks = null;
     	Token token = parser.expectTokenInList(TokenLists.IDENT_OR_STRING, true);
     	if (token.tokenType == TokenType.TOKEN_IDENTIFIER)
     	{
@@ -181,9 +185,42 @@ public class ExtendsTagNode extends TagNode
     	}
         parser.expectToken(TokenType.TOKEN_CLOSE_TAG);
     	templateLoader = loader;
+
+    	// read till the extends tag
+        Node children = parser.parseTillNodeInList(loader, ENDEXTENDS);
+    	if (children != null)
+    	{
+    		// only take nodes that are Blocks and discard all others
+    		if (children instanceof BlockTagNode)
+    		{
+    			addBlock((BlockTagNode)children);
+    		}
+    		else if (children instanceof NodeList)
+    		{
+    			NodeList nodeList = (NodeList)children;
+    			for (int i = 0, count = nodeList.childNodeCount();i < count;i++)
+    			{
+    				Node child = nodeList.getChildNode(i);
+    				if (child instanceof BlockTagNode)
+    					addBlock((BlockTagNode)child);
+    			}
+    		}
+    	}
     	return true;
     }
-	
+
+    /**
+     * Adds a block tag node iff it has non null name.
+     * @param block
+     */
+    public void addBlock(BlockTagNode block)
+    {
+    	if (block != null && block.blockName != null && block.blockName != "")
+    	{
+    		blocks.put(block.blockName, block);
+    	}
+    }
+
 	public boolean equalsTagNode(TagNode another)
 	{
         if (!(another instanceof ExtendsTagNode))

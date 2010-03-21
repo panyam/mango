@@ -195,8 +195,8 @@ public class ForTagNode extends TagNode
     public Node childNodes;
     public Node emptyNodes;
 
-    private final static String []EMPTY_OR_ENDFOR = new String[] { "empty", "endfor" };
-    private final static String []ENDFOR = new String[] { "endfor" };
+    private final static String []EMPTY_OR_ENDFOR = new String[] { "empty", "endfor", null };
+    private final static String []ENDFOR = new String[] { "endfor", null };
 
     /**
      * Creates a ForTagNode directly without parsing from the input.

@@ -78,7 +78,7 @@ public class ParserTests extends TestCase
 			if (node instanceof NodeList)
 			{
 				NodeList nodeList = (NodeList)node;
-				assertEquals("Number of do not match.",expectedNodes.length, nodeList == null ? 0 : nodeList.size());
+				assertEquals("Number of do not match.",expectedNodes.length, nodeList == null ? 0 : nodeList.childNodeCount());
 				Iterator<Node> iterator = nodeList.iterator();
 				if (iterator != null)
 				{

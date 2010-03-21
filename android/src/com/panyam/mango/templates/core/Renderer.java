@@ -12,7 +12,7 @@ import java.io.*;
  *
  * So to do this a node cannot do its rendering.  Well it can but then it
  * will have to manage the context stacks manually.  Instead we have a
- * "renderer" class that drivers the rendering process and the nodes simply
+ * "renderer" that drives the rendering process and the nodes simply
  * provide information to the renderer on what kind of stack info it needs
  * to save and restore.
  *

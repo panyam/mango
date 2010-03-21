@@ -39,9 +39,17 @@ public class NodeList extends Node implements Iterable<Node>
 		return nodeList == null ? null : nodeList.iterator();
 	}
 	
-	public int size()
+	public int childNodeCount()
 	{
 		return nodeList == null ? 0 : nodeList.size();
+	}
+	
+	/**
+	 * Get the child at a given index.
+	 */
+	public Node getChildNode(int index)
+	{
+		return nodeList == null ? null : nodeList.get(index);
 	}
 
     /**

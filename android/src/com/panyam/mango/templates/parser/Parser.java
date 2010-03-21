@@ -226,7 +226,8 @@ public class Parser
             nextNode  = parseNode(loader);
         }
 
-        // ok why are we doing 
+        // just an optimisation to directly return a node if 
+        // there is only one item instead of a node list
         if (nodeCount <= 1)
         {
         	return firstNode;
@@ -263,7 +264,7 @@ public class Parser
             	{
             		token = expectToken(TokenType.TOKEN_IDENTIFIER, true);
             		String []nameList = (String [])endNodeStack.firstElement(); 
-            		for (int i = 0;i < nameList.length;i++)
+            		for (int i = 0;nameList[i] != null;i++)
             		{
             			if (nameList[i].equals(token.tokenValue.toString()))
             			{

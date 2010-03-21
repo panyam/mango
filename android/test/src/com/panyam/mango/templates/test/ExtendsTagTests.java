@@ -4,9 +4,9 @@ import java.io.*;
 import com.panyam.mango.templates.core.*;
 import com.panyam.mango.templates.parser.*;
 
-public class IncludeTagTests extends RendererTestBase 
+public class ExtendsTagTests extends RendererTestBase 
 {
-	public IncludeTagTests(String name) 
+	public ExtendsTagTests(String name) 
 	{
 		super(name);
 	}
