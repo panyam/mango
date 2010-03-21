@@ -1,8 +1,6 @@
 package com.panyam.mango.templates.test;
 
-import java.io.*;
-import com.panyam.mango.templates.core.*;
-import com.panyam.mango.templates.parser.*;
+import com.panyam.mango.templates.tags.ExtendsTagNode;
 
 public class ExtendsTagTests extends RendererTestBase 
 {
@@ -10,74 +8,38 @@ public class ExtendsTagTests extends RendererTestBase
 	{
 		super(name);
 	}
-
-	protected MockTemplateLoader getLoader() {
-		return (MockTemplateLoader)loader;
+	
+	/**
+	 * Extending an empty file.
+	 * Check that only the block children are accepted and others are discarded.
+	 */
+	public void testParsingAndDiscardNonBlockChildren()
+	{
+		loadTemplate("empty", "");
+		setupWithInputString("{% extends 'empty' %}{% block block1 %}{%endblock%}{%block block2 %}{%endblock%}HelloWorld{%endextends%}");
+		ExtendsTagNode etn = (ExtendsTagNode)parsedNodes;
+		assertEquals(2, etn.getBlockCount());
 	}
 	
-	protected void setUp() throws Exception {
-		loader = new MockTemplateLoader();
-		super.setUp();
-	}
-
-	protected Node loadTemplate(String name, String contents)
+	/**
+	 * Extending an empty file.
+	 * Output should be nothing as there is nothing to extend.
+	 */
+	public void testExtendingEmptyBlock()
 	{
-		try {
-			Tokenizer tok = new Tokenizer(new BufferedReader(new StringReader(contents)));
-			Parser p2 = new Parser(tok);
-			Node node = p2.parse(loader);
-			getLoader().SetTemplate(name, node);
-			return node;
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	public void testEmptyFile()
-	{
-		loadTemplate("empty_template", "");
-		setupWithInputString("{% include 'empty_template' %}");
+		loadTemplate("empty", "");
+		setupWithInputString("{% extends 'empty' %}{% block block1 %}{%endblock%}{%block block2 %}{%endblock%}HelloWorld{%endextends%}");
 		checkRenderedOutput("");
 	}
 	
-	public void testIncludeFile()
+	/**
+	 * Extending a block that is not in the parent.
+	 * Output should be same as the parent.
+	 */
+	public void testExtendingNonExistingBlocks()
 	{
-		loadTemplate("simple_template", "Hello World");
-		setupWithInputString("{% include 'simple_template' %}");
-		checkRenderedOutput("Hello World");
-	}
-	
-	public void testIncludeFileFromIncludeFile()
-	{
-		loadTemplate("template1", "Hello World");
-		loadTemplate("template2", "Hello World {% include 'template1' %} Hello World");
-		setupWithInputString("{% include 'template2' %}");
-		checkRenderedOutput("Hello World Hello World Hello World");
-	}
-	
-	public void testIncludeFileAsVariable()
-	{
-		loadTemplate("template1", "Hello World in Template 1");
-		loadTemplate("template2", "Hello World in Template 2");
-		context.setValue("template", "template1");
-		setupWithInputString("{% include template %}");
-		checkRenderedOutput("Hello World in Template 1");
-		context.setValue("template", "template2");
-		checkRenderedOutput("Hello World in Template 2");
-	}
-	
-	public void testIncludeInForLoopWithChangingVariable()
-	{
-		loadTemplate("template1", "Hello World 1");
-		loadTemplate("template2", "Hello World 2");
-		loadTemplate("template3", "Hello World 3");
-		loadTemplate("template4", "Hello World 4");
-		loadTemplate("template5", "Hello World 5");
-		
-		context.setValue("templates", Utils.makeArrayList("template1", "template2", "template3", "template4", "template5"));
-		setupWithInputString("{%for template in templates%}{%include template%} {%endfor%}");
-		checkRenderedOutput("Hello World 1 Hello World 2 Hello World 3 Hello World 4 Hello World 5 ");
+		loadTemplate("empty", "{%block block0 %}{% endblock %}");
+		setupWithInputString("{% extends 'empty' %}{% block block1 %}{%endextends%}");
+		checkRenderedOutput("");
 	}
 }

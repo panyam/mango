@@ -1,6 +1,7 @@
 package com.panyam.mango.templates.test;
 
 import java.io.*;
+
 import com.panyam.mango.templates.*;
 import com.panyam.mango.templates.core.*;
 import com.panyam.mango.templates.filters.*;
@@ -25,6 +26,10 @@ public abstract class RendererTestBase extends TestCase
 		super(name);
 	}
 
+	protected MockTemplateLoader getLoader() {
+		return (MockTemplateLoader)loader;
+	}
+
 	protected void setUp() throws Exception {
 		super.setUp();
 		filterLibrary = FilterLibrary.getSharedInstance();
@@ -37,9 +42,12 @@ public abstract class RendererTestBase extends TestCase
 		tagLibrary.registerObjectClass("for", ForTagNode.class);
 		tagLibrary.registerObjectClass("if", IfTagNode.class);
 		tagLibrary.registerObjectClass("include", IncludeTagNode.class);
+		tagLibrary.registerObjectClass("block", BlockTagNode.class);
+		tagLibrary.registerObjectClass("extends", ExtendsTagNode.class);
 
 		context = new TemplateContext();
 		renderer = new Renderer();
+		loader = new MockTemplateLoader();
 	}
 
 	protected void tearDown() throws Exception {
@@ -56,9 +64,31 @@ public abstract class RendererTestBase extends TestCase
 	    }
 	    catch (ParserException pe)
 	    {
-	    	fail("Got Parser Exception: " + pe.getMessage());
 	    	pe.printStackTrace();
+	    	fail("Got Parser Exception: " + pe.getMessage());
 	    }
+	}
+
+	/**
+	 * Loads a template under a name.
+	 * 
+	 * @param name
+	 * @param contents
+	 * @return
+	 */
+	protected Node loadTemplate(String name, String contents)
+	{
+		try {
+			Tokenizer tok = new Tokenizer(new BufferedReader(new StringReader(contents)));
+			Parser p2 = new Parser(tok);
+			Node node = p2.parse(loader);
+			getLoader().SetTemplate(name, node);
+			return node;
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	protected void checkRenderedOutput(String output)

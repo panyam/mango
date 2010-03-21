@@ -63,8 +63,10 @@ public class BlockTagNode extends TagNode
     	else 
     	{
     		blockName = token.tokenValue.toString();
+    		parser.expectToken(TokenType.TOKEN_CLOSE_TAG);
     	}
     	blockContent = parser.parseTillNodeInList(loader, ENDBLOCK);
+    	parser.discardTokensTill(TokenType.TOKEN_CLOSE_TAG);
         return true;
     }
 

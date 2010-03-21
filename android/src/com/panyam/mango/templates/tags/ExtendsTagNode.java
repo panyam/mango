@@ -188,6 +188,7 @@ public class ExtendsTagNode extends TagNode
 
     	// read till the extends tag
         Node children = parser.parseTillNodeInList(loader, ENDEXTENDS);
+        parser.discardTokensTill(TokenType.TOKEN_CLOSE_TAG);
     	if (children != null)
     	{
     		// only take nodes that are Blocks and discard all others
@@ -217,8 +218,20 @@ public class ExtendsTagNode extends TagNode
     {
     	if (block != null && block.blockName != null && block.blockName != "")
     	{
+    		if (blocks == null)
+    			blocks = new TreeMap<String, BlockTagNode>();
     		blocks.put(block.blockName, block);
     	}
+    }
+    
+    /**
+     * Gets the block count.
+     * 
+     * @return
+     */
+    public int getBlockCount()
+    {
+    	return blocks == null ? 0 : blocks.size();
     }
 
 	public boolean equalsTagNode(TagNode another)

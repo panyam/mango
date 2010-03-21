@@ -12,7 +12,7 @@ public class Parser
     protected Tokenizer     	tokenizer       = null;
     protected Token         	currToken       = null;
     protected Token         	peekedToken     = null;
-    protected Stack<Object> 	endNodeStack    = new Stack<Object>();
+    protected Stack<String[]> 	endNodeStack    = new Stack<String[]>();
 
     // private final static TagNode endTagFoundNode = new TagNode();
 
@@ -263,7 +263,7 @@ public class Parser
             	if (!endNodeStack.empty())
             	{
             		token = expectToken(TokenType.TOKEN_IDENTIFIER, true);
-            		String []nameList = (String [])endNodeStack.firstElement(); 
+            		String []nameList = endNodeStack.peek(); 
             		for (int i = 0;nameList[i] != null;i++)
             		{
             			if (nameList[i].equals(token.tokenValue.toString()))
@@ -311,7 +311,7 @@ public class Parser
     public Node parseTillNodeInList(TemplateLoader loader, String []nameList) throws ParserException
     {
     	int stackSize = endNodeStack.size();
-    	endNodeStack.add(nameList);
+    	endNodeStack.push(nameList);
     	Node parsedNodes = parse(loader);
     	if (stackSize != endNodeStack.size())	// if the end node was not popped the sizes wont match!
     		throwError("End nodes were not found");

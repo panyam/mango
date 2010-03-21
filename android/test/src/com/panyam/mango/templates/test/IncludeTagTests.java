@@ -1,38 +1,10 @@
 package com.panyam.mango.templates.test;
 
-import java.io.*;
-import com.panyam.mango.templates.core.*;
-import com.panyam.mango.templates.parser.*;
-
 public class IncludeTagTests extends RendererTestBase 
 {
 	public IncludeTagTests(String name) 
 	{
 		super(name);
-	}
-
-	protected MockTemplateLoader getLoader() {
-		return (MockTemplateLoader)loader;
-	}
-	
-	protected void setUp() throws Exception {
-		loader = new MockTemplateLoader();
-		super.setUp();
-	}
-
-	protected Node loadTemplate(String name, String contents)
-	{
-		try {
-			Tokenizer tok = new Tokenizer(new BufferedReader(new StringReader(contents)));
-			Parser p2 = new Parser(tok);
-			Node node = p2.parse(loader);
-			getLoader().SetTemplate(name, node);
-			return node;
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	public void testEmptyFile()
