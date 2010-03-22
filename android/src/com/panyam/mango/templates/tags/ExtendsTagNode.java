@@ -114,7 +114,7 @@ import com.panyam.mango.templates.variables.Variable;
  * 
  * @author Sri Panyam
  */
-public class ExtendsTagNode extends TagNode 
+public class ExtendsTagNode extends TagNode implements NodeFilter 
 {
 	/**
 	 * The template we are including.
@@ -250,7 +250,7 @@ public class ExtendsTagNode extends TagNode
     	if (loadedNode == null || !sourceVar.isQuoted)
     	{
     		String realSource = sourceVar.resolve(context, currContext).toString();
-    		
+
     		// once resolved, only load the template again if the variable value has changed!
     		if (realSource != prevSource)
     		{
@@ -273,4 +273,22 @@ public class ExtendsTagNode extends TagNode
     	}
     	return loadedNode;
     }
+
+    /**
+     * Filters and substitutes block nodes in an inherited template with 
+     * extensions provided in the child template.
+     */
+	public Node filterNode(Node node, TemplateContext context, NodeContext currContext) 
+	{
+		if (node != null && node instanceof BlockTagNode)
+		{
+			BlockTagNode block = (BlockTagNode)node;
+	    	if (block.blockName != null && block.blockName != "" && blocks.containsKey(block.blockName))
+	    	{
+	    		// found replacement? then return it
+    			return blocks.get(block.blockName);
+	    	}
+		}
+		return node;
+	}
 }

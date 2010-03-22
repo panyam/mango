@@ -39,7 +39,7 @@ public class ExtendsTagTests extends RendererTestBase
 	public void testExtendingNonExistingBlocks()
 	{
 		loadTemplate("empty", "{%block block0 %}{% endblock %}");
-		setupWithInputString("{% extends 'empty' %}{% block block1 %}{%endextends%}");
+		setupWithInputString("{% extends 'empty' %}{% block block1 %}{%endblock%}{%endextends%}");
 		checkRenderedOutput("");
 	}
 }

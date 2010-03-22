@@ -116,12 +116,23 @@ public class Node
 	{
 		return null;
 	}
-	
+
+	/**
+	 * Utility class to compare two nodes.
+	 * 
+	 * @param node1
+	 * @param node2
+	 * @return
+	 */
 	public static boolean CompareNodes(Node node1, Node node2)
 	{
 		if (node1 == node2)
 		{
 			return true;
+		}
+		else if (node1 == null)
+		{
+			return false;
 		}
 		return node1.equals(node2);
 	}

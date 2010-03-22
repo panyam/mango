@@ -21,6 +21,8 @@ public class BlockTagNode extends TagNode
 {
 	// Name of the block - optional
 	String blockName;
+	
+	// Block content
 	Node blockContent;
 
     private final static String []ENDBLOCK = new String[] { "endblock", null };
