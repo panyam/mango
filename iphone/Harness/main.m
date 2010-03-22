@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 	
 #ifdef TEST_PARSER
 	NSError *error = nil;
-	NSString *input = @"{{a.b.c}}";
+	NSString *input = @"{{a.b.c}}	";
     Tokenizer *tokenizer = [Tokenizer allocFromString:input];
     Parser *parser    = [Parser allocWithTokenizer:tokenizer];
 	////////// test data begins here - set expected nodes here

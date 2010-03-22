@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		10418C5811184B4B00F3361F /* Variable.h in Headers */ = {isa = PBXBuildFile; fileRef = 10418C5611184B4B00F3361F /* Variable.h */; };
 		10418C5911184B4B00F3361F /* Variable.m in Sources */ = {isa = PBXBuildFile; fileRef = 10418C5711184B4B00F3361F /* Variable.m */; };
-		1071742811152262006E210B /* libDjangoTemplates.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */; };
+		1071742811152262006E210B /* libmango.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libmango.a */; };
 		1072EA6E1129E45C00892585 /* ObjectLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1072EA6C1129E45C00892585 /* ObjectLibrary.h */; };
 		1072EA6F1129E45C00892585 /* ObjectLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 1072EA6D1129E45C00892585 /* ObjectLibrary.m */; };
 		10734A371115B4AD00FC3D5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10734A361115B4AD00FC3D5D /* main.m */; };
@@ -62,9 +62,9 @@
 		108D49C41119B1360070DC54 /* TemplateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 108D49C31119B1360070DC54 /* TemplateTests.m */; };
 		10A42CD611159970006283CC /* TokenizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10A42CD511159970006283CC /* TokenizerTests.m */; };
 		10A42D5D1115A8DB006283CC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 10734A361115B4AD00FC3D5D /* main.m */; };
-		10A42D7B1115A985006283CC /* libDjangoTemplates.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */; };
+		10A42D7B1115A985006283CC /* libmango.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libmango.a */; };
 		10B6CC5911201DDA0078910E /* ParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B6CC5811201DDA0078910E /* ParserTests.m */; };
-		AA747D9F0F9514B9006C5449 /* DjangoTemplates_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */; };
+		AA747D9F0F9514B9006C5449 /* mango_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* mango_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,14 +74,21 @@
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = DjangoTemplates;
+			remoteInfo = mango;
+		};
+		107C34DF1158130400F73B0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10A42D561115A8A4006283CC /* Harness */;
+			remoteInfo = Harness;
 		};
 		10A42D5E1115A8E7006283CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = DjangoTemplates;
+			remoteInfo = mango;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -148,9 +155,9 @@
 		10A42D591115A8A4006283CC /* Harness-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Harness-Info.plist"; sourceTree = "<group>"; };
 		10B6CC5711201DDA0078910E /* ParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserTests.h; path = Tests/ParserTests.h; sourceTree = "<group>"; };
 		10B6CC5811201DDA0078910E /* ParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserTests.m; path = Tests/ParserTests.m; sourceTree = "<group>"; };
-		AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DjangoTemplates_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AA747D9E0F9514B9006C5449 /* mango_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mango_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D2AAC07E0554694100DB518D /* libDjangoTemplates.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDjangoTemplates.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2AAC07E0554694100DB518D /* libmango.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmango.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1071742811152262006E210B /* libDjangoTemplates.a in Frameworks */,
+				1071742811152262006E210B /* libmango.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10A42D7B1115A985006283CC /* libDjangoTemplates.a in Frameworks */,
+				10A42D7B1115A985006283CC /* libmango.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,14 +191,14 @@
 		034768DFFF38A50411DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D2AAC07E0554694100DB518D /* libDjangoTemplates.a */,
+				D2AAC07E0554694100DB518D /* libmango.a */,
 				107173DB11151F3D006E210B /* UnitTests.octest */,
 				10A42D571115A8A4006283CC /* Harness.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0867D691FE84028FC02AAC07 /* DjangoTemplates */ = {
+		0867D691FE84028FC02AAC07 /* mango */ = {
 			isa = PBXGroup;
 			children = (
 				10A42D2511159F50006283CC /* Harness */,
@@ -203,7 +210,7 @@
 				107173DC11151F3D006E210B /* UnitTests-Info.plist */,
 				10A42D591115A8A4006283CC /* Harness-Info.plist */,
 			);
-			name = DjangoTemplates;
+			name = mango;
 			sourceTree = "<group>";
 		};
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
@@ -336,7 +343,7 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AA747D9E0F9514B9006C5449 /* DjangoTemplates_Prefix.pch */,
+				AA747D9E0F9514B9006C5449 /* mango_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -348,7 +355,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA747D9F0F9514B9006C5449 /* DjangoTemplates_Prefix.pch in Headers */,
+				AA747D9F0F9514B9006C5449 /* mango_Prefix.pch in Headers */,
 				107AD4BA111776F3007A8881 /* Template.h in Headers */,
 				10418C5811184B4B00F3361F /* Variable.h in Headers */,
 				1072EA6E1129E45C00892585 /* ObjectLibrary.h in Headers */,
@@ -394,6 +401,7 @@
 			);
 			dependencies = (
 				107173F91115207B006E210B /* PBXTargetDependency */,
+				107C34E01158130400F73B0F /* PBXTargetDependency */,
 			);
 			name = UnitTests;
 			productName = UnitTests;
@@ -418,9 +426,9 @@
 			productReference = 10A42D571115A8A4006283CC /* Harness.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D2AAC07D0554694100DB518D /* DjangoTemplates */ = {
+		D2AAC07D0554694100DB518D /* mango */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "DjangoTemplates" */;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "mango" */;
 			buildPhases = (
 				D2AAC07A0554694100DB518D /* Headers */,
 				D2AAC07B0554694100DB518D /* Sources */,
@@ -430,9 +438,9 @@
 			);
 			dependencies = (
 			);
-			name = DjangoTemplates;
-			productName = DjangoTemplates;
-			productReference = D2AAC07E0554694100DB518D /* libDjangoTemplates.a */;
+			name = mango;
+			productName = mango;
+			productReference = D2AAC07E0554694100DB518D /* libmango.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -440,15 +448,15 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "DjangoTemplates" */;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "mango" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
-			mainGroup = 0867D691FE84028FC02AAC07 /* DjangoTemplates */;
+			mainGroup = 0867D691FE84028FC02AAC07 /* mango */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D2AAC07D0554694100DB518D /* DjangoTemplates */,
+				D2AAC07D0554694100DB518D /* mango */,
 				107173DA11151F3D006E210B /* UnitTests */,
 				10A42D561115A8A4006283CC /* Harness */,
 			);
@@ -544,12 +552,17 @@
 /* Begin PBXTargetDependency section */
 		107173F91115207B006E210B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D2AAC07D0554694100DB518D /* DjangoTemplates */;
+			target = D2AAC07D0554694100DB518D /* mango */;
 			targetProxy = 107173F81115207B006E210B /* PBXContainerItemProxy */;
+		};
+		107C34E01158130400F73B0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10A42D561115A8A4006283CC /* Harness */;
+			targetProxy = 107C34DF1158130400F73B0F /* PBXContainerItemProxy */;
 		};
 		10A42D5F1115A8E7006283CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D2AAC07D0554694100DB518D /* DjangoTemplates */;
+			target = D2AAC07D0554694100DB518D /* mango */;
 			targetProxy = 10A42D5E1115A8E7006283CC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -559,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Harness.app/Contents/MacOS/Harness";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sri Panyam (675548EZJC)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -671,16 +685,16 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sri Panyam (675548EZJC)";
 				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/DjangoTemplates.dst;
+				DSTROOT = /tmp/mango.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = DjangoTemplates_Prefix.pch;
+				GCC_PREFIX_HEADER = mango_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = DjangoTemplates;
+				PRODUCT_NAME = mango;
 				PROVISIONING_PROFILE = "4C362CC8-61FB-4959-960B-764C80D6CCEE";
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = static;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -692,12 +706,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DSTROOT = /tmp/DjangoTemplates.dst;
+				DSTROOT = /tmp/mango.dst;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = DjangoTemplates_Prefix.pch;
+				GCC_PREFIX_HEADER = mango_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
-				PRODUCT_NAME = DjangoTemplates;
+				PRODUCT_NAME = mango;
 			};
 			name = Release;
 		};
@@ -749,7 +763,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "DjangoTemplates" */ = {
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "mango" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB921F08733DC00010E9CD /* Debug */,
@@ -758,7 +772,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "DjangoTemplates" */ = {
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "mango" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB922308733DC00010E9CD /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  Variable.m
-//  DjangoTemplates
+//  mango
 //
 //  Fully qualified variable names.
 //
