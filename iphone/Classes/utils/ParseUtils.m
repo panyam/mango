@@ -28,7 +28,7 @@ Variable *parseVariable(Parser * parser, NSError **error)
     while (YES)
     {
         NSString *varValue = token.tokenValue;
-        Variable *nextVar = [[Variable alloc] initWithValueQuoted:varValue 
+        Variable *nextVar = [[Variable alloc] initWithValueQuotedAndNext:varValue 
 														 isquoted:(token.tokenType == TOKEN_QUOTED_STRING) 
 															 next:nil];
         if (firstVar == nil)
@@ -37,7 +37,7 @@ Variable *parseVariable(Parser * parser, NSError **error)
         }
         else
         {
-            lastVar.nextVar = nextVar;
+            lastVar.nextVariable = nextVariable;
             lastVar = nextVar;
         }
         

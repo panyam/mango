@@ -16,46 +16,70 @@
 @synthesize isNumber;
 @synthesize isQuoted;
 @synthesize intValue;
-@synthesize nextVar;
+@synthesize nextVariable;
 
-- (id) init
-{
-    return [self initWithValueNumAndQuoted:nil isnum:NO isquoted:NO next:nil];
-}
-
-- (id) initWithValue:(NSString *)val next:(Variable *)next
-{
-    return [self initWithValueQuoted:val isquoted:NO next:nil];
-}
-
-- (id) initWithValueQuoted:(NSString *)val isquoted:(BOOL)isquoted next:(Variable *)next
-{
-    return [self initWithValueNumAndQuoted:val
-                                     isnum:(!isquoted && [Variable isInteger:val])
-                                     isquoted:isquoted
-                                     next:next];
-}
-
-- (id) initWithValueNumAndQuoted:(NSString *)val
-                           isnum:(BOOL)isnum
-                        isquoted:(BOOL)isquoted
-                            next:(Variable *)next
+- (id) initWithValueQuotedAndNext:(NSString *)val
+                         isquoted:(BOOL)isquoted
+                             next:(Variable *)next
 {
     if (self = [super init])
     {
-        value       = [val copy];
-        isNumber    = isnum;
-        isQuoted    = isquoted;
-        nextVar     = [next retain];
+        isNumber        = YES;
+        isQuoted        = isquoted;
+        nextVariable    = [next retain];
+        [self setValue:val];
     }
     return self;
+}
+
+- (id) initWithValueAndNext:(NSString *)val next:(Variable *)next
+{
+    return [self initWithValueQuotedAndNext:val isquoted:NO next:next];
+}
+
+- (id) initWithValueAndQuoted:(NSString *)val isquoted:(BOOL)isquoted
+{
+    return [self initWithValueQuotedAndNext:val isquoted:isquoted next:nil];
+}
+
+- (id) initWithValue:(NSString *)val
+{
+    return [self initWithValueQuotedAndNext:val isquoted:NO next:nil];
+}
+
+- (id) init
+{
+    return [self initWithValueQuotedAndNext:nil isquoted:NO next:nil];
 }
 
 - (void) dealloc
 {
     [value release];
-    [nextVar release];
+    [nextVariable release];
     [super dealloc];
+}
+
+- (void) setValue:(NSString *)another
+{
+    if (value != another)
+    {
+        [value release];
+        isNumber = [Variable isInteger:another];
+        intValue = [another intValue];
+    }
+}
+
+- (Variable *) setNextVariable:(NSString *)val isquoted:(BOOL)isquoted
+{
+    nextVariable = [[Variable alloc] initWithValueAndQuoted:val
+                                                   isquoted:isquoted];
+    return nextVariable;
+}
+
+- (NSObject *) resolve:(TemplateContext *)context
+            topContext:(NodeContext *)topContext
+{
+    return nil;
 }
 
 - (BOOL) isEqual:(NSObject *)another
@@ -71,21 +95,23 @@
     if ([anotherVar.value isEqual:value])
         if (anotherVar.isQuoted == self.isQuoted)
             if (anotherVar.isNumber == self.isNumber)
-                if (nextVar == anotherVar.nextVar)
+                if (nextVariable == anotherVar.nextVariable)
                     return YES;
-                else if (nextVar != nil)
-                    return [nextVar isEqual:anotherVar.nextVar]; 
+                else if (nextVariable != nil)
+                    return [nextVariable isEqual:anotherVar.nextVariable]; 
     return NO;
 }
 
 + (BOOL) isInteger:(NSString *)value
 {
-    return NO;
+    int val;
+    return [[NSScanner scannerWithString:value] scanInt:&val];
 }
 
 + (BOOL) isFloat:(NSString *)value
 {
-    return NO;
+    float val;
+    return [[NSScanner scannerWithString:value] scanFloat:&val];
 }
 
 @end

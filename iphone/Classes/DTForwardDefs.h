@@ -1,11 +1,12 @@
 
-#ifndef __DT_PUBLIC_H__
-#define __DT_PUBLIC_H__
+#ifndef __DT_FORWARDDEFS_H__
+#define __DT_FORWARDDEFS_H__
 
 @class ObjectLibrary;
 @class Template;
 @class TemplateContext;
-@class Node;;
+@class Node;
+@class NodeContext;
 @class FreeTextNode;
 @class TagNode;
 @class TagLibrary;

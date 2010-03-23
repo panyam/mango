@@ -320,8 +320,4 @@ public class ParserTests extends TestCase
 		ftn.emptyNodes = new FreeTextNode("Empty Content");
 		checkParsedNodeWith(ftn);
 	}
-	
-	public void testParseTillNode()
-	{
-	}
 }

@@ -9,31 +9,36 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DTForwardDefs.h"
 
 @interface Variable : NSObject
 {
     // the item being referred to
     NSString *  value;
-    BOOL        isNumber;
     BOOL        isQuoted;
+    BOOL        isNumber;
 	int			intValue;
-    Variable *  nextVar;
+    Variable *  nextVariable;
 }
 
 @property (nonatomic, copy) NSString *value;
 @property (nonatomic) BOOL isNumber;
 @property (nonatomic) BOOL isQuoted;
 @property (nonatomic, readonly) int intValue;
-@property (nonatomic, retain) Variable *nextVar;
+@property (nonatomic, readonly, retain) Variable *nextVariable;
 
+- (id) initWithValueQuotedAndNext:(NSString *)value
+                         isquoted:(BOOL)isquoted
+                             next:(Variable *)next;
+- (id) initWithValueAndNext:(NSString *)val next:(Variable *)next;
+- (id) initWithValueAndQuoted:(NSString *)value isquoted:(BOOL)isquoted;
+- (id) initWithValue:(NSString *)val;
 - (id) init;
-- (id) initWithValue:(NSString *)val next:(Variable *)next;
-- (id) initWithValueQuoted:(NSString *)value isquoted:(BOOL)isquoted next:(Variable *)next;
-- (id) initWithValueNumAndQuoted:(NSString *)value
-                           isnum:(BOOL)isnum
-                        isquoted:(BOOL)isquoted
-                            next:(Variable *)next;
+- (id) initWithParser:(Parser *)parser error:(NSError **)error;
 - (BOOL) isEqual:(NSObject *)another;
+- (Variable *) setNextVariable:(NSString *)value isquoted:(BOOL)isquoted;
+- (NSObject *) resolve:(TemplateContext *)context
+            topContext:(NodeContext *)topContext;
 + (BOOL) isInteger:(NSString *)value;
 + (BOOL) isFloat:(NSString *)value;
 

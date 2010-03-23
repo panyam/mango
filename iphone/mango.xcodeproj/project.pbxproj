@@ -76,13 +76,6 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = mango;
 		};
-		107C34DF1158130400F73B0F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 10A42D561115A8A4006283CC /* Harness */;
-			remoteInfo = Harness;
-		};
 		10A42D5E1115A8E7006283CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -401,7 +394,6 @@
 			);
 			dependencies = (
 				107173F91115207B006E210B /* PBXTargetDependency */,
-				107C34E01158130400F73B0F /* PBXTargetDependency */,
 			);
 			name = UnitTests;
 			productName = UnitTests;
@@ -492,7 +484,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "# Run the unit tests in this test bundle.\n# \"${SYSTEM_DEVELOPER_DIR}/Tools/otest\" -SenTest All\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -555,11 +547,6 @@
 			target = D2AAC07D0554694100DB518D /* mango */;
 			targetProxy = 107173F81115207B006E210B /* PBXContainerItemProxy */;
 		};
-		107C34E01158130400F73B0F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 10A42D561115A8A4006283CC /* Harness */;
-			targetProxy = 107C34DF1158130400F73B0F /* PBXContainerItemProxy */;
-		};
 		10A42D5F1115A8E7006283CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC07D0554694100DB518D /* mango */;
@@ -572,7 +559,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Harness.app/Contents/MacOS/Harness";
+				BUNDLE_LOADER = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Sri Panyam (675548EZJC)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (

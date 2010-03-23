@@ -209,13 +209,48 @@
 }
 
 ///////////////    Testing tags now!!!
-
-- (void) testSingleTag
+public void testSingleUnclosedTag()
 {
-    [self setUpWithInputString:@"{% for a in listofas %}"];
-    ForTagNode ftn = new ForTagNode(new Variable("listofas", false, false)];
-    ftn.addItem(new Variable("a", false, false)];
-    [self checkParsedNodeWith:ftn];
+    setUpWithInputString("{% for a in listofas %}");
+    checkParsedNodeForException(-1, "End nodes were not found");
+}
+
+public void testDiscardingTokens()
+{
+    setUpWithInputString("{% a b c %}Hello World");
+    try {
+        parser.discardTokensTill(TokenType.TOKEN_CLOSE_TAG);
+        checkParsedNodeWith(new FreeTextNode("Hello World"));
+    } catch (ParserException e) {
+        e.printStackTrace();
+    }
+}
+
+public void testSimpleForTag()
+{
+    setUpWithInputString("{% for a in listofas %}{%endfor%}");
+    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
+    ftn.addItem(new Variable("a"));
+    checkParsedNodeWith(ftn);
+}
+
+public void testForTagWithChild()
+{
+    setUpWithInputString("{% for a in listofas %}Hello World{%endfor%}");
+    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
+    ftn.addItem(new Variable("a"));
+    ftn.childNodes = new FreeTextNode("Hello World");
+    checkParsedNodeWith(ftn);
+}
+
+public void testForTagWithChildAndEmpty()
+{
+    setUpWithInputString("{% for a in listofas %}Hello World{%empty%}Empty Content{%endfor%}");
+    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
+    ftn.addItem(new Variable("a"));
+    ftn.childNodes = new FreeTextNode("Hello World");
+    ftn.emptyNodes = new FreeTextNode("Empty Content");
+    checkParsedNodeWith(ftn);
 }
 #endif
 
