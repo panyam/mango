@@ -277,9 +277,9 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>39</integer>
-									<integer>34</integer>
-									<integer>32</integer>
+									<integer>4</integer>
+									<integer>3</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
@@ -313,12 +313,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>main.m</string>
+								<string>DTForwardDefs.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,11 +328,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>main.m</string>
+										<string>DTForwardDefs.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>109A7DF71159540700F064D8</string>
+										<string>109A7E0F115961DA00F064D8</string>
 										<key>history</key>
 										<array>
 											<string>1071458511125FD50062653C</string>
@@ -356,7 +358,6 @@
 											<string>1072E9DA1129DE7B00892585</string>
 											<string>1072EA7F1129E59B00892585</string>
 											<string>1075FFFB112B7F5F0031A423</string>
-											<string>1075FFFF112B7F5F0031A423</string>
 											<string>10750000112B7F5F0031A423</string>
 											<string>1075002F112B83550031A423</string>
 											<string>10750030112B83550031A423</string>
@@ -375,11 +376,13 @@
 											<string>1074BBDF112BD9C300E66083</string>
 											<string>1074BBE0112BD9C300E66083</string>
 											<string>1074BC35112BE1BB00E66083</string>
-											<string>107C34AF1158112C00F73B0F</string>
 											<string>107C34EE1158143700F73B0F</string>
 											<string>107C350C1158152500F73B0F</string>
 											<string>109A7DE6115951EF00F064D8</string>
-											<string>107C34ED1158143700F73B0F</string>
+											<string>109A7E07115961DA00F064D8</string>
+											<string>109A7E08115961DA00F064D8</string>
+											<string>109A7E09115961DA00F064D8</string>
+											<string>109A7E0A115961DA00F064D8</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -423,6 +426,10 @@
 											<string>1074BBCB112BD7AC00E66083</string>
 											<string>107C34B01158112C00F73B0F</string>
 											<string>109A7DE7115951EF00F064D8</string>
+											<string>109A7E0B115961DA00F064D8</string>
+											<string>109A7E0C115961DA00F064D8</string>
+											<string>109A7E0D115961DA00F064D8</string>
+											<string>109A7E0E115961DA00F064D8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -444,8 +451,6 @@
 							<string>762pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -619,12 +624,11 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>109A7DF81159540700F064D8</string>
-		<string>109A7DF2115953EA00F064D8</string>
 		<string>109A7DF3115953EA00F064D8</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>1071458C11125FD50062653C</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>/Volumes/WorkSpace/projects/mobile/mango/iphone/mango.xcodeproj</string>
+		<string>1071458C11125FD50062653C</string>
 	</array>
 	<key>WindowString</key>
 	<string>107 59 1015 943 0 0 1280 1002 </string>
@@ -643,12 +647,14 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>RunPlatformUnitTests.include</string>
+								<string>ParseUtils.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -665,8 +671,6 @@
 							<string>536pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -717,7 +721,7 @@
 			<key>WindowToolGUID</key>
 			<string>1071458C11125FD50062653C</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
