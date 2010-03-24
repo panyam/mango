@@ -14,11 +14,10 @@
 #import "DTForwardDefs.h"
 
 /**
- * Utility class for parsing standard variables.
+ * Utility class for parsing variables and other common elements.
  * 
  * @author Sri Panyam
  */
-
 Variable *			parseVariable(Parser * parser, NSError **error);
 NSMutableArray *	parseFilterList(Parser *parser, NSError **error);
 FilterNode *		parseFilterExpression(Parser *parser, NSError **error);
