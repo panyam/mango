@@ -13,3 +13,13 @@ tags.*
 iphone/build/*
 android/bin/*
 android/test/bin/*
+UnitTest++/src/*.d
+UnitTest++/src/*.o
+UnitTest++/src/test/*.d
+UnitTest++/src/test/*.o
+UnitTest++/src/Posix/*.d
+UnitTest++/src/Posix/*.o
+UnitTest++/src/Win32/*.d
+UnitTest++/src/Win32/*.o
+UnitTest++/libUnitTest++.a
+UnitTest++/TestUnitTest++
