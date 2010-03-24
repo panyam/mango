@@ -9,14 +9,15 @@
 ._*.h
 ._*.m
 ._*.*
+*.o
 tags.*
 iphone/build/*
 android/bin/*
 android/test/bin/*
 UnitTest++/src/*.d
 UnitTest++/src/*.o
-UnitTest++/src/test/*.d
-UnitTest++/src/test/*.o
+UnitTest++/src/tests/*.d
+UnitTest++/src/tests/*.o
 UnitTest++/src/Posix/*.d
 UnitTest++/src/Posix/*.o
 UnitTest++/src/Win32/*.d
