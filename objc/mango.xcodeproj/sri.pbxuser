@@ -331,7 +331,7 @@
 		fileEncoding = 4;
 		lastKnownFileType = sourcecode.c.objc;
 		name = Tokenizer.m;
-		path = /Volumes/WorkSpace/projects/mobile/mango/iphone/Classes/Tokenizer.m;
+		path = /Volumes/WorkSpace/projects/mobile/mango/objc/Classes/Tokenizer.m;
 		sourceTree = "<absolute>";
 	};
 	107174C9111528FD006E210B /* PBXTextBookmark */ = {

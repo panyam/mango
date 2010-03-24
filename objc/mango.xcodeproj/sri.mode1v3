@@ -621,7 +621,7 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>1071458C11125FD50062653C</string>
-		<string>/Volumes/WorkSpace/projects/mobile/mango/iphone/mango.xcodeproj</string>
+		<string>/Volumes/WorkSpace/projects/mobile/mango/objc/mango.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>107 59 1015 943 0 0 1280 1002 </string>
