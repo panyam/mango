@@ -37,52 +37,28 @@ typedef enum {
 struct MangoToken
 {
     MangoTokenType      tokenType;
-    unsigned            tokenSize;
-    MangoString *       tokenValue;
+
+    /**
+     * Gets the size of the token value.
+     */
+    int (*tokenSize)(MangoToken *);
+
+    /**
+     * Append a character to the token's value.
+     *
+     * \param   token   Token to add the character to.
+     * \param   ch      Character to add.
+     */
+    void (*appendChar)(MangoToken *, int ch);
+
+    /**
+     * Set the value of a mango token.
+     *
+     * \param   token   Token whose value is to be set.
+     * \param   value   Value to set to.
+     */
+    void (*setValue)(MangoToken *token, void *);
 };
-
-/**
- * Creates a new token given the type and value.
- *
- * \param   type    Type of the token
- * \param   value   Value of the token.
- */
-extern MangoToken mango_token_create(MangoTokenType type, MangoString *value);
-
-/**
- * Destroy a mango token.
- *
- * \param   token   Token to be destroyed.
- */
-extern void mango_token_destroy(MangoToken *token);
-
-/**
- * Append another character to a token's value.
- *
- * \param   token   Token to add the character to.
- * \param   ch      Character to add.
- */
-extern void mango_token_append_char(MangoToken *token, int ch);
-
-/**
- * Set the value of a mango token.
- *
- * \param   token   Token whose value is to be set.
- * \param   value   Value to set to.
- */
-extern void mango_token_set_value(MangoToken *token, MangoString *value);
-
-/**
- * Create an EOF token.
- */
-extern MangoToken mango_token_eof();
-
-/**
- * Create an error token.
- *
- * \param   message Message of the error token.
- */
-extern MangoToken mango_token_error(MangoString *message);
 
 #ifdef __cplusplus
 }

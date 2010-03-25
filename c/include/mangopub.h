@@ -1,11 +1,11 @@
 
-#ifndef __MANGO_FWD_DEFS_H__
-#define __MANGO_FWD_DEFS_H__
+#ifndef __MANGO_PUBLIC_H__
+#define __MANGO_PUBLIC_H__
 
-#include <ctype.h>
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "mfwddefs.h"
+#include "mtoken.h"
+#include "mtokenizer.h"
+#include "minputsource.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,7 +16,6 @@ extern "C" {
 typedef int BOOL;
 
 typedef struct MangoInputSource MangoInputSource;
-typedef struct MangoString MangoString;
 typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
 

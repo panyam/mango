@@ -1,5 +1,5 @@
 
-#include "mstream.h"
+#include "minputsource.h"
 #include "mstring.h"
 #include "mtokenizer.h"
 
@@ -17,7 +17,7 @@ enum
  */
 int mango_tokenizer_next_char(MangoTokenizer *tokenizer)
 {
-    // is there a char we ungetted?
+    // is there a character we ungetted?
     int outChar = -1;
     if (tokenizer->pushedCharsLen > 0)
     {
@@ -25,22 +25,7 @@ int mango_tokenizer_next_char(MangoTokenizer *tokenizer)
     }
     else
     {
-        if (tokenizer->bufferPos >= tokenizer->bufferLen)
-        {
-            // refill the buffer
-            if (tokenizer->inputStream->hasBytesAvailable(tokenizer->inputStream))
-            {
-                tokenizer->bufferPos   = 0;
-                tokenizer->bufferLen   = tokenizer->inputStream->read(tokenizer->inputStream, tokenizer->inputBuffer, BUFFER_SIZE);
-                if (tokenizer->bufferLen <= 0)
-                    return -1;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-        outChar = tokenizer->inputBuffer[tokenizer->bufferPos++];
+        return tokenizer->inputSource->nextChar(tokenizer->inputSource);
     }
     if (outChar == '\n')
     {
@@ -66,7 +51,7 @@ void mango_tokenizer_unget_char(MangoTokenizer *tokenizer, int ch)
  *
  * \param   input   Input stream for the tokenizer.
  */
-MangoTokenizer *mango_tokenizer_create(MangoInputStream *input)
+MangoTokenizer *mango_tokenizer_create(MangoInputSource *input)
 {
     MangoTokenizer *tokenizer = malloc(sizeof(MangoTokenizer));
     assert(tokenizer != NULL);
@@ -88,15 +73,13 @@ void mango_tokenizer_destroy(MangoTokenizer *tokenizer)
  *
  * \param   input   New input stream to reset with.
  */
-void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputStream *input)
+void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputSource *input)
 {
-    tokenizer->inputStream          = input;
+    tokenizer->inputSource          = input;
     tokenizer->maxStringSize        = -1;
     tokenizer->_insideNode          = NODETYPE_NONE;
     tokenizer->_insideQuotes        = false;
     tokenizer->_insideIdentifier    = false;
-    tokenizer->bufferPos            = 0;
-    tokenizer->bufferLen            = 0;
     tokenizer->pushedCharsLen       = 0;
     tokenizer->currLine             = 0;
     tokenizer->currColumn           = 0;
@@ -109,9 +92,17 @@ void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputStream *input)
  */
 BOOL mango_tokenizer_has_tokens(MangoTokenizer *tokenizer)
 {
-    return tokenizer->bufferPos < tokenizer->bufferLen ||
-           tokenizer->pushedCharsLen > 0 || 
-           tokenizer->inputStream->hasBytesAvailable(tokenizer->inputStream);
+    if (tokenizer->pushedCharsLen > 0)
+    {
+        return true;
+    }
+    else 
+    {
+        int nextChar = mango_tokenizer_next_char(tokenizer);
+        mango_tokenizer_unget_char(tokenizer, nextChar);
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -137,7 +128,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
 {
     token->tokenType = TOKEN_UNKNOWN;
     // the buffer only gets created once in the entire parser run
-    mango_token_set_value(token, "");
+    token->setValue(token, "");
 
     int char1 = mango_tokenizer_next_char(tokenizer);
     while (char1 >= 0)
@@ -192,15 +183,15 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
                 else 
                 {
                     // nothing so append to buffer and continue
-                    mango_token_append_char(token, char1);
+                    token->appendChar(token, char1);
                     if (char2 >= 0)
-                        mango_token_append_char(token, char2);
+                        token->appendChar(token, char2);
                 }
             }
             else
             {
                 // append to freetext buffer
-                mango_token_append_char(token, char1);
+                token->appendChar(token, char1);
             }
         }
         else if (tokenizer->_insideNode == NODETYPE_COMMENT)
@@ -236,27 +227,27 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
                         char1 = mango_tokenizer_next_char(tokenizer);
                         if (char1 == '\n')
                         {
-                            mango_token_append_char(token, '\n');
+                            token->appendChar(token, '\n');
                         }
                         else if (char1 == '\r')
                         {
-                            mango_token_append_char(token, '\r');
+                            token->appendChar(token, '\r');
                         }
                         else if (char1 == '\t')
                         {
-                            mango_token_append_char(token, '\t');
+                            token->appendChar(token, '\t');
                         }
                         else if (char1 == '\'')
                         {
-                            mango_token_append_char(token, '\'');
+                            token->appendChar(token, '\'');
                         }
                         else if (char1 == '"')
                         {
-                            mango_token_append_char(token, '"');
+                            token->appendChar(token, '"');
                         }
                         else if (char1 == 'f')
                         {
-                            mango_token_append_char(token, '\f');
+                            token->appendChar(token, '\f');
                         }
                         else if (char1 == 'u')
                         {
@@ -273,13 +264,13 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
                         }
                         else
                         {
-                            mango_token_append_char(token, '\\');
-                            mango_token_append_char(token, char1);
+                            token->appendChar(token, '\\');
+                            token->appendChar(token, char1);
                         }
                     }
                     else
                     {
-                        mango_token_append_char(token, char1);
+                        token->appendChar(token, char1);
                     }
                 }
             }
@@ -287,7 +278,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
             {
                 if (isalnum(char1))
                 {
-                    mango_token_append_char(token, char1);
+                    token->appendChar(token, char1);
                 }
                 else
                 {
@@ -388,7 +379,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
     {
         // return unterminated node
         token->tokenType = TOKEN_ERROR;
-        mango_token_set_value(&token, "Reached EOF without terminating node.");
+        token->setValue(token, "Reached EOF without terminating node.");
         return true;
     }
     return false;

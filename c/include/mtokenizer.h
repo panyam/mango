@@ -59,30 +59,15 @@ extern "C" {
 struct MangoTokenizer
 {
     /**
-     * current input stream being read
+     * current input source being read
      */
-    MangoInputStream *  inputStream;
+    MangoInputSource *  inputSource;
 
     /**
      * This is just an option to bound the size of tokens if there are
      * memory constraints.
      */
     int                 maxStringSize;
-
-    /**
-     * Current input buffer read from the input stream
-     */
-    char                inputBuffer[BUFFER_SIZE];
-
-    /**
-     * Length of the buffer.
-     */
-    int                 bufferLen;
-
-    /**
-     * Position within the buffer.
-     */
-    int                 bufferPos;
 
     /**
      * Array for maintaining characters that were "unget"ed.
@@ -108,11 +93,11 @@ struct MangoTokenizer
 };
 
 /**
- * Create a tokenizer from an input stream.
+ * Create a tokenizer from an input source.
  *
- * \param   input   Input stream for the tokenizer.
+ * \param   input   Input source for the tokenizer.
  */
-extern MangoTokenizer *mango_tokenizer_create(MangoInputStream *input);
+extern MangoTokenizer *mango_tokenizer_create(MangoInputSource *input);
 
 /**
  * Destroy a tokenizer.
@@ -122,11 +107,11 @@ extern MangoTokenizer *mango_tokenizer_create(MangoInputStream *input);
 extern void mango_tokenizer_destroy(MangoTokenizer *tokenizer);
 
 /**
- * Resets the tokenizer with another stream.
+ * Resets the tokenizer with another source.
  *
- * \param   input   New input stream to reset with.
+ * \param   input   New input source to reset with.
  */
-extern void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputStream *input);
+extern void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputSource *input);
 
 /**
  * Get the next token.
