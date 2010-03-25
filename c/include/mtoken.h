@@ -1,6 +1,12 @@
 
-#ifndef MANGO_TOKEN_H
-#define MANGO_TOKEN_H
+#ifndef __MANGO_TOKEN_H__
+#define __MANGO_TOKEN_H__
+
+#include "mfwddefs.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * Different token types allowed by the tokenizer.
@@ -28,11 +34,12 @@ typedef enum {
 /**
  * Tokens returned by the tokenizer.
  */
-typedef struct MangoToken
+struct MangoToken
 {
     MangoTokenType      tokenType;
+    unsigned            tokenSize;
     MangoString *       tokenValue;
-} MangoToken;
+};
 
 /**
  * Creates a new token given the type and value.
@@ -40,7 +47,7 @@ typedef struct MangoToken
  * \param   type    Type of the token
  * \param   value   Value of the token.
  */
-extern MangoToken mango_token_create(TokenType type, MangoString *value);
+extern MangoToken mango_token_create(MangoTokenType type, MangoString *value);
 
 /**
  * Destroy a mango token.
@@ -76,6 +83,10 @@ extern MangoToken mango_token_eof();
  * \param   message Message of the error token.
  */
 extern MangoToken mango_token_error(MangoString *message);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
