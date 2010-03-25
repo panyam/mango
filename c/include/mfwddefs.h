@@ -19,6 +19,12 @@ typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoString MangoString;
 typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
+typedef struct MangoParser MangoParser;
+typedef struct MangoError MangoError;
+typedef struct MangoList MangoList;
+typedef struct MangoListNode MangoListNode;
+typedef struct MangoNode MangoNode;
+typedef struct MangoTemplateLoader MangoTemplateLoader;
 
 #ifdef __cplusplus
 }

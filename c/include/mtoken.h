@@ -36,12 +36,20 @@ typedef enum {
  */
 struct MangoToken
 {
+    /**
+     * Token type
+     */
     MangoTokenType      tokenType;
+
+    /**
+     * Implementation specific data associated with the token.
+     */
+    void *              tokenData;
 
     /**
      * Gets the size of the token value.
      */
-    size_t (*tokenSize)(MangoToken *);
+    size_t (*tokenSize)(void *);
 
     /**
      * Append a character to the token's value.
@@ -49,7 +57,7 @@ struct MangoToken
      * \param   token   Token to add the character to.
      * \param   ch      Character to add.
      */
-    void (*appendChar)(MangoToken *, int ch);
+    void (*appendChar)(void *, int ch);
 
     /**
      * Set the value of a mango token.
@@ -57,7 +65,7 @@ struct MangoToken
      * \param   token   Token whose value is to be set.
      * \param   value   Value to set to.
      */
-    void (*setValue)(MangoToken *token, void *);
+    void (*setValue)(void *token, void *);
 };
 
 #ifdef __cplusplus

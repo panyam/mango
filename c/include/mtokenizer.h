@@ -118,7 +118,7 @@ extern void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputSource *i
  *
  * \param   tokenizer
  */
-extern BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token);
+extern BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token, MangoError **error);
 
 /**
  * Tells if there are any tokens left.

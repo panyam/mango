@@ -4,6 +4,7 @@
 
 #include "mfwddefs.h"
 #include "mtoken.h"
+#include <string.h>
 #include <string>
 #include <sstream>
 
@@ -14,20 +15,33 @@ extern "C" {
 /**
  * Stl String implementation of the token.
  */
-typedef struct StlStringToken
+class StlStringTokenData
 {
-    MangoToken          tokenBase;  // el-cheapo inheritance
+public:
+    //! Constructor.
+    StlStringTokenData(const char *value = NULL)
+    {
+        tokenValue.str(value ? value : "");
+        tokenSize = value ? strlen(value) : 0;
+    }
+
+public:
     size_t              tokenSize;
     std::stringstream   tokenValue;
-} StlStringToken;
+};
 
 /**
- * Initialises a token given the type and value.
+ * Creates a new token given the type and value.
  *
  * \param   tType   Token type
  * \param   tValue  Token value
  */
-extern void init_stl_string_token(StlStringToken *token, MangoTokenType tType = TOKEN_UNKNOWN, const char *input = NULL);
+extern MangoToken *stl_string_token_new(MangoTokenType tType = TOKEN_UNKNOWN, const char *input = NULL);
+
+/**
+ * Destroys a mango token that was created with stl_string_token_new.
+ */
+extern void stl_string_token_free(MangoToken *token);
 
 #ifdef __cplusplus
 }

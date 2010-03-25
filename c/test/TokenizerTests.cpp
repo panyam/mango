@@ -70,17 +70,16 @@ protected:
 
     void satisfyExpectation(int expectation)
     {
-    	StlStringToken token;
-        init_stl_string_token(&token);
+        MangoToken *token = stl_string_token_new(TOKEN_UNKNOWN, "");
         CHECK(mango_tokenizer_has_tokens(tokenizer));
         BOOL foundToken;
-        CHECK((foundToken = mango_tokenizer_next_token(tokenizer, ((MangoToken *)&token))));
+        CHECK((foundToken = mango_tokenizer_next_token(tokenizer, token, NULL)));
         ExpectedToken expectedToken = expectedTokens.at(expectation);
-        CHECK_EQUAL(expectedToken.tokenType, token.tokenBase.tokenType);
+        CHECK_EQUAL(expectedToken.tokenType, token->tokenType);
         if (expectedToken.tokenValue.size() != 0)
         {
             std::string expectedTokenValue  = expectedToken.tokenValue;
-            std::string tokenValue(token.tokenValue.str());
+            std::string tokenValue(((StlStringTokenData *)token->tokenData)->tokenValue.str());
             CHECK_EQUAL(expectedTokenValue, tokenValue);
         }
     }
