@@ -71,16 +71,6 @@ public class Node
     	return new NodeContext(this, topContext);
     }
 
-    public static NodeList MakeNodeList(Node ... nodes)
-    {
-    	java.util.LinkedList<Node> out = new java.util.LinkedList<Node>();
-    	for (int i = 0;i < nodes.length;i++)
-    	{
-    		out.add(nodes[i]);
-    	}
-    	return new NodeList(out);
-    }
-
     /**
      * Renders the next bit or returns the next child node to transfer rendering to.
      * 
@@ -103,14 +93,14 @@ public class Node
     }
 
     /**
-     * Called when a child node (that was returned in renderBitMore) was exited having completed.
-     * By doing this we are giving the parent node a chance to tell the renderer what the next 
-     * node will be.
+     * Called when a child node (that was returned in renderBitMore) was
+     * exited having completed.  By doing this we are giving the parent
+     * node a chance to tell the renderer what the next node will be.
      * @param childNode
      * @param context
      * @param currContext
-     * @return null if this node is ALSO to be exited, otherwise a new child node to be pushed 
-     * onto the renderer stack.
+     * @return null if this node is ALSO to be exited, otherwise a new
+     * child node to be pushed onto the renderer stack.
      */
 	public Node childExited(Node childNode, TemplateContext context, NodeContext currContext) 
 	{
@@ -136,5 +126,15 @@ public class Node
 		}
 		return node1.equals(node2);
 	}
+
+    public static NodeList MakeNodeList(Node ... nodes)
+    {
+    	java.util.LinkedList<Node> out = new java.util.LinkedList<Node>();
+    	for (int i = 0;i < nodes.length;i++)
+    	{
+    		out.add(nodes[i]);
+    	}
+    	return new NodeList(out);
+    }
 }
 
