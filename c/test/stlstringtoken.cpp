@@ -1,7 +1,8 @@
 
 #include "stlstringtoken.h"
+#include <string.h>
 
-int stl_string_token_size(MangoToken *);
+size_t stl_string_token_size(MangoToken *);
 void stl_string_token_append_char(MangoToken *token, int ch);
 void stl_string_token_set_value(MangoToken *token, void *);
 void *stl_string_token_value(MangoToken *token);
@@ -12,22 +13,22 @@ void *stl_string_token_value(MangoToken *token);
  * \param   tType   Token type
  * \param   tValue  Token value
  */
-void init_stl_string_token(MangoToken *token, MangoTokenType tType, const char *input)
+void init_stl_string_token(StlStringToken *token, MangoTokenType tType, const char *input)
 {
-    token->tokenType  = tType;
-    token->tokenSize  = stl_string_token_size;
-    token->appendChar = stl_string_token_append_char;
-    token->setValue   = stl_string_token_set_value;
-
-    ((StlStringToken *)token)->tokenValue.str(input ? input : "");
+    token->tokenBase.tokenType  = tType;
+    token->tokenBase.tokenSize  = stl_string_token_size;
+    token->tokenBase.appendChar = stl_string_token_append_char;
+    token->tokenBase.setValue   = stl_string_token_set_value;
+    token->tokenValue.str(input ? input : "");
+    token->tokenSize = input ? strlen(input) : 0;
 }
 
 /**
  * Gets the size of the token value.
  */
-int stl_string_token_size(MangoToken *)
+size_t stl_string_token_size(MangoToken *token)
 {
-    return 0;
+    return ((StlStringToken *)token)->tokenSize;
 }
 
 /**
@@ -38,6 +39,8 @@ int stl_string_token_size(MangoToken *)
  */
 void stl_string_token_append_char(MangoToken *token, int ch)
 {
+    ((StlStringToken *)token)->tokenSize++;
+    ((StlStringToken *)token)->tokenValue << (char)ch;
 }
 
 /**
@@ -46,6 +49,8 @@ void stl_string_token_append_char(MangoToken *token, int ch)
  * \param   token   Token whose value is to be set.
  * \param   value   Value to set to.
  */
-void stl_string_token_set_value(MangoToken *token, void *)
+void stl_string_token_set_value(MangoToken *token, void *value)
 {
+    ((StlStringToken *)token)->tokenSize = strlen((const char *)value);
+    ((StlStringToken *)token)->tokenValue.str((const char *)value);
 }

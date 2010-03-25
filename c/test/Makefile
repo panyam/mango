@@ -54,7 +54,7 @@ ifeq ($(LINK_STATICALLY),yes)
 
 test: base $(TEST_OBJS)
 	@echo Building Test with Static Libraries...
-	@$(GPP) $(CFLAGS) $(TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
+	$(GPP) $(CFLAGS) $(TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
 	$(TEST_OUTPUT)
 
 else

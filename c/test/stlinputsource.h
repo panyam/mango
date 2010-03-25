@@ -18,7 +18,14 @@ struct StlInputSource
 /**
  * Initialises an stl input source with an std istream.
  */
-void init_stl_input_source(StlInputSource *source, std::istream *instream);
+extern StlInputSource *new_stl_input_source(std::istream *instream = NULL);
+
+/**
+ * Frees the input source.
+ * The istream object is NOT deleted.  It must be deleted prior to calling
+ * this method.
+ */
+extern void free_stl_input_source(StlInputSource *source);
 
 #ifdef __cplusplus
 }

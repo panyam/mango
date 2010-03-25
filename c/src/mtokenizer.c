@@ -66,6 +66,8 @@ MangoTokenizer *mango_tokenizer_create(MangoInputSource *input)
  */
 void mango_tokenizer_destroy(MangoTokenizer *tokenizer)
 {
+    if (tokenizer != NULL)
+        free(tokenizer);
 }
 
 /**
@@ -131,7 +133,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
     token->setValue(token, "");
 
     int char1 = mango_tokenizer_next_char(tokenizer);
-    while (char1 >= 0)
+    while (char1 > 0)
     {
         if (tokenizer->_insideNode == NODETYPE_NONE)
         {
@@ -164,7 +166,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
                 // then return it
                 if (tokenizer->_insideNode != NODETYPE_NONE)
                 {
-                    if (token->tokenSize > 0)
+                    if (token->tokenSize(token) > 0)
                     {
                         // push the two characters back 
                         // so they can be read again
@@ -369,7 +371,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer, MangoToken *token)
     token->tokenType = TOKEN_EOF;
     if (tokenizer->_insideNode == NODETYPE_NONE)
     {
-        if (token->tokenSize > 0)
+        if (token->tokenSize(token) > 0)
         {
             token->tokenType = TOKEN_FREETEXT;
             return true;

@@ -41,7 +41,7 @@ struct MangoToken
     /**
      * Gets the size of the token value.
      */
-    int (*tokenSize)(MangoToken *);
+    size_t (*tokenSize)(MangoToken *);
 
     /**
      * Append a character to the token's value.
