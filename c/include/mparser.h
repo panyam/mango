@@ -81,7 +81,7 @@ extern void mango_parser_discard_till_token(MangoParser *parser,
                                             MangoError **error);
 
 /**
- * Parses a node.
+ * Parses an input stream and returns a list of nodes.
  *
  * \param   parser  Parser doing the parsing.
  * \param   loader  The template loader driving this instance.
@@ -92,6 +92,19 @@ extern void mango_parser_discard_till_token(MangoParser *parser,
 extern MangoNode *mango_parser_parse(MangoParser *parser,
                                      MangoTemplateLoader *loader,
                                      MangoError **error);
+
+/**
+ * Parses the next node off the stream.
+ *
+ * \param   parser  Parser doing the parsing.
+ * \param   loader  The template loader driving this instance.
+ * \param   error   Error to be set if any.
+ *
+ * \return  A Node instance.
+ */
+extern MangoNode *mango_parser_parse_node(MangoParser *parser,
+                                          MangoTemplateLoader *loader,
+                                          MangoError **error);
 
 #if 0
     /**

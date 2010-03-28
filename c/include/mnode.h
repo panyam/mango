@@ -21,6 +21,7 @@ struct MangoNode
 {
     /**
      * The node class - this has to be unique for different types.
+     * The class is obtaining by the node class methods.
      */
     int     nodeClass;
 

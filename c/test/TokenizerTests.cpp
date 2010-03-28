@@ -45,13 +45,14 @@ public:
             if (stl_input_source->inputStream != NULL)
                 delete stl_input_source->inputStream;
             free_stl_input_source(stl_input_source);
+            stl_input_source = NULL;
         }
 
         if (tokenizer != NULL)
+        {
             delete tokenizer;
-
-        tokenizer = NULL;
-        stl_input_source = NULL;
+            tokenizer = NULL;
+        }
     }
 
 protected:
@@ -60,7 +61,7 @@ protected:
         DeleteTokenizer();
         input_string = input;
         stl_input_source = new_stl_input_source(new std::istringstream(input));
-        tokenizer = mango_tokenizer_create((MangoInputSource *)stl_input_source);
+        tokenizer = mango_tokenizer_new((MangoInputSource *)stl_input_source);
     }
     
     void expectToken(MangoTokenType tType, const std::string &value = "")

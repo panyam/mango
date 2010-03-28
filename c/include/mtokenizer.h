@@ -97,14 +97,14 @@ struct MangoTokenizer
  *
  * \param   input   Input source for the tokenizer.
  */
-extern MangoTokenizer *mango_tokenizer_create(MangoInputSource *input);
+extern MangoTokenizer *mango_tokenizer_new(MangoInputSource *input);
 
 /**
  * Destroy a tokenizer.
  *
  * \param   tokenizer   Tokenizer to destroy and free.
  */
-extern void mango_tokenizer_destroy(MangoTokenizer *tokenizer);
+extern void mango_tokenizer_free(MangoTokenizer *tokenizer);
 
 /**
  * Resets the tokenizer with another source.

@@ -2,6 +2,8 @@
 #ifndef __MANGO_NODE_LIST_H__
 #define __MANGO_NODE_LIST_H__
 
+#include "mfwddefs.h"
+
 /**
  * Creates a new mango node list.
  */

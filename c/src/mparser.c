@@ -2,6 +2,8 @@
 #include "merror.h"
 #include "mtokenizer.h"
 #include "mparser.h"
+#include "mlist.h"
+#include "mnodelist.h"
 
 /**
  * Create a new parser given a tokenizer.
@@ -180,12 +182,12 @@ MangoNode *mango_parser_parse(MangoParser *parser,
             if (nodeList == NULL)
             {
                 nodeList = mango_list_new();
-                mango_list_add(nodeList, firstNode);
+                mango_list_push_back(nodeList, firstNode);
             }
-            mango_list_add(nodeList, nextNode);
+            mango_list_push_back(nodeList, nextNode);
         }
         nodeCount++;
-        nextNode  = parseNode(parser, loader, error);
+        nextNode  = mango_parser_parse_node(parser, loader, error);
     }
 
     // just an optimisation to directly return a node if 
@@ -198,5 +200,21 @@ MangoNode *mango_parser_parse(MangoParser *parser,
     {
         return mango_nodelist_new(nodeList);
     }
+}
+
+/**
+ * Parses the next node off the stream.
+ *
+ * \param   parser  Parser doing the parsing.
+ * \param   loader  The template loader driving this instance.
+ * \param   error   Error to be set if any.
+ *
+ * \return  A Node instance.
+ */
+MangoNode *mango_parser_parse_node(MangoParser *parser,
+                                   MangoTemplateLoader *loader,
+                                   MangoError **error)
+{
+    return NULL;
 }
 

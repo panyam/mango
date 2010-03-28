@@ -52,7 +52,7 @@ void mango_tokenizer_unget_char(MangoTokenizer *tokenizer, int ch)
  *
  * \param   input   Input stream for the tokenizer.
  */
-MangoTokenizer *mango_tokenizer_create(MangoInputSource *input)
+MangoTokenizer *mango_tokenizer_new(MangoInputSource *input)
 {
     MangoTokenizer *tokenizer = malloc(sizeof(MangoTokenizer));
     assert(tokenizer != NULL);
@@ -65,7 +65,7 @@ MangoTokenizer *mango_tokenizer_create(MangoInputSource *input)
  *
  * \param   tokenizer   Tokenizer to destroy and free.
  */
-void mango_tokenizer_destroy(MangoTokenizer *tokenizer)
+void mango_tokenizer_free(MangoTokenizer *tokenizer)
 {
     if (tokenizer != NULL)
         free(tokenizer);
