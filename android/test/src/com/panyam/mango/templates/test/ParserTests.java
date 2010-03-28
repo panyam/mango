@@ -124,6 +124,7 @@ public class ParserTests extends TestCase
     		}
     	}
     }
+
     /**
 	 * Tests the creation of a parser.
 	 */

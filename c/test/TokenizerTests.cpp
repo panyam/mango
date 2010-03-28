@@ -23,11 +23,11 @@ public:
 public:
     std::vector<ExpectedToken>  expectedTokens;
     MangoTokenizer *            tokenizer;
-    StlInputSource *            stl_input_source;
+    StlInputSource *            input_source;
     std::string                 input_string;
 
 public:
-    TokenizerTestFixture() : tokenizer(NULL), stl_input_source(NULL)
+    TokenizerTestFixture() : tokenizer(NULL), input_source(NULL)
     {
     }
 
@@ -40,12 +40,12 @@ public:
 
     void DeleteTokenizer()
     {
-        if (stl_input_source != NULL)
+        if (input_source != NULL)
         {
-            if (stl_input_source->inputStream != NULL)
-                delete stl_input_source->inputStream;
-            free_stl_input_source(stl_input_source);
-            stl_input_source = NULL;
+            if (input_source->inputStream != NULL)
+                delete input_source->inputStream;
+            free_stl_input_source(input_source);
+            input_source = NULL;
         }
 
         if (tokenizer != NULL)
@@ -60,8 +60,8 @@ protected:
     {
         DeleteTokenizer();
         input_string = input;
-        stl_input_source = new_stl_input_source(new std::istringstream(input));
-        tokenizer = mango_tokenizer_new((MangoInputSource *)stl_input_source);
+        input_source = new_stl_input_source(new std::istringstream(input));
+        tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
     }
     
     void expectToken(MangoTokenType tType, const std::string &value = "")
