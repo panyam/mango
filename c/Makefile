@@ -49,8 +49,8 @@ distclean: cleanall
 	@rm -Rf $(OUTPUT_DIR)
 
 dep:
-	@cd test ; make dep >& /dev/null
-	@cd src ; make dep >& /dev/null
+	cd test ; make dep
+	cd src ; make dep
 
 PACKAGE_NAME = $(PRODUCT_NAME)-$(MAJOR_VERSION).$(MINOR_VERSION).$(BUILD_VERSION)
 # 

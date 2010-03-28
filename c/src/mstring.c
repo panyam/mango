@@ -12,6 +12,11 @@
  */
 MangoString *mango_string_new(unsigned capacity)
 {
+    MangoString *mstr = (MangoString *)calloc(1, sizeof(MangoString));
+    mstr->buffer = (char *)malloc(sizeof(char) * capacity);
+    mstr->capacity = capacity;
+    mstr->length = 0;
+    return mstr;
 }
 
 /**
@@ -21,6 +26,9 @@ MangoString *mango_string_new(unsigned capacity)
  */
 void mango_string_free(MangoString *mstr)
 {
+    if (mstr->buffer != NULL)
+        free(mstr->buffer);
+    free(mstr);
 }
 
 /**
@@ -30,15 +38,35 @@ void mango_string_free(MangoString *mstr)
  */
 void mango_string_clear(MangoString *mstr)
 {
+    mstr->length = 0;
 }
 
 /**
  * Sets the buffer value.
  *
  * \param   mstr    String to be updated.
+ * \param   value   Value to be set to (not necessarily null terminated).
+ * \param   length  Length of the input string.
  */
 void mango_string_set(MangoString *mstr, const char *value, size_t length)
 {
+    mstr->length = 0;
+    mango_string_append(mstr, value, length);
+}
+
+/**
+ * Appends a value to the string buffer.
+ *
+ * \param   mstr    String to be updated.
+ * \param   value   Value to be set to (not necessarily null terminated).
+ * \param   length  Length of the input string.
+ */
+void mango_string_append(MangoString *mstr, const char *value, size_t length)
+{
+    mango_string_ensure_capacity(mstr, length + mstr->length + 1);
+    memcpy(mstr->buffer + mstr->length, value, length);
+    mstr->length += length;
+    mstr->buffer[mstr->length] = 0;
 }
 
 /**
@@ -49,6 +77,9 @@ void mango_string_set(MangoString *mstr, const char *value, size_t length)
  */
 void mango_string_append_char(MangoString *mstr, char ch)
 {
+    mango_string_ensure_capacity(mstr, mstr->length + 2);
+    mstr->buffer[mstr->length++] = ch;
+    mstr->buffer[mstr->length] = 0;
 }
 
 /**
@@ -59,6 +90,13 @@ void mango_string_append_char(MangoString *mstr, char ch)
  */
 void mango_string_append_short(MangoString *mstr, short value)
 {
+    int nbytes = sizeof(value);
+    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
+    for (int i = 0;i < nbytes;i++)
+    {
+        mstr->buffer[mstr->length++] = ((char *)value)[i];
+    }
+    mstr->buffer[mstr->length] = 0;
 }
 
 /**
@@ -69,6 +107,13 @@ void mango_string_append_short(MangoString *mstr, short value)
  */
 void mango_string_append_int(MangoString *mstr, int value)
 {
+    int nbytes = sizeof(value);
+    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
+    for (int i = 0;i < nbytes;i++)
+    {
+        mstr->buffer[mstr->length++] = ((char *)value)[i];
+    }
+    mstr->buffer[mstr->length] = 0;
 }
 
 /**
@@ -79,6 +124,13 @@ void mango_string_append_int(MangoString *mstr, int value)
  */
 void mango_string_append_long(MangoString *mstr, long value)
 {
+    int nbytes = sizeof(value);
+    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
+    for (int i = 0;i < nbytes;i++)
+    {
+        mstr->buffer[mstr->length++] = ((char *)value)[i];
+    }
+    mstr->buffer[mstr->length] = 0;
 }
 
 /**
@@ -92,6 +144,7 @@ void mango_string_append_long(MangoString *mstr, long value)
  */
 int mango_string_append_format(MangoString *mstr, const char *fmt, ...)
 {
+    return 0;
 }
 
 /**
@@ -102,5 +155,11 @@ int mango_string_append_format(MangoString *mstr, const char *fmt, ...)
  */
 void mango_string_ensure_capacity(MangoString *mstr, size_t newcap)
 {
+    if (mstr->capacity < newcap)
+    {
+        newcap          = (newcap * 3) / 2;
+        mstr->buffer    = realloc(mstr->buffer, newcap);
+        mstr->capacity  = newcap;
+    }
 }
 

@@ -364,9 +364,8 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
             }
             else
             {
-                char buffer[128];
-                sprintf(buffer, "Invalid Character: %c/%d", char1, char1);
-                assert(buffer && false);
+                fprintf(stderr, "Invalid Character: %c/%d", char1, char1);
+                assert(false);
             }
         }
         char1 = mango_tokenizer_next_char(tokenizer);

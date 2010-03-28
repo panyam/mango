@@ -22,6 +22,7 @@ MangoToken *stl_string_token_new(MangoTokenType tType, const char *input)
     token->appendChar   = stl_string_token_append_char;
     token->setValue     = stl_string_token_set_value;
     token->tokenSize    = stl_string_token_size;
+    return token;
 }
 
 /**

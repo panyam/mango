@@ -92,3 +92,15 @@ distclean: cleanall
 dep:
 	makedepend -Y -p"$(OUTPUT_DIR)/" -I../include -- $(MANGO_SOURCES)
 
+# DO NOT DELETE
+
+../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mlist.o: ../include/mlist.h ../include/mfwddefs.h
+../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
+../bld/./mparser.o: ../include/mparser.h
+../bld/./mstring.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mstring.o: ../include/mstring.h
+../bld/./mtokenizer.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mtokenizer.o: ../include/minputsource.h ../include/mstring.h
+../bld/./mtokenizer.o: ../include/mtokenizer.h ../include/mtoken.h

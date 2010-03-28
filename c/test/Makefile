@@ -82,3 +82,13 @@ distclean: cleanall
 
 dep:
 	makedepend -Y -p"$(OUTPUT_DIR)/" -I../include   -- $(TEST_SOURCES)
+# DO NOT DELETE
+
+../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
+../bld/./stlinputsource.o: ../include/mfwddefs.h
+../bld/./stlstringtoken.o: ../include/mtoken.h ../include/mfwddefs.h
+../bld/./stlstringtoken.o: stlstringtoken.h
+../bld/./TokenizerTests.o: ../include/mangopub.h ../include/mfwddefs.h
+../bld/./TokenizerTests.o: ../include/mtoken.h ../include/mtokenizer.h
+../bld/./TokenizerTests.o: ../include/minputsource.h stlstringtoken.h
+../bld/./TokenizerTests.o: stlinputsource.h

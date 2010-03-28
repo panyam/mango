@@ -49,6 +49,15 @@ extern void mango_string_clear(MangoString *mstr);
 extern void mango_string_set(MangoString *mstr, const char *value, size_t length);
 
 /**
+ * Appends a value to the string buffer.
+ *
+ * \param   mstr    String to be updated.
+ * \param   value   Value to be set to (not necessarily null terminated).
+ * \param   length  Length of the input string.
+ */
+extern void mango_string_append(MangoString *mstr, const char *value, size_t length);
+
+/**
  * Appends a character.
  *
  * \param   mstr    String to be updated.
