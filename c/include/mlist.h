@@ -29,11 +29,17 @@ struct MangoList
 extern MangoListNode *mango_list_node_new(void *data);
 
 /**
- * Creates a linked list.
+ * Creates a new mango list.
  *
  * \returns A new MangoList instance.
  */
 extern MangoList *mango_list_new();
+
+/**
+ * Frees a mango list.
+ * \param   mlist    The mango list to be freed
+ */
+extern void mango_list_free(MangoList *mlist);
 
 /**
  * Adds a new object at the end of the list.

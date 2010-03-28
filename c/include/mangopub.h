@@ -10,6 +10,7 @@
 #include "minputsource.h"
 #include "mstring.h"
 #include "mtemplateloader.h"
+#include "mtemplatecontext.h"
 
 #ifdef __cplusplus
 extern "C" {

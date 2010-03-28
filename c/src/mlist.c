@@ -24,6 +24,24 @@ MangoList *mango_list_new()
 }
 
 /**
+ * Frees a mango list.
+ * \param   mlist    The mango list to be freed
+ */
+void mango_list_free(MangoList *mlist)
+{
+    if (mlist != NULL)
+    {
+        for (MangoListNode *temp = mlist->head;temp != NULL;)
+        {
+            MangoListNode *next = temp->next;
+            free(temp);
+            temp = next;
+        }
+        free(mlist);
+    }
+}
+
+/**
  * Adds a new object at the end of the list.
  *
  * \returns The node at which the object was added.

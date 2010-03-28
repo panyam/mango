@@ -24,7 +24,9 @@ typedef struct MangoError MangoError;
 typedef struct MangoList MangoList;
 typedef struct MangoListNode MangoListNode;
 typedef struct MangoNode MangoNode;
+typedef struct MangoNodeContext MangoNodeContext;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
+typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoLibrary MangoLibrary;
 
 #ifdef __cplusplus

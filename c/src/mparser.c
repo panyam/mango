@@ -209,12 +209,91 @@ MangoNode *mango_parser_parse(MangoParser *parser,
  * \param   loader  The template loader driving this instance.
  * \param   error   Error to be set if any.
  *
- * \return  A Node instance.
+ * \return  The node read off the stream, NULL if none exist.
  */
 MangoNode *mango_parser_parse_node(MangoParser *parser,
                                    MangoTemplateLoader *loader,
                                    MangoError **error)
 {
+    const MangoToken *token = mango_parser_get_token(parser, error);
+    if (token != NULL)
+    {
+        if (token->tokenType == TOKEN_FREETEXT)
+        {
+            // easy
+            return new FreeTextNode(token.tokenValue.toString());
+        }
+        else if (token->tokenType == TOKEN_OPEN_VARIABLE)
+        {
+            return new VariableNode(this);
+        }
+        else if (token->tokenType == TOKEN_OPEN_TAG)
+        {
+            // see if the tag is part of the end node stack
+            if (!endNodeStack.empty())
+            {
+                token = expectToken(TOKEN_IDENTIFIER, true);
+                char **nameList = endNodeStack.peek(); 
+                for (int i = 0;nameList[i] != NULL;i++)
+                {
+                    if (nameList[i].equals(token->tokenValue.toString()))
+                    {
+                        // we are at an end tag so pop the endtag list and return an endtag indicator
+                        endNodeStack.pop();
+                        return NULL;
+                    }
+                }
+            }
+            // its a normal (non-end) tag so extract it as usual
+            try
+            {
+                return TagNode.extractWithParser(this, loader);
+            } catch (InvocationTargetException ite)
+            {
+                Throwable target = ite.getTargetException();
+                if (target instanceof ParserException)
+                    throw (ParserException)target;
+                else
+                    ite.printStackTrace();
+                String message = target.getMessage();
+                throwError(message);
+            }
+        }
+        throwError(-1, "Invalid token found: " + token.tokenType);
+    }
     return NULL;
+}
+
+/**
+ * This is called by a TagNode (or its derivative) to parse "upto" a certain 
+ * tag node in the input stream.  For example in a "for loop" node, after reading
+ * the initial {% for x in blah %}, the tag will want to read everything upto 
+ * an "empty" or "endfor" node and store the resulting nodes as child nodes.
+ * So for this the parser must be handed back control to read upto that point.
+ * This function does that.
+ * Also this itself can be recursive, so if there is a forloop inside a forloop,
+ * then the first empty (or end) node that is encountered must be given to the 
+ * second forloop and not the first one.
+ *
+ * \param   parser  Parser doing the parsing.
+ * \param   loader  Template loader
+ * \param   names   NULL terminated list of names that can act as terminal nodes.
+ * \param   error   Error value to be written to in case of error.
+ */
+MangoNode *mango_parser_parse_till(MangoParser *parser,
+                                   MangoTemplateLoader *loader,
+                                   const char **names,
+                                   MangoError **error)
+{
+    int stackSize = endNodeStack->size;
+    mango_list_push_front(endNodeStack, names);
+    MangoNode *parsedNodes = mango_parser_parse(parser, loader, error);
+    if (stackSize != endNodeStack->size)	// if the end node was not popped the sizes wont match!
+    {
+        if (parsedNodes != NULL)
+        {
+        }
+    }
+    return parsedNodes;
 }
 

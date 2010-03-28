@@ -31,6 +31,11 @@ struct MangoNode
     void    *nodeData;
 
     /**
+     * Callback to delete the node data.
+     */
+    void (*deleteNodeData)(void *nodeData);
+
+    /**
      * Returns the node count.
      */
     int (*nodeCount)(void *nodeData);
@@ -38,7 +43,7 @@ struct MangoNode
     /**
      * Returns a child node at a given index.
      */
-    MangoNode *(*getChildNode)(void *nodeData, int index);
+    MangoNode *(*getChildNode)(void *nodeData, unsigned index);
 
     /**
      * Creates node context data for this node.
@@ -46,6 +51,11 @@ struct MangoNode
     void *(*createNodeContextData)(void *nodeData,
                                    MangoTemplateContext *templateContext,
                                    MangoNodeContext *topContext);
+
+    /**
+     * Deletes node context data for this node.
+     */
+    void (*deleteNodeContextData)(void *nodeContextData);
 
     /**
      * Compares the node data of 2 nodes if the node classes are equal.
@@ -60,9 +70,9 @@ struct MangoNode
      * transferred back to the parent, "this" if this node is to be
      * continued with otherwise a child node to be rendered.
      */
-    (MangoNode *)(*renderBitMore)(void *nodeData, 
-                                  MangoTemplateContext *templateContext,
-                                  MangoNodeContext *topContext);
+    MangoNode *(*renderBitMore)(void *nodeData, 
+                                MangoTemplateContext *templateContext,
+                                MangoNodeContext *topContext);
 
     /**
      * Called when a child node (that was returned in renderBitMore) was
@@ -77,15 +87,20 @@ struct MangoNode
      * \return null if this node is ALSO to be exited, otherwise a new
      * child node to be pushed onto the renderer stack.
      */
-    (MangoNode *)(*childExited)(void *nodeData, 
-                                MangoTemplateContext *templateContext,
-                                MangoNodeContext *topContext);
+    MangoNode *(*childExited)(void *nodeData, 
+                              MangoTemplateContext *templateContext,
+                              MangoNodeContext *topContext);
 };
 
 /**
  * Creates a node with default methods.
  */
-extern MangoNode *mango_node_new_default(void *nodeData);
+extern MangoNode *mango_node_new(void *nodeData);
+
+/**
+ * Destroys a node.
+ */
+extern void mango_node_free(MangoNode *node);
 
 #endif
 

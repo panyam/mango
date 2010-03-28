@@ -96,6 +96,7 @@ dep:
 
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mlist.o: ../include/mlist.h ../include/mfwddefs.h
+../bld/./mnode.o: ../include/mnode.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./mparser.o: ../include/mparser.h ../include/mlist.h
