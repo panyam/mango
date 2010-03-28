@@ -42,6 +42,13 @@ extern void mango_string_free(MangoString *mstr);
 extern void mango_string_clear(MangoString *mstr);
 
 /**
+ * Makes a copy of the string.
+ *
+ * \param   mstr    String to be copied.
+ */
+extern MangoString *mango_string_copy(MangoString *mstr);
+
+/**
  * Sets the buffer value.
  *
  * \param   mstr    String to be updated.

@@ -42,6 +42,22 @@ void mango_string_clear(MangoString *mstr)
 }
 
 /**
+ * Makes a copy of the string.
+ *
+ * \param   mstr    String to be copied.
+ */
+MangoString *mango_string_copy(MangoString *mstr)
+{
+    if (mstr == NULL)
+        return NULL;
+    MangoString *newcopy = mango_string_new(mstr->length + 1);
+    newcopy->length = mstr->length;
+    memcpy(newcopy->buffer, mstr->buffer, mstr->length);
+    newcopy->buffer[length] = 0;
+    return newcopy;
+}
+
+/**
  * Sets the buffer value.
  *
  * \param   mstr    String to be updated.

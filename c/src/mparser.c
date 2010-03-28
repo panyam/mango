@@ -3,6 +3,7 @@
 #include "mtokenizer.h"
 #include "mparser.h"
 #include "mlist.h"
+#include "mfreetext.h"
 #include "mnodelist.h"
 
 /**
@@ -221,25 +222,25 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
         if (token->tokenType == TOKEN_FREETEXT)
         {
             // easy
-            return new FreeTextNode(token.tokenValue.toString());
+            return mango_freetext_new(mango_string_copy(token->tokenValue));
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
-            return new VariableNode(this);
+            // return mango_variablenode_new(this);
         }
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {
             // see if the tag is part of the end node stack
-            if (!endNodeStack.empty())
+            if (!mango_list_is_empty(parser->endNodeStack))
             {
                 token = expectToken(TOKEN_IDENTIFIER, true);
-                char **nameList = endNodeStack.peek(); 
+                char **nameList = mango_list_peek(parser->endNodeStack);
                 for (int i = 0;nameList[i] != NULL;i++)
                 {
-                    if (nameList[i].equals(token->tokenValue.toString()))
+                    if (mango_string_compare(token->tokenValue, nameList[i]) == 0)
                     {
                         // we are at an end tag so pop the endtag list and return an endtag indicator
-                        endNodeStack.pop();
+                        mango_list_pop_front(parser->endNodeStack);
                         return NULL;
                     }
                 }

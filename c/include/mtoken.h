@@ -3,6 +3,7 @@
 #define __MANGO_TOKEN_H__
 
 #include "mfwddefs.h"
+#include "mstring.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,28 +45,7 @@ struct MangoToken
     /**
      * Implementation specific data associated with the token.
      */
-    void *              tokenData;
-
-    /**
-     * Gets the size of the token value.
-     */
-    size_t (*tokenSize)(void *);
-
-    /**
-     * Append a character to the token's value.
-     *
-     * \param   token   Token to add the character to.
-     * \param   ch      Character to add.
-     */
-    void (*appendChar)(void *, int ch);
-
-    /**
-     * Set the value of a mango token.
-     *
-     * \param   token   Token whose value is to be set.
-     * \param   value   Value to set to.
-     */
-    void (*setValue)(void *token, void *);
+    MangoString *       tokenValue;
 };
 
 #ifdef __cplusplus
