@@ -6,12 +6,17 @@
 #include "mtoken.h"
 #include "mtokenizer.h"
 #include "mparser.h"
+#include "merror.h"
+#include "mlist.h"
 #include "mlibrary.h"
 #include "minputsource.h"
 #include "mstring.h"
 #include "mfreetext.h"
 #include "mtemplateloader.h"
 #include "mtemplatecontext.h"
+#include "mnode.h"
+#include "mnodelist.h"
+#include "mfreetext.h"
 
 #ifdef __cplusplus
 extern "C" {

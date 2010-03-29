@@ -4,6 +4,10 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A mango error object.
  */
@@ -31,7 +35,11 @@ extern void mango_error_free(MangoError *merror);
 /**
  * Sets the message in an error if it is not null.
  */
-extern int mango_error_set(MangoError **error, int code, char *format, ...);
+extern int mango_error_set(MangoError **error, int code, const char *format, ...);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

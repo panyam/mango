@@ -1,4 +1,5 @@
 
+#define _GNU_SOURCE
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +36,7 @@ void mango_error_free(MangoError *merror)
 /**
  * Sets the message in an error if it is not null.
  */
-int mango_error_set(MangoError **error, int code, char *format, ...)
+int mango_error_set(MangoError **error, int code, const char *format, ...)
 {
     const size_t MAX_MESSAGE_SIZE = 256;
     if (error != NULL)
@@ -52,5 +53,6 @@ int mango_error_set(MangoError **error, int code, char *format, ...)
         (*error)->errorMessage = strdup(buffer);
         return result;
     }
+    return 0;
 }
 

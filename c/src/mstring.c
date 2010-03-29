@@ -20,6 +20,37 @@ MangoString *mango_string_new(unsigned capacity)
 }
 
 /**
+ * Create a new string from a buffer.
+ *
+ * \param   buffer  Buffer of the values to copy.
+ * \param   length  Length of the buffer.  If length < 0, then buffer is
+ *                  null terminated.
+ * \return A new string instance.
+ */
+MangoString *mango_string_from_buffer(const char *buffer, int length)
+{
+    if (length < 0)
+        length = strlen(buffer);
+    MangoString *mstr = mango_string_new(length + 1);
+    memcpy(mstr->buffer, buffer, length);
+    mstr->buffer[mstr->length] = 0;
+    return mstr;
+}
+
+/**
+ * Makes a copy of another string.
+ *
+ * \param   buffer  Buffer of the values to copy.
+ * \param   length  Length of the buffer.  If length < 0, then buffer is
+ *                  null terminated.
+ * \return A new string instance.
+ */
+MangoString *mango_string_copy(const MangoString *another)
+{
+    return mango_string_from_buffer(another->buffer, another->length);
+}
+
+/**
  * Destroys a string.
  *
  * \param   mstr String to be destroyed.
@@ -39,22 +70,6 @@ void mango_string_free(MangoString *mstr)
 void mango_string_clear(MangoString *mstr)
 {
     mstr->length = 0;
-}
-
-/**
- * Makes a copy of the string.
- *
- * \param   mstr    String to be copied.
- */
-MangoString *mango_string_copy(const MangoString *mstr)
-{
-    if (mstr == NULL)
-        return NULL;
-    MangoString *newcopy = mango_string_new(mstr->length + 1);
-    newcopy->length = mstr->length;
-    memcpy(newcopy->buffer, mstr->buffer, mstr->length);
-    newcopy->buffer[newcopy->length] = 0;
-    return newcopy;
 }
 
 /**
@@ -151,6 +166,7 @@ void mango_string_append_long(MangoString *mstr, long value)
 
 /**
  * Formatted appending of contents to the end of the string.
+ * Cannot append more than a total of 1024 characters at a time.
  *
  * \param   mstr    String to be appended.
  * \param   fmt     Format of the input.
@@ -160,7 +176,13 @@ void mango_string_append_long(MangoString *mstr, long value)
  */
 int mango_string_append_format(MangoString *mstr, const char *fmt, ...)
 {
-    return 0;
+    char buff[1024];
+    int len;
+    va_list(ap);
+    va_start(ap, fmt);
+    len = vsnprintf(buff, 2047, fmt, ap);
+    mango_string_append(mstr, buff, len);
+    return len;
 }
 
 /**

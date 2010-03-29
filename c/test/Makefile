@@ -86,16 +86,20 @@ dep:
 
 ../bld/./ParserTests.o: ../include/mangopub.h ../include/mfwddefs.h
 ../bld/./ParserTests.o: ../include/mtoken.h ../include/mtokenizer.h
-../bld/./ParserTests.o: ../include/mparser.h ../include/mlibrary.h
+../bld/./ParserTests.o: ../include/mparser.h ../include/merror.h
+../bld/./ParserTests.o: ../include/mlist.h ../include/mlibrary.h
 ../bld/./ParserTests.o: ../include/minputsource.h ../include/mstring.h
 ../bld/./ParserTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
-../bld/./ParserTests.o: ../include/mtemplatecontext.h stlinputsource.h
+../bld/./ParserTests.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./ParserTests.o: ../include/mnodelist.h stlinputsource.h
 ../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
 ../bld/./stlinputsource.o: ../include/mfwddefs.h
 ../bld/./TokenizerTests.o: ../include/mangopub.h ../include/mfwddefs.h
 ../bld/./TokenizerTests.o: ../include/mtoken.h ../include/mtokenizer.h
-../bld/./TokenizerTests.o: ../include/mparser.h ../include/mlibrary.h
+../bld/./TokenizerTests.o: ../include/mparser.h ../include/merror.h
+../bld/./TokenizerTests.o: ../include/mlist.h ../include/mlibrary.h
 ../bld/./TokenizerTests.o: ../include/minputsource.h ../include/mstring.h
 ../bld/./TokenizerTests.o: ../include/mfreetext.h
 ../bld/./TokenizerTests.o: ../include/mtemplateloader.h
-../bld/./TokenizerTests.o: ../include/mtemplatecontext.h stlinputsource.h
+../bld/./TokenizerTests.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./TokenizerTests.o: ../include/mnodelist.h stlinputsource.h

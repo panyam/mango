@@ -4,6 +4,7 @@
 #include "mtokenizer.h"
 #include "mparser.h"
 #include "mlist.h"
+#include "mstring.h"
 #include "mfreetext.h"
 #include "mnodelist.h"
 

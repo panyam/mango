@@ -95,12 +95,14 @@ dep:
 # DO NOT DELETE
 
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mlibrary.o: ../include/mlibrary.h ../include/mfwddefs.h
 ../bld/./mlist.o: ../include/mlist.h ../include/mfwddefs.h
 ../bld/./mnode.o: ../include/mnode.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./mparser.o: ../include/mparser.h ../include/mlist.h
-../bld/./mparser.o: ../include/mfreetext.h ../include/mnodelist.h
+../bld/./mparser.o: ../include/mstring.h ../include/mfreetext.h
+../bld/./mparser.o: ../include/mnodelist.h
 ../bld/./mstring.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mstring.o: ../include/mstring.h
 ../bld/./mtoken.o: ../include/mstring.h ../include/mfwddefs.h

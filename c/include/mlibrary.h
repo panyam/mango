@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-typedef void *(*CreatorFunc)(...);
+typedef void *(*CreatorFunc)(const char *name, ...);
 
 /**
  * A generic library that acts as a factory of objects.

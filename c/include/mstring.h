@@ -28,6 +28,23 @@ struct MangoString
 extern MangoString *mango_string_new(unsigned capacity);
 
 /**
+ * Create a new string from a buffer.
+ *
+ * \param   buffer  Buffer of the values to copy.
+ * \param   length  Length of the buffer.  If length < 0, then buffer is
+ *                  null terminated.
+ * \return A new string instance.
+ */
+extern MangoString *mango_string_from_buffer(const char *buffer, int length);
+
+/**
+ * Makes a copy of the string.
+ *
+ * \param   another String to be copied.
+ */
+extern MangoString *mango_string_copy(const MangoString *another);
+
+/**
  * Destroys a string.
  *
  * \param   mstr String to be destroyed.
@@ -40,13 +57,6 @@ extern void mango_string_free(MangoString *mstr);
  * \param   mstr    String to be updated.
  */
 extern void mango_string_clear(MangoString *mstr);
-
-/**
- * Makes a copy of the string.
- *
- * \param   mstr    String to be copied.
- */
-extern MangoString *mango_string_copy(const MangoString *mstr);
 
 /**
  * Sets the buffer value.

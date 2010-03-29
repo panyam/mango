@@ -4,6 +4,10 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Bit of context for a node for its rendering.
  */
@@ -101,6 +105,10 @@ extern MangoNode *mango_node_new(void *nodeData);
  * Destroys a node.
  */
 extern void mango_node_free(MangoNode *node);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

@@ -49,7 +49,7 @@ void mango_node_free(MangoNode *node)
     }
 }
 
-void delete_node_data(void *nodeData)
+void default_delete_node_data(void *nodeData)
 {
     if (nodeData != NULL)
         free(nodeData);

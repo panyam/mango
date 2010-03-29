@@ -87,21 +87,25 @@ protected:
     }
 };
 
-#if 0
-
 /**
  * Tests the creation of a parser.
  */
 TEST_FIXTURE(ParserTestFixture, TestParserCreate)
 {
     setUpWithInputString("");
-    try {
-        Node nodeList = parser.parse(loader);
-        assertEquals("Node should be null for empty string", null, nodeList);
-    } catch (ParserException e) {
-        e.printStackTrace();
+    MangoError *error = NULL;
+    MangoNode * nodeList = mango_parser_parse(parser, loader, &error);
+    CHECK(NULL == nodeList);
+    mango_node_free(nodeList);
+    if (error != NULL)
+    {
+        printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
+        CHECK(false);
+        mango_error_free(error);
     }
 }
+
+#if 0
 
 /**
  * Tests the creation of a parser.
@@ -122,7 +126,7 @@ TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
 TEST_FIXTURE(ParserTestFixture, TestSingleVariable)
 {
     setUpWithInputString("{{variable}}");
-    checkParsedNodeWith(new VariableNode(new Variable("variable", false, null)));
+    checkParsedNodeWith(new VariableNode(new Variable("variable", false, NULL)));
 }
 
 TEST_FIXTURE(ParserTestFixture, TestMultipleVariables)
@@ -130,7 +134,7 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleVariables)
     setUpWithInputString("{{a.b.c}}");
     VariableNode expectedNode = new VariableNode(new Variable("a", 
                                                     new Variable("b",
-                                                        new Variable("c", null))), null);
+                                                        new Variable("c", NULL))), NULL);
     checkParsedNodeWith(expectedNode);
 }
 
@@ -139,7 +143,7 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleQuotedVariables)
     setUpWithInputString("{{a.'b'.'c'}}");
     VariableNode expectedNode = new VariableNode(new Variable("a", 
                                                     new Variable("b", true,
-                                                        new Variable("c", true, null))), null);
+                                                        new Variable("c", true, NULL))), NULL);
     checkParsedNodeWith(expectedNode);
 }
 
@@ -149,7 +153,7 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithNumericIndexes)
     VariableNode expectedNode = new VariableNode(new Variable("a", 
                                                     new Variable("0", 
                                                         new Variable("1", 
-                                                            new Variable("d", null)))), null);
+                                                            new Variable("d", NULL)))), NULL);
     checkParsedNodeWith(expectedNode);
 }
 
@@ -159,7 +163,7 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
     VariableNode expectedNode = new VariableNode(new Variable("a", 
                                                     new Variable("0", 
                                                         new Variable("1", true,
-                                                            new Variable("d", null)))), null);
+                                                            new Variable("d", NULL)))), NULL);
     checkParsedNodeWith(expectedNode);
 }
 
@@ -167,13 +171,13 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
     Filter f1 = filterLibrary.makeNewInstance("add");
     Filter f2 = filterLibrary.makeNewInstance("add");
-    assertEquals("Filters are not equal as should be with singletons", f1, f2);
+    CHECK_EQUAL("Filters are not equal as should be with singletons", f1, f2);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilter)
 {
     setUpWithInputString("{{a|add}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
     checkParsedNodeWith(expectedNode);
 }
@@ -182,7 +186,7 @@ TEST_FIXTURE(ParserTestFixture, TestSingleFilter)
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneArgument)
 {
     setUpWithInputString("{{a|add:3}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
     addNode.addArgument(new Variable("3", false));
     expectedNode.addFilterNode(addNode);
@@ -192,7 +196,7 @@ TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneArgument)
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneQuotedArgument)
 {
     setUpWithInputString("{{a|add:\"3\"}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
     addNode.addArgument(new Variable("3", true));
     expectedNode.addFilterNode(addNode);
@@ -202,7 +206,7 @@ TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneQuotedArgument)
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithMultipleArguments)
 {
     setUpWithInputString("{{a|add:(3,'4',five)}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
     addNode.addArgument(new Variable("3", false));
     addNode.addArgument(new Variable("4", true));
@@ -214,7 +218,7 @@ TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithMultipleArguments)
 TEST_FIXTURE(ParserTestFixture, TestMultipleFilters)
 {
     setUpWithInputString("{{a|add|add|add}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
@@ -224,7 +228,7 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleFilters)
 TEST_FIXTURE(ParserTestFixture, TestMultipleFiltersWithArguments)
 {
     setUpWithInputString("{{a|add|add:1|add:(2,'3')}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, null));
+    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
 
