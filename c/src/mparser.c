@@ -1,4 +1,5 @@
 
+#include <string.h>
 #include "merror.h"
 #include "mtokenizer.h"
 #include "mparser.h"
@@ -233,34 +234,22 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
             // see if the tag is part of the end node stack
             if (!mango_list_is_empty(parser->endNodeStack))
             {
-                token = expectToken(TOKEN_IDENTIFIER, true);
-                char **nameList = mango_list_peek(parser->endNodeStack);
+                token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, true, error);
+                char **nameList = mango_list_front(parser->endNodeStack);
                 for (int i = 0;nameList[i] != NULL;i++)
                 {
-                    if (mango_string_compare(token->tokenValue, nameList[i]) == 0)
+                    if (mango_string_compare(token->tokenValue, nameList[i], strlen(nameList[i])) == 0)
                     {
                         // we are at an end tag so pop the endtag list and return an endtag indicator
-                        mango_list_pop_front(parser->endNodeStack);
+                        mango_list_remove_front(parser->endNodeStack);
                         return NULL;
                     }
                 }
             }
             // its a normal (non-end) tag so extract it as usual
-            try
-            {
-                return TagNode.extractWithParser(this, loader);
-            } catch (InvocationTargetException ite)
-            {
-                Throwable target = ite.getTargetException();
-                if (target instanceof ParserException)
-                    throw (ParserException)target;
-                else
-                    ite.printStackTrace();
-                String message = target.getMessage();
-                throwError(message);
-            }
+            return mango_tagnode_extract_with_parser(parser, loader, error);
         }
-        throwError(-1, "Invalid token found: " + token.tokenType);
+        mango_error_set(error, -1, "Invalid token found: %d", token->tokenType);
     }
     return NULL;
 }
@@ -286,13 +275,14 @@ MangoNode *mango_parser_parse_till(MangoParser *parser,
                                    const char **names,
                                    MangoError **error)
 {
-    int stackSize = endNodeStack->size;
-    mango_list_push_front(endNodeStack, names);
+    int stackSize = parser->endNodeStack->size;
+    mango_list_push_front(parser->endNodeStack, names);
     MangoNode *parsedNodes = mango_parser_parse(parser, loader, error);
-    if (stackSize != endNodeStack->size)	// if the end node was not popped the sizes wont match!
+    if (stackSize != parser->endNodeStack->size)	// if the end node was not popped the sizes wont match!
     {
         if (parsedNodes != NULL)
         {
+            mango_error_set(error, -1, "End nodes do not match");
         }
     }
     return parsedNodes;

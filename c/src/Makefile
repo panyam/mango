@@ -99,10 +99,12 @@ dep:
 ../bld/./mnode.o: ../include/mnode.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mparser.o: ../include/mstring.h ../include/mparser.h
-../bld/./mparser.o: ../include/mlist.h ../include/mnodelist.h
+../bld/./mparser.o: ../include/mparser.h ../include/mlist.h
+../bld/./mparser.o: ../include/mfreetext.h ../include/mnodelist.h
 ../bld/./mstring.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mstring.o: ../include/mstring.h
+../bld/./mtoken.o: ../include/mstring.h ../include/mfwddefs.h
+../bld/./mtoken.o: ../include/mtoken.h
 ../bld/./mtokenizer.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mtokenizer.o: ../include/minputsource.h ../include/mstring.h
 ../bld/./mtokenizer.o: ../include/mtokenizer.h ../include/mtoken.h

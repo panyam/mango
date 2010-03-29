@@ -53,7 +53,7 @@ MangoString *mango_string_copy(MangoString *mstr)
     MangoString *newcopy = mango_string_new(mstr->length + 1);
     newcopy->length = mstr->length;
     memcpy(newcopy->buffer, mstr->buffer, mstr->length);
-    newcopy->buffer[length] = 0;
+    newcopy->buffer[newcopy->length] = 0;
     return newcopy;
 }
 
@@ -177,5 +177,25 @@ void mango_string_ensure_capacity(MangoString *mstr, size_t newcap)
         mstr->buffer    = realloc(mstr->buffer, newcap);
         mstr->capacity  = newcap;
     }
+}
+
+/**
+ * Compares the string contents with another buffer.
+ *
+ * \param   mstr    String being compared.
+ * \param   value   String being compared to.
+ * \param   length  Length of the string being compared to.
+ *
+ * \return -1 if mstr < value, 0 if equal else +1
+ */
+int mango_string_compare(const MangoString *mstr, const char *value, size_t length)
+{
+    int minlen = mstr->length < length ? mstr->length : length;
+    for (int i = 0;i < minlen;i++)
+    {
+        if (mstr->buffer[i] != value[i])
+            return mstr->buffer[i] - value[i];
+    }
+    return mstr->length - length;
 }
 

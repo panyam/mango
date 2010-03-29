@@ -1,7 +1,6 @@
 
 #include <UnitTest++.h>
 #include "mangopub.h"
-#include "stlstringtoken.h"
 #include "stlinputsource.h"
 #include <vector>
 #include <sstream>

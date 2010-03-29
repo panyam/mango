@@ -42,6 +42,26 @@ void mango_list_free(MangoList *mlist)
 }
 
 /**
+ * Returns (without removing) the item at the front of the list.
+ *
+ * \returns The value of the node at the front of the list.
+ */
+void *mango_list_front(MangoList *mlist)
+{
+    return mlist->head != NULL ? mlist->head->data : NULL;
+}
+
+/**
+ * Returns (without removing) the item at the back of the list.
+ *
+ * \returns The value of the node at the back of the list.
+ */
+void *mango_list_back(MangoList *mlist)
+{
+    return mlist->tail != NULL ? mlist->tail->data : NULL;
+}
+
+/**
  * Adds a new object at the end of the list.
  *
  * \returns The node at which the object was added.
@@ -103,8 +123,9 @@ MangoListNode *mango_list_insert(MangoList *mlist, void *data, MangoListNode *be
 /**
  * Removes a node from the list.
  */
-extern void mango_list_remove(MangoList *mlist, MangoListNode *node)
+void *mango_list_remove(MangoList *mlist, MangoListNode *node)
 {
+    void *data = node->data;
     if (mlist->size > 0)
     {
         MangoListNode *prev = node->prev;
@@ -115,6 +136,34 @@ extern void mango_list_remove(MangoList *mlist, MangoListNode *node)
 
         if (next != NULL) next->prev = prev;
         else mlist->tail = prev;
+
+        // erase the node
+        free(node);
     }
+    return data;
+}
+
+/**
+ * Removes a node from the front of the list.
+ */
+void *mango_list_remove_front(MangoList *mlist)
+{
+    return mango_list_remove(mlist, mlist->head);
+}
+
+/**
+ * Removes a node from the back of the list.
+ */
+void *mango_list_remove_back(MangoList *mlist)
+{
+    return mango_list_remove(mlist, mlist->tail);
+}
+
+/**
+ * Tells if a list is empty or not.
+ */
+BOOL mango_list_is_empty(MangoList *mlist)
+{
+    return mlist->head == NULL;
 }
 

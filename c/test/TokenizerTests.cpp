@@ -1,7 +1,6 @@
 
 #include <UnitTest++.h>
 #include "mangopub.h"
-#include "stlstringtoken.h"
 #include "stlinputsource.h"
 #include <vector>
 #include <sstream>
@@ -71,7 +70,7 @@ protected:
 
     void satisfyExpectation(int expectation)
     {
-        MangoToken *token = stl_string_token_new(TOKEN_UNKNOWN, "");
+        MangoToken *token = mango_token_new(TOKEN_UNKNOWN, "", 0);
         CHECK(mango_tokenizer_has_tokens(tokenizer));
         BOOL foundToken;
         CHECK((foundToken = mango_tokenizer_next_token(tokenizer, token, NULL)));
@@ -80,7 +79,7 @@ protected:
         if (expectedToken.tokenValue.size() != 0)
         {
             std::string expectedTokenValue  = expectedToken.tokenValue;
-            std::string tokenValue(((StlStringTokenData *)token->tokenData)->tokenValue.str());
+            std::string tokenValue(token->tokenValue->buffer);
             CHECK_EQUAL(expectedTokenValue, tokenValue);
         }
     }

@@ -133,7 +133,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
 {
     token->tokenType = TOKEN_UNKNOWN;
     // the buffer only gets created once in the entire parser run
-    token->setValue(token->tokenData, "");
+    mango_token_set_value(token, "");
 
     int char1 = mango_tokenizer_next_char(tokenizer);
     while (char1 > 0)
@@ -169,7 +169,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                 // then return it
                 if (tokenizer->_insideNode != NODETYPE_NONE)
                 {
-                    if (token->tokenSize(token->tokenData) > 0)
+                    if (token->tokenValue->length > 0)
                     {
                         // push the two characters back 
                         // so they can be read again
@@ -188,15 +188,15 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                 else 
                 {
                     // nothing so append to buffer and continue
-                    token->appendChar(token->tokenData, char1);
+                    mango_token_append_char(token, char1);
                     if (char2 >= 0)
-                        token->appendChar(token->tokenData, char2);
+                        mango_token_append_char(token, char2);
                 }
             }
             else
             {
                 // append to freetext buffer
-                token->appendChar(token->tokenData, char1);
+                mango_token_append_char(token, char1);
             }
         }
         else if (tokenizer->_insideNode == NODETYPE_COMMENT)
@@ -232,27 +232,27 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                         char1 = mango_tokenizer_next_char(tokenizer);
                         if (char1 == '\n')
                         {
-                            token->appendChar(token->tokenData, '\n');
+                            mango_token_append_char(token, '\n');
                         }
                         else if (char1 == '\r')
                         {
-                            token->appendChar(token->tokenData, '\r');
+                            mango_token_append_char(token, '\r');
                         }
                         else if (char1 == '\t')
                         {
-                            token->appendChar(token->tokenData, '\t');
+                            mango_token_append_char(token, '\t');
                         }
                         else if (char1 == '\'')
                         {
-                            token->appendChar(token->tokenData, '\'');
+                            mango_token_append_char(token, '\'');
                         }
                         else if (char1 == '"')
                         {
-                            token->appendChar(token->tokenData, '"');
+                            mango_token_append_char(token, '"');
                         }
                         else if (char1 == 'f')
                         {
-                            token->appendChar(token->tokenData, '\f');
+                            mango_token_append_char(token, '\f');
                         }
                         else if (char1 == 'u')
                         {
@@ -270,13 +270,13 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                         }
                         else
                         {
-                            token->appendChar(token->tokenData, '\\');
-                            token->appendChar(token->tokenData, char1);
+                            mango_token_append_char(token, '\\');
+                            mango_token_append_char(token, char1);
                         }
                     }
                     else
                     {
-                        token->appendChar(token->tokenData, char1);
+                        mango_token_append_char(token, char1);
                     }
                 }
             }
@@ -284,7 +284,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
             {
                 if (isalnum(char1))
                 {
-                    token->appendChar(token->tokenData, char1);
+                    mango_token_append_char(token, char1);
                 }
                 else
                 {
@@ -374,7 +374,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
     token->tokenType = TOKEN_EOF;
     if (tokenizer->_insideNode == NODETYPE_NONE)
     {
-        if (token->tokenSize(token->tokenData) > 0)
+        if (token->tokenValue->length > 0)
         {
             token->tokenType = TOKEN_FREETEXT;
             return true;
@@ -384,7 +384,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
     {
         // return unterminated node
         token->tokenType = TOKEN_ERROR;
-        token->setValue(token->tokenData, "Reached EOF without terminating node.");
+        mango_token_set_value(token, "Reached EOF without terminating node.");
         mango_error_set(error, -1, "Reached EOF without terminating node.");
         return true;
     }

@@ -115,6 +115,17 @@ extern int mango_string_append_format(MangoString *mstr, const char *fmt, ...);
  */
 extern void mango_string_ensure_capacity(MangoString *mstr, size_t newcap);
 
+/**
+ * Compares the string contents with another buffer.
+ *
+ * \param   mstr    String being compared.
+ * \param   value   String being compared to.
+ * \param   length  Length of the string being compared to.
+ *
+ * \return -1 if mstr < value, 0 if equal else +1
+ */
+extern int mango_string_compare(const MangoString *mstr, const char *value, size_t length);
+
 #ifdef __cplusplus
 }
 #endif

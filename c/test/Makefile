@@ -85,20 +85,17 @@ dep:
 # DO NOT DELETE
 
 ../bld/./ParserTests.o: ../include/mangopub.h ../include/mfwddefs.h
-../bld/./ParserTests.o: ../include/mtoken.h ../include/mstring.h
-../bld/./ParserTests.o: ../include/mtokenizer.h ../include/mparser.h
-../bld/./ParserTests.o: ../include/mlibrary.h ../include/minputsource.h
-../bld/./ParserTests.o: ../include/mtemplateloader.h
-../bld/./ParserTests.o: ../include/mtemplatecontext.h stlstringtoken.h
-../bld/./ParserTests.o: stlinputsource.h
+../bld/./ParserTests.o: ../include/mtoken.h ../include/mtokenizer.h
+../bld/./ParserTests.o: ../include/mparser.h ../include/mlibrary.h
+../bld/./ParserTests.o: ../include/minputsource.h ../include/mstring.h
+../bld/./ParserTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
+../bld/./ParserTests.o: ../include/mtemplatecontext.h stlinputsource.h
 ../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
 ../bld/./stlinputsource.o: ../include/mfwddefs.h
-../bld/./stlstringtoken.o: ../include/mtoken.h ../include/mfwddefs.h
-../bld/./stlstringtoken.o: ../include/mstring.h stlstringtoken.h
 ../bld/./TokenizerTests.o: ../include/mangopub.h ../include/mfwddefs.h
-../bld/./TokenizerTests.o: ../include/mtoken.h ../include/mstring.h
-../bld/./TokenizerTests.o: ../include/mtokenizer.h ../include/mparser.h
-../bld/./TokenizerTests.o: ../include/mlibrary.h ../include/minputsource.h
+../bld/./TokenizerTests.o: ../include/mtoken.h ../include/mtokenizer.h
+../bld/./TokenizerTests.o: ../include/mparser.h ../include/mlibrary.h
+../bld/./TokenizerTests.o: ../include/minputsource.h ../include/mstring.h
+../bld/./TokenizerTests.o: ../include/mfreetext.h
 ../bld/./TokenizerTests.o: ../include/mtemplateloader.h
-../bld/./TokenizerTests.o: ../include/mtemplatecontext.h stlstringtoken.h
-../bld/./TokenizerTests.o: stlinputsource.h
+../bld/./TokenizerTests.o: ../include/mtemplatecontext.h stlinputsource.h
