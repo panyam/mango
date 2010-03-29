@@ -45,13 +45,13 @@ public:
 
         if (tokenizer != NULL) 
         {
-            delete tokenizer;
+            mango_tokenizer_free(tokenizer);
             tokenizer = NULL;
         }
 
         if (parser != NULL) 
         {
-            delete parser;
+            mango_parser_free(parser);
             parser = NULL;
         }
 

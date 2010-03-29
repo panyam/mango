@@ -46,7 +46,7 @@ void mango_string_clear(MangoString *mstr)
  *
  * \param   mstr    String to be copied.
  */
-MangoString *mango_string_copy(MangoString *mstr)
+MangoString *mango_string_copy(const MangoString *mstr)
 {
     if (mstr == NULL)
         return NULL;
@@ -110,7 +110,7 @@ void mango_string_append_short(MangoString *mstr, short value)
     mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
     for (int i = 0;i < nbytes;i++)
     {
-        mstr->buffer[mstr->length++] = ((char *)value)[i];
+        mstr->buffer[mstr->length++] = ((char *)&value)[i];
     }
     mstr->buffer[mstr->length] = 0;
 }
@@ -127,7 +127,7 @@ void mango_string_append_int(MangoString *mstr, int value)
     mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
     for (int i = 0;i < nbytes;i++)
     {
-        mstr->buffer[mstr->length++] = ((char *)value)[i];
+        mstr->buffer[mstr->length++] = ((char *)&value)[i];
     }
     mstr->buffer[mstr->length] = 0;
 }
@@ -144,7 +144,7 @@ void mango_string_append_long(MangoString *mstr, long value)
     mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
     for (int i = 0;i < nbytes;i++)
     {
-        mstr->buffer[mstr->length++] = ((char *)value)[i];
+        mstr->buffer[mstr->length++] = ((char *)&value)[i];
     }
     mstr->buffer[mstr->length] = 0;
 }

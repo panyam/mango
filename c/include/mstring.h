@@ -46,7 +46,7 @@ extern void mango_string_clear(MangoString *mstr);
  *
  * \param   mstr    String to be copied.
  */
-extern MangoString *mango_string_copy(MangoString *mstr);
+extern MangoString *mango_string_copy(const MangoString *mstr);
 
 /**
  * Sets the buffer value.

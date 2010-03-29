@@ -22,6 +22,18 @@ MangoParser *mango_parser_new(MangoTokenizer *tokenizer)
 }
 
 /**
+ * Destroys a parser created with mango_parser_new.
+ *
+ * \param   parser  Parser to be destroyed.
+ */
+void mango_parser_free(MangoParser *parser)
+{
+    if (parser->currToken != NULL)
+        mango_token_free(parser->currToken);
+    free(parser);
+}
+
+/**
  * Gets or Peeks at the next token ignore comments.
  */
 const MangoToken *mango_parser_next_token(MangoParser *parser,

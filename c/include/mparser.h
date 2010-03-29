@@ -4,6 +4,10 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Mango parser.
  */
@@ -19,9 +23,16 @@ struct MangoParser
  * Create a new parser given a tokenizer.
  *
  * \param   tokenizer   Tokenizer to initialise with.
- * \returns A new parser.  Must be freed with free.
+ * \returns A new parser.
  */
 extern MangoParser *mango_parser_new(MangoTokenizer *tokenizer);
+
+/**
+ * Destroys a parser created with mango_parser_new.
+ *
+ * \param   parser  Parser to be destroyed.
+ */
+extern void mango_parser_free(MangoParser *parser);
 
 /**
  * Gets or Peeks at the next token ignore comments.
@@ -126,6 +137,10 @@ extern MangoNode *mango_parser_parse_till(MangoParser *parser,
                                           MangoTemplateLoader *loader,
                                           const char **name_list,
                                           MangoError **error);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

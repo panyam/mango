@@ -49,7 +49,7 @@ public:
 
         if (tokenizer != NULL)
         {
-            delete tokenizer;
+            mango_tokenizer_free(tokenizer);
             tokenizer = NULL;
         }
     }
