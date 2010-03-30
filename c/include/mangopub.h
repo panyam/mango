@@ -9,6 +9,7 @@
 #include "mparser.h"
 #include "merror.h"
 #include "mlist.h"
+#include "mbintree.h"
 #include "mlibrary.h"
 #include "minputsource.h"
 #include "mstring.h"

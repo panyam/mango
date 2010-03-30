@@ -94,10 +94,21 @@ dep:
 
 # DO NOT DELETE
 
+../bld/./mbintree.o: ../include/mbintree.h ../include/mfwddefs.h
+../bld/./mclasses.o: ../include/mclasses.h ../include/mfwddefs.h
+../bld/./mclasses.o: ../include/uthash.h
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mfreetext.o: ../include/mnode.h ../include/mfwddefs.h
+../bld/./mfreetext.o: ../include/mclasses.h ../include/mstring.h
+../bld/./mfreetext.o: ../include/mfreetext.h
+../bld/./miterator.o: ../include/miterator.h ../include/mfwddefs.h
 ../bld/./mlibrary.o: ../include/mlibrary.h ../include/mfwddefs.h
 ../bld/./mlist.o: ../include/mlist.h ../include/mfwddefs.h
 ../bld/./mnode.o: ../include/mnode.h ../include/mfwddefs.h
+../bld/./mnode.o: ../include/mclasses.h
+../bld/./mnodelist.o: ../include/mnodelist.h ../include/mfwddefs.h
+../bld/./mnodelist.o: ../include/mnode.h ../include/mclasses.h
+../bld/./mnodelist.o: ../include/mlist.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./mparser.o: ../include/mparser.h ../include/mlist.h
@@ -105,6 +116,11 @@ dep:
 ../bld/./mparser.o: ../include/mnodelist.h
 ../bld/./mstring.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mstring.o: ../include/mstring.h
+../bld/./mtagnode.o: ../include/mnode.h ../include/mfwddefs.h
+../bld/./mtagnode.o: ../include/mclasses.h ../include/merror.h
+../bld/./mtagnode.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./mtagnode.o: ../include/mtoken.h ../include/mtemplateloader.h
+../bld/./mtagnode.o: ../include/mtagnode.h
 ../bld/./mtoken.o: ../include/mstring.h ../include/mfwddefs.h
 ../bld/./mtoken.o: ../include/mtoken.h
 ../bld/./mtokenizer.o: ../include/merror.h ../include/mfwddefs.h

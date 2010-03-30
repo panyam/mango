@@ -29,6 +29,8 @@ typedef struct MangoNodeContext MangoNodeContext;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
 typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoLibrary MangoLibrary;
+typedef struct MangoBinTree MangoBinTree;
+typedef struct MangoBinTreeNode MangoBinTreeNode;
 
 #ifdef __cplusplus
 }

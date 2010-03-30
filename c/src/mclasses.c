@@ -1,6 +1,16 @@
 
 #include "mclasses.h"
-#include "mlist.h"
+#include "uthash.h"
+
+typedef struct MangoClass
+{
+    unsigned    classId;
+    const char *className;
+    UT_hash_handle  hh;
+} MangoClass;
+
+static MangoClass * mango_classes = NULL;
+static  int         mango_class_count = 0;
 
 /**
  * Gets the class for a given name, registering it if necessary.
@@ -13,6 +23,8 @@
  */
 int mango_class_for_name(const char *name, BOOL reg)
 {
+    if (mango_classes == NULL && !reg)
+        return 0;
     return 0;
 }
 
