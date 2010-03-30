@@ -19,6 +19,8 @@
 #include "mnode.h"
 #include "mnodelist.h"
 #include "mfreetext.h"
+#include "mvarnode.h"
+#include "mvariable.h"
 
 #ifdef __cplusplus
 extern "C" {

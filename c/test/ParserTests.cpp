@@ -186,21 +186,26 @@ TEST_FIXTURE(ParserTestFixture, TestOnlyFreeText)
     CheckParsedNodeWith(1, mango_freetext_new(mango_string_from_buffer("Hello World", -1)));
 }
 
-#if 0
-
 TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
 {
     SetUpWithInputString("Hello{# A Huge Comment#}World");
-    CheckParsedNodeWith(mango_freetext_new(mango_string_from_buffer("Hello", -1)), 
+    CheckParsedNodeWith(2, 
+                        mango_freetext_new(mango_string_from_buffer("Hello", -1)), 
                         mango_freetext_new(mango_string_from_buffer("World", -1)));
+}
+
+MangoVariable *create_variable(const char *value, bool isQuoted, MangoVariable *next)
+{
+    return mango_variable_new(mango_string_from_buffer(value, -1), isQuoted, next);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleVariable)
 {
     SetUpWithInputString("{{variable}}");
-    CheckParsedNodeWith(new VariableNode(new Variable("variable", false, NULL)));
+    CheckParsedNodeWith(1, mango_varnode_new(create_variable("variable", false, NULL)));
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestMultipleVariables)
 {
     SetUpWithInputString("{{a.b.c}}");

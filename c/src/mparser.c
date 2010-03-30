@@ -182,10 +182,10 @@ MangoNode *mango_parser_parse(MangoParser *parser,
                               MangoTemplateLoader *loader,
                               MangoError **error)
 {
-    MangoList *nodeList;
-    MangoNode *firstNode = NULL;
-    MangoNode *nextNode = mango_parser_parse_node(parser, loader, error);
-    int nodeCount = 0;
+    MangoList * nodeList    = NULL;
+    MangoNode * firstNode   = NULL;
+    MangoNode * nextNode    = mango_parser_parse_node(parser, loader, error);
+    int         nodeCount   = 0;
     while (nextNode != NULL)
     {
         if (firstNode == NULL)

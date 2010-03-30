@@ -92,7 +92,8 @@ dep:
 ../bld/./ParserTests.o: ../include/minputsource.h ../include/mstring.h
 ../bld/./ParserTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
 ../bld/./ParserTests.o: ../include/mtemplatecontext.h ../include/mnode.h
-../bld/./ParserTests.o: ../include/mnodelist.h stlinputsource.h
+../bld/./ParserTests.o: ../include/mnodelist.h ../include/mvarnode.h
+../bld/./ParserTests.o: ../include/mvariable.h stlinputsource.h
 ../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
 ../bld/./stlinputsource.o: ../include/mfwddefs.h
 ../bld/./TokenizerTests.o: ../include/mangopub.h ../include/mfwddefs.h
@@ -104,4 +105,5 @@ dep:
 ../bld/./TokenizerTests.o: ../include/mfreetext.h
 ../bld/./TokenizerTests.o: ../include/mtemplateloader.h
 ../bld/./TokenizerTests.o: ../include/mtemplatecontext.h ../include/mnode.h
-../bld/./TokenizerTests.o: ../include/mnodelist.h stlinputsource.h
+../bld/./TokenizerTests.o: ../include/mnodelist.h ../include/mvarnode.h
+../bld/./TokenizerTests.o: ../include/mvariable.h stlinputsource.h

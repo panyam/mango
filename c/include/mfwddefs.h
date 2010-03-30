@@ -21,16 +21,18 @@ typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoParser MangoParser;
 typedef struct MangoError MangoError;
-typedef struct MangoIterator MangoIterator;
-typedef struct MangoList MangoList;
-typedef struct MangoListNode MangoListNode;
+typedef struct MangoValue MangoValue;
+typedef struct MangoVariable MangoVariable;
 typedef struct MangoNode MangoNode;
 typedef struct MangoNodeContext MangoNodeContext;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
 typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoLibrary MangoLibrary;
+typedef struct MangoList MangoList;
+typedef struct MangoListNode MangoListNode;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
+typedef struct MangoIterator MangoIterator;
 
 #ifdef __cplusplus
 }
