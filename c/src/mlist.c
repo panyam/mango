@@ -42,6 +42,44 @@ void mango_list_free(MangoList *mlist)
 }
 
 /**
+ * Gets the number of items in the list.
+ *
+ * \returns A the list size.
+ */
+size_t mango_list_size(const MangoList *mlist)
+{
+    return mlist->size;
+}
+
+/**
+ * Gets the node at a given index.
+ * \param   mlist   List being searched.
+ * \param   index   Index at which the node is to be retrieved.
+ * \return The node at the given index.
+ */
+const MangoListNode *mango_list_node_at(const MangoList *mlist, int index)
+{
+    if (index < 0 || index >= mlist->size)
+        return NULL;
+
+    const MangoListNode *temp = mlist->head;
+    for (int i = 0;i < index && temp != NULL;i++, temp = temp->next);
+    return temp;
+}
+
+/**
+ * Gets the item at a given index.
+ * \param   mlist   List being searched.
+ * \param   index   Index at which the item is to be retrieved.
+ * \return The data at the given index.
+ */
+void *mango_list_item_at(const MangoList *mlist, int index)
+{
+    MangoListNode *node = mango_list_node_at(mlist, index);
+    return node == NULL ? NULL : node->data;
+}
+
+/**
  * Returns (without removing) the item at the front of the list.
  *
  * \returns The value of the node at the front of the list.

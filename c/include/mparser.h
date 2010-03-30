@@ -3,6 +3,7 @@
 #define __MANGO_PARSER_H__
 
 #include "mfwddefs.h"
+#include "mtokenizer.h"
 
 #ifdef __cplusplus
 extern "C" {

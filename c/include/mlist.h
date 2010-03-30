@@ -18,7 +18,7 @@ struct MangoList
 {
     MangoListNode * head;
     MangoListNode * tail;
-    int             size;
+    size_t          size;
 };
 
 /**
@@ -40,6 +40,29 @@ extern MangoList *mango_list_new();
  * \param   mlist    The mango list to be freed
  */
 extern void mango_list_free(MangoList *mlist);
+
+/**
+ * Gets the number of items in the list.
+ *
+ * \returns A the list size.
+ */
+extern size_t mango_list_size(const MangoList *mlist);
+
+/**
+ * Gets the node at a given index.
+ * \param   mlist   List being searched.
+ * \param   index   Index at which the node is to be retrieved.
+ * \return The node at the given index.
+ */
+extern const MangoListNode *mango_list_node_at(const MangoList *mlist, int index);
+
+/**
+ * Gets the item at a given index.
+ * \param   mlist   List being searched.
+ * \param   index   Index at which the item is to be retrieved.
+ * \return The data at the given index.
+ */
+extern void *mango_list_item_at(const MangoList *mlist, int index);
 
 /**
  * Returns (without removing) the item at the front of the list.

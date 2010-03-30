@@ -18,6 +18,24 @@ struct MangoNodeContext
     void *              contextData;
 };
 
+/*
+ * Typedef of a few callback types.
+ */
+typedef void (*DeleteNodeDataCallback)(void *nodeData);
+typedef int (*NodeCountCallback)(void *nodeData);
+typedef MangoNode *(*GetChildNodeCallback)(void *nodeData, unsigned index);
+typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
+                                               MangoTemplateContext *templateContext,
+                                               MangoNodeContext *topContext);
+typedef void (*DeleteNodeContextDataCallback)(void *nodeContextData);
+typedef BOOL (*NodeEqualsCallback)(void *nodedata1, void *nodedata2);
+typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
+                                         MangoTemplateContext *templateContext,
+                                         MangoNodeContext *topContext);
+typedef MangoNode *(*NodeChildExitedCallback)(void *nodeData,
+                                              MangoTemplateContext *templateContext,
+                                              MangoNodeContext *topContext);
+
 /**
  * A mango node object.
  */

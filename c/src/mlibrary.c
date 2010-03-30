@@ -32,9 +32,7 @@ void mango_library_free(MangoLibrary *library)
  * \param   name    Name of the creator to be registered.
  * \param   func    Creator method to be used.
  */
-void mango_library_register(MangoLibrary *library,
-                            const char *name,
-                            CreatorFunc func)
+void mango_library_register(MangoLibrary *library, const char *name, CreatorFunc func)
 {
 }
 
@@ -49,6 +47,8 @@ void mango_library_register(MangoLibrary *library,
  * \return  A new instance of the object created by the registered creator
  * method or NULL if a creator was not found for the name.
  */
-extern void *mango_library_new_instance(MangoLibrary *library,
-                                        const char *name,
-                                        ...);
+void *mango_library_new_instance(MangoLibrary *library, const char *name, ...)
+{
+    return NULL;
+}
+
