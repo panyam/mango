@@ -28,7 +28,7 @@ extern MangoNode *mango_node_new(void *nodeData)
     node->getChildNode          = default_get_child_node;
     node->createNodeContextData = default_create_node_context_data;
     node->deleteNodeContextData = default_delete_node_context_data;
-    node->equalsNode            = default_node_compare;
+    node->nodeEquals            = default_node_compare;
     node->renderBitMore         = default_render_bit_more;
     node->childExited           = default_child_exited;
     return node;

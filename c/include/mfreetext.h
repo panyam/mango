@@ -4,10 +4,18 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Creates a new mango node list.
  */
 extern MangoNode *mango_freetext_new(MangoString *value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

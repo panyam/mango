@@ -181,6 +181,7 @@ int mango_string_append_format(MangoString *mstr, const char *fmt, ...)
     va_list(ap);
     va_start(ap, fmt);
     len = vsnprintf(buff, 2047, fmt, ap);
+    va_end(ap);
     mango_string_append(mstr, buff, len);
     return len;
 }

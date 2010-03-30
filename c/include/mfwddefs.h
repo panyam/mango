@@ -21,6 +21,7 @@ typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoParser MangoParser;
 typedef struct MangoError MangoError;
+typedef struct MangoIterator MangoIterator;
 typedef struct MangoList MangoList;
 typedef struct MangoListNode MangoListNode;
 typedef struct MangoNode MangoNode;

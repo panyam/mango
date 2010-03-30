@@ -82,7 +82,7 @@ struct MangoNode
     /**
      * Compares the node data of 2 nodes if the node classes are equal.
      */
-    BOOL (*equalsNode)(void *nodedata1, void *nodedata2);
+    BOOL (*nodeEquals)(void *nodedata1, void *nodedata2);
 
     /**
      * Renders a bit of the node and returns the next node (if a child node
