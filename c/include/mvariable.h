@@ -36,6 +36,12 @@ struct MangoVariable
 extern MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariable *next);
 
 /**
+ * Destroys a mango variable.
+ * \param   mstr        Variable to be destroyed.
+ */
+extern void mango_variable_free(MangoVariable *mvar);
+
+/**
  * Sets the new value of a variable.
  *
  * \param   mvar        Variable whose value is to be changed.
@@ -50,6 +56,11 @@ extern void mango_variable_set_value(MangoVariable *mvar, BOOL isQuoted, const c
  * template and node contexts.
  */
 extern int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *context, MangoNodeContext *topContext, void **value);
+
+/**
+ * Returns if two variables are equal.
+ */
+extern BOOL mango_variable_equals(MangoVariable *var1, MangoVariable *var2);
 
 #ifdef __cplusplus
 }
