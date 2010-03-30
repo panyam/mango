@@ -96,7 +96,7 @@ dep:
 
 ../bld/./mbintree.o: ../include/mbintree.h ../include/mfwddefs.h
 ../bld/./mclasses.o: ../include/mclasses.h ../include/mfwddefs.h
-../bld/./mclasses.o: ../include/uthash.h
+../bld/./mclasses.o: ../include/mbintree.h
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mfreetext.o: ../include/mnode.h ../include/mfwddefs.h
 ../bld/./mfreetext.o: ../include/mclasses.h ../include/mstring.h

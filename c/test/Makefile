@@ -88,9 +88,9 @@ dep:
 ../bld/./ParserTests.o: ../include/mclasses.h ../include/mtoken.h
 ../bld/./ParserTests.o: ../include/mtokenizer.h ../include/mparser.h
 ../bld/./ParserTests.o: ../include/merror.h ../include/mlist.h
-../bld/./ParserTests.o: ../include/mlibrary.h ../include/minputsource.h
-../bld/./ParserTests.o: ../include/mstring.h ../include/mfreetext.h
-../bld/./ParserTests.o: ../include/mtemplateloader.h
+../bld/./ParserTests.o: ../include/mbintree.h ../include/mlibrary.h
+../bld/./ParserTests.o: ../include/minputsource.h ../include/mstring.h
+../bld/./ParserTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
 ../bld/./ParserTests.o: ../include/mtemplatecontext.h ../include/mnode.h
 ../bld/./ParserTests.o: ../include/mnodelist.h stlinputsource.h
 ../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
@@ -99,8 +99,9 @@ dep:
 ../bld/./TokenizerTests.o: ../include/mclasses.h ../include/mtoken.h
 ../bld/./TokenizerTests.o: ../include/mtokenizer.h ../include/mparser.h
 ../bld/./TokenizerTests.o: ../include/merror.h ../include/mlist.h
-../bld/./TokenizerTests.o: ../include/mlibrary.h ../include/minputsource.h
-../bld/./TokenizerTests.o: ../include/mstring.h ../include/mfreetext.h
+../bld/./TokenizerTests.o: ../include/mbintree.h ../include/mlibrary.h
+../bld/./TokenizerTests.o: ../include/minputsource.h ../include/mstring.h
+../bld/./TokenizerTests.o: ../include/mfreetext.h
 ../bld/./TokenizerTests.o: ../include/mtemplateloader.h
 ../bld/./TokenizerTests.o: ../include/mtemplatecontext.h ../include/mnode.h
 ../bld/./TokenizerTests.o: ../include/mnodelist.h stlinputsource.h

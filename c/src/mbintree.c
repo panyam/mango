@@ -23,6 +23,17 @@ MangoBinTree *mango_bintree_new()
 }
 
 /**
+ * Returns the size of a binary tree.
+ *
+ * \param   mtree   Tree whose size is being queried.
+ * \return  The number of nodes in the tree.
+ */
+size_t mango_bintree_size(MangoBinTree *mtree)
+{
+    return mtree->size;
+}
+
+/**
  * Inserts an item into a tree.
  *
  * \param   mtree   Tree in which to insert the item.
@@ -31,7 +42,7 @@ MangoBinTree *mango_bintree_new()
  * \return  The tree node matching the item.  If an item already exists, it
  * is returned instead of adding a new node.
  */
-MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(void *, void*))
+MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*))
 {
     if (data == NULL)
         return NULL;
@@ -87,7 +98,7 @@ MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*co
  * \return  The tree node matching the item or NULL if the item cannot be
  * found.
  */
-MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(void *, void*))
+MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*))
 {
     MangoBinTreeNode *curr = mtree->root;
     while (curr != NULL)

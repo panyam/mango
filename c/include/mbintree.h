@@ -30,7 +30,7 @@ struct MangoBinTree
 /**
  * Creates a new binary tree.
  */
-MangoBinTree *mango_bintree_new();
+extern MangoBinTree *mango_bintree_new();
 
 /**
  * Inserts an item into a tree.
@@ -41,7 +41,15 @@ MangoBinTree *mango_bintree_new();
  * \return  The tree node matching the item.  If an item already exists, it
  * is returned instead of adding a new node.
  */
-MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(void *, void*));
+extern MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*));
+
+/**
+ * Returns the size of a binary tree.
+ *
+ * \param   mtree   Tree whose size is being queried.
+ * \return  The number of nodes in the tree.
+ */
+extern size_t mango_bintree_size(MangoBinTree *mtree);
 
 /**
  * Finds a node with a given item.
@@ -51,7 +59,7 @@ MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*co
  * \return  The tree node matching the item or NULL if the item cannot be
  * found.
  */
-MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(void *, void*));
+extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*));
 
 #ifdef __cplusplus
 }

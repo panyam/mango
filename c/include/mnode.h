@@ -29,7 +29,7 @@ typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
                                                MangoTemplateContext *templateContext,
                                                MangoNodeContext *topContext);
 typedef void (*DeleteNodeContextDataCallback)(void *nodeContextData);
-typedef BOOL (*NodeDataEqualsCallback)(void *nodedata1, void *nodedata2);
+typedef BOOL (*NodeDataEqualsCallback)(const void *nodedata1, const void *nodedata2);
 typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
                                          MangoTemplateContext *templateContext,
                                          MangoNodeContext *topContext);
@@ -83,7 +83,7 @@ struct MangoNode
     /**
      * Compares the node data of 2 nodes if the node classes are equal.
      */
-    BOOL (*nodeDataEquals)(void *nodedata1, void *nodedata2);
+    BOOL (*nodeDataEquals)(const void *nodedata1, const void *nodedata2);
 
     /**
      * Renders a bit of the node and returns the next node (if a child node
