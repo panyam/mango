@@ -1,12 +1,6 @@
 
-#ifndef __MANGO_CLASSES_H__
-#define __MANGO_CLASSES_H__
-
-#include "mfwddefs.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "mclasses.h"
+#include "mlist.h"
 
 /**
  * Gets the class for a given name, registering it if necessary.
@@ -17,17 +11,17 @@ extern "C" {
  *
  * \returns The class integer ID for the name, if it exists.  0 otherwise.
  */
-extern int mango_class_for_name(const char *name, BOOL reg);
+int mango_class_for_name(const char *name, BOOL reg)
+{
+    return 0;
+}
 
 /**
  * Gets the name of a class given its class ID.
  * \param   cls Class whose string name is to be returned.
  */
-extern const char *mango_name_for_class(int cls);
-
-#ifdef __cplusplus
+const char *mango_name_for_class(int cls)
+{
+    return "";
 }
-#endif
-
-#endif
 

@@ -3,6 +3,7 @@
 #define __MANGO_NODE_H__
 
 #include "mfwddefs.h"
+#include "mclasses.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +29,7 @@ typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
                                                MangoTemplateContext *templateContext,
                                                MangoNodeContext *topContext);
 typedef void (*DeleteNodeContextDataCallback)(void *nodeContextData);
-typedef BOOL (*NodeEqualsCallback)(void *nodedata1, void *nodedata2);
+typedef BOOL (*NodeDataEqualsCallback)(void *nodedata1, void *nodedata2);
 typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
                                          MangoTemplateContext *templateContext,
                                          MangoNodeContext *topContext);
@@ -82,7 +83,7 @@ struct MangoNode
     /**
      * Compares the node data of 2 nodes if the node classes are equal.
      */
-    BOOL (*nodeEquals)(void *nodedata1, void *nodedata2);
+    BOOL (*nodeDataEquals)(void *nodedata1, void *nodedata2);
 
     /**
      * Renders a bit of the node and returns the next node (if a child node
@@ -123,6 +124,17 @@ extern MangoNode *mango_node_new(void *nodeData);
  * Destroys a node.
  */
 extern void mango_node_free(MangoNode *node);
+
+/**
+ * Compares two nodes to see if they are equal.
+ *
+ * \param   node1   First node in the comparison.
+ * \param   node2   Second node in the comparison.
+ *
+ * \return  true if nodes are equal (as defined by their nodeEquals
+ * callback), false otherwise.
+ */
+extern BOOL mango_node_equal(const MangoNode *node1, const MangoNode *node2);
 
 #ifdef __cplusplus
 }

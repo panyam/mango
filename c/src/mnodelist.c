@@ -10,6 +10,7 @@
 MangoNode *mango_nodelist_new(MangoList *nodes)
 {
     MangoNode *node             = mango_node_new(nodes);
+    node->nodeClass             = mango_class_for_name("NodeList", true);
     node->deleteNodeData        = (DeleteNodeDataCallback)mango_list_free;
     node->nodeCount             = (NodeCountCallback)mango_list_size;
     node->getChildNode          = (GetChildNodeCallback)mango_list_item_at;

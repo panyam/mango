@@ -4,6 +4,10 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct MangoListNode
 {
     void *          data;
@@ -118,6 +122,10 @@ extern void *mango_list_remove_back(MangoList *mlist);
  * Tells if a list is empty or not.
  */
 extern BOOL mango_list_is_empty(MangoList *mlistd);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

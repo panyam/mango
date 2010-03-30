@@ -94,7 +94,7 @@ public:
             {
                 MangoNode *expectedNode = va_arg(ap, MangoNode *);
                 MangoNode *childNode = node->getChildNode(node->nodeData, i);
-                CHECK(childNode->nodeEquals(expectedNode, childNode));
+                CHECK(mango_node_equal(expectedNode, childNode));
             }
             va_end(ap);
         }
@@ -104,7 +104,7 @@ public:
             va_start(ap, numNodes);
             MangoNode *expectedNode = va_arg(ap, MangoNode *);
             CHECK_EQUAL(numNodes, 1);
-            CHECK(node->nodeEquals(expectedNode, node));
+            CHECK(mango_node_equal(expectedNode, node));
             va_end(ap);
         }
         else
