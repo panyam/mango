@@ -118,7 +118,7 @@ public class VariableNode extends Node
             parser.getToken();
         }
     }
-    
+
     /**
      * Adds a new filter node programmatically.
      * @param filterNode

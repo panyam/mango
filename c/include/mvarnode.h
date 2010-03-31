@@ -11,7 +11,7 @@ extern "C" {
 /**
  * Creates a new mango node list.
  */
-extern MangoNode *mango_varnode_new(MangoVariable *mvar);
+extern MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes);
 
 /**
  * Extracts and builds a variable node with parser.

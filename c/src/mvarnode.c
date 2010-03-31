@@ -39,7 +39,7 @@ void mango_varnodedata_free(MangoVarNodeData *data)
         mango_variable_free(data->variable);
     if (data->filterNodes != NULL)
     {
-        mango_list_clear(data->filterNodes, mango_filternode_free);
+        mango_list_clear(data->filterNodes, (DeleteFunc)mango_filternode_free);
         mango_list_free(data->filterNodes);
     }
     free(data);
@@ -60,9 +60,9 @@ BOOL mango_varnodedata_equals(MangoVarNodeData *data1, MangoVarNodeData *data2)
 /**
  * Creates a new mango node list.
  */
-MangoNode *mango_varnode_new(MangoVariable *mvar)
+MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
 {
-    MangoNode *node         = mango_node_new(mango_varnodedata_new(mvar, NULL));
+    MangoNode *node         = mango_node_new(mango_varnodedata_new(mvar, filter_nodes));
     node->nodeClass         = mango_class_for_name("Variable", true);
     node->deleteNodeData    = (DeleteNodeDataCallback)mango_varnodedata_free;
     node->nodeDataEquals    = (EqualsFunc)mango_varnodedata_equals;
@@ -102,7 +102,7 @@ MangoNode *mango_varnode_new(MangoVariable *mvar)
  */
 MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **error)
 {
-    MangoVariable *variable = mango_variable_extract_with_parser(parser);
+    MangoVariable *variable = mango_variable_extract_with_parser(parser, error);
     if (variable == NULL)
         return NULL;
 
@@ -123,7 +123,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     
     if (token == NULL || token->tokenType != TOKEN_CLOSE_VARIABLE)
     {
-        mango_error_set(error, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : mango_token_to_string(token->tokenType));
+        mango_error_set(error, -1, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : mango_token_to_string(token->tokenType));
     }
     else
     {
@@ -139,7 +139,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
         mango_variable_free(variable);
         if (filter_nodes != NULL)
         {
-            mango_list_clear(filter_nodes, mango_filternode_free);
+            mango_list_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
             free(filter_nodes);
         }
     }

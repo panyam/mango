@@ -202,7 +202,7 @@ MangoVariable *create_variable(const char *value, bool isQuoted, MangoVariable *
 TEST_FIXTURE(ParserTestFixture, TestSingleVariable)
 {
     SetUpWithInputString("{{variable}}");
-    CheckParsedNodeWith(1, mango_varnode_new(create_variable("variable", false, NULL)));
+    CheckParsedNodeWith(1, mango_varnode_new(create_variable("variable", false, NULL), NULL));
 }
 
 #if 0
