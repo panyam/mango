@@ -72,3 +72,21 @@ void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar)
     mango_list_push_back(fnode->arguments, mvar);
 }
 
+/**
+ * Reads a list of filter expressions with the parser and returns a list.
+ *
+ * \param   parser  The parser doing the parsing.
+ * \param   error   Error value to be set in case of failure.
+ *
+ * \return  A MangoList with filternode instances.  When an error occurs,
+ * the error variable will be set (if it is non NULL) and the output 
+ * list can be non-null to indicate filter expressions read upto the point
+ * of error.  It is the caller's responsibility to destroy the read
+ * instances.
+ */
+MangoList *mango_filternode_extract_filter_list(MangoParser *parser, MangoError **error)
+{
+    assert(false);
+    return NULL;
+}
+

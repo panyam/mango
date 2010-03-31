@@ -86,3 +86,18 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
     return false;
 }
 
+/**
+ * Extract a variable using the parser.
+ *
+ * \param   parser  Parser extracting the tokens.
+ * \param   error   Errors to be set if any.
+ *
+ * \return A MangoVariable instance if successful, otherwise NULL with the
+ * error variable set (if it is supplied).
+ */
+MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoError **error)
+{
+    assert(false);
+    return NULL;
+}
+

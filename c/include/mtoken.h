@@ -12,16 +12,16 @@ extern "C" {
  * Different token types allowed by the tokenizer.
  */
 typedef enum {
-    TOKEN_UNKNOWN   =   -2,
-    TOKEN_ERROR     =   -1,
+    TOKEN_UNKNOWN,
+    TOKEN_ERROR,
     TOKEN_EOF,
     TOKEN_FREETEXT,
     TOKEN_QUOTED_STRING,
     TOKEN_IDENTIFIER,
     TOKEN_DOT,
-    TOKEN_FILTER_SEPERATOR,			// "|"
-    TOKEN_COLON,					// ":"
-	TOKEN_COMA,
+    TOKEN_FILTER_SEPERATOR,     // "|"
+    TOKEN_COLON,
+    TOKEN_COMA,
     TOKEN_OPEN_PAREN,
     TOKEN_CLOSE_PAREN,
     TOKEN_COMMENT,
@@ -29,7 +29,14 @@ typedef enum {
     TOKEN_CLOSE_VARIABLE,
     TOKEN_OPEN_TAG,
     TOKEN_CLOSE_TAG,
+
+    TOKEN_COUNT
 } MangoTokenType;
+
+/**
+ * String representation of the tokens.
+ */
+extern const char *MangoTokenStrings[TOKEN_COUNT];
 
 /**
  * Tokens returned by the tokenizer.

@@ -123,7 +123,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     
     if (token == NULL || token->tokenType != TOKEN_CLOSE_VARIABLE)
     {
-        mango_error_set(error, -1, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : mango_token_to_string(token->tokenType));
+        mango_error_set(error, -1, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : MangoTokenStrings[token->tokenType]);
     }
     else
     {
