@@ -42,6 +42,27 @@ void mango_list_free(MangoList *mlist)
 }
 
 /**
+ * Clears the list and optionally deletes entries within the list with a
+ * given deletor method.
+ *
+ * \param   mlist   List to be freed and cleared.
+ * \param   deletor Method that will delete each entry.
+ */
+void mango_list_clear(MangoList *mlist, void (*deletor)(void *))
+{
+    for (MangoListNode *temp = mlist->head;temp != NULL;)
+    {
+        MangoListNode *next = temp->next;
+        if (deletor != NULL && temp->data != NULL)
+            deletor(temp->data);
+        free(temp);
+        temp = next;
+    }
+    mlist->head = mlist->tail = NULL;
+    mlist->size = 0;
+}
+
+/**
  * Gets the number of items in the list.
  *
  * \returns A the list size.

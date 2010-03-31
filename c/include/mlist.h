@@ -46,6 +46,15 @@ extern MangoList *mango_list_new();
 extern void mango_list_free(MangoList *mlist);
 
 /**
+ * Clears the list and optionally deletes entries within the list with a
+ * given deletor method.
+ *
+ * \param   mlist   List to be freed and cleared.
+ * \param   deletor Method that will delete each entry.
+ */
+extern void mango_list_clear(MangoList *mlist, void (*deletor)(void *));
+
+/**
  * Gets the number of items in the list.
  *
  * \returns A the list size.

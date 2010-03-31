@@ -1,6 +1,7 @@
 
 #include "mnode.h"
 #include "mvariable.h"
+#include "mfilternode.h"
 #include "mlist.h"
 #include "mmemutils.h"
 
@@ -32,8 +33,13 @@ MangoVarNodeData *mango_varnodedata_new(MangoVariable *mvar, MangoList *filterNo
  */
 void mango_varnodedata_free(MangoVarNodeData *data)
 {
-    mango_variable_free(data->variable);
-    assert(false);
+    if (data->variable != NULL)
+        mango_variable_free(data->variable);
+    if (data->filterNodes != NULL)
+    {
+        mango_list_clear(data->filterNodes, mango_filternode_free);
+        mango_list_free(data->filterNodes);
+    }
     free(data);
 }
 
