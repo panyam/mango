@@ -1,5 +1,7 @@
 
 #include "mnode.h"
+#include "merror.h"
+#include "mparser.h"
 #include "mvariable.h"
 #include "mfilternode.h"
 #include "mlist.h"
@@ -98,31 +100,54 @@ MangoNode *mango_varnode_new(MangoVariable *mvar)
  *                  already read the "{{" token.
  * \return  A new Variable node instance.
  */
-MangoNode *mango_varnode_extract_with_parser(MangoParser *parser)
+MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **error)
 {
-    MangoNode *node = mango_varnode_new(NULL);
-    return node;
+    MangoVariable *variable = mango_variable_extract_with_parser(parser);
+    if (variable == NULL)
+        return NULL;
 
-#if 0
-    variable = ParseUtils.parseVariable(parser);
     // read the next token - it should be a close or a filter starter
-    Token token = parser.peekToken();
-    if (token.tokenType == TokenType.TOKEN_FILTER_SEPERATOR)
+    const MangoToken *token = mango_parser_peek_token(parser, error);
+    if (token == NULL)
+        return NULL;
+
+    MangoList *filter_nodes = NULL;
+    if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
-        filterNodes = ParseUtils.parseFilterList(parser);
-        token = parser.peekToken();
+        filter_nodes = mango_filternode_extract_filter_list(parser, error);
+        if (error == NULL || *error == NULL)
+        {
+            token = mango_parser_peek_token(parser, error);
+        }
     }
     
-    if (token == null || token.tokenType != TokenType.TOKEN_CLOSE_VARIABLE)
+    if (token == NULL || token->tokenType != TOKEN_CLOSE_VARIABLE)
     {
-        parser.throwError("Expected '}}', but found '" + (token == null ? "EOF" : token) + "'");
+        mango_error_set(error, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : mango_token_to_string(token->tokenType));
     }
     else
     {
         // otherwise read and discard the '}}'
-        parser.getToken();
+        mango_parser_get_token(parser, error);
     }
-#endif
+
+    MangoNode *node = NULL;
+
+    // was there an error?
+    if (error == NULL || *error == NULL)
+    {
+        mango_variable_free(variable);
+        if (filter_nodes != NULL)
+        {
+            mango_list_clear(filter_nodes, mango_filternode_free);
+            free(filter_nodes);
+        }
+    }
+    else
+    {
+        node = mango_varnode_new(variable, filter_nodes);
+    }
+    return node;
 }
 
 /**

@@ -62,6 +62,17 @@ extern int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *con
  */
 extern BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *var2);
 
+/**
+ * Extract a variable using the parser.
+ *
+ * \param   parser  Parser extracting the tokens.
+ * \param   error   Errors to be set if any.
+ *
+ * \return A MangoVariable instance if successful, otherwise NULL with the
+ * error variable set (if it is supplied).
+ */
+extern MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoError **error);
+
 #ifdef __cplusplus
 }
 #endif
