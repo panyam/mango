@@ -6,6 +6,7 @@
 #include "mmemutils.h"
 #include "mclasses.h"
 #include "mtoken.h"
+#include "mtokenlists.h"
 #include "mtokenizer.h"
 #include "mparser.h"
 #include "merror.h"

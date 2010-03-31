@@ -1,9 +1,11 @@
 
 #include "mvariable.h"
+#include "mparser.h"
 #include "mstring.h"
 #include "mtemplatecontext.h"
 #include "mnode.h"
 #include "mmemutils.h"
+#include "mtokenlists.h"
 
 /**
  * Creates a new mango variable.
@@ -23,7 +25,7 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
 
 /**
  * Destroys a mango variable.
- * \param   mstr        Variable to be destroyed.
+ * \param   mstr        MangoVariable *to be destroyed.
  */
 void mango_variable_free(MangoVariable *mvar)
 {
@@ -38,9 +40,9 @@ void mango_variable_free(MangoVariable *mvar)
 /**
  * Sets the new value of a variable.
  *
- * \param   mvar    Variable whose value is to be changed.
+ * \param   mvar    MangoVariable *whose value is to be changed.
  * \param   buffer  New Value
- * \param   length  Length of the buffer.  if < then buffer is null terminated.
+ * \param   length  Length of the buffer.  if < then buffer is NULL terminated.
  */
 void mango_variable_set_value(MangoVariable *mvar, BOOL isQuoted, const char *buffer, int length)
 {
@@ -97,7 +99,51 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
  */
 MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoError **error)
 {
-    assert(false);
-    return NULL;
+    MangoVariable *firstVar = NULL;
+    MangoVariable *lastVar = NULL;
+    const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
+    if (token == NULL || (error != NULL && *error != NULL))
+    {
+        return NULL;
+    }
+
+    while (true)
+    {
+        const MangoString *varValue = token->tokenValue;
+        BOOL isQuoted = token->tokenType == TOKEN_QUOTED_STRING;
+        if (firstVar == NULL)
+        {
+            // see if the variable library returns a "special" variable
+            MangoVariable *nextVar = isQuoted ? NULL : VariableLibrary.getSharedInstance().makeNewInstance(varValue);
+            if (nextVar == NULL)
+            {
+                nextVar = mango_variable_new(mango_string_from_buffer(varValue->buffer, varValue->length), isQuoted, NULL);
+            }
+            firstVar = lastVar = nextVar;
+        }
+        else
+        {
+            // MangoVariable *nextVar = lastVar->setNextVariable(varValue, isQuoted);
+            MangoVariable *nextVar = mango_variable_new(mango_string_from_buffer(varValue->buffer, varValue->length), isQuoted, NULL);
+            lastVar->next = nextVar;
+            if (nextVar != NULL)
+            {
+                lastVar = nextVar;
+            }
+        }
+        
+        // peek at the next token...
+        token = mango_parser_peek_token(parser, error);
+        if (token != NULL && token->tokenType == TOKEN_DOT)
+        {
+            mango_parser_get_token(parser, error);    // discard the DOT
+            token = mango_parser_expect_token_in_list(parser, IDENT_OR_STRING, false, error);
+        }
+        else
+        {
+            break ;
+        }
+    }
+    return firstVar;
 }
 
