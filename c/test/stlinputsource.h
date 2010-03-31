@@ -2,7 +2,7 @@
 #ifndef __STL_INPUT_SOURCE_H__
 #define __STL_INPUT_SOURCE_H__
 
-#include "minputsource.h"
+#include "mangopub.h"
 #include <istream>
 
 #ifdef __cplusplus

@@ -75,7 +75,7 @@ const MangoListNode *mango_list_node_at(const MangoList *mlist, int index)
  */
 void *mango_list_item_at(const MangoList *mlist, int index)
 {
-    MangoListNode *node = mango_list_node_at(mlist, index);
+    const MangoListNode *node = mango_list_node_at(mlist, index);
     return node == NULL ? NULL : node->data;
 }
 
@@ -203,5 +203,35 @@ void *mango_list_remove_back(MangoList *mlist)
 BOOL mango_list_is_empty(MangoList *mlist)
 {
     return mlist->head == NULL;
+}
+
+/**
+ * Tells if two lists are equal using a comparator function.
+ */
+BOOL mango_lists_are_equal(const MangoList *list1, const MangoList *list2, BOOL (*equalFn)(const void *item1, const void *item2))
+{
+    if (list1 == list2)
+    {
+        return true;
+    }
+    else if (list1 == NULL || list2 == NULL)
+    {
+        return false;
+    }
+    else if (list1->size != list2->size)
+    {
+        return false;
+    }
+    if (equalFn != NULL)
+    {
+        for (MangoListNode *n1 = list1->head, *n2=list2->head;n1 != NULL;n1=n1->next,n2=n2->next)
+        {
+            if (!equalFn(n1->data, n2->data))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 

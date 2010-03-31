@@ -4,6 +4,7 @@
 #include <string.h>
 #include "merror.h"
 #include "mstring.h"
+#include "mmemutils.h"
 
 /**
  * Create a new string with a given capacity.
@@ -12,10 +13,10 @@
  */
 MangoString *mango_string_new(unsigned capacity)
 {
-    MangoString *mstr = (MangoString *)calloc(1, sizeof(MangoString));
-    mstr->buffer = (char *)malloc(sizeof(char) * capacity);
-    mstr->capacity = capacity;
-    mstr->length = 0;
+    MangoString *mstr   = ZNEW(MangoString);
+    mstr->buffer        = NEW_ARRAY(char, capacity);
+    mstr->capacity      = capacity;
+    mstr->length        = 0;
     return mstr;
 }
 

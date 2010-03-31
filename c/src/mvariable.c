@@ -3,6 +3,7 @@
 #include "mstring.h"
 #include "mtemplatecontext.h"
 #include "mnode.h"
+#include "mmemutils.h"
 
 /**
  * Creates a new mango variable.
@@ -13,7 +14,7 @@
  */
 MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariable *next)
 {
-    MangoVariable *mvar = (MangoVariable *)malloc(sizeof(MangoVariable));
+    MangoVariable *mvar = NEW(MangoVariable);
     mvar->next      = next;
     mvar->value     = NULL;
     mango_variable_set_value(mvar, isQuoted, mstr->buffer, mstr->length);
@@ -66,7 +67,7 @@ int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *context, M
 /**
  * Returns if two variables are equal.
  */
-BOOL mango_variable_equals(MangoVariable *var1, MangoVariable *var2)
+BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *var2)
 {
     if (var1 == var2)
     {
@@ -80,7 +81,7 @@ BOOL mango_variable_equals(MangoVariable *var1, MangoVariable *var2)
              var1->isNumber == var2->isNumber)
     {
         return mango_string_compare(var1->value, var2->value->buffer, var2->value->length) == 0 &&
-                    mango_variable_equals(var1->next, var2->next);
+                    mango_variables_are_equal(var1->next, var2->next);
     }
     return false;
 }

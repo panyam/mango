@@ -3,6 +3,7 @@
 #include "minputsource.h"
 #include "mstring.h"
 #include "mtokenizer.h"
+#include "mmemutils.h"
 
 #define BRACE   '{'
 enum
@@ -54,7 +55,7 @@ void mango_tokenizer_unget_char(MangoTokenizer *tokenizer, int ch)
  */
 MangoTokenizer *mango_tokenizer_new(MangoInputSource *input)
 {
-    MangoTokenizer *tokenizer = malloc(sizeof(MangoTokenizer));
+    MangoTokenizer *tokenizer = NEW(MangoTokenizer);
     assert(tokenizer != NULL);
     mango_tokenizer_reset(tokenizer, input);
     return tokenizer;

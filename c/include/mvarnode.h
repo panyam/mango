@@ -46,6 +46,14 @@ extern MangoNode *mango_varnode_new(MangoVariable *mvar);
  */
 extern MangoNode *mango_varnode_extract_with_parser(MangoParser *parser);
 
+/**
+ * Adds a new filter node.
+ *
+ * \param   mnode   Mango (variable) node to add to.
+ * \param   fnode   The filter node to add.
+ */
+extern void mango_varnode_add_filter(MangoNode *mnode, MangoFilterNode *fnode);
+
 #ifdef __cplusplus
 }
 #endif

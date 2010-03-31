@@ -2,10 +2,12 @@
 #include <string.h>
 #include "merror.h"
 #include "mtokenizer.h"
+#include "mtemplateloader.h"
 #include "mparser.h"
 #include "mlist.h"
 #include "mstring.h"
 #include "mfreetext.h"
+#include "mvarnode.h"
 #include "mnodelist.h"
 
 /**
@@ -240,7 +242,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
-            return mango_varnode_extract_with_parser(this);
+            return mango_varnode_extract_with_parser(parser);
         }
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {

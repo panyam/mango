@@ -47,47 +47,49 @@ MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*co
     if (data == NULL)
         return NULL;
 
-    if (mtree->root == NULL)
+    MangoBinTreeNode *parent = NULL;
+    MangoBinTreeNode *curr = mtree->root;
+    BOOL curr_is_parents_left = false;
+    while (curr != NULL)
     {
-        mtree->size++;
-        return mtree->root = mango_bintreenode_new(data);
+        int cmp = compare(data, curr->data);
+        if (cmp == 0)
+        {
+            return curr;
+        }
+        else if (cmp < 0)
+        {
+            curr_is_parents_left = true;
+            parent = curr;
+            curr = curr->left;
+        }
+        else
+        {
+            curr_is_parents_left = false;
+            parent = curr;
+            curr = curr->right;
+        }
+    }
+
+    mtree->size++;
+    MangoBinTreeNode *newnode = mango_bintreenode_new(data);
+
+    if (parent == NULL)
+    {
+        mtree->root = newnode;
     }
     else
     {
-        MangoBinTreeNode *curr = mtree->root;
-        while (curr != NULL)
+        if (curr_is_parents_left)
         {
-            int cmp = compare(data, curr->data);
-            if (cmp == 0)
-            {
-                return curr;
-            }
-            else if (cmp < 0)
-            {
-                if (curr->left == NULL)
-                {
-                    mtree->size++;
-                    return curr->left = mango_bintreenode_new(data);
-                }
-                else
-                {
-                    curr = curr->left;
-                }
-            }
-            else
-            {
-                if (curr->right == NULL)
-                {
-                    mtree->size++;
-                    return curr->right = mango_bintreenode_new(data);
-                }
-                else
-                {
-                    curr = curr->right;
-                }
-            }
+            parent->left = newnode;
+        }
+        else
+        {
+            parent->right = newnode;
         }
     }
+    return newnode;
 }
 
 /**

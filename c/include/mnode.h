@@ -29,7 +29,6 @@ typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
                                                MangoTemplateContext *templateContext,
                                                MangoNodeContext *topContext);
 typedef void (*DeleteNodeContextDataCallback)(void *nodeContextData);
-typedef BOOL (*NodeDataEqualsCallback)(const void *nodedata1, const void *nodedata2);
 typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
                                          MangoTemplateContext *templateContext,
                                          MangoNodeContext *topContext);

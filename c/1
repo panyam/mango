@@ -2,7 +2,6 @@
 #include "mnode.h"
 #include "mvariable.h"
 #include "mlist.h"
-#include "mmemutils.h"
 
 typedef struct MangoVarNodeData
 {
@@ -20,7 +19,7 @@ typedef struct MangoVarNodeData
  */
 MangoVarNodeData *mango_varnodedata_new(MangoVariable *mvar, MangoList *filterNodes)
 {
-    MangoVarNodeData *nodedata  = NEW(MangoVarNodeData);
+    MangoVarNodeData *nodedata  = (MangoVarNodeData *)malloc(sizeof(MangoVarNodeData *));
     nodedata->variable          = mvar;
     nodedata->filterNodes       = filterNodes;
     return nodedata;
@@ -96,28 +95,36 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser)
 {
     MangoNode *node = mango_varnode_new(NULL);
     return node;
-
-#if 0
-    variable = ParseUtils.parseVariable(parser);
-    // read the next token - it should be a close or a filter starter
-    Token token = parser.peekToken();
-    if (token.tokenType == TokenType.TOKEN_FILTER_SEPERATOR)
-    {
-        filterNodes = ParseUtils.parseFilterList(parser);
-        token = parser.peekToken();
-    }
-    
-    if (token == null || token.tokenType != TokenType.TOKEN_CLOSE_VARIABLE)
-    {
-        parser.throwError("Expected '}}', but found '" + (token == null ? "EOF" : token) + "'");
-    }
-    else
-    {
-        // otherwise read and discard the '}}'
-        parser.getToken();
-    }
-#endif
 }
+
+    /**
+     * Reads the variable expression part of the node.
+     * 
+     * This is identifer ( DOT identifier ) *
+     * 
+     * @param parser
+     */
+    protected void parseVariableNode(Parser parser) throws ParserException
+    {
+        variable = ParseUtils.parseVariable(parser);
+        // read the next token - it should be a close or a filter starter
+        Token token = parser.peekToken();
+        if (token.tokenType == TokenType.TOKEN_FILTER_SEPERATOR)
+        {
+            filterNodes = ParseUtils.parseFilterList(parser);
+            token = parser.peekToken();
+        }
+        
+        if (token == null || token.tokenType != TokenType.TOKEN_CLOSE_VARIABLE)
+        {
+            parser.throwError("Expected '}}', but found '" + (token == null ? "EOF" : token) + "'");
+        }
+        else
+        {
+            // otherwise read and discard the '}}'
+            parser.getToken();
+        }
+    }
 
 /**
  * Adds a new filter node.
@@ -127,12 +134,16 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser)
  */
 void mango_varnode_add_filter(MangoNode *mnode, MangoFilterNode *fnode)
 {
-    assert(mnode->nodeClass == mango_class_for_name("Variable", true));
-    MangoVarNodeData *data = (MangoVarNodeData *)mnode->nodeData;
-    if (data->filterNodes == NULL)
-    {
-        data->filterNodes = mango_list_new();
-    }
-    mango_list_push_back(data->filterNodes, fnode);
+    MangoVarNodeData *data = (MangoVarNodeData *)mnode->data;
+    if (
 }
-
+    /**
+     * Adds a new filter node programmatically.
+     * @param filterNode
+     */
+    public void addFilterNode(FilterNode filterNode)
+    {
+        if (filterNodes == null)
+            filterNodes = new ArrayList<FilterNode>();
+        filterNodes.add(filterNode);
+    }

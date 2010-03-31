@@ -22,6 +22,8 @@ typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoParser MangoParser;
 typedef struct MangoError MangoError;
 typedef struct MangoValue MangoValue;
+typedef struct MangoFilter MangoFilter;
+typedef struct MangoFilterNode MangoFilterNode;
 typedef struct MangoVariable MangoVariable;
 typedef struct MangoNode MangoNode;
 typedef struct MangoNodeContext MangoNodeContext;
@@ -33,6 +35,21 @@ typedef struct MangoListNode MangoListNode;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
 typedef struct MangoIterator MangoIterator;
+
+/**
+ * Functions that check whether two items are equal.
+ */
+typedef BOOL (*EqualsFunc)(const void *, const void *);
+
+/**
+ * Items that compare two items.
+ */
+typedef int (*CompareFunc)(const void *, const void *);
+
+/**
+ * Delete function signature.
+ */
+typedef void (*DeleteFunc)(void *);
 
 #ifdef __cplusplus
 }

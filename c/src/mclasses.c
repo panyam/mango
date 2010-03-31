@@ -3,6 +3,7 @@
 #include <string.h>
 #include "mclasses.h"
 #include "mbintree.h"
+#include "mmemutils.h"
 
 typedef struct MangoClass
 {
@@ -14,7 +15,7 @@ static MangoBinTree *mango_classes;
 
 MangoClass *mango_class_new(const char *name, unsigned id)
 {
-    MangoClass *mclass  = (MangoClass *)malloc(sizeof(MangoClass));
+    MangoClass *mclass  = NEW(MangoClass);
     mclass->className   = strdup(name);
     mclass->classId     = id;
     return mclass;

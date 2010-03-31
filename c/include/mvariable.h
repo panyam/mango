@@ -60,7 +60,7 @@ extern int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *con
 /**
  * Returns if two variables are equal.
  */
-extern BOOL mango_variable_equals(MangoVariable *var1, MangoVariable *var2);
+extern BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *var2);
 
 #ifdef __cplusplus
 }

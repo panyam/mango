@@ -11,7 +11,7 @@ int stl_input_source_next_char(MangoInputSource *);
  */
 StlInputSource *new_stl_input_source(std::istream *instream)
 {
-    StlInputSource *source = (StlInputSource *)malloc(sizeof(StlInputSource));
+    StlInputSource *source = NEW(StlInputSource);
     source->sourceBase.nextChar = stl_input_source_next_char;
     source->inputStream = instream;
     return source;

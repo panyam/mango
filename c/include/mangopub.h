@@ -3,6 +3,7 @@
 #define __MANGO_PUBLIC_H__
 
 #include "mfwddefs.h"
+#include "mmemutils.h"
 #include "mclasses.h"
 #include "mtoken.h"
 #include "mtokenizer.h"
@@ -19,8 +20,10 @@
 #include "mnode.h"
 #include "mnodelist.h"
 #include "mfreetext.h"
-#include "mvarnode.h"
 #include "mvariable.h"
+#include "mvarnode.h"
+#include "mfilter.h"
+#include "mfilternode.h"
 
 #ifdef __cplusplus
 extern "C" {

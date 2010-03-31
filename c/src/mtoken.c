@@ -1,6 +1,7 @@
 
 #include "mstring.h"
 #include "mtoken.h"
+#include "mmemutils.h"
 #include <string.h>
 
 /**
@@ -14,7 +15,7 @@
  */
 MangoToken *mango_token_new(MangoTokenType tokType, const char *tokValue, int tokLen)
 {
-    MangoToken *token   = (MangoToken *)malloc(sizeof(MangoToken));
+    MangoToken *token   = NEW(MangoToken);
     token->tokenType    = tokType;
     token->tokenValue   = mango_string_new(tokLen + 1);
     mango_string_set(token->tokenValue, tokValue, tokLen);

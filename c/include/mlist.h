@@ -123,6 +123,11 @@ extern void *mango_list_remove_back(MangoList *mlist);
  */
 extern BOOL mango_list_is_empty(MangoList *mlistd);
 
+/**
+ * Tells if two lists are equal using a comparator function.
+ */
+extern BOOL mango_lists_are_equal(const MangoList *list1, const MangoList *list2, BOOL (*equalFn)(const void *item1, const void *item2));
+
 #ifdef __cplusplus
 }
 #endif

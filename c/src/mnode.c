@@ -7,7 +7,7 @@ void *default_create_node_context_data(void *nodeData,
                                        MangoTemplateContext *templateContext,
                                        MangoNodeContext *topContext);
 void default_delete_node_context_data(void *node_context);
-BOOL default_node_compare(void *nodedata1, void *nodedata2);
+BOOL default_node_compare(const void *nodedata1, const void *nodedata2);
 MangoNode *default_render_bit_more(void *nodeData, 
                                    MangoTemplateContext *templateContext,
                                    MangoNodeContext *topContext);
@@ -28,7 +28,7 @@ extern MangoNode *mango_node_new(void *nodeData)
     node->getChildNode          = default_get_child_node;
     node->createNodeContextData = default_create_node_context_data;
     node->deleteNodeContextData = default_delete_node_context_data;
-    node->nodeDataEquals            = default_node_compare;
+    node->nodeDataEquals        = default_node_compare;
     node->renderBitMore         = default_render_bit_more;
     node->childExited           = default_child_exited;
     return node;
@@ -120,7 +120,7 @@ void default_delete_node_context_data(void *node_context)
         free(node_context);
 }
 
-BOOL default_node_compare(void *nodedata1, void *nodedata2)
+BOOL default_node_compare(const void *nodedata1, const void *nodedata2)
 {
     return false;
 }

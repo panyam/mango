@@ -98,6 +98,8 @@ dep:
 ../bld/./mclasses.o: ../include/mclasses.h ../include/mfwddefs.h
 ../bld/./mclasses.o: ../include/mbintree.h
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mfilternode.o: ../include/mfilternode.h ../include/mfwddefs.h
+../bld/./mfilternode.o: ../include/mvariable.h ../include/mtemplatecontext.h
 ../bld/./mfreetext.o: ../include/mnode.h ../include/mfwddefs.h
 ../bld/./mfreetext.o: ../include/mclasses.h ../include/mstring.h
 ../bld/./mfreetext.o: ../include/mfreetext.h
@@ -111,8 +113,9 @@ dep:
 ../bld/./mnodelist.o: ../include/mlist.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mparser.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mparser.o: ../include/mparser.h ../include/mlist.h
-../bld/./mparser.o: ../include/mstring.h ../include/mfreetext.h
+../bld/./mparser.o: ../include/mtemplateloader.h ../include/mparser.h
+../bld/./mparser.o: ../include/mlist.h ../include/mstring.h
+../bld/./mparser.o: ../include/mfreetext.h ../include/mvarnode.h
 ../bld/./mparser.o: ../include/mnodelist.h
 ../bld/./mstring.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mstring.o: ../include/mstring.h
@@ -126,3 +129,9 @@ dep:
 ../bld/./mtokenizer.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mtokenizer.o: ../include/minputsource.h ../include/mstring.h
 ../bld/./mtokenizer.o: ../include/mtokenizer.h ../include/mtoken.h
+../bld/./mvariable.o: ../include/mvariable.h ../include/mfwddefs.h
+../bld/./mvariable.o: ../include/mstring.h ../include/mtemplatecontext.h
+../bld/./mvariable.o: ../include/mnode.h ../include/mclasses.h
+../bld/./mvarnode.o: ../include/mnode.h ../include/mfwddefs.h
+../bld/./mvarnode.o: ../include/mclasses.h ../include/mvariable.h
+../bld/./mvarnode.o: ../include/mlist.h
