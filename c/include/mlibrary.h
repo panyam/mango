@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-typedef void *(*CreatorFunc)(const char *name, ...);
+typedef void *(*CreatorFunc)(const MangoString *name, ...);
 
 /**
  * A generic library that acts as a factory of objects.
@@ -16,8 +16,8 @@ typedef void *(*CreatorFunc)(const char *name, ...);
 struct MangoLibrary
 {
     //! Type of library - eg filter, tag etc
-    char *      libType;
-    MangoList * creators;
+    MangoString *   name;
+    MangoList *     creators;
 };
 
 /**
@@ -25,7 +25,7 @@ struct MangoLibrary
  * \param name  Name of the library.
  * \return  A new MangoLibrary instance.
  */
-extern MangoLibrary *mango_library_new(const char *name);
+extern MangoLibrary *mango_library_new(const MangoString *name);
 
 /**
  * Frees a library created with the above new method.
@@ -40,7 +40,7 @@ extern void mango_library_free(MangoLibrary *library);
  * \param   func    Creator method to be used.
  */
 extern void mango_library_register(MangoLibrary *library,
-                                   const char *name,
+                                   const MangoString *name,
                                    CreatorFunc func);
 
 /**
@@ -55,7 +55,7 @@ extern void mango_library_register(MangoLibrary *library,
  * method or NULL if a creator was not found for the name.
  */
 extern void *mango_library_new_instance(MangoLibrary *library,
-                                        const char *name,
+                                        const MangoString *name,
                                         ...);
 
 #ifdef __cplusplus

@@ -24,6 +24,12 @@ struct MangoVariable
     
     //! Next variable section of the variable (ie a.b.c)
     MangoVariable * next;
+
+    //! Extendible data.
+    void *          varData;
+
+    //! Child specific setter of the next variable
+    MangoVariable *(*setNextVariable)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
 };
 
 /**
@@ -61,6 +67,17 @@ extern int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *con
  * Returns if two variables are equal.
  */
 extern BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *var2);
+
+/**
+ * Sets the next variable for a particular variable.
+ *
+ * \param   mvar    The variable whose next variable is to be set.
+ * \param   value   Value of the next variable.
+ * \param   iquote  Is the value quoted?
+ *
+ * \return  A new variable if it is set.
+ */
+extern MangoVariable *mango_variable_set_next(MangoVariable *mvar, MangoString *value, BOOL isquoted);
 
 /**
  * Extract a variable using the parser.

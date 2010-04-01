@@ -154,8 +154,8 @@ protected:
         input_source = new_stl_input_source(new std::istringstream(input));
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
         parser = mango_parser_new(tokenizer);
-        filterLibrary = mango_library_new("filters");
-        tagLibrary = mango_library_new("tags");
+        filterLibrary = mango_filter_library_singleton();
+        tagLibrary = mango_tag_library_singleton();
     }
 };
 

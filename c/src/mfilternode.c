@@ -48,7 +48,7 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
     {
         return false;
     }
-    return mango_lists_are_equal(fn1->arguments, fn2->arguments, mango_variables_are_equal);
+    return mango_lists_are_equal(fn1->arguments, fn2->arguments, (EqualsFunc)mango_variables_are_equal);
 }
 
 /**

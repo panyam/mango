@@ -136,6 +136,11 @@ extern void mango_string_ensure_capacity(MangoString *mstr, size_t newcap);
  */
 extern int mango_string_compare(const MangoString *mstr, const char *value, size_t length);
 
+/**
+ * Tells if two strings are equal.
+ */
+extern BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2);
+
 #ifdef __cplusplus
 }
 #endif

@@ -3,6 +3,7 @@
 #define __MANGO_TOKEN_LISTS_H__
 
 #include "mfwddefs.h"
+#include "mtoken.h"
 
 #ifdef __cplusplus
 extern "C" {
