@@ -46,15 +46,32 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar
  * Reads a list of filter expressions with the parser and returns a list.
  *
  * \param   parser  The parser doing the parsing.
+ * \param   filters List storing all the parsed filters.
  * \param   error   Error value to be set in case of failure.
  *
- * \return  A MangoList with filternode instances.  When an error occurs,
- * the error variable will be set (if it is non NULL) and the output 
- * list can be non-null to indicate filter expressions read upto the point
- * of error.  It is the caller's responsibility to destroy the read
- * instances.
+ * \return true if filters were read successfully, false on error.  On
+ * error, the error variable might be set if it is provided.  On error, the
+ * output list will still contain extracted filters upto the point of error
+ * and it is the caller's responsibility to destroy the read filters.
  */
-extern MangoList *mango_filternode_extract_filter_list(MangoParser *parser, MangoError **error);
+extern BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList *filters, MangoError **error);
+
+/**
+ * Extracts the next filter expression in the filter list.  This assumes
+ * that the next token being read will be an identifier indicating the name
+ * of the filter.
+ * 
+ * Filter expressions are of the form: 
+ *      ident
+ *      ident COLON value
+ *      ident COLON OPEN_PAREN value_list CLOSE_PAREN
+ *
+ * \param   parser  Parser doing the parsing.
+ * \param   error   Optional storage for the error if any.
+ *
+ * \return A filternode instance on success, otherwise NULL.
+ */
+extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoError **error);
 
 #ifdef __cplusplus
 }

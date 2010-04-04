@@ -8,3 +8,10 @@ MangoTokenType IDENT_OR_STRING[3] =
     TOKEN_UNKNOWN,
 };
 
+MangoTokenType IDENT_STRING_OR_OPEN_PAREN[4] = {
+    TOKEN_IDENT,
+    TOKEN_STRING,
+    TOKEN_OPEN_PAREN,
+    TOKEN_UNKNOWN,
+};
+

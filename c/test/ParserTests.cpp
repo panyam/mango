@@ -224,15 +224,15 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithNumericIndexes)
     CheckParsedNodeWith(1, expectedNode);
 }
 
-#if 0
 TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 {
     SetUpWithInputString("{{a.0.'1'.d}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", 
-                                                    new Variable("0", 
-                                                        new Variable("1", true,
-                                                            new Variable("d", NULL)))), NULL);
-    CheckParsedNodeWith(expectedNode);
+    MangoNode *expectedNode = mango_varnode_new(
+                                create_variable("a", false, false, 
+                                    create_variable("0", false, true,
+                                        create_variable("1", true, true,
+                                            create_variable("d", false, false, NULL)))), NULL);
+    CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
@@ -242,6 +242,7 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
     CHECK_EQUAL("Filters are not equal as should be with singletons", f1, f2);
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestSingleFilter)
 {
     SetUpWithInputString("{{a|add}}");
