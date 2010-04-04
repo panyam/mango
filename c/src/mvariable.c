@@ -7,6 +7,8 @@
 #include "mnode.h"
 #include "mmemutils.h"
 #include "mtokenlists.h"
+#include "mutils.h"
+#include "msingletons.h"
 
 
 /**
@@ -23,7 +25,7 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
     mvar->varData           = NULL;
     mvar->value             = NULL;
     mvar->setNextVariable   = mango_variable_set_next;
-    mango_variable_set_value(mvar, isQuoted, mstr->buffer, mstr->length);
+    mango_variable_set_value(mvar, mstr, isQuoted);
     return mvar;
 }
 
@@ -48,17 +50,16 @@ void mango_variable_free(MangoVariable *mvar)
  * \param   buffer  New Value
  * \param   length  Length of the buffer.  if < then buffer is NULL terminated.
  */
-void mango_variable_set_value(MangoVariable *mvar, BOOL isQuoted, const char *buffer, int length)
+void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQuoted)
 {
     if (mvar->value != NULL)
     {
         mango_string_free(mvar->value);
     }
-    mvar->value = mango_string_from_buffer(buffer, length);
+    mvar->value     = value;
     mvar->isQuoted  = isQuoted;
-    mvar->isNumber  = false;
     mvar->intValue  = 0;
-    // TODO: check if integer
+    mvar->isNumber  = is_integer(value->buffer, value->length, &mvar->intValue);
 }
 
 /**
@@ -84,7 +85,8 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
         return false;
     }
     else if (var1->isQuoted == var2->isQuoted && 
-             var1->isNumber == var2->isNumber)
+             var1->isNumber == var2->isNumber &&
+             var1->intValue == var2->intValue)
     {
         return mango_string_compare(var1->value, var2->value->buffer, var2->value->length) == 0 &&
                     mango_variables_are_equal(var1->next, var2->next);
@@ -96,14 +98,17 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
  * Sets the next variable for a particular variable.
  *
  * \param   mvar    The variable whose next variable is to be set.
- * \param   value   Value of the next variable.
+ * \param   value   Value of the next variable.  The variable now owns this
+ *                  string.
  * \param   iquote  Is the value quoted?
  *
  * \return  A new variable if it is set.
  */
-MangoVariable *mango_variable_set_next(MangoVariable *mvar, MangoString *value, BOOL isquoted)
+MangoVariable *mango_variable_set_next(MangoVariable *mvar,
+                                       MangoString *value,
+                                       BOOL isquoted)
 {
-    MangoVariable *nextVar = mango_variable_new(mango_string_from_buffer(value->buffer, value->length), isquoted, NULL);
+    MangoVariable *nextVar = mango_variable_new(value, isquoted, NULL);
     mvar->next = nextVar;
     return nextVar;
 }
@@ -134,7 +139,10 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoErro
         if (firstVar == NULL)
         {
             // see if the variable library returns a "special" variable
-            MangoVariable *nextVar = isQuoted ? NULL : mango_library_new_instance(mango_variable_library_singleton(), varValue->buffer);
+            MangoVariable *nextVar = isQuoted ? NULL :
+                                        (MangoVariable *)mango_library_new_instance(
+                                                            mango_variable_library_singleton(),
+                                                            varValue);
             if (nextVar == NULL)
             {
                 nextVar = mango_variable_new(mango_string_from_buffer(varValue->buffer, varValue->length), isQuoted, NULL);
@@ -143,7 +151,7 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoErro
         }
         else
         {
-            MangoVariable *nextVar = lastVar->setNextVariable(lastVar, varValue, isQuoted);
+            MangoVariable *nextVar = lastVar->setNextVariable(lastVar, mango_string_copy(varValue), isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

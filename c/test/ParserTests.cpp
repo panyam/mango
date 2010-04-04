@@ -11,8 +11,6 @@ class ParserTestFixture
 public:
     MangoTokenizer *        tokenizer;
     MangoParser *           parser;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
@@ -21,8 +19,6 @@ public:
     ParserTestFixture() :
         tokenizer(NULL),
         parser(NULL),
-        filterLibrary(NULL),
-        tagLibrary(NULL),
         loader(NULL),
         input_source(NULL),
         input_string("")
@@ -60,18 +56,6 @@ public:
         {
             delete loader;
             loader = NULL;
-        }
-
-        if (filterLibrary != NULL) 
-        {
-            mango_library_free(filterLibrary);
-            filterLibrary = NULL;
-        }
-
-        if (tagLibrary != NULL) 
-        {
-            mango_library_free(tagLibrary);
-            tagLibrary = NULL;
         }
     }
 
@@ -154,8 +138,6 @@ protected:
         input_source = new_stl_input_source(new std::istringstream(input));
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
         parser = mango_parser_new(tokenizer);
-        filterLibrary = mango_filter_library_singleton();
-        tagLibrary = mango_tag_library_singleton();
     }
 };
 
@@ -194,46 +176,55 @@ TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
                         mango_freetext_new(mango_string_from_buffer("World", -1)));
 }
 
-MangoVariable *create_variable(const char *value, bool isQuoted, MangoVariable *next)
+MangoVariable *create_variable(const char *value, bool isQuoted, bool isNum, MangoVariable *next)
 {
-    return mango_variable_new(mango_string_from_buffer(value, -1), isQuoted, next);
+    MangoVariable *var = mango_variable_new(mango_string_from_buffer(value, -1), isQuoted, next);
+    var->isNumber = isNum;
+    if (isNum)
+    {
+        var->intValue = atoi(value);
+    }
+    return var;
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleVariable)
 {
     SetUpWithInputString("{{variable}}");
-    CheckParsedNodeWith(1, mango_varnode_new(create_variable("variable", false, NULL), NULL));
+    CheckParsedNodeWith(1, mango_varnode_new(create_variable("variable", false, false, NULL), NULL));
 }
 
-#if 0
 TEST_FIXTURE(ParserTestFixture, TestMultipleVariables)
 {
     SetUpWithInputString("{{a.b.c}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", 
-                                                    new Variable("b",
-                                                        new Variable("c", NULL))), NULL);
-    CheckParsedNodeWith(expectedNode);
+    MangoNode *expectedNode = mango_varnode_new(
+                                create_variable("a", false, false,
+                                    create_variable("b", false, false,
+                                        create_variable("c", false, false, NULL))), NULL);
+    CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestMultipleQuotedVariables)
 {
     SetUpWithInputString("{{a.'b'.'c'}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", 
-                                                    new Variable("b", true,
-                                                        new Variable("c", true, NULL))), NULL);
-    CheckParsedNodeWith(expectedNode);
+    MangoNode *expectedNode = mango_varnode_new(
+                                create_variable("a", false, false,
+                                    create_variable("b", true, false,
+                                        create_variable("c", true, false, NULL))), NULL);
+    CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestVariableWithNumericIndexes)
 {
     SetUpWithInputString("{{a.0.1.d}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", 
-                                                    new Variable("0", 
-                                                        new Variable("1", 
-                                                            new Variable("d", NULL)))), NULL);
-    CheckParsedNodeWith(expectedNode);
+    MangoNode *expectedNode = mango_varnode_new(
+                                create_variable("a", false, false,
+                                    create_variable("0", false, true,
+                                        create_variable("1", false, true,
+                                            create_variable("d", false, false, NULL)))), NULL);
+    CheckParsedNodeWith(1, expectedNode);
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 {
     SetUpWithInputString("{{a.0.'1'.d}}");

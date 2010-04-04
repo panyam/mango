@@ -69,7 +69,7 @@ void mango_library_register(MangoLibrary *library, const MangoString *name, Crea
 void *mango_library_new_instance(MangoLibrary *library, const MangoString *name, ...)
 {
     void *new_instance = NULL;
-    if (library != NULL)
+    if (library != NULL && library->creators != NULL)
     {
         // creators list contains name and creator func interleaved
         for (MangoListNode *temp = library->creators->head;temp != NULL;temp = temp->next->next)

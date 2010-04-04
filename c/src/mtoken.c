@@ -37,7 +37,7 @@ MangoToken *mango_token_new(MangoTokenType tokType, const char *tokValue, int to
 {
     MangoToken *token   = NEW(MangoToken);
     token->tokenType    = tokType;
-    token->tokenValue   = mango_string_new(tokLen + 1);
+    token->tokenValue   = mango_string_with_capacity(tokLen + 1);
     mango_string_set(token->tokenValue, tokValue, tokLen);
     return token;
 }
@@ -63,7 +63,7 @@ void mango_token_set_value(MangoToken *token, const char *value)
     int length = strlen(value);
     if (token->tokenValue == NULL)
     {
-        token->tokenValue = mango_string_new(length + 1);
+        token->tokenValue = mango_string_with_capacity(length + 1);
     }
     mango_string_set(token->tokenValue, value, length);
 }
@@ -79,7 +79,7 @@ void mango_token_append_char(MangoToken *token, char value)
     int length = 1;
     if (token->tokenValue == NULL)
     {
-        token->tokenValue = mango_string_new(length + 1);
+        token->tokenValue = mango_string_with_capacity(length + 1);
     }
     mango_string_append_char(token->tokenValue, value);
 }

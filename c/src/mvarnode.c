@@ -134,7 +134,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     MangoNode *node = NULL;
 
     // was there an error?
-    if (error == NULL || *error == NULL)
+    if (error != NULL && *error != NULL)
     {
         mango_variable_free(variable);
         if (filter_nodes != NULL)

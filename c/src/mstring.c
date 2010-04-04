@@ -11,7 +11,7 @@
  *
  * \param   capacity    Capacity of the string.
  */
-MangoString *mango_string_new(unsigned capacity)
+MangoString *mango_string_with_capacity(unsigned capacity)
 {
     MangoString *mstr   = ZNEW(MangoString);
     mstr->buffer        = NEW_ARRAY(char, capacity);
@@ -32,8 +32,9 @@ MangoString *mango_string_from_buffer(const char *buffer, int length)
 {
     if (length < 0)
         length = strlen(buffer);
-    MangoString *mstr = mango_string_new(length + 1);
+    MangoString *mstr = mango_string_with_capacity(length + 1);
     memcpy(mstr->buffer, buffer, length);
+    mstr->length = length;
     mstr->buffer[mstr->length] = 0;
     return mstr;
 }

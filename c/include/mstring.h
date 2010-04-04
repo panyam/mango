@@ -25,7 +25,7 @@ struct MangoString
  *
  * \param   capacity    Capacity of the string.
  */
-extern MangoString *mango_string_new(unsigned capacity);
+extern MangoString *mango_string_with_capacity(unsigned capacity);
 
 /**
  * Create a new string from a buffer.

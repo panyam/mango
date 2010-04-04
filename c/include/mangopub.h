@@ -26,6 +26,7 @@
 #include "mfilter.h"
 #include "mfilternode.h"
 #include "msingletons.h"
+#include "mutils.h"
 
 #endif
 

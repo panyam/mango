@@ -52,21 +52,26 @@ extern void mango_variable_free(MangoVariable *mvar);
  *
  * \param   mvar        Variable whose value is to be changed.
  * \param   isQuoted    Is the value quoted?
- * \param   buffer      New Value
- * \param   length      Length of the buffer.  if < then buffer is null terminated.
+ * \param   value       New Value.  The variable gets ownership of this string.
  */
-extern void mango_variable_set_value(MangoVariable *mvar, BOOL isQuoted, const char *buffer, int length);
+extern void mango_variable_set_value(MangoVariable *mvar,
+                                     MangoString *value,
+                                     BOOL isQuoted);
 
 /**
  * Resolves the value of a variable (for rendering purposes) given the
  * template and node contexts.
  */
-extern int mango_variable_resolve(MangoVariable *mvar, MangoTemplateContext *context, MangoNodeContext *topContext, void **value);
+extern int mango_variable_resolve(MangoVariable *       mvar,
+                                  MangoTemplateContext *context,
+                                  MangoNodeContext *    topContext,
+                                  void **               value);
 
 /**
  * Returns if two variables are equal.
  */
-extern BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *var2);
+extern BOOL mango_variables_are_equal(const MangoVariable *var1,
+                                      const MangoVariable *var2);
 
 /**
  * Sets the next variable for a particular variable.
