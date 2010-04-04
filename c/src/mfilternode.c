@@ -2,6 +2,9 @@
 #include "mmemutils.h"
 #include "mfilternode.h"
 #include "mfilter.h"
+#include "merror.h"
+#include "msingletons.h"
+#include "mlibrary.h"
 #include "mvariable.h"
 #include "mlist.h"
 #include "mtokenlists.h"
@@ -166,14 +169,24 @@ BOOL mango_filternode_parse_filter_arguments(MangoParser *parser,
         token = mango_parser_expect_token_in_list(parser, IDENT_OR_STRING, false, error);
         while (true)
         {
-            String varValue = token->tokenValue.toString();
-            Variable nextVar = new Variable(varValue, token->tokenType == TOKEN_QUOTED_STRING, null);
-            filterNode.addArgument(nextVar);
-            token = parser.expectTokenInList(TokenLists.COMA_OR_CLOSE_PAREN);
-            if (token->tokenType == TOKEN_CLOSE_PAREN)
+            MangoString *varValue = mango_string_copy(token->tokenValue);
+            MangoVariable *variable = mango_variable_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
+            mango_filternode_add_arg(filternode, variable);
+            token = mango_parser_expect_token_in_list(parser, COMA_OR_CLOSE_PAREN, false, error);
+            if (token == NULL)
+            {
+                return false;
+            }
+            else if (token->tokenType == TOKEN_CLOSE_PAREN)
+            {
                 break ;
+            }
             else if (token->tokenType == TOKEN_COMA)
-                token = parser.expectTokenInList(TokenLists.IDENT_OR_STRING);
+            {
+                token = mango_parser_expect_token_in_list(parser, IDENT_OR_STRING, false, error);
+                if (token == NULL)
+                    return false;
+            }
         }
     }
     else if (token->tokenType == TOKEN_IDENTIFIER || 
@@ -181,7 +194,7 @@ BOOL mango_filternode_parse_filter_arguments(MangoParser *parser,
     {
         MangoString *varValue = mango_string_copy(token->tokenValue);
         MangoVariable *variable = mango_variable_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
-        filterNode.addArgument(variable);
+        mango_filternode_add_arg(filternode, variable);
     }
     else
     {
