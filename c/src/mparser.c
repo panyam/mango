@@ -8,6 +8,7 @@
 #include "mstring.h"
 #include "mfreetext.h"
 #include "mvarnode.h"
+#include "mtagnode.h"
 #include "mnodelist.h"
 
 /**

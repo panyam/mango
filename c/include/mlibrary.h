@@ -31,7 +31,7 @@ extern MangoLibrary *mango_library_new(const MangoString *name);
  * Frees a library created with the above new method.
  * \param   library Library to be destroyed.
  */
-extern void mango_library_free(MangoLibrary *library);
+extern void mango_library_free(MangoLibrary *library, void (*deletor)(void *));
 
 /**
  * Registers a new creator method for a new type of object.

@@ -14,6 +14,8 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
+    MangoLibrary *          filterLibrary;
+    MangoLibrary *          tagLibrary;
 
 public:
     ParserTestFixture() :
@@ -21,7 +23,9 @@ public:
         parser(NULL),
         loader(NULL),
         input_source(NULL),
-        input_string("")
+        input_string(""),
+        filterLibrary(mango_filter_library_singleton()),
+        tagLibrary(mango_tag_library_singleton())
     {
     }
 
@@ -237,9 +241,11 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
-    Filter f1 = filterLibrary.makeNewInstance("add");
-    Filter f2 = filterLibrary.makeNewInstance("add");
-    CHECK_EQUAL("Filters are not equal as should be with singletons", f1, f2);
+    MangoString *add = mango_string_from_buffer("add", 3);
+    MangoFilter *f1 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
+    MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(tagLibrary, add);
+    mango_string_free(add);
+    CHECK_EQUAL(f1, f2);
 }
 
 #if 0

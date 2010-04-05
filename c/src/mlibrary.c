@@ -1,5 +1,6 @@
 
 #define _GNU_SOURCE
+#include <stdarg.h>
 #include "mlibrary.h"
 #include "mlist.h"
 #include "mstring.h"
@@ -20,10 +21,16 @@ MangoLibrary *mango_library_new(const MangoString *name)
  * Frees a library created with the above new method.
  * \param   library Library to be destroyed.
  */
-void mango_library_free(MangoLibrary *library)
+void mango_library_free(MangoLibrary *library, void (*deletor)(void *))
 {
     if (library->name != NULL)
         mango_string_free(library->name);
+    if (library->creators != NULL)
+    {
+        if (deletor != NULL)
+            mango_list_clear(library->creators, deletor);
+        mango_list_free(library->creators);
+    }
     free(library);
 }
 
@@ -72,13 +79,17 @@ void *mango_library_new_instance(MangoLibrary *library, const MangoString *name,
     if (library != NULL && library->creators != NULL)
     {
         // creators list contains name and creator func interleaved
-        for (MangoListNode *temp = library->creators->head;temp != NULL;temp = temp->next->next)
+        for (MangoListNode *temp = library->creators->head;
+                            temp != NULL;
+                            temp = temp->next->next)
         {
             if (mango_strings_are_equal((MangoString *)temp->data, name))
             {
-                assert(false);
                 CreatorFunc func = (CreatorFunc)temp->next->data;
-
+                va_list ap;
+                va_start(ap, name);
+                new_instance = func(name, ap);
+                va_end(ap);
                 break ;
             }
         }

@@ -10,18 +10,18 @@ extern "C" {
 #endif
 
 /**
- * Filters get applied on variables in how they manipulate the value stored in a variable.
- * 
- * We do not want to have multiple instances of the same filter.  So it would be better to 
- * have a single instance of the filter through out the application to save memory and their
- * performance wouldnt be bad either.  Since only a certain number of filter instances are 
- * created to conserve memory, this implies that Filter objects cannot have shared state or 
- * state specific to each invocation(of their render) method.  This is for the sake of thread
- * safety.
+ * Filters get applied on variables in how they manipulate the value stored
+ * in a variable.  We do not want to have multiple instances of the same
+ * filter.  So it would be better to have a single instance of the filter
+ * through out the application to save memory and their performance wouldnt
+ * be bad either.  Since only a certain number of filter instances are
+ * created to conserve memory, this implies that Filter objects cannot have
+ * shared state or state specific to each invocation(of their render)
+ * method.  This is for the sake of thread safety.
  *
- * So as an extension (at a later date), this restriction on shared or invocation specific 
- * state can be relaxed by having a FilterContext object associated with each filter if
- * this is a paramount requirement.
+ * So as an extension (at a later date), this restriction on shared or
+ * invocation specific state can be relaxed by having a FilterContext
+ * object associated with each filter if this is a paramount requirement.
  */
 struct MangoFilter
 {

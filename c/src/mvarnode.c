@@ -111,19 +111,23 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     if (token == NULL)
         return NULL;
 
-    MangoList *filter_nodes = NULL;
+    MangoList *filter_nodes = mango_list_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
-        filter_nodes = mango_filternode_extract_filter_list(parser, error);
-        if (error == NULL || *error == NULL)
+        if (mango_filternode_extract_filter_list(parser, filter_nodes, error))
         {
             token = mango_parser_peek_token(parser, error);
+        }
+        else
+        {
+            assert("How do we handle this?" && false);
         }
     }
     
     if (token == NULL || token->tokenType != TOKEN_CLOSE_VARIABLE)
     {
-        mango_error_set(error, -1, "Expected '}}', but found '%s'.", token == NULL ? "EOF" : MangoTokenStrings[token->tokenType]);
+        mango_error_set(error, -1, "Expected '}}', but found '%s'.",
+                            token == NULL ? "EOF" : MangoTokenStrings[token->tokenType]);
     }
     else
     {

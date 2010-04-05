@@ -54,7 +54,9 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
     {
         return false;
     }
-    return mango_lists_are_equal(fn1->arguments, fn2->arguments, (EqualsFunc)mango_variables_are_equal);
+    // compare the arguments
+    return mango_lists_are_equal(fn1->arguments, fn2->arguments,
+                                 (EqualsFunc)mango_variables_are_equal);
 }
 
 /**
@@ -91,7 +93,9 @@ void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar)
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
-BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList *filters, MangoError **error)
+BOOL mango_filternode_extract_filter_list(MangoParser *parser,
+                                          MangoList *filters,
+                                          MangoError **error)
 {
     const MangoToken *token = mango_parser_peek_token(parser, error);
     if (token == NULL)
@@ -126,9 +130,11 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList *filter
  *
  * \return A filternode instance on success, otherwise NULL.
  */
-MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoError **error)
+MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
+                                                      MangoError **error)
 {
-    const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
+    const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER,
+                                                        false, error);
 
     MangoFilter *filter = (MangoFilter *)mango_library_new_instance(mango_filter_library_singleton(), token->tokenValue);
     if (filter == NULL)
@@ -145,22 +151,23 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, Mango
     {
         // consume the token
         token = mango_parser_get_token(parser, error);
-        mango_filternode_parse_filter_arguments(parser, filternode, error);
+        mango_filternode_parse_filter_args(parser, filternode, error);
     }
     return filternode;
 }
 
-    /**
-     * Parses the arguments of a filter expression.  This assumes that next token
-     * that will be read is either a "(" or a variable.
-     * @param parser
-     */
-BOOL mango_filternode_parse_filter_arguments(MangoParser *parser,
-                                             MangoFilterNode *filternode,
-                                             MangoError **error)
+/**
+ * Parses the arguments of a filter expression.  This assumes that next token
+ * that will be read is either a "(" or a variable.
+ * @param parser
+ */
+BOOL mango_filternode_parse_filter_args(MangoParser *parser,
+                                        MangoFilterNode *filternode,
+                                        MangoError **error)
 {
     // now read the tokens
-    const MangoToken *token = mango_parser_expect_token_in_list(parser, IDENT_STRING_OR_OPEN_PAREN, false, error);
+    const MangoToken *token = mango_parser_expect_token_in_list(
+                                parser, IDENT_STRING_OR_OPEN_PAREN, false, error);
     if (token == NULL)
         return false;
 
@@ -170,7 +177,8 @@ BOOL mango_filternode_parse_filter_arguments(MangoParser *parser,
         while (true)
         {
             MangoString *varValue = mango_string_copy(token->tokenValue);
-            MangoVariable *variable = mango_variable_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
+            MangoVariable *variable = mango_variable_new(
+                                        varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
             mango_filternode_add_arg(filternode, variable);
             token = mango_parser_expect_token_in_list(parser, COMA_OR_CLOSE_PAREN, false, error);
             if (token == NULL)
