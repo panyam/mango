@@ -235,11 +235,14 @@ BOOL mango_lists_are_equal(const MangoList *list1, const MangoList *list2, BOOL 
     {
         return true;
     }
-    else if (list1 == NULL || list2 == NULL)
+
+    int size1 = list1 == NULL ? 0 : list1->size;
+    int size2 = list2 == NULL ? 0 : list2->size;
+    if (size1 != size2)
     {
         return false;
     }
-    else if (list1->size != list2->size)
+    else if (list1 == NULL || list2 == NULL)
     {
         return false;
     }

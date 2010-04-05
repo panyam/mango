@@ -4,7 +4,18 @@
 #include "stlinputsource.h"
 #include <vector>
 #include <sstream>
+#include <string.h>
 #include <stdarg.h>
+#include "maddfilter.h"
+
+void register_filter(MangoLibrary *filter_library,
+                     const char *filter,
+                     void *(*creator)(const MangoString *name, ...))
+{
+    mango_library_register(filter_library,
+                           mango_string_from_buffer(filter, strlen(filter)),
+                           creator);
+}
 
 class ParserTestFixture
 {
@@ -27,6 +38,7 @@ public:
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tag_library_singleton())
     {
+        register_filter(filterLibrary, "add", mango_addfilter_new);
     }
 
     virtual ~ParserTestFixture()
@@ -245,6 +257,7 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
     MangoFilter *f1 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
     MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(tagLibrary, add);
     mango_string_free(add);
+    CHECK(f2 == NULL);
     CHECK_EQUAL(f1, f2);
 }
 

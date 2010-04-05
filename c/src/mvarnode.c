@@ -149,6 +149,11 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     }
     else
     {
+        if (filter_nodes->size == 0)
+        {
+            mango_list_free(filter_nodes);
+            filter_nodes = NULL;
+        }
         node = mango_varnode_new(variable, filter_nodes);
     }
     return node;
