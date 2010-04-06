@@ -3,6 +3,7 @@
 #define __MANGO_PUBLIC_H__
 
 #include "mfwddefs.h"
+#include "mobject.h"
 #include "mmemutils.h"
 #include "mclasses.h"
 #include "mtoken.h"

@@ -1,5 +1,6 @@
 
 #include "mbintree.h"
+#include "mmemutils.h"
 
 /**
  * Creates a new binary tree node.
@@ -18,8 +19,7 @@ MangoBinTreeNode *mango_bintreenode_new(void *data)
  */
 MangoBinTree *mango_bintree_new()
 {
-    MangoBinTree *mtree = (MangoBinTree *)calloc(1, sizeof(MangoBinTree));
-    return mtree;
+    return ZNEW(MangoBinTree);
 }
 
 /**
@@ -42,7 +42,10 @@ size_t mango_bintree_size(MangoBinTree *mtree)
  * \return  The tree node matching the item.  If an item already exists, it
  * is returned instead of adding a new node.
  */
-MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*))
+MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree,
+                                       void *data,
+                                       CompareFunc compare)
+                                       // int (*compare)(const void *, const void*))
 {
     if (data == NULL)
         return NULL;
@@ -100,7 +103,9 @@ MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*co
  * \return  The tree node matching the item or NULL if the item cannot be
  * found.
  */
-MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*))
+MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
+                                     void *data,
+                                     CompareFunc compare)
 {
     MangoBinTreeNode *curr = mtree->root;
     while (curr != NULL)

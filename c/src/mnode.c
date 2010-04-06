@@ -18,7 +18,7 @@ MangoNode *default_child_exited(void *nodeData,
 /**
  * Creates a node with default methods.
  */
-extern MangoNode *mango_node_new(void *nodeData)
+MangoNode *mango_node_new(void *nodeData)
 {
     MangoNode *node             = (MangoNode *)calloc(1, sizeof(MangoNode));
     node->nodeClass             = mango_class_for_name("Node", true);

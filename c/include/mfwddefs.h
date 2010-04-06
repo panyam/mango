@@ -15,6 +15,7 @@ extern "C" {
 #define false   0
 typedef int BOOL;
 
+typedef struct MangoObject MangoObject;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoString MangoString;
 typedef struct MangoToken MangoToken;
@@ -30,6 +31,7 @@ typedef struct MangoNodeContext MangoNodeContext;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
 typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoLibrary MangoLibrary;
+typedef struct MangoFilterLibrary MangoFilterLibrary;
 typedef struct MangoList MangoList;
 typedef struct MangoListNode MangoListNode;
 typedef struct MangoBinTree MangoBinTree;

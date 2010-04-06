@@ -41,7 +41,7 @@ extern MangoBinTree *mango_bintree_new();
  * \return  The tree node matching the item.  If an item already exists, it
  * is returned instead of adding a new node.
  */
-extern MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*));
+extern MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree, void *data, CompareFunc compare);
 
 /**
  * Returns the size of a binary tree.
@@ -59,7 +59,7 @@ extern size_t mango_bintree_size(MangoBinTree *mtree);
  * \return  The tree node matching the item or NULL if the item cannot be
  * found.
  */
-extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, int (*compare)(const void *, const void*));
+extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, void *data, CompareFunc compare);
 
 #ifdef __cplusplus
 }
