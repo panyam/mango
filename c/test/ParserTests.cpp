@@ -254,7 +254,7 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
     MangoString *add = mango_string_from_buffer("add", 3);
     MangoFilter *f1 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
-    MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(tagLibrary, add);
+    MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
     mango_string_free(add);
     CHECK(f1 != NULL);
     CHECK(f2 != NULL);

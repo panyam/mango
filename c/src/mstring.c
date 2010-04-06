@@ -229,6 +229,6 @@ int mango_string_compare(const MangoString *mstr, const char *value, size_t leng
  */
 BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2)
 {
-    return mango_string_compare(mstr1, mstr2->buffer, mstr2->length);
+    return mango_string_compare(mstr1, mstr2->buffer, mstr2->length) == 0;
 }
 
