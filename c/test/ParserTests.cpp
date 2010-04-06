@@ -77,7 +77,6 @@ public:
 
     /**
      * Checkes that the parsed node matches what we are expecting.
-     * @param expectedNode
      */
     virtual void CheckParsedNodeWith(int numNodes, ...)
     {
