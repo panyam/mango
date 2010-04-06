@@ -38,7 +38,7 @@ public:
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tag_library_singleton())
     {
-        register_filter(filterLibrary, "add", mango_addfilter_new);
+        register_filter(filterLibrary, "add", (CreatorFunc)mango_addfilter_new);
     }
 
     virtual ~ParserTestFixture()
@@ -257,7 +257,8 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
     MangoFilter *f1 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
     MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(tagLibrary, add);
     mango_string_free(add);
-    CHECK(f2 == NULL);
+    CHECK(f1 != NULL);
+    CHECK(f2 != NULL);
     CHECK_EQUAL(f1, f2);
 }
 

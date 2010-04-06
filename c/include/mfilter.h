@@ -57,6 +57,11 @@ struct MangoFilter
 extern MangoFilter *mango_filter_new(void *data);
 
 /**
+ * Resets the filter contents.
+ */
+extern void mango_filter_reset(MangoFilter *filter, void *data);
+
+/**
  * Destroys a filter created with mango_filter_new.
  */
 extern void mango_filter_free(MangoFilter *filter);

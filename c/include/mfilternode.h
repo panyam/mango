@@ -73,6 +73,22 @@ extern BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList 
  */
 extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoError **error);
 
+/**
+ * Parses the arguments of a filter expression.  This assumes that next token
+ * that will be read is either a "(" or a variable.
+ *
+ * \param   parser      Parser doing the parsing!
+ * \param   filternode  The filter node to which the arguments are to be
+ *                      added.
+ * \param   error       Error to be set in case of failure.
+ *
+ * \return TRUE if one or more arguments were added to the filter node,
+ * false otherwise.
+ */
+extern BOOL mango_filternode_parse_filter_args(MangoParser *parser,
+                                               MangoFilterNode *filternode,
+                                               MangoError **error);
+
 #ifdef __cplusplus
 }
 #endif

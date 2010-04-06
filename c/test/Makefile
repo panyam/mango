@@ -85,7 +85,8 @@ dep:
 # DO NOT DELETE
 
 ../bld/./ParserTests.o: ../include/mangopub.h ../include/mfwddefs.h
-../bld/./ParserTests.o: ../include/mclasses.h ../include/mtoken.h
+../bld/./ParserTests.o: ../include/mmemutils.h ../include/mclasses.h
+../bld/./ParserTests.o: ../include/mtoken.h ../include/mtokenlists.h
 ../bld/./ParserTests.o: ../include/mtokenizer.h ../include/mparser.h
 ../bld/./ParserTests.o: ../include/merror.h ../include/mlist.h
 ../bld/./ParserTests.o: ../include/mbintree.h ../include/mlibrary.h
@@ -93,12 +94,40 @@ dep:
 ../bld/./ParserTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
 ../bld/./ParserTests.o: ../include/mtemplatecontext.h ../include/mnode.h
 ../bld/./ParserTests.o: ../include/mnodelist.h ../include/mvariable.h
-../bld/./ParserTests.o: ../include/mvarnode.h ../include/mfilternode.h
-../bld/./ParserTests.o: stlinputsource.h
-../bld/./stlinputsource.o: stlinputsource.h ../include/minputsource.h
-../bld/./stlinputsource.o: ../include/mfwddefs.h
+../bld/./ParserTests.o: ../include/mvarnode.h ../include/mfilter.h
+../bld/./ParserTests.o: ../include/mfilternode.h ../include/msingletons.h
+../bld/./ParserTests.o: ../include/mutils.h stlinputsource.h
+../bld/./ParserTests.o: ../include/maddfilter.h
+../bld/./stlinputsource.o: stlinputsource.h ../include/mangopub.h
+../bld/./stlinputsource.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./stlinputsource.o: ../include/mclasses.h ../include/mtoken.h
+../bld/./stlinputsource.o: ../include/mtokenlists.h ../include/mtokenizer.h
+../bld/./stlinputsource.o: ../include/mparser.h ../include/merror.h
+../bld/./stlinputsource.o: ../include/mlist.h ../include/mbintree.h
+../bld/./stlinputsource.o: ../include/mlibrary.h ../include/minputsource.h
+../bld/./stlinputsource.o: ../include/mstring.h ../include/mfreetext.h
+../bld/./stlinputsource.o: ../include/mtemplateloader.h
+../bld/./stlinputsource.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./stlinputsource.o: ../include/mnodelist.h ../include/mvariable.h
+../bld/./stlinputsource.o: ../include/mvarnode.h ../include/mfilter.h
+../bld/./stlinputsource.o: ../include/mfilternode.h ../include/msingletons.h
+../bld/./stlinputsource.o: ../include/mutils.h
+../bld/./StringTests.o: ../include/mangopub.h ../include/mfwddefs.h
+../bld/./StringTests.o: ../include/mmemutils.h ../include/mclasses.h
+../bld/./StringTests.o: ../include/mtoken.h ../include/mtokenlists.h
+../bld/./StringTests.o: ../include/mtokenizer.h ../include/mparser.h
+../bld/./StringTests.o: ../include/merror.h ../include/mlist.h
+../bld/./StringTests.o: ../include/mbintree.h ../include/mlibrary.h
+../bld/./StringTests.o: ../include/minputsource.h ../include/mstring.h
+../bld/./StringTests.o: ../include/mfreetext.h ../include/mtemplateloader.h
+../bld/./StringTests.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./StringTests.o: ../include/mnodelist.h ../include/mvariable.h
+../bld/./StringTests.o: ../include/mvarnode.h ../include/mfilter.h
+../bld/./StringTests.o: ../include/mfilternode.h ../include/msingletons.h
+../bld/./StringTests.o: ../include/mutils.h
 ../bld/./TokenizerTests.o: ../include/mangopub.h ../include/mfwddefs.h
-../bld/./TokenizerTests.o: ../include/mclasses.h ../include/mtoken.h
+../bld/./TokenizerTests.o: ../include/mmemutils.h ../include/mclasses.h
+../bld/./TokenizerTests.o: ../include/mtoken.h ../include/mtokenlists.h
 ../bld/./TokenizerTests.o: ../include/mtokenizer.h ../include/mparser.h
 ../bld/./TokenizerTests.o: ../include/merror.h ../include/mlist.h
 ../bld/./TokenizerTests.o: ../include/mbintree.h ../include/mlibrary.h
@@ -107,5 +136,6 @@ dep:
 ../bld/./TokenizerTests.o: ../include/mtemplateloader.h
 ../bld/./TokenizerTests.o: ../include/mtemplatecontext.h ../include/mnode.h
 ../bld/./TokenizerTests.o: ../include/mnodelist.h ../include/mvariable.h
-../bld/./TokenizerTests.o: ../include/mvarnode.h ../include/mfilternode.h
-../bld/./TokenizerTests.o: stlinputsource.h
+../bld/./TokenizerTests.o: ../include/mvarnode.h ../include/mfilter.h
+../bld/./TokenizerTests.o: ../include/mfilternode.h ../include/msingletons.h
+../bld/./TokenizerTests.o: ../include/mutils.h stlinputsource.h

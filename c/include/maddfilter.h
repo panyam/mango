@@ -3,10 +3,18 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Creates a new "add" filter.
  */
 extern MangoFilter *mango_addfilter_new(const MangoString *name, ...);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

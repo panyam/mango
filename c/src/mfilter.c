@@ -18,7 +18,16 @@ int default_apply_func(void *data, int inType, void *inValue, void **outValue, M
  */
 MangoFilter *mango_filter_new(void *data)
 {
-    MangoFilter *filter = NEW(MangoFilter);
+    MangoFilter *filter                 = NEW(MangoFilter);
+    mango_filter_reset(filter, data);
+    return filter;
+}
+
+/**
+ * Resets the filter contents.
+ */
+void mango_filter_reset(MangoFilter *filter, void *data)
+{
     filter->data                        = data;
     filter->deleteFunc                  = free;
     filter->applyFunc                   = default_apply_func;
