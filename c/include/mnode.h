@@ -2,8 +2,7 @@
 #ifndef __MANGO_NODE_H__
 #define __MANGO_NODE_H__
 
-#include "mfwddefs.h"
-#include "mclasses.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
