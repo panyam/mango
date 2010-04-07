@@ -9,15 +9,12 @@ BOOL default_objects_are_equal(const void *objdata1, const void *objdata2);
 /**
  * Creates a object with default methods.
  */
-MangoObject *mango_object_new(void *objData)
+MangoObject *mango_object_new(MangoPrototype *proto, void *objData)
 {
     MangoObject *obj        = ZNEW(MangoObject);
-    obj->objRefCount        = 1;
-    obj->objClass           = mango_class_for_name("Object", true);
+    obj->prototype          = proto;
+    obj->refCount           = 1;
     obj->objData            = objData;
-    obj->deleteObjectData   = default_delete_object_data;
-    obj->objectDataEquals   = default_objects_are_equal;
-    obj->compareObjectData  = default_object_compare;
     return obj;
 }
 
@@ -26,9 +23,9 @@ MangoObject *mango_object_new(void *objData)
  */
 void mango_object_free(MangoObject *obj)
 {
-    if (obj->objData != NULL && obj->deleteObjectData != NULL)
+    if (obj->objData != NULL && obj->prototype->deleteObjectData != NULL)
     {
-        obj->deleteObjectData(obj->objData);
+        obj->prototype->deleteObjectData(obj->objData);
     }
     free(obj);
 }
@@ -52,7 +49,7 @@ BOOL mango_object_equal(const MangoObject *obj1, const MangoObject *obj2)
     {
         return false;
     }
-    else if (obj1->objClass == obj2->objClass)
+    else if (obj1->prototype == obj2->prototype)
     {
         if (obj1->objData == obj2->objData)
         {
@@ -62,13 +59,13 @@ BOOL mango_object_equal(const MangoObject *obj1, const MangoObject *obj2)
         {
             return false;
         }
-        else if (obj1->objectDataEquals != NULL)
+        else if (obj1->prototype->objectDataEquals != NULL)
         {
-            return obj1->objectDataEquals(obj1->objData, obj2->objData);
+            return obj1->prototype->objectDataEquals(obj1->objData, obj2->objData);
         }
-        else if (obj2->objectDataEquals != NULL)
+        else if (obj2->prototype->objectDataEquals != NULL)
         {
-            return obj2->objectDataEquals(obj2->objData, obj1->objData);
+            return obj2->prototype->objectDataEquals(obj2->objData, obj1->objData);
         }
         return true;
     }

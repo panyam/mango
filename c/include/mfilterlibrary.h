@@ -9,11 +9,6 @@ extern "C" {
 #endif
 
 /**
- * Function to initialise a filter.
- */
-typedef void (*InitFilterFunc)(const MangoString *name, MangoFilter *filter, ...);
-
-/**
  * A generic library that acts as a factory of objects.
  */
 struct MangoFilterLibrary
@@ -41,11 +36,11 @@ extern void mango_filter_library_free(MangoFilterLibrary *library);
  * Registers a new creator method for a new type of object.
  * \param   library     Library where the new creator is to be registered.
  * \param   name        Name of the filter to be registered.
- * \param   initFunc    Initialiser function.
+ * \param   filter      Filter to be registered.
  */
 extern void mango_filter_library_register(MangoFilterLibrary *library,
-                                          const MangoString *name,
-                                          InitFilterFunc initFunc);
+                                          MangoString *name,
+                                          MangoFilter *filter);
 
 /**
  * Gets a filter by a given name.
@@ -55,8 +50,8 @@ extern void mango_filter_library_register(MangoFilterLibrary *library,
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-extern MangoFilter *mango_filter_library_get(MangoLibrary *library,
-                                             const MangoString *name);
+extern const MangoFilter *mango_filter_library_get(MangoFilterLibrary *library,
+                                                   const MangoString *name);
 
 #ifdef __cplusplus
 }

@@ -9,8 +9,7 @@
 extern "C" {
 #endif
 
-struct MangoString2Struct
-{
+DECLARE_CLASS(MangoString2,
     //! Buffer that stores the data.
     char *      buffer;
 
@@ -19,9 +18,7 @@ struct MangoString2Struct
 
     //! Length of the contents.
     unsigned    length;
-};
-
-DECLARE_CLASS(MangoString2, MangoString2Struct);
+);
 
 /**
  * Tells if two strings are equal.

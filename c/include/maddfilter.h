@@ -8,9 +8,9 @@ extern "C" {
 #endif
 
 /**
- * Creates a new "add" filter.
+ * Initiases a filter as the "add" filter.
  */
-extern MangoFilter *mango_addfilter_new(const MangoString *name, ...);
+extern void mango_addfilter_init(const MangoString *name, MangoFilter *filter, ...);
 
 #ifdef __cplusplus
 }

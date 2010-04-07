@@ -15,6 +15,7 @@ int filter_node_compare(const void *a, const void *b)
 {
     FilterNode *fna = (FilterNode *)a;
     FilterNode *fnb = (FilterNode *)b;
+    return mango_string_compare(fna->name, fnb->name->buffer, fnb->name->length);
 }
 
 /**
@@ -43,11 +44,22 @@ void mango_filter_library_free(MangoFilterLibrary *library)
  * \param   initFunc    Initialiser function.
  */
 void mango_filter_library_register(MangoFilterLibrary *library,
-                                   const MangoString *name,
-                                   InitFilterFunc initFunc)
+                                   MangoString *name,
+                                   MangoFilter *filter)
 {
     if (library->filters == NULL)
         library->filters = mango_bintree_new();
+    FilterNode fnode;
+    fnode.name = name;
+    fnode.filter = filter;
+    MangoBinTreeNode *node = mango_bintree_find(library->filters, &fnode, filter_node_compare);
+    if (node == NULL)
+    {
+        FilterNode *newfnode = ZNEW(FilterNode);
+        newfnode->name = name;
+        newfnode->filter = filter;
+        mango_bintree_insert(library->filters, newfnode, filter_node_compare);
+    }
 }
 
 /**
@@ -58,8 +70,9 @@ void mango_filter_library_register(MangoFilterLibrary *library,
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-MangoFilter *mango_filter_library_get(MangoLibrary *library, const MangoString *name)
+const MangoFilter *mango_filter_library_get(MangoFilterLibrary *library,
+                                            const MangoString *name)
 {
-    assert("Not implemented" && false);
+    NOT_IMPLEMENTED();
     return NULL;
 }

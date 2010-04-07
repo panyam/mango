@@ -18,7 +18,7 @@ struct MangoObject
     /**
      * Object's reference count.
      */
-    int objRefCount;
+    int refCount;
 
     /**
      * Object specific data.
@@ -30,14 +30,9 @@ struct MangoObject
     struct CLASS_NAME                               \
     {                                               \
         /**                                         \
-         * Prototype for the object.                \
+         * Base object.                             \
          */                                         \
-        const MangoPrototype *  prototype;          \
-                                                    \
-        /**                                         \
-         * Object's reference count.                \
-         */                                         \
-        int objRefCount;                            \
+        MangoObject __base__;                       \
                                                     \
         __VA_ARGS__                                 \
     }
@@ -46,7 +41,7 @@ struct MangoObject
 /**
  * Creates a mango object with default methods.
  */
-extern MangoObject *mango_object_new(void *objData);
+extern MangoObject *mango_object_new(MangoPrototype *proto, void *objData);
 
 /**
  * Destroys a mango object.

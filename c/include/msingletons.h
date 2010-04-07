@@ -4,6 +4,7 @@
 
 #include "mfwddefs.h"
 #include "mlibrary.h"
+#include "mfilterlibrary.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,7 +13,7 @@ extern "C" {
 /**
  * Get the shared filter library instance.
  */
-extern MangoLibrary *mango_filter_library_singleton();
+extern MangoFilterLibrary *mango_filter_library_singleton();
 
 /**
  * Get the shared tag library instance.

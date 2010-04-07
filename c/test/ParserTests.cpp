@@ -9,13 +9,13 @@
 #include <stdarg.h>
 #include "maddfilter.h"
 
-void register_filter(MangoLibrary *filter_library,
-                     const char *filter,
-                     void *(*creator)(const MangoString *name, ...))
+void register_filter(MangoFilterLibrary *filter_library,
+                     const char *name,
+                     MangoFilter *filter)
 {
-    mango_library_register(filter_library,
-                           mango_string_from_buffer(filter, strlen(filter)),
-                           creator);
+    mango_filter_library_register(filter_library,
+                                  mango_string_from_buffer(name, strlen(name)),
+                                  filter);
 }
 
 class ParserTestFixture
@@ -26,7 +26,7 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
+    MangoFilterLibrary *    filterLibrary;
     MangoLibrary *          tagLibrary;
 
 public:
@@ -39,7 +39,9 @@ public:
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tag_library_singleton())
     {
-        register_filter(filterLibrary, "add", (CreatorFunc)mango_addfilter_new);
+        MangoFilter *newfilter = mango_filter_new(NULL);
+        mango_addfilter_init(mango_string_from_buffer("add", strlen("add")), newfilter);
+        register_filter(filterLibrary, "add", newfilter);
     }
 
     virtual ~ParserTestFixture()
@@ -254,8 +256,8 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
     MangoString *add = mango_string_from_buffer("add", 3);
-    MangoFilter *f1 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
-    MangoFilter *f2 = (MangoFilter *)mango_library_new_instance(filterLibrary, add);
+    MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
+    MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
     mango_string_free(add);
     CHECK(f1 != NULL);
     CHECK(f2 != NULL);

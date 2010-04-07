@@ -19,6 +19,7 @@ typedef struct MangoPrototype MangoPrototype;
 typedef struct MangoObject MangoObject;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoString MangoString;
+typedef struct MangoStringTable MangoStringTable;
 typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoParser MangoParser;
@@ -53,6 +54,8 @@ typedef int (*CompareFunc)(const void *, const void *);
  * Delete function signature.
  */
 typedef void (*DeleteFunc)(void *);
+
+#define NOT_IMPLEMENTED()    assert("Not Implemented" && false)
 
 #ifdef __cplusplus
 }

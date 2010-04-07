@@ -5,13 +5,13 @@
 /**
  * Get the shared filter library instance.
  */
-MangoLibrary *mango_filter_library_singleton()
+MangoFilterLibrary *mango_filter_library_singleton()
 {
-    static MangoLibrary *filter_library = NULL;
+    static MangoFilterLibrary *filter_library = NULL;
 
     if (filter_library == NULL)
     {
-        filter_library = mango_library_new(mango_string_from_buffer("Filters", strlen("Filters")));
+        filter_library = mango_filter_library_new();
     }
 
     return filter_library;
