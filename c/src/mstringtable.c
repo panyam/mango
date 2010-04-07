@@ -1,7 +1,26 @@
 
+#include <string.h>
 #include "mstringtable.h"
 #include "mmemutils.h"
 #include "mbintree.h"
+
+typedef struct StringTableNode
+{
+    int     strId;
+    char *  strValue;
+    int     strLength;
+} StringTableNode;
+
+/**
+ * Compare two string table nodes by their string value.
+ */
+int stablenode_compare(const void *a, const void *b)
+{
+    const StringTableNode *stna = (const StringTableNode *)a;
+    const StringTableNode *stnb = (const StringTableNode *)b;
+    return strcmp(stna->strValue, stnb->strValue);
+}
+
 
 /**
  * Creates a new string table.
@@ -12,7 +31,6 @@ MangoStringTable *mango_string_table_new()
     return ZNEW(MangoStringTable);
 }
 
-
 /**
  * Frees a string table created with the above new method.
  * \param   mstable The mango string table to be destroyed.
@@ -22,7 +40,7 @@ void mango_string_table_free(MangoStringTable *mstable)
     if (mstable->data != NULL)
     {
         NOT_IMPLEMENTED();
-        mango_bintree_free((MangoBinTree *)mstable->data);
+        // mango_bintree_free((MangoBinTree *)mstable->data);
     }
     free(mstable);
 }
@@ -44,6 +62,29 @@ int mango_string_table_find(MangoStringTable *  stable,
                             int                 length,
                             BOOL                create)
 {
-    return -1;
+    if (stable->data == NULL)
+    {
+        if (!create)
+            return false;
+        stable->data = mango_bintree_new();
+    }
+
+    MangoBinTree *  bintree = (MangoBinTree *)stable->data;
+    StringTableNode stnode;
+    stnode.strValue = (char *)str;
+    stnode.strLength = length;
+    MangoBinTreeNode *node = mango_bintree_find(bintree, &stnode, stablenode_compare);
+    int strId = -1;
+    if (node == NULL && create)
+    {
+        strId = mango_bintree_size(bintree) + 1;
+        StringTableNode *newnode = ZNEW(StringTableNode);
+        newnode->strId      = strId;
+        newnode->strLength  = length;
+        newnode->strValue   = NEW_ARRAY(char, length);
+        memcpy(newnode->strValue, str, length);
+        node = mango_bintree_insert(bintree, newnode, stablenode_compare);
+    }
+    return strId;
 }
 
