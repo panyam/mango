@@ -26,25 +26,21 @@ struct MangoObject
     void *objData;
 };
 
-#define DECLARE_CLASS(CLASS_NAME, CLASS_DATA_STRUCT)                    \
-    struct CLASS_NAME                                                   \
-    {                                                                   \
-        /**                                                             \
-         * Prototype for the object.                                    \
-         */                                                             \
-        const MangoPrototype *  prototype;                              \
-                                                                        \
-        /**                                                             \
-         * Object's reference count.                                    \
-         */                                                             \
-        int objRefCount;                                                \
-                                                                        \
-        /**                                                             \
-         * Actual data of the object.                                   \
-         */                                                             \
-        CLASS_DATA_STRUCT   objectData;                                 \
-    };                                                                  \
-    typedef struct CLASS_NAME CLASS_NAME                                \
+#define DECLARE_CLASS(CLASS_NAME, ...)              \
+    struct CLASS_NAME                               \
+    {                                               \
+        /**                                         \
+         * Prototype for the object.                \
+         */                                         \
+        const MangoPrototype *  prototype;          \
+                                                    \
+        /**                                         \
+         * Object's reference count.                \
+         */                                         \
+        int objRefCount;                            \
+                                                    \
+        __VA_ARGS__                                 \
+    }
 
 
 /**
