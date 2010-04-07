@@ -14,6 +14,12 @@ struct MangoStringTable
 };
 
 /**
+ * Gets the default string table.
+ * \return  The default global string table.
+ */
+extern MangoStringTable *mango_string_table_default();
+
+/**
  * Creates a new string table.
  * \return  A new mango string table instance.
  */
@@ -33,6 +39,7 @@ extern void mango_string_table_free(MangoStringTable *mstable);
  *                  terminated.
  * \param   create  If the string is not found, it will be created, if this
  *                  parameter is set.
+ * \param   rcdelta How much to change the refcount by.
  * 
  * \return  The index of the string if it exists or if it was created,
  * otherwise -1.
@@ -40,7 +47,22 @@ extern void mango_string_table_free(MangoStringTable *mstable);
 extern int mango_string_table_find(MangoStringTable *   stable,
                                    const char *         str,
                                    int                  length,
-                                   BOOL                 create);
+                                   BOOL                 create,
+                                   int                  rcdelta);
+
+/**
+ * Increments the reference count of a string.
+ * \param   mstable Table in which to find the string.
+ * \param   strid   ID of the string.
+ */
+extern void mango_string_table_incref(MangoStringTable *mstable, int strid);
+
+/**
+ * Decrements the reference count of a string.
+ * \param   mstable Table in which to find the string.
+ * \param   strid   ID of the string.
+ */
+extern void mango_string_table_decref(MangoStringTable *mstable, int strid);
 
 #ifdef __cplusplus
 }

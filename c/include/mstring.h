@@ -8,41 +8,48 @@
 extern "C" {
 #endif
 
+/**
+ * Immutable strings.
+ */
 struct MangoString
 {
-    //! Buffer that stores the data.
-    char *      buffer;
+    /**
+     * The Intern ID.
+     */
+    int                 internId;
 
-    //! Buffer capacity.
-    unsigned    capacity;
-
-    //! Length of the contents.
-    unsigned    length;
+    /**
+     * The string table/pool to which the string belongs.
+     * If this is a waste of space, we can remove this and make it the
+     * caller's responsibility to ensure that the strings being compared
+     * belong to the same string table.
+     */
+    MangoStringTable *  mstable;
 };
 
 /**
- * Create a new string with a given capacity.
+ * Creates a new immutale string.
+ * \param   value   Value of the string.
+ * \param   lenght  Length of the string.  If -ve then string is null
+ *                  terminated.
+ * \param   mstable The String table/pool from which the string is to be
+ *                  sourced.  If NULL, then the default table is used.
  *
- * \param   capacity    Capacity of the string.
+ * \return  A new instance of the immutable string.
  */
-extern MangoString *mango_string_with_capacity(unsigned capacity);
+extern MangoString *mango_string_new(const char *value,
+                                     int length,
+                                     MangoStringTable *mstable);
 
 /**
- * Create a new string from a buffer.
- *
- * \param   buffer  Buffer of the values to copy.
- * \param   length  Length of the buffer.  If length < 0, then buffer is
- *                  null terminated.
- * \return A new string instance.
+ * Gets the buffer value of the string.
  */
-extern MangoString *mango_string_from_buffer(const char *buffer, int length);
+extern const char *mango_string_value(const MangoString *mstr);
 
 /**
- * Makes a copy of the string.
- *
- * \param   another String to be copied.
+ * Gets the length of the string.
  */
-extern MangoString *mango_string_copy(const MangoString *another);
+extern size_t mango_string_length(const MangoString *mstr);
 
 /**
  * Destroys a string.
@@ -50,80 +57,6 @@ extern MangoString *mango_string_copy(const MangoString *another);
  * \param   mstr String to be destroyed.
  */
 extern void mango_string_free(MangoString *mstr);
-
-/**
- * Clears the buffer.
- *
- * \param   mstr    String to be updated.
- */
-extern void mango_string_clear(MangoString *mstr);
-
-/**
- * Sets the buffer value.
- *
- * \param   mstr    String to be updated.
- */
-extern void mango_string_set(MangoString *mstr, const char *value, size_t length);
-
-/**
- * Appends a value to the string buffer.
- *
- * \param   mstr    String to be updated.
- * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
- */
-extern void mango_string_append(MangoString *mstr, const char *value, size_t length);
-
-/**
- * Appends a character.
- *
- * \param   mstr    String to be updated.
- * \param   chr     Character to be appended.
- */
-extern void mango_string_append_char(MangoString *mstr, char ch);
-
-/**
- * Appends a short value.
- *
- * \param   mstr    String to be updated.
- * \param   value   Character to be appended.
- */
-extern void mango_string_append_short(MangoString *mstr, short value);
-
-/**
- * Appends an int value as binary.
- *
- * \param   mstr    String to be updated.
- * \param   value   Short value to be appended.
- */
-extern void mango_string_append_int(MangoString *mstr, int value);
-
-/**
- * Appends long value as binary.
- *
- * \param   mstr    String to be updated.
- * \param   value   Long value to be appended.
- */
-extern void mango_string_append_long(MangoString *mstr, long value);
-
-/**
- * Formatted appending of contents to the end of the string.
- *
- * \param   mstr    String to be appended.
- * \param   fmt     Format of the input.
- * \param   ...     Parameters to be appended.
- *
- * \returns Number of characters added.
- */
-extern int mango_string_append_format(MangoString *mstr, const char *fmt, ...);
-
-/**
- * Ensures that the string has certain capacity.
- *
- * \param   mstr    String to be updated.
- * \param   newcap  New capacity to be made available in the string.
- */
-extern void mango_string_ensure_capacity(MangoString *mstr, size_t newcap);
 
 /**
  * Compares the string contents with another buffer.
@@ -134,7 +67,7 @@ extern void mango_string_ensure_capacity(MangoString *mstr, size_t newcap);
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-extern int mango_string_compare(const MangoString *mstr, const char *value, size_t length);
+extern int mango_string_compare(const MangoString *mstr1, const MangoString *mstr2);
 
 /**
  * Tells if two strings are equal.

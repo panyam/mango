@@ -2,7 +2,7 @@
 #include "mvariable.h"
 #include "mlibrary.h"
 #include "mparser.h"
-#include "mstring.h"
+#include "mstringbuffer.h"
 #include "mtemplatecontext.h"
 #include "mnode.h"
 #include "mmemutils.h"
@@ -59,7 +59,9 @@ void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQu
     mvar->value     = value;
     mvar->isQuoted  = isQuoted;
     mvar->intValue  = 0;
-    mvar->isNumber  = is_integer(value->buffer, value->length, &mvar->intValue);
+    mvar->isNumber  = is_integer(mango_string_value(value),
+                                 mango_string_length(value),
+                                 &mvar->intValue);
 }
 
 /**
@@ -88,7 +90,7 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
              var1->isNumber == var2->isNumber &&
              var1->intValue == var2->intValue)
     {
-        return mango_string_compare(var1->value, var2->value->buffer, var2->value->length) == 0 &&
+        return mango_string_compare(var1->value, var2->value) &&
                     mango_variables_are_equal(var1->next, var2->next);
     }
     return false;
@@ -134,10 +136,10 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoErro
 
     while (true)
     {
-        const MangoString *varValue = token->tokenValue;
         BOOL isQuoted = token->tokenType == TOKEN_QUOTED_STRING;
         if (firstVar == NULL)
         {
+            MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
             // see if the variable library returns a "special" variable
             MangoVariable *nextVar = isQuoted ? NULL :
                                         (MangoVariable *)mango_library_new_instance(
@@ -145,13 +147,15 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoErro
                                                             varValue);
             if (nextVar == NULL)
             {
-                nextVar = mango_variable_new(mango_string_from_buffer(varValue->buffer, varValue->length), isQuoted, NULL);
+                nextVar = mango_variable_new(varValue, isQuoted, NULL);
             }
             firstVar = lastVar = nextVar;
         }
         else
         {
-            MangoVariable *nextVar = lastVar->setNextVariable(lastVar, mango_string_copy(varValue), isQuoted);
+            MangoVariable *nextVar = lastVar->setNextVariable(lastVar,
+                                        mango_stringbuffer_tostring(token->tokenValue),
+                                        isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

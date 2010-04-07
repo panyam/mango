@@ -51,7 +51,7 @@ struct MangoToken
     /**
      * Implementation specific data associated with the token.
      */
-    MangoString *       tokenValue;
+    MangoStringBuffer * tokenValue;
 };
 
 /**

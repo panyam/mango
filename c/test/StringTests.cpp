@@ -14,7 +14,5 @@ public:
  */
 TEST_FIXTURE(StringTestFixture, TestStringCreate)
 {
-    MangoString *mstr = mango_string_with_capacity(0);
-    mango_string_free(mstr);
 }
 

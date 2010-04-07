@@ -5,7 +5,7 @@
 #include "mtemplateloader.h"
 #include "mparser.h"
 #include "mlist.h"
-#include "mstring.h"
+#include "mstringbuffer.h"
 #include "mfreetext.h"
 #include "mvarnode.h"
 #include "mtagnode.h"
@@ -239,7 +239,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
         if (token->tokenType == TOKEN_FREETEXT)
         {
             // easy
-            return mango_freetext_new(mango_string_copy(token->tokenValue));
+            return mango_freetext_new(mango_stringbuffer_tostring(token->tokenValue));
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
@@ -254,7 +254,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
                 char **nameList = mango_list_front(parser->endNodeStack);
                 for (int i = 0;nameList[i] != NULL;i++)
                 {
-                    if (mango_string_compare(token->tokenValue, nameList[i], strlen(nameList[i])) == 0)
+                    if (mango_stringbuffer_compare(token->tokenValue, nameList[i], strlen(nameList[i])) == 0)
                     {
                         // we are at an end tag so pop the endtag list and return an endtag indicator
                         mango_list_remove_front(parser->endNodeStack);

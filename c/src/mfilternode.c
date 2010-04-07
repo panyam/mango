@@ -9,7 +9,7 @@
 #include "mlist.h"
 #include "mtokenlists.h"
 #include "mparser.h"
-#include "mstring.h"
+#include "mstringbuffer.h"
 #include "mtemplatecontext.h"
 
 /**
@@ -183,7 +183,7 @@ BOOL mango_filternode_parse_filter_args(MangoParser *parser,
         token = mango_parser_expect_token_in_list(parser, IDENT_OR_STRING, false, error);
         while (true)
         {
-            MangoString *varValue = mango_string_copy(token->tokenValue);
+            MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
             MangoVariable *variable = mango_variable_new(
                                         varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
             mango_filternode_add_arg(filternode, variable);

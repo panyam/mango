@@ -1,7 +1,7 @@
 
-#include "mstring.h"
 #include "mtoken.h"
 #include "mmemutils.h"
+#include "mstringbuffer.h"
 #include <string.h>
 
 const char *MangoTokenStrings[TOKEN_COUNT] = {

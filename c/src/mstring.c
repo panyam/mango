@@ -4,38 +4,29 @@
 #include <string.h>
 #include "merror.h"
 #include "mstring.h"
+#include "mstringtable.h"
 #include "mmemutils.h"
 
 /**
- * Create a new string with a given capacity.
+ * Creates a new immutale string.
+ * \param   value   Value of the string.
+ * \param   lenght  Length of the string.  If -ve then string is null
+ *                  terminated.
+ * \param   mstable The String table/pool from which the string is to be
+ *                  sourced.  If NULL, then the default table is used.
  *
- * \param   capacity    Capacity of the string.
+ * \return  A new instance of the immutable string.
  */
-MangoString *mango_string_with_capacity(unsigned capacity)
+MangoString *mango_string_new(const char *value, int length,
+                              MangoStringTable *mstable)
 {
-    MangoString *mstr   = ZNEW(MangoString);
-    mstr->buffer        = NEW_ARRAY(char, capacity);
-    mstr->capacity      = capacity;
-    mstr->length        = 0;
-    return mstr;
-}
-
-/**
- * Create a new string from a buffer.
- *
- * \param   buffer  Buffer of the values to copy.
- * \param   length  Length of the buffer.  If length < 0, then buffer is
- *                  null terminated.
- * \return A new string instance.
- */
-MangoString *mango_string_from_buffer(const char *buffer, int length)
-{
+    if (mstable == NULL)
+        mstable = mango_string_table_default();
     if (length < 0)
-        length = strlen(buffer);
-    MangoString *mstr = mango_string_with_capacity(length + 1);
-    memcpy(mstr->buffer, buffer, length);
-    mstr->length = length;
-    mstr->buffer[mstr->length] = 0;
+        length = strlen(value);
+    MangoString *mstr = NEW(MangoString);
+    mstr->internId  = mango_string_table_find(mstable, value, length, true, 1);
+    mstr->mstable   = mstable;
     return mstr;
 }
 
@@ -49,7 +40,11 @@ MangoString *mango_string_from_buffer(const char *buffer, int length)
  */
 MangoString *mango_string_copy(const MangoString *another)
 {
-    return mango_string_from_buffer(another->buffer, another->length);
+    MangoString *mstr   = NEW(MangoString);
+    mango_string_table_incref(another->mstable, another->internId);
+    mstr->internId      = another->internId;
+    mstr->mstable       = another->mstable;
+    return mstr;
 }
 
 /**
@@ -59,169 +54,25 @@ MangoString *mango_string_copy(const MangoString *another)
  */
 void mango_string_free(MangoString *mstr)
 {
-    if (mstr->buffer != NULL)
-        free(mstr->buffer);
+    mango_string_table_decref(mstr->mstable, mstr->internId);
     free(mstr);
-}
-
-/**
- * Clears the buffer.
- *
- * \param   mstr    String to be updated.
- */
-void mango_string_clear(MangoString *mstr)
-{
-    mstr->length = 0;
-}
-
-/**
- * Sets the buffer value.
- *
- * \param   mstr    String to be updated.
- * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
- */
-void mango_string_set(MangoString *mstr, const char *value, size_t length)
-{
-    mstr->length = 0;
-    mango_string_append(mstr, value, length);
-}
-
-/**
- * Appends a value to the string buffer.
- *
- * \param   mstr    String to be updated.
- * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
- */
-void mango_string_append(MangoString *mstr, const char *value, size_t length)
-{
-    mango_string_ensure_capacity(mstr, length + mstr->length + 1);
-    memcpy(mstr->buffer + mstr->length, value, length);
-    mstr->length += length;
-    mstr->buffer[mstr->length] = 0;
-}
-
-/**
- * Appends a character.
- *
- * \param   mstr    String to be updated.
- * \param   chr     Character to be appended.
- */
-void mango_string_append_char(MangoString *mstr, char ch)
-{
-    mango_string_ensure_capacity(mstr, mstr->length + 2);
-    mstr->buffer[mstr->length++] = ch;
-    mstr->buffer[mstr->length] = 0;
-}
-
-/**
- * Appends a short value.
- *
- * \param   mstr    String to be updated.
- * \param   value   Character to be appended.
- */
-void mango_string_append_short(MangoString *mstr, short value)
-{
-    int nbytes = sizeof(value);
-    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
-    for (int i = 0;i < nbytes;i++)
-    {
-        mstr->buffer[mstr->length++] = ((char *)&value)[i];
-    }
-    mstr->buffer[mstr->length] = 0;
-}
-
-/**
- * Appends an int value as binary.
- *
- * \param   mstr    String to be updated.
- * \param   value   Short value to be appended.
- */
-void mango_string_append_int(MangoString *mstr, int value)
-{
-    int nbytes = sizeof(value);
-    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
-    for (int i = 0;i < nbytes;i++)
-    {
-        mstr->buffer[mstr->length++] = ((char *)&value)[i];
-    }
-    mstr->buffer[mstr->length] = 0;
-}
-
-/**
- * Appends long value as binary.
- *
- * \param   mstr    String to be updated.
- * \param   value   Long value to be appended.
- */
-void mango_string_append_long(MangoString *mstr, long value)
-{
-    int nbytes = sizeof(value);
-    mango_string_ensure_capacity(mstr, mstr->length + nbytes + 1);
-    for (int i = 0;i < nbytes;i++)
-    {
-        mstr->buffer[mstr->length++] = ((char *)&value)[i];
-    }
-    mstr->buffer[mstr->length] = 0;
-}
-
-/**
- * Formatted appending of contents to the end of the string.
- * Cannot append more than a total of 1024 characters at a time.
- *
- * \param   mstr    String to be appended.
- * \param   fmt     Format of the input.
- * \param   ...     Parameters to be appended.
- *
- * \returns Number of characters added.
- */
-int mango_string_append_format(MangoString *mstr, const char *fmt, ...)
-{
-    char buff[1024];
-    int len;
-    va_list(ap);
-    va_start(ap, fmt);
-    len = vsnprintf(buff, 2047, fmt, ap);
-    va_end(ap);
-    mango_string_append(mstr, buff, len);
-    return len;
-}
-
-/**
- * Ensures that the string has certain capacity.
- *
- * \param   mstr    String to be updated.
- * \param   newcap  New capacity to be made available in the string.
- */
-void mango_string_ensure_capacity(MangoString *mstr, size_t newcap)
-{
-    if (mstr->capacity < newcap)
-    {
-        newcap          = (newcap * 3) / 2;
-        mstr->buffer    = realloc(mstr->buffer, newcap);
-        mstr->capacity  = newcap;
-    }
 }
 
 /**
  * Compares the string contents with another buffer.
  *
- * \param   mstr    String being compared.
- * \param   value   String being compared to.
- * \param   length  Length of the string being compared to.
+ * \param   mstr1   First String being compared with.
+ * \param   mstr2   Second String being compared to.
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-int mango_string_compare(const MangoString *mstr, const char *value, size_t length)
+int mango_string_compare(const MangoString *mstr1, const MangoString *mstr2)
 {
-    int minlen = mstr->length < length ? mstr->length : length;
-    for (int i = 0;i < minlen;i++)
+    if (mstr1->mstable == mstr2->mstable)
     {
-        if (mstr->buffer[i] != value[i])
-            return mstr->buffer[i] - value[i];
+        return mstr1->internId - mstr2->internId;
     }
-    return mstr->length - length;
+    return mstr1->mstable - mstr2->mstable;
 }
 
 /**
@@ -229,6 +80,7 @@ int mango_string_compare(const MangoString *mstr, const char *value, size_t leng
  */
 BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2)
 {
-    return mango_string_compare(mstr1, mstr2->buffer, mstr2->length) == 0;
+    return mstr1->internId == mstr2->internId &&
+            mstr1->mstable == mstr2->mstable;
 }
 

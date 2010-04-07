@@ -1,7 +1,7 @@
 
 #include "merror.h"
 #include "minputsource.h"
-#include "mstring.h"
+#include "mstringbuffer.h"
 #include "mtokenizer.h"
 #include "mmemutils.h"
 

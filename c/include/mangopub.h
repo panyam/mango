@@ -18,6 +18,7 @@
 #include "mlibrary.h"
 #include "minputsource.h"
 #include "mstring.h"
+#include "mstringbuffer.h"
 #include "mstringtable.h"
 #include "mfreetext.h"
 #include "mtemplateloader.h"

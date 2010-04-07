@@ -10,7 +10,14 @@ typedef struct StringTableEntry
     int     strId;
     char *  strValue;
     int     strLength;
+    int     refCount;
 } StringTableEntry;
+
+typedef struct StringTableImpl
+{
+    MangoArray *    entriesByIndex;
+    MangoBinTree *  entriesByName;
+} StringTableImpl;
 
 /**
  * Compare two string table nodes by their string value.
@@ -27,7 +34,7 @@ int stablenode_compare(const void *a, const void *b)
  */
 MangoArray *mango_string_table_by_index(MangoStringTable *mstable)
 {
-    return (MangoArray *)(((void **)mstable->data)[0]);
+    return ((StringTableImpl *)mstable->data)->entriesByIndex;
 }
 
 /**
@@ -35,7 +42,35 @@ MangoArray *mango_string_table_by_index(MangoStringTable *mstable)
  */
 MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
 {
-    return (MangoArray *)(((void **)mstable->data)[1]);
+    return ((StringTableImpl *)mstable->data)->entriesByName;
+}
+
+/**
+ * Increments the reference count of a string.
+ * \param   mstable Table in which to find the string.
+ * \param   strid   ID of the string.
+ */
+void mango_string_table_incref(MangoStringTable *mstable, int strid)
+{
+    MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
+    StringTableEntry *entry = mango_array_itemat(entriesByIndex, strid);
+    entry->refCount++;
+}
+
+/**
+ * Decrements the reference count of a string.
+ * \param   mstable Table in which to find the string.
+ * \param   strid   ID of the string.
+ */
+void mango_string_table_decref(MangoStringTable *mstable, int strid)
+{
+    MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
+    StringTableEntry *entry = mango_array_itemat(entriesByIndex, strid);
+    entry->refCount--;
+    if (entry->refCount <= 0)
+    {
+        // TODO: delete it?
+    }
 }
 
 /**
@@ -44,11 +79,25 @@ MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
  */
 MangoStringTable *mango_string_table_new()
 {
-    MangoStringTable *mstable = ZNEW(MangoStringTable);
-    mstable->data = ZNEW_ARRAY(void *, 2);
-    ((void **)mstable->data)[0] = mango_array_new();
-    ((void **)mstable->data)[1] = mango_bintree_new();
+    MangoStringTable *mstable = NEW(MangoStringTable);
+    mstable->data = NEW(StringTableImpl);
+    ((StringTableImpl *)mstable->data)->entriesByIndex = mango_array_new();
+    ((StringTableImpl *)mstable->data)->entriesByName = mango_bintree_new();
     return mstable;
+}
+
+/**
+ * Gets the default string table.
+ * \return  The default global string table.
+ */
+MangoStringTable *mango_string_table_default()
+{
+    MangoStringTable *DEFAULT_STRING_TABLE = NULL;
+    if (DEFAULT_STRING_TABLE  == NULL)
+    {
+        DEFAULT_STRING_TABLE = mango_string_table_new();
+    }
+    return DEFAULT_STRING_TABLE;
 }
 
 /**
@@ -73,6 +122,7 @@ void mango_string_table_free(MangoStringTable *mstable)
  *                  terminated.
  * \param   create  If the string is not found, it will be created, if this
  *                  parameter is set.
+ * \param   rcdelta How much to change the refcount by.
  * 
  * \return  The index of the string if it exists or if it was created,
  * otherwise -1.
@@ -80,7 +130,8 @@ void mango_string_table_free(MangoStringTable *mstable)
 int mango_string_table_find(MangoStringTable *  stable,
                             const char *        str,
                             int                 length,
-                            BOOL                create)
+                            BOOL                create,
+                            int                 rcdelta)
 {
     if (stable->data == NULL)
     {
@@ -103,9 +154,21 @@ int mango_string_table_find(MangoStringTable *  stable,
         newentry->strId      = strId;
         newentry->strLength  = length;
         newentry->strValue   = NEW_ARRAY(char, length);
+        newentry->refCount   = 0;
         memcpy(newentry->strValue, str, length);
         node = mango_bintree_insert(bintree, newentry, stablenode_compare);
         mango_array_insert(array, newentry, -1);
+    }
+
+    if (node != NULL)
+    {
+        StringTableEntry *stEntry = (StringTableEntry *)node->data;
+        stEntry += rcdelta;
+        if (stEntry->refCount <= 0)
+        {
+            stEntry->refCount = 0;
+            // TODO: what do we do here? delete it to save space?
+        }
     }
     return strId;
 }

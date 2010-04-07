@@ -10,12 +10,10 @@
 #include "maddfilter.h"
 
 void register_filter(MangoFilterLibrary *filter_library,
-                     const char *name,
+                     MangoString *name,
                      MangoFilter *filter)
 {
-    mango_filter_library_register(filter_library,
-                                  mango_string_from_buffer(name, strlen(name)),
-                                  filter);
+    mango_filter_library_register(filter_library, name, filter);
 }
 
 class ParserTestFixture
@@ -40,8 +38,8 @@ public:
         tagLibrary(mango_tag_library_singleton())
     {
         MangoFilter *newfilter = mango_filter_new(NULL);
-        mango_addfilter_init(mango_string_from_buffer("add", strlen("add")), newfilter);
-        register_filter(filterLibrary, "add", newfilter);
+        mango_addfilter_init(mango_string_new("add", -1, NULL), newfilter);
+        register_filter(filterLibrary, mango_string_new("add", -1, NULL), newfilter);
     }
 
     virtual ~ParserTestFixture()
@@ -183,20 +181,20 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
 TEST_FIXTURE(ParserTestFixture, TestOnlyFreeText)
 {
     SetUpWithInputString("Hello World");
-    CheckParsedNodeWith(1, mango_freetext_new(mango_string_from_buffer("Hello World", -1)));
+    CheckParsedNodeWith(1, mango_freetext_new(mango_string_new("Hello World", -1, NULL)));
 }
 
 TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
 {
     SetUpWithInputString("Hello{# A Huge Comment#}World");
     CheckParsedNodeWith(2, 
-                        mango_freetext_new(mango_string_from_buffer("Hello", -1)), 
-                        mango_freetext_new(mango_string_from_buffer("World", -1)));
+                        mango_freetext_new(mango_string_new("Hello", -1, NULL)), 
+                        mango_freetext_new(mango_string_new("World", -1, NULL)));
 }
 
 MangoVariable *create_variable(const char *value, bool isQuoted, bool isNum, MangoVariable *next)
 {
-    MangoVariable *var = mango_variable_new(mango_string_from_buffer(value, -1), isQuoted, next);
+    MangoVariable *var = mango_variable_new(mango_string_new(value, -1, NULL), isQuoted, next);
     var->isNumber = isNum;
     if (isNum)
     {
@@ -255,7 +253,7 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
-    MangoString *add = mango_string_from_buffer("add", 3);
+    MangoString *add = mango_string_new("add", -1, NULL);
     MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
     MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
     mango_string_free(add);
