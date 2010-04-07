@@ -1,9 +1,15 @@
 
-#include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include "marray.h"
+#include "mmemutils.h"
+
+/**
+ * Creates a new array with a given capacity.
+ */
+MangoArray *mango_array_new()
+{
+    return ZNEW(MangoArray);
+}
 
 /*
  * Initialise an array.
@@ -88,7 +94,7 @@ MangoArray * mango_array_remove(MangoArray *array, int index)
 /*
  * Remove a range of values in an array.
  */
-MangoArray * mango_array_rremove(MangoArray *array, int from, int to)
+MangoArray * mango_array_remove_range(MangoArray *array, int from, int to)
 {
     if (from > to)
     {

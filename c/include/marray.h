@@ -21,50 +21,55 @@ struct MangoArray
     unsigned    capacity;
 };
 
+/**
+ * Creates a new array.
+ */
+extern MangoArray *mango_array_new();
+
+/*
+ * Destroys an array
+ */
+extern void mango_array_free(MangoArray *array);
+
+/*
+ * Resets an array without freeing the array itself (but the buffer is
+ * freed)
+ */
+extern void mango_array_reset(MangoArray *array);
+
 /*
  * Initialise an array.
  */
-MangoArray *  mango_array_reserve(MangoArray *array, int capacity);
+extern MangoArray *  mango_array_reserve(MangoArray *array, int capacity);
 
 /*
  * Return the element at a given index.
  */
-void *      mango_array_itemat(MangoArray *array, int index);
+extern void *mango_array_itemat(MangoArray *array, int index);
 
 /*
  * Insert an item at a given index in the array
  *
  * -ve index indicates an append operation
  */
-MangoArray *  mango_array_insert(MangoArray *array, void *item, int index);
+extern MangoArray *mango_array_insert(MangoArray *array, void *item, int index);
 
 /*
  * Insert a set of value at a given index.
  *
  * -ve index indicates an append operation
  */
-MangoArray *  mango_array_sinsert(MangoArray *array, int index, void **src, int srclen);
+extern MangoArray *mango_array_sinsert(MangoArray *array, int index, void **src, int srclen);
 
 /*
  * Remove an item at a given index
  */
-MangoArray *  mango_array_remove(MangoArray *array, int index);
+extern MangoArray *mango_array_remove(MangoArray *array, int index);
 
 /*
  * Remove a range of values in an array.
  */
-MangoArray *  mango_array_rremove(MangoArray *array, int from, int to);
-
-/*
- * Resets an array without freeing the array itself (but the buffer is
- * freed)
- */
-void mango_array_reset(MangoArray *array);
-
-/*
- * Destroys an array
- */
-void        mango_array_free(MangoArray *array);
+extern MangoArray *mango_array_remove_range(MangoArray *array, int from, int to);
 
 #ifdef __cplusplus
 }

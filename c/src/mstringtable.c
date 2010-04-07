@@ -3,24 +3,40 @@
 #include "mstringtable.h"
 #include "mmemutils.h"
 #include "mbintree.h"
+#include "marray.h"
 
-typedef struct StringTableNode
+typedef struct StringTableEntry
 {
     int     strId;
     char *  strValue;
     int     strLength;
-} StringTableNode;
+} StringTableEntry;
 
 /**
  * Compare two string table nodes by their string value.
  */
 int stablenode_compare(const void *a, const void *b)
 {
-    const StringTableNode *stna = (const StringTableNode *)a;
-    const StringTableNode *stnb = (const StringTableNode *)b;
+    const StringTableEntry *stna = (const StringTableEntry *)a;
+    const StringTableEntry *stnb = (const StringTableEntry *)b;
     return strcmp(stna->strValue, stnb->strValue);
 }
 
+/**
+ * Return the StringTable entries of a String Table by index.
+ */
+MangoArray *mango_string_table_by_index(MangoStringTable *mstable)
+{
+    return (MangoArray *)(((void **)mstable->data)[0]);
+}
+
+/**
+ * Return the StringTable entries of a String Table by name.
+ */
+MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
+{
+    return (MangoArray *)(((void **)mstable->data)[1]);
+}
 
 /**
  * Creates a new string table.
@@ -28,7 +44,11 @@ int stablenode_compare(const void *a, const void *b)
  */
 MangoStringTable *mango_string_table_new()
 {
-    return ZNEW(MangoStringTable);
+    MangoStringTable *mstable = ZNEW(MangoStringTable);
+    mstable->data = ZNEW_ARRAY(void *, 2);
+    ((void **)mstable->data)[0] = mango_array_new();
+    ((void **)mstable->data)[1] = mango_bintree_new();
+    return mstable;
 }
 
 /**
@@ -69,21 +89,23 @@ int mango_string_table_find(MangoStringTable *  stable,
         stable->data = mango_bintree_new();
     }
 
-    MangoBinTree *  bintree = (MangoBinTree *)stable->data;
-    StringTableNode stnode;
-    stnode.strValue = (char *)str;
-    stnode.strLength = length;
-    MangoBinTreeNode *node = mango_bintree_find(bintree, &stnode, stablenode_compare);
+    MangoBinTree *  bintree = mango_string_table_by_name(stable);
+    MangoArray *    array   = mango_string_table_by_index(stable);
+    StringTableEntry stentry;
+    stentry.strValue = (char *)str;
+    stentry.strLength = length;
+    MangoBinTreeNode *node = mango_bintree_find(bintree, &stentry, stablenode_compare);
     int strId = -1;
     if (node == NULL && create)
     {
         strId = mango_bintree_size(bintree) + 1;
-        StringTableNode *newnode = ZNEW(StringTableNode);
-        newnode->strId      = strId;
-        newnode->strLength  = length;
-        newnode->strValue   = NEW_ARRAY(char, length);
-        memcpy(newnode->strValue, str, length);
-        node = mango_bintree_insert(bintree, newnode, stablenode_compare);
+        StringTableEntry *newentry = ZNEW(StringTableEntry);
+        newentry->strId      = strId;
+        newentry->strLength  = length;
+        newentry->strValue   = NEW_ARRAY(char, length);
+        memcpy(newentry->strValue, str, length);
+        node = mango_bintree_insert(bintree, newentry, stablenode_compare);
+        mango_array_insert(array, newentry, -1);
     }
     return strId;
 }
