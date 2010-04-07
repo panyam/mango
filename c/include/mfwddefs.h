@@ -15,6 +15,7 @@ extern "C" {
 #define false   0
 typedef int BOOL;
 
+typedef struct MangoPrototype MangoPrototype;
 typedef struct MangoObject MangoObject;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoString MangoString;

@@ -2,19 +2,18 @@
 #ifndef __MANGO_OBJECT_H__
 #define __MANGO_OBJECT_H__
 
-#include "mclasses.h"
+#include "mprototype.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct MangoObject
 {
     /**
-     * Class of the object.
+     * Prototype for the object.
      */
-    int objClass;
-
-    /**
-     * Object specific data.
-     */
-    void *objData;
+    const MangoPrototype *  prototype;
 
     /**
      * Object's reference count.
@@ -22,50 +21,23 @@ struct MangoObject
     int objRefCount;
 
     /**
-     * Deletes object data for this object.
+     * Object specific data.
      */
-    void (*deleteObjectData)(void *objData);
-
-    /**
-     * Tells if the data of two objects are equal.
-     */
-    BOOL (*objectDataEquals)(const void *objData1, const void *objData2);
-
-    /**
-     * Compares the data of two objects.
-     */
-    int (*compareObjectData)(const void *objData1, const void *objData2);
+    void *objData;
 };
 
 #define DECLARE_CLASS(CLASS_NAME, CLASS_DATA_STRUCT)                    \
     struct CLASS_NAME                                                   \
     {                                                                   \
         /**                                                             \
-         * Class of the object.                                         \
+         * Prototype for the object.                                    \
          */                                                             \
-        int objClass;                                                   \
+        const MangoPrototype *  prototype;                              \
                                                                         \
         /**                                                             \
          * Object's reference count.                                    \
          */                                                             \
         int objRefCount;                                                \
-                                                                        \
-        /**                                                             \
-         * Deletes object data for this object.                         \
-         */                                                             \
-        void (*deleteObjectData)(CLASS_DATA_STRUCT *objData);           \
-                                                                        \
-        /**                                                             \
-         * Tells if the data of two objects are equal.                  \
-         */                                                             \
-        BOOL (*objectDataEquals)(const CLASS_DATA_STRUCT *objData1,     \
-                                 const CLASS_DATA_STRUCT *objData2);    \
-                                                                        \
-        /**                                                             \
-         * Compares the data of two objects.                            \
-         */                                                             \
-        int (*compareObjectData)(const CLASS_DATA_STRUCT *objData1,     \
-                                 const CLASS_DATA_STRUCT *objData2);    \
                                                                         \
         /**                                                             \
          * Actual data of the object.                                   \
@@ -95,6 +67,10 @@ extern void mango_object_free(MangoObject *obj);
  * callback), false otherwise.
  */
 extern BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
