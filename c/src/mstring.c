@@ -84,3 +84,17 @@ BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2)
             mstr1->mstable == mstr2->mstable;
 }
 
+/**
+ * Gets the buffer value of the string.
+ */
+const char *mango_string_value(const MangoString *mstr)
+{
+    MangoStringData *msData = mango_string_table_get(mstr->mstable, mstr->internId);
+    return msData->buffer;
+}
+
+/**
+ * Gets the length of the string.
+ */
+size_t mango_string_length(const MangoString *mstr);
+

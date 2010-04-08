@@ -8,6 +8,14 @@
 extern "C" {
 #endif
 
+typedef struct MangoStringData
+{
+    int     strId;
+    char *  strValue;
+    int     strLength;
+    int     refCount;
+} MangoStringData;
+
 struct MangoStringTable
 {
     void *data;
@@ -49,6 +57,14 @@ extern int mango_string_table_find(MangoStringTable *   stable,
                                    int                  length,
                                    BOOL                 create,
                                    int                  rcdelta);
+
+/**
+ * Gets the string data for a particular string ID.
+ * \param   mstable The mango string table to be searched.
+ * \param   strid   ID of the string to be searched.
+ */
+extern const MangoStringData *mango_string_table_free(MangoStringTable *mstable,
+                                                      int strid);
 
 /**
  * Increments the reference count of a string.

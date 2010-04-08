@@ -5,14 +5,6 @@
 #include "mbintree.h"
 #include "marray.h"
 
-typedef struct StringTableEntry
-{
-    int     strId;
-    char *  strValue;
-    int     strLength;
-    int     refCount;
-} StringTableEntry;
-
 typedef struct StringTableImpl
 {
     MangoArray *    entriesByIndex;
@@ -24,8 +16,8 @@ typedef struct StringTableImpl
  */
 int stablenode_compare(const void *a, const void *b)
 {
-    const StringTableEntry *stna = (const StringTableEntry *)a;
-    const StringTableEntry *stnb = (const StringTableEntry *)b;
+    const MangoStringData *stna = (const MangoStringData *)a;
+    const MangoStringData *stnb = (const MangoStringData *)b;
     return strcmp(stna->strValue, stnb->strValue);
 }
 
@@ -53,7 +45,7 @@ MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
 void mango_string_table_incref(MangoStringTable *mstable, int strid)
 {
     MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
-    StringTableEntry *entry = mango_array_itemat(entriesByIndex, strid);
+    MangoStringData *entry = mango_array_itemat(entriesByIndex, strid);
     entry->refCount++;
 }
 
@@ -65,7 +57,7 @@ void mango_string_table_incref(MangoStringTable *mstable, int strid)
 void mango_string_table_decref(MangoStringTable *mstable, int strid)
 {
     MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
-    StringTableEntry *entry = mango_array_itemat(entriesByIndex, strid);
+    MangoStringData *entry = mango_array_itemat(entriesByIndex, strid);
     entry->refCount--;
     if (entry->refCount <= 0)
     {
@@ -142,7 +134,7 @@ int mango_string_table_find(MangoStringTable *  stable,
 
     MangoBinTree *  bintree = mango_string_table_by_name(stable);
     MangoArray *    array   = mango_string_table_by_index(stable);
-    StringTableEntry stentry;
+    MangoStringData stentry;
     stentry.strValue = (char *)str;
     stentry.strLength = length;
     MangoBinTreeNode *node = mango_bintree_find(bintree, &stentry, stablenode_compare);
@@ -150,7 +142,7 @@ int mango_string_table_find(MangoStringTable *  stable,
     if (node == NULL && create)
     {
         strId = mango_bintree_size(bintree) + 1;
-        StringTableEntry *newentry = ZNEW(StringTableEntry);
+        MangoStringData *newentry = ZNEW(MangoStringData);
         newentry->strId      = strId;
         newentry->strLength  = length;
         newentry->strValue   = NEW_ARRAY(char, length);
@@ -162,14 +154,25 @@ int mango_string_table_find(MangoStringTable *  stable,
 
     if (node != NULL)
     {
-        StringTableEntry *stEntry = (StringTableEntry *)node->data;
-        stEntry += rcdelta;
-        if (stEntry->refCount <= 0)
+        MangoStringData *msData = (MangoStringData *)node->data;
+        msData += rcdelta;
+        if (msData->refCount <= 0)
         {
-            stEntry->refCount = 0;
+            msData->refCount = 0;
             // TODO: what do we do here? delete it to save space?
         }
     }
     return strId;
+}
+
+
+/**
+ * Gets the string data for a particular string ID.
+ * \param   mstable The mango string table to be searched.
+ * \param   strid   ID of the string to be searched.
+ */
+const MangoStringData *mango_string_table_get(MangoStringTable *mstable, int strid)
+{
+    return (MangoStringData *)mango_array_itemat(((StringTableImpl *)mstable->data)->entriesByIndex, strid);
 }
 
