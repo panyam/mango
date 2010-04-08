@@ -33,7 +33,7 @@ extern MangoStringBuffer *mango_stringbuffer_with_capacity(unsigned capacity);
 /**
  * Returns an immutable string value of the buffer.
  */
-extern MangoString *mango_stringbuffer_tostring(MangoStringBuffer *mstrbuff);
+extern MangoString *mango_stringbuffer_tostring(const MangoStringBuffer *msbuffer);
 
 /**
  * Create a new string from a buffer.

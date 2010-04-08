@@ -59,10 +59,6 @@ const MangoPrototype *mango_prototype_for_name(const char *name, BOOL reg)
         MangoPrototype *newclass = mango_prototype_new(name);
         node = mango_bintree_insert(mango_prototypes, newclass, mango_prototype_compare);
     }
-    else
-    {
-        node = (MangoPrototype *)node->data;
-    }
-    return node;
+    return node == NULL ? NULL : (MangoPrototype *)node->data;
 }
 

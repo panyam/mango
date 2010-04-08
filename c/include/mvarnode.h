@@ -39,12 +39,18 @@ extern MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes
  *                  |   ident COMA filter_arg_list
  *                  ;
  *
+ * \param   parser      Parser to extract with.  The parser at this point has
+ *                      already read the "{{" token.
+ * \param   filterlib   Filter library to fetch filters from.
+ * \param   varlib      Variable library to fetch special variables from.
+ * \param   error       Optional error variable to be filled in case of failure.
  *
- * \param   parser  Parser to extract with.  The parser at this point has
- *                  already read the "{{" token.
  * \return  A new Variable node instance.
  */
-extern MangoNode *mango_varnode_extract_with_parser(MangoParser *parser);
+extern MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
+                                                    MangoFilterLibrary *filterlib,
+                                                    MangoLibrary *varlib,
+                                                    MangoError **error);
 
 /**
  * Adds a new filter node.

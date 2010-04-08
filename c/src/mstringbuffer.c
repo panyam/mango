@@ -13,7 +13,7 @@
  */
 MangoStringBuffer *mango_stringbuffer_with_capacity(unsigned capacity)
 {
-    MangoStringBuffer *mstr   = ZNEW(MangoString);
+    MangoStringBuffer *mstr   = ZNEW(MangoStringBuffer);
     mstr->buffer        = NEW_ARRAY(char, capacity);
     mstr->capacity      = capacity;
     mstr->length        = 0;
@@ -37,6 +37,21 @@ MangoStringBuffer *mango_stringbuffer_from_buffer(const char *buffer, int length
     mstr->length = length;
     mstr->buffer[mstr->length] = 0;
     return mstr;
+}
+
+/**
+ * Get an immutable copy of the buffer.
+ *
+ * \param   msbuffer    String buffer whose immutable copy is to be
+ *                      returned.
+ *
+ * \return A MangoString instance that must be freed with mango_string_free
+ * upon usage.
+ */
+MangoString *mango_stringbuffer_tostring(const MangoStringBuffer *msbuffer)
+{
+    NOT_IMPLEMENTED();
+    return NULL;
 }
 
 /**

@@ -44,17 +44,22 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar
 
 /**
  * Reads a list of filter expressions with the parser and returns a list.
+ * Also the final '}}' is discarded.
  *
- * \param   parser  The parser doing the parsing.
- * \param   filters List storing all the parsed filters.
- * \param   error   Error value to be set in case of failure.
+ * \param   parser      The parser doing the parsing.
+ * \param   filters     List storing all the parsed filters.
+ * \param   filterlib   Filter library to extract filters from.
+ * \param   error       Error value to be set in case of failure.
  *
  * \return true if filters were read successfully, false on error.  On
  * error, the error variable might be set if it is provided.  On error, the
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
-extern BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList *filters, MangoError **error);
+extern BOOL mango_filternode_extract_filter_list(MangoParser *parser,
+                                                 MangoList *filters,
+                                                 MangoFilterLibrary *filterlib,
+                                                 MangoError **error);
 
 /**
  * Extracts the next filter expression in the filter list.  This assumes
@@ -67,11 +72,14 @@ extern BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoList 
  *      ident COLON OPEN_PAREN value_list CLOSE_PAREN
  *
  * \param   parser  Parser doing the parsing.
+ * \param   lib     Filter library from which to fetch the filters.
  * \param   error   Optional storage for the error if any.
  *
  * \return A filternode instance on success, otherwise NULL.
  */
-extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoError **error);
+extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
+                                                             MangoFilterLibrary *lib,
+                                                             MangoError **error);
 
 /**
  * Parses the arguments of a filter expression.  This assumes that next token

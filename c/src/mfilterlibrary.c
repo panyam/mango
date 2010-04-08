@@ -15,7 +15,7 @@ int filter_node_compare(const void *a, const void *b)
 {
     FilterNode *fna = (FilterNode *)a;
     FilterNode *fnb = (FilterNode *)b;
-    return mango_string_compare(fna->name, fnb->name->buffer, fnb->name->length);
+    return mango_string_compare(fna->name, fnb->name);
 }
 
 /**
@@ -70,8 +70,8 @@ void mango_filter_library_register(MangoFilterLibrary *library,
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-const MangoFilter *mango_filter_library_get(MangoFilterLibrary *library,
-                                            const MangoString *name)
+const MangoFilter *mango_filter_library_get(const MangoString *name, 
+                                            MangoFilterLibrary *library)
 {
     NOT_IMPLEMENTED();
     return NULL;

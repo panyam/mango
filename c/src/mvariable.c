@@ -46,9 +46,9 @@ void mango_variable_free(MangoVariable *mvar)
 /**
  * Sets the new value of a variable.
  *
- * \param   mvar    MangoVariable *whose value is to be changed.
- * \param   buffer  New Value
- * \param   length  Length of the buffer.  if < then buffer is NULL terminated.
+ * \param   mvar        MangoVariable *whose value is to be changed.
+ * \param   value       New Value
+ * \param   isquoted    Is the value quoted?
  */
 void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQuoted)
 {
@@ -120,11 +120,14 @@ MangoVariable *mango_variable_set_next(MangoVariable *mvar,
  *
  * \param   parser  Parser extracting the tokens.
  * \param   error   Errors to be set if any.
+ * \param   varlib  Variable library to fetch "special" variables from.
  *
  * \return A MangoVariable instance if successful, otherwise NULL with the
  * error variable set (if it is supplied).
  */
-MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoError **error)
+MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
+                                                  MangoError **error,
+                                                  MangoLibrary *varlib)
 {
     MangoVariable *firstVar = NULL;
     MangoVariable *lastVar = NULL;
@@ -143,7 +146,7 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser, MangoErro
             // see if the variable library returns a "special" variable
             MangoVariable *nextVar = isQuoted ? NULL :
                                         (MangoVariable *)mango_library_new_instance(
-                                                            mango_variable_library_singleton(),
+                                                            varlib,
                                                             varValue);
             if (nextVar == NULL)
             {

@@ -42,6 +42,20 @@ extern MangoString *mango_string_new(const char *value,
                                      MangoStringTable *mstable);
 
 /**
+ * Copies another mango string.
+ * \param   mstr    String to be copied.
+ * \return  A new instance of the immutable string.
+ */
+extern MangoString *mango_string_copy(const MangoString *mstr);
+
+/**
+ * Destroys a string.
+ *
+ * \param   mstr String to be destroyed.
+ */
+extern void mango_string_free(MangoString *mstr);
+
+/**
  * Gets the buffer value of the string.
  */
 extern const char *mango_string_value(const MangoString *mstr);
@@ -50,13 +64,6 @@ extern const char *mango_string_value(const MangoString *mstr);
  * Gets the length of the string.
  */
 extern size_t mango_string_length(const MangoString *mstr);
-
-/**
- * Destroys a string.
- *
- * \param   mstr String to be destroyed.
- */
-extern void mango_string_free(MangoString *mstr);
 
 /**
  * Compares the string contents with another buffer.

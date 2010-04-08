@@ -15,15 +15,18 @@ extern "C" {
  */
 extern MangoFilterLibrary *mango_filter_library_singleton();
 
+
 /**
  * Get the shared tag library instance.
+ * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_tag_library_singleton();
+extern MangoLibrary *mango_tag_library_singleton(MangoStringTable *mstable);
 
 /**
  * Get the shared variable library instance.
+ * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_variable_library_singleton();
+extern MangoLibrary *mango_variable_library_singleton(MangoStringTable *mstable);
 
 #ifdef __cplusplus
 }

@@ -6,6 +6,7 @@
 #include "mfilternode.h"
 #include "mlist.h"
 #include "mmemutils.h"
+#include "mclasses.h"
 
 typedef struct MangoVarNodeData
 {
@@ -96,13 +97,20 @@ MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
  *                  |   ident COMA filter_arg_list
  *                  ;
  *
- * \param   parser  Parser to extract with.  The parser at this point has
- *                  already read the "{{" token.
+ * \param   parser      Parser to extract with.  The parser at this point has
+ *                      already read the "{{" token.
+ * \param   filterlib   Filter library to fetch filters from.
+ * \param   varlib      Variable library to fetch special variables from.
+ * \param   error       Optional error variable to be filled in case of failure.
+ *
  * \return  A new Variable node instance.
  */
-MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **error)
+MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
+                                             MangoFilterLibrary *filterlib,
+                                             MangoLibrary *varlib,
+                                             MangoError **error)
 {
-    MangoVariable *variable = mango_variable_extract_with_parser(parser, error);
+    MangoVariable *variable = mango_variable_extract_with_parser(parser, error, varlib);
     if (variable == NULL)
         return NULL;
 
@@ -114,7 +122,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoError **e
     MangoList *filter_nodes = mango_list_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
-        if (mango_filternode_extract_filter_list(parser, filter_nodes, error))
+        if (mango_filternode_extract_filter_list(parser, filter_nodes, filterlib, error))
         {
             token = mango_parser_peek_token(parser, error);
         }

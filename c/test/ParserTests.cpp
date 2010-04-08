@@ -34,8 +34,8 @@ public:
         loader(NULL),
         input_source(NULL),
         input_string(""),
-        filterLibrary(mango_filter_library_singleton()),
-        tagLibrary(mango_tag_library_singleton())
+        filterLibrary(NULL),
+        tagLibrary(NULL)
     {
         MangoFilter *newfilter = mango_filter_new(NULL);
         mango_addfilter_init(mango_string_new("add", -1, NULL), newfilter);
@@ -254,8 +254,8 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
     MangoString *add = mango_string_new("add", -1, NULL);
-    MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
-    MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(filterLibrary, add);
+    MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(add, filterLibrary);
+    MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(add, filterLibrary);
     mango_string_free(add);
     CHECK(f1 != NULL);
     CHECK(f2 != NULL);

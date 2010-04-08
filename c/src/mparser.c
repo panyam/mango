@@ -243,7 +243,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
-            return mango_varnode_extract_with_parser(parser);
+            return mango_varnode_extract_with_parser(parser, NULL, NULL, error);
         }
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {

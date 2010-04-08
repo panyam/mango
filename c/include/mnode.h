@@ -3,6 +3,7 @@
 #define __MANGO_NODE_H__
 
 #include "mobject.h"
+#include "mclasses.h"
 
 #ifdef __cplusplus
 extern "C" {

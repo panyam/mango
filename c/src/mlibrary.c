@@ -13,7 +13,7 @@
 MangoLibrary *mango_library_new(const MangoString *name)
 {
     MangoLibrary *mlib  = (MangoLibrary *)calloc(1, sizeof(MangoLibrary *));
-    mlib->name          = mango_string_incref(name);
+    mlib->name          = mango_string_copy(name);
     return mlib;
 }
 
@@ -60,7 +60,7 @@ void mango_library_register(MangoLibrary *library, const MangoString *name, Crea
     }
 
     // add it otherwise
-    mango_list_push_back(library->creators, mango_string_incref(name));
+    mango_list_push_back(library->creators, mango_string_copy(name));
     mango_list_push_back(library->creators, func);
 }
 

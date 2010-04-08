@@ -45,13 +45,14 @@ extern void mango_filter_library_register(MangoFilterLibrary *library,
 /**
  * Gets a filter by a given name.
  *
- * \param   library Library where the creator methods are stored.
  * \param   name    Name of the object class to be created.
+ * \param   library Library where the creator methods are stored.  If NULL
+ *                  the default instance is used.
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-extern const MangoFilter *mango_filter_library_get(MangoFilterLibrary *library,
-                                                   const MangoString *name);
+extern const MangoFilter *mango_filter_library_get(const MangoString *name, 
+                                                   MangoFilterLibrary *library);
 
 #ifdef __cplusplus
 }
