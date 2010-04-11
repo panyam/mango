@@ -50,8 +50,7 @@ MangoStringBuffer *mango_stringbuffer_from_buffer(const char *buffer, int length
  */
 MangoString *mango_stringbuffer_tostring(const MangoStringBuffer *msbuffer)
 {
-    NOT_IMPLEMENTED();
-    return NULL;
+    return mango_string_new(msbuffer->buffer, msbuffer->length, NULL);
 }
 
 /**

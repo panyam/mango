@@ -63,8 +63,8 @@ extern int mango_string_table_find(MangoStringTable *   stable,
  * \param   mstable The mango string table to be searched.
  * \param   strid   ID of the string to be searched.
  */
-extern const MangoStringData *mango_string_table_free(MangoStringTable *mstable,
-                                                      int strid);
+extern const MangoStringData *mango_string_table_get(const MangoStringTable *mstable,
+                                                     int strid);
 
 /**
  * Increments the reference count of a string.

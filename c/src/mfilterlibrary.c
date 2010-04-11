@@ -1,5 +1,6 @@
 
 #include "mfilterlibrary.h"
+#include "msingletons.h"
 #include "mbintree.h"
 #include "mmemutils.h"
 #include "mfilter.h"
@@ -47,6 +48,8 @@ void mango_filter_library_register(MangoFilterLibrary *library,
                                    MangoString *name,
                                    MangoFilter *filter)
 {
+    if (library == NULL)
+        library = mango_filter_library_singleton();
     if (library->filters == NULL)
         library->filters = mango_bintree_new();
     FilterNode fnode;

@@ -84,7 +84,7 @@ MangoStringTable *mango_string_table_new()
  */
 MangoStringTable *mango_string_table_default()
 {
-    MangoStringTable *DEFAULT_STRING_TABLE = NULL;
+    static MangoStringTable *DEFAULT_STRING_TABLE = NULL;
     if (DEFAULT_STRING_TABLE  == NULL)
     {
         DEFAULT_STRING_TABLE = mango_string_table_new();
@@ -171,8 +171,8 @@ int mango_string_table_find(MangoStringTable *  stable,
  * \param   mstable The mango string table to be searched.
  * \param   strid   ID of the string to be searched.
  */
-const MangoStringData *mango_string_table_get(MangoStringTable *mstable, int strid)
+const MangoStringData *mango_string_table_get(const MangoStringTable *mstable, int strid)
 {
-    return (MangoStringData *)mango_array_itemat(((StringTableImpl *)mstable->data)->entriesByIndex, strid);
+    return (const MangoStringData *)mango_array_itemat(((StringTableImpl *)mstable->data)->entriesByIndex, strid);
 }
 

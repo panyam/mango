@@ -106,6 +106,7 @@ dep:
 ../bld/./mfilter.o: ../include/mmemutils.h ../include/mfwddefs.h
 ../bld/./mfilter.o: ../include/mfilter.h ../include/mvariable.h
 ../bld/./mfilterlibrary.o: ../include/mfilterlibrary.h ../include/mfwddefs.h
+../bld/./mfilterlibrary.o: ../include/msingletons.h ../include/mlibrary.h
 ../bld/./mfilterlibrary.o: ../include/mbintree.h ../include/mmemutils.h
 ../bld/./mfilterlibrary.o: ../include/mfilter.h ../include/mvariable.h
 ../bld/./mfilterlibrary.o: ../include/mstring.h ../include/mobject.h
@@ -185,12 +186,12 @@ dep:
 ../bld/./mvariable.o: ../include/mvariable.h ../include/mfwddefs.h
 ../bld/./mvariable.o: ../include/mlibrary.h ../include/mparser.h
 ../bld/./mvariable.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mvariable.o: ../include/mstring.h ../include/mobject.h
-../bld/./mvariable.o: ../include/mprototype.h ../include/mtemplatecontext.h
-../bld/./mvariable.o: ../include/mnode.h ../include/mclasses.h
-../bld/./mvariable.o: ../include/mmemutils.h ../include/mtokenlists.h
-../bld/./mvariable.o: ../include/mutils.h ../include/msingletons.h
-../bld/./mvariable.o: ../include/mfilterlibrary.h
+../bld/./mvariable.o: ../include/mstringbuffer.h ../include/mstring.h
+../bld/./mvariable.o: ../include/mobject.h ../include/mprototype.h
+../bld/./mvariable.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./mvariable.o: ../include/mclasses.h ../include/mmemutils.h
+../bld/./mvariable.o: ../include/mtokenlists.h ../include/mutils.h
+../bld/./mvariable.o: ../include/msingletons.h ../include/mfilterlibrary.h
 ../bld/./mvarnode.o: ../include/mnode.h ../include/mobject.h
 ../bld/./mvarnode.o: ../include/mprototype.h ../include/mfwddefs.h
 ../bld/./mvarnode.o: ../include/mclasses.h ../include/merror.h
