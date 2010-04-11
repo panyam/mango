@@ -1,5 +1,4 @@
 
-#include <stdlib.h>
 #include "marray.h"
 #include "mmemutils.h"
 
@@ -14,25 +13,15 @@ MangoArray *mango_array_new()
 /*
  * Initialise an array.
  */
-MangoArray * mango_array_reserve(MangoArray *array, int capacity)
+void mango_array_reserve(MangoArray *array, int capacity)
 {
-    if (array == NULL)
-    {
-        array = malloc(sizeof(MangoArray));
-
-        if (array == NULL)
-            return NULL;
-
-        memset(array, 0, sizeof(MangoArray));
-    }
+    assert(array != NULL);
 
     if (capacity > array->capacity)
     {
-        array->items    = realloc(array, sizeof(void*) * capacity);
+        array->items    = realloc(array->items, sizeof(void*) * capacity);
         array->capacity = capacity;
     }
-
-    return array;
 }
 
 /*
@@ -48,9 +37,9 @@ void * mango_array_itemat(MangoArray *array, int index)
  *
  * -ve index indicates an append operation
  */
-MangoArray * mango_array_insert(MangoArray *array, void *item, int index)
+void mango_array_insert(MangoArray *array, void *item, int index)
 {
-    array = mango_array_reserve(array, array->length + 1);
+    mango_array_reserve(array, array->length + 1);
     if (index < 0 || index >= array->length)
     {
         array->items[array->length] = item;
@@ -61,7 +50,6 @@ MangoArray * mango_array_insert(MangoArray *array, void *item, int index)
         array->items[index] = item;
     }
     array->length++;
-    return array;
 }
 
 /*
@@ -69,32 +57,32 @@ MangoArray * mango_array_insert(MangoArray *array, void *item, int index)
  *
  * -ve index indicates an append operation
  */
-MangoArray *  mango_array_sinsert(MangoArray *array, int index, void **src, int srclen)
+void mango_array_sinsert(MangoArray *array, int index, void **src, int srclen)
 {
-    array = mango_array_reserve(array, array->length + srclen);
+    mango_array_reserve(array, array->length + srclen);
     if (index >= 0 && index < array->length)
     {
         memmove(array->items + index + srclen, array->items + index, array->length - index);
     }
     memcpy(array + index, src, srclen * sizeof(void *));
     array->length += srclen;
-    return array;
 }
 
 /*
  * Remove an item at a given index
  */
-MangoArray * mango_array_remove(MangoArray *array, int index)
+void *mango_array_remove(MangoArray *array, int index)
 {
+    void *removed = array->items[index];
     memmove(array->items + index, array->items + index + 1, array->length - (index + 1));
     array->length--;
-    return array;
+    return removed;
 }
 
 /*
  * Remove a range of values in an array.
  */
-MangoArray * mango_array_remove_range(MangoArray *array, int from, int to)
+void mango_array_remove_range(MangoArray *array, int from, int to)
 {
     if (from > to)
     {
@@ -104,14 +92,13 @@ MangoArray * mango_array_remove_range(MangoArray *array, int from, int to)
     }
     memmove(array->items + from, array->items + to + 1, array->length - (to + 1));
     array->length -= (1 + to - from);
-    return array;
 }
 
 /*
- * Resets an array without freeing the array itself (but the buffer is
+ * Clear an array without freeing the array itself (but the buffer is
  * freed)
  */
-void mango_array_reset(MangoArray *array)
+void mango_array_clear(MangoArray *array)
 {
     if (array && array->items)
     {
