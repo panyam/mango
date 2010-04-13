@@ -7,9 +7,8 @@ void *default_make_context_func(MangoList *arguments)
     return NULL;
 }
 
-int default_apply_func(void *data, int inType, void *inValue, void **outValue, MangoTemplateContext *context, MangoList *arguments)
+int default_apply_func(void *data, const MangoValue *input, MangoValue *output, MangoTemplateContext *context, MangoList *arguments)
 {
-    *outValue = NULL;
     return -1;
 }
 
@@ -48,25 +47,23 @@ void mango_filter_free(MangoFilter *filter)
 /**
  * Applies the filter on a value and returns the new value.
  * \param   filter      Filter being applied.
- * \param   inType      Input type
- * \param   inValue     Input value
- * \param   outValue    Output value.
+ * \param   input       Input value
+ * \param   output      Output value.
  * \param   context     Template Context
  * \param   arguments   Arguments for the application.
  *
  * \return  Output type with the value stored in outValue.
  */
 int mango_filter_apply(MangoFilter *filter,
-                       int inType, void *inValue,
-                       void **outValue,
+                       const MangoValue *input,
+                       MangoValue *output,
                        MangoTemplateContext *context,
                        MangoList *arguments)
 {
-    *outValue = NULL;
     if (filter->applyFunc == NULL || filter->data == NULL)
     {
         return -1;
     }
-    return filter->applyFunc(filter->data, inType, inValue, outValue, context, arguments);
+    return filter->applyFunc(filter->data, input, output, context, arguments);
 }
 

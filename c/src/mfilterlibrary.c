@@ -35,7 +35,7 @@ MangoFilterLibrary *mango_filter_library_new()
  */
 void mango_filter_library_free(MangoFilterLibrary *library)
 {
-    assert("Filter Library cannot be freed yet.");
+    NOT_IMPLEMENTED();
 }
 
 /**
@@ -76,6 +76,18 @@ void mango_filter_library_register(MangoFilterLibrary *library,
 const MangoFilter *mango_filter_library_get(const MangoString *name, 
                                             MangoFilterLibrary *library)
 {
-    NOT_IMPLEMENTED();
-    return NULL;
+    if (library == NULL)
+        library = mango_filter_library_singleton();
+
+    MangoFilter *filter = NULL;
+    FilterNode fnode;
+    fnode.name = name;
+    fnode.filter = filter;
+    if (library->filters != NULL)
+    {
+        MangoBinTreeNode *node = mango_bintree_find(library->filters, &fnode, filter_node_compare);
+        if (node != NULL)
+            filter = (MangoFilter *)node->data;
+    }
+    return filter;
 }

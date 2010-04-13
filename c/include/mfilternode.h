@@ -32,7 +32,7 @@ extern BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoF
 /**
  * Applies a filter arguments to a filter and returns the value.
  */
-extern int mango_filternode_apply(MangoFilterNode *fnode, int inType, void *inValue, void **outValue, MangoTemplateContext *context);
+extern int mango_filternode_apply(MangoFilterNode *fnode, const MangoValue *input, MangoValue *output, MangoTemplateContext *context);
 
 /**
  * Adds an argument to a filter node.

@@ -63,9 +63,9 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
 /**
  * Applies a filter arguments to a filter and returns the value.
  */
-int mango_filternode_apply(MangoFilterNode *fnode, int inType, void *inValue, void **outValue, MangoTemplateContext *context)
+int mango_filternode_apply(MangoFilterNode *fnode, const MangoValue *input, MangoValue *output, MangoTemplateContext *context)
 {
-    return mango_filter_apply(fnode->filter, inType, inValue, outValue, context, fnode->arguments);
+    return mango_filter_apply(fnode->filter, input, output, context, fnode->arguments);
 }
 
 /**
@@ -109,7 +109,7 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser,
         mango_parser_get_token(parser, error);  // discard the "|"
         MangoFilterNode *filternode =
                 mango_filternode_extract_with_parser(parser, filterlib, error);
-        if (filternode != NULL)
+        if (filternode == NULL)
             return false;
         mango_list_push_back(filters, filternode);
         token = mango_parser_peek_token(parser, error);

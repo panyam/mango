@@ -55,7 +55,7 @@ void mango_varnodedata_free(MangoVarNodeData *data)
 BOOL mango_varnodedata_equals(MangoVarNodeData *data1, MangoVarNodeData *data2)
 {
     return mango_variables_are_equal(data1->variable, data2->variable) &&
-            mango_lists_are_equal(data1->filterNodes, data2->filterNodes, NULL);
+            mango_lists_are_equal(data1->filterNodes, data2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
 }
 
 /**
@@ -131,7 +131,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
             assert("How do we handle this?" && false);
         }
     }
-    
+
     if (token == NULL || token->tokenType != TOKEN_CLOSE_VARIABLE)
     {
         mango_error_set(error, -1, "Expected '}}', but found '%s'.",

@@ -262,44 +262,47 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
     CHECK_EQUAL(f1, f2);
 }
 
-#if 0
 TEST_FIXTURE(ParserTestFixture, TestSingleFilter)
 {
     SetUpWithInputString("{{a|add}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
-    expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
-    CheckParsedNodeWith(expectedNode);
+    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
+    mango_varnode_add_filter(expectedNode, mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL)));
+    mango_string_free(add);
+    CheckParsedNodeWith(1, expectedNode);
 }
-
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneArgument)
 {
     SetUpWithInputString("{{a|add:3}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
-    FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
-    addNode.addArgument(new Variable("3", false));
-    expectedNode.addFilterNode(addNode);
-    CheckParsedNodeWith(expectedNode);
+    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
+    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    mango_varnode_add_filter(expectedNode, filternode);
+    mango_filternode_add_arg(filternode, create_variable("3", false, true, NULL));
+    mango_string_free(add);
+    CheckParsedNodeWith(1, expectedNode);
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneQuotedArgument)
 {
     SetUpWithInputString("{{a|add:\"3\"}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
-    FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
-    addNode.addArgument(new Variable("3", true));
-    expectedNode.addFilterNode(addNode);
-    CheckParsedNodeWith(expectedNode);
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
+    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    mango_varnode_add_filter(expectedNode, filternode);
+    addNode.addArgument(create_variable("3", false, true, NULL));
+    CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithMultipleArguments)
 {
     SetUpWithInputString("{{a|add:(3,'4',five)}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
-    addNode.addArgument(new Variable("3", false));
-    addNode.addArgument(new Variable("4", true));
-    addNode.addArgument(new Variable("five", false));
+    addNode.addArgument(create_variable("3", false));
+    addNode.addArgument(create_variable("4", true));
+    addNode.addArgument(create_variable("five", false));
     expectedNode.addFilterNode(addNode);
     CheckParsedNodeWith(expectedNode);
 }
@@ -307,7 +310,7 @@ TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithMultipleArguments)
 TEST_FIXTURE(ParserTestFixture, TestMultipleFilters)
 {
     SetUpWithInputString("{{a|add|add|add}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, NULL));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
@@ -317,17 +320,17 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleFilters)
 TEST_FIXTURE(ParserTestFixture, TestMultipleFiltersWithArguments)
 {
     SetUpWithInputString("{{a|add|add:1|add:(2,'3')}}");
-    VariableNode expectedNode = new VariableNode(new Variable("a", false, NULL));
+    MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, NULL));
     FilterNode addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
     expectedNode.addFilterNode(new FilterNode(filterLibrary.makeNewInstance("add")));
 
     addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
-    addNode.addArgument(new Variable("1", false));
+    addNode.addArgument(create_variable("1", false));
     expectedNode.addFilterNode(addNode);		
 
     addNode = new FilterNode(filterLibrary.makeNewInstance("add"));
-    addNode.addArgument(new Variable("2", false));
-    addNode.addArgument(new Variable("3", true));
+    addNode.addArgument(create_variable("2", false));
+    addNode.addArgument(create_variable("3", true));
     expectedNode.addFilterNode(addNode);		
 
     CheckParsedNodeWith(expectedNode);
@@ -355,16 +358,16 @@ TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)
 TEST_FIXTURE(ParserTestFixture, TestSimpleForTag)
 {
     SetUpWithInputString("{% for a in listofas %}{%endfor%}");
-    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
-    ftn.addItem(new Variable("a"));
+    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
+    ftn.addItem(create_variable("a"));
     CheckParsedNodeWith(ftn);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestForTagWithChild)
 {
     SetUpWithInputString("{% for a in listofas %}Hello World{%endfor%}");
-    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
-    ftn.addItem(new Variable("a"));
+    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
+    ftn.addItem(create_variable("a"));
     ftn.childNodes = mango_freetext_new(mango_string_from_buffer("Hello World", -1));
     CheckParsedNodeWith(ftn);
 }
@@ -372,8 +375,8 @@ TEST_FIXTURE(ParserTestFixture, TestForTagWithChild)
 TEST_FIXTURE(ParserTestFixture, TestForTagWithChildAndEmpty)
 {
     SetUpWithInputString("{% for a in listofas %}Hello World{%empty%}Empty Content{%endfor%}");
-    ForTagNode ftn = new ForTagNode(new Variable("listofas"));
-    ftn.addItem(new Variable("a"));
+    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
+    ftn.addItem(create_variable("a"));
     ftn.childNodes = mango_freetext_new(mango_string_from_buffer("Hello World", -1));
     ftn.emptyNodes = mango_freetext_new(mango_string_from_buffer("Empty Content", -1));
     CheckParsedNodeWith(ftn);
