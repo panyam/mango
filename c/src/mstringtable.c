@@ -73,7 +73,9 @@ MangoStringTable *mango_string_table_new()
 {
     MangoStringTable *mstable = NEW(MangoStringTable);
     mstable->data = NEW(StringTableImpl);
-    ((StringTableImpl *)mstable->data)->entriesByIndex = mango_array_new();
+    MangoArray *array = mango_array_new();
+    mango_array_insert(array, NULL, -1);  // reserve index 0 for NULL entries
+    ((StringTableImpl *)mstable->data)->entriesByIndex = array;
     ((StringTableImpl *)mstable->data)->entriesByName = mango_bintree_new();
     return mstable;
 }
@@ -100,7 +102,7 @@ void mango_string_table_free(MangoStringTable *mstable)
 {
     if (mstable->data != NULL)
     {
-        NOT_IMPLEMENTED();
+        // NOT_IMPLEMENTED();
         // mango_bintree_free((MangoBinTree *)mstable->data);
     }
     free(mstable);
@@ -128,9 +130,12 @@ int mango_string_table_find(MangoStringTable *  stable,
     if (stable->data == NULL)
     {
         if (!create)
-            return false;
+            return -1;
         stable->data = mango_bintree_new();
     }
+
+    if (length < 0)
+        length = strlen(str);
 
     MangoBinTree *  bintree = mango_string_table_by_name(stable);
     MangoArray *    array   = mango_string_table_by_index(stable);
@@ -146,7 +151,7 @@ int mango_string_table_find(MangoStringTable *  stable,
         newentry->strId      = strId;
         newentry->strLength  = length;
         newentry->strValue   = NEW_ARRAY(char, length);
-        newentry->refCount   = 0;
+        newentry->refCount   = 1;
         memcpy(newentry->strValue, str, length);
         node = mango_bintree_insert(bintree, newentry, stablenode_compare);
         mango_array_insert(array, newentry, -1);
@@ -155,7 +160,8 @@ int mango_string_table_find(MangoStringTable *  stable,
     if (node != NULL)
     {
         MangoStringData *msData = (MangoStringData *)node->data;
-        msData += rcdelta;
+        strId                   = msData->strId;
+        msData->refCount        += rcdelta;
         if (msData->refCount <= 0)
         {
             msData->refCount = 0;
