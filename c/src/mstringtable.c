@@ -144,27 +144,35 @@ int mango_string_table_find(MangoStringTable *  stable,
     stentry.strLength = length;
     MangoBinTreeNode *node = mango_bintree_find(bintree, &stentry, stablenode_compare);
     int strId = -1;
+    BOOL created = false;
+    MangoStringData *msdata = NULL;
     if (node == NULL && create)
     {
-        strId = mango_bintree_size(bintree) + 1;
-        MangoStringData *newentry = ZNEW(MangoStringData);
-        newentry->strId      = strId;
-        newentry->strLength  = length;
-        newentry->strValue   = NEW_ARRAY(char, length);
-        newentry->refCount   = 1;
-        memcpy(newentry->strValue, str, length);
-        node = mango_bintree_insert(bintree, newentry, stablenode_compare);
-        mango_array_insert(array, newentry, -1);
+        created             = true;
+        strId               = mango_bintree_size(bintree) + 1;
+        msdata              = ZNEW(MangoStringData);
+        msdata->strId       = strId;
+        msdata->strLength   = length;
+        msdata->strValue    = NEW_ARRAY(char, length);
+        msdata->refCount    = rcdelta > 0 ? rcdelta : 1;
+        memcpy(msdata->strValue, str, length);
+        node = mango_bintree_insert(bintree, msdata, stablenode_compare);
+        mango_array_insert(array, msdata, -1);
+    }
+    else if (node != NULL)
+    {
+        msdata  = (MangoStringData *)node->data;
+        strId   = msdata->strId;
     }
 
-    if (node != NULL)
+    if (msdata != NULL && !created)
     {
-        MangoStringData *msData = (MangoStringData *)node->data;
-        strId                   = msData->strId;
-        msData->refCount        += rcdelta;
-        if (msData->refCount <= 0)
+        // only updated ref count if a node was found and 
+        // it was not newly created
+        msdata->refCount        += rcdelta;
+        if (msdata->refCount <= 0)
         {
-            msData->refCount = 0;
+            msdata->refCount = 0;
             // TODO: what do we do here? delete it to save space?
         }
     }
