@@ -90,7 +90,7 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
              var1->isNumber == var2->isNumber &&
              var1->intValue == var2->intValue)
     {
-        return mango_string_compare(var1->value, var2->value) &&
+        return (mango_string_compare(var1->value, var2->value) == 0) &&
                     mango_variables_are_equal(var1->next, var2->next);
     }
     return false;

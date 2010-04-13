@@ -18,7 +18,7 @@ int stablenode_compare(const void *a, const void *b)
 {
     const MangoStringData *stna = (const MangoStringData *)a;
     const MangoStringData *stnb = (const MangoStringData *)b;
-    return strcmp(stna->strValue, stnb->strValue);
+    return memcmp(stna->strValue, stnb->strValue, stna->strLength <= stnb->strLength ? stna->strLength : stnb->strLength);
 }
 
 /**
@@ -153,9 +153,10 @@ int mango_string_table_find(MangoStringTable *  stable,
         msdata              = ZNEW(MangoStringData);
         msdata->strId       = strId;
         msdata->strLength   = length;
-        msdata->strValue    = NEW_ARRAY(char, length);
+        msdata->strValue    = NEW_ARRAY(char, length + 1);
         msdata->refCount    = rcdelta > 0 ? rcdelta : 1;
         memcpy(msdata->strValue, str, length);
+        msdata->strValue[length] = 0;
         node = mango_bintree_insert(bintree, msdata, stablenode_compare);
         mango_array_insert(array, msdata, -1);
     }
