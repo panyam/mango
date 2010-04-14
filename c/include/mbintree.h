@@ -33,6 +33,13 @@ struct MangoBinTree
 extern MangoBinTree *mango_bintree_new();
 
 /**
+ * Clears the tree (and applies a deletor function to all entries).
+ * \param   tree    Tree to be cleared.
+ * \param   deletor Deletor method to be applied on all elements.
+ */
+extern void mango_bintree_free(MangoBinTree *mtree, void (*deletor)(void *));
+
+/**
  * Inserts an item into a tree.
  *
  * \param   mtree   Tree in which to insert the item.
@@ -62,7 +69,7 @@ extern size_t mango_bintree_size(MangoBinTree *mtree);
  * found.
  */
 extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
-                                            void *data,
+                                            const void *data,
                                             CompareFunc compare);
 
 #ifdef __cplusplus

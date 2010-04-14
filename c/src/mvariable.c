@@ -1,6 +1,7 @@
 
 #include "mvariable.h"
 #include "mlibrary.h"
+#include "mvarlibrary.h"
 #include "mparser.h"
 #include "mstringbuffer.h"
 #include "mtemplatecontext.h"
@@ -144,10 +145,7 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
         {
             MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
             // see if the variable library returns a "special" variable
-            MangoVariable *nextVar = isQuoted ? NULL :
-                                        (MangoVariable *)mango_library_new_instance(
-                                                            varlib,
-                                                            varValue);
+            MangoVariable *nextVar = isQuoted ? NULL : mango_variable_library_new_instance(varValue, varlib);
             if (nextVar == NULL)
             {
                 nextVar = mango_variable_new(varValue, isQuoted, NULL);

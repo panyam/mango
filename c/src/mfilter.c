@@ -7,7 +7,7 @@ void *default_make_context_func(MangoList *arguments)
     return NULL;
 }
 
-int default_apply_func(void *data, const MangoValue *input, MangoValue *output, MangoTemplateContext *context, MangoList *arguments)
+int default_apply_func(void *filter_data, const MangoValue *input, MangoValue *output, MangoTemplateContext *context, MangoList *arguments)
 {
     return -1;
 }

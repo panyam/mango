@@ -103,7 +103,8 @@ extern void mango_parser_discard_till_token(MangoParser *parser,
  */
 extern MangoNode *mango_parser_parse(MangoParser *parser,
                                      MangoTemplateLoader *loader,
-                                     MangoError **error);
+                                     MangoError **error,
+                                     MangoLibrary *tagParserLib);
 
 /**
  * Parses the next node off the stream.
@@ -116,7 +117,8 @@ extern MangoNode *mango_parser_parse(MangoParser *parser,
  */
 extern MangoNode *mango_parser_parse_node(MangoParser *parser,
                                           MangoTemplateLoader *loader,
-                                          MangoError **error);
+                                          MangoError **error,
+                                          MangoLibrary *tagParserLib);
 
 /**
  * This is called by a TagNode (or its derivative) to parse "upto" a certain 
@@ -137,7 +139,8 @@ extern MangoNode *mango_parser_parse_node(MangoParser *parser,
 extern MangoNode *mango_parser_parse_till(MangoParser *parser,
                                           MangoTemplateLoader *loader,
                                           const char **name_list,
-                                          MangoError **error);
+                                          MangoError **error,
+                                          MangoLibrary *tagParserLib);
 
 #ifdef __cplusplus
 }

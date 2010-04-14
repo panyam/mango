@@ -183,11 +183,12 @@ void mango_parser_discard_till_token(MangoParser *parser,
  */
 MangoNode *mango_parser_parse(MangoParser *parser,
                               MangoTemplateLoader *loader,
-                              MangoError **error)
+                              MangoError **error,
+                              MangoLibrary *tagParserLib)
 {
     MangoList * nodeList    = NULL;
     MangoNode * firstNode   = NULL;
-    MangoNode * nextNode    = mango_parser_parse_node(parser, loader, error);
+    MangoNode * nextNode    = mango_parser_parse_node(parser, loader, error, tagParserLib);
     int         nodeCount   = 0;
     while (nextNode != NULL)
     {
@@ -205,7 +206,7 @@ MangoNode *mango_parser_parse(MangoParser *parser,
             mango_list_push_back(nodeList, nextNode);
         }
         nodeCount++;
-        nextNode  = mango_parser_parse_node(parser, loader, error);
+        nextNode  = mango_parser_parse_node(parser, loader, error, tagParserLib);
     }
 
     // just an optimisation to directly return a node if 
@@ -231,7 +232,8 @@ MangoNode *mango_parser_parse(MangoParser *parser,
  */
 MangoNode *mango_parser_parse_node(MangoParser *parser,
                                    MangoTemplateLoader *loader,
-                                   MangoError **error)
+                                   MangoError **error,
+                                   MangoLibrary *tagParserLib)
 {
     const MangoToken *token = mango_parser_get_token(parser, error);
     if (token != NULL)
@@ -248,7 +250,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {
             // see if the tag is part of the end node stack
-            if (!mango_list_is_empty(parser->endNodeStack))
+            if (parser->endNodeStack != NULL && !mango_list_is_empty(parser->endNodeStack))
             {
                 token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, true, error);
                 char **nameList = mango_list_front(parser->endNodeStack);
@@ -263,7 +265,7 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
                 }
             }
             // its a normal (non-end) tag so extract it as usual
-            return mango_tagnode_extract_with_parser(parser, loader, error);
+            return mango_tagnode_extract_with_parser(parser, loader, error, tagParserLib);
         }
         mango_error_set(error, -1, "Invalid token found: %d", token->tokenType);
     }
@@ -289,11 +291,12 @@ MangoNode *mango_parser_parse_node(MangoParser *parser,
 MangoNode *mango_parser_parse_till(MangoParser *parser,
                                    MangoTemplateLoader *loader,
                                    const char **names,
-                                   MangoError **error)
+                                   MangoError **error,
+                                   MangoLibrary *tagParserLib)
 {
     int stackSize = parser->endNodeStack->size;
     mango_list_push_front(parser->endNodeStack, names);
-    MangoNode *parsedNodes = mango_parser_parse(parser, loader, error);
+    MangoNode *parsedNodes = mango_parser_parse(parser, loader, error, tagParserLib);
     if (stackSize != parser->endNodeStack->size)	// if the end node was not popped the sizes wont match!
     {
         if (parsedNodes != NULL)

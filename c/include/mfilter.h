@@ -55,7 +55,7 @@ struct MangoFilter
      * stringified argument on each render call!
      * @throws IOException 
      */
-    int (*applyFunc)(void *data, const MangoValue *input, MangoValue *output,
+    int (*applyFunc)(void *filter_data, const MangoValue *input, MangoValue *output,
                      MangoTemplateContext *context, MangoList *arguments);
 
     //! Creates an invocation specific context

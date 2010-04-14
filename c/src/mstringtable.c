@@ -18,7 +18,11 @@ int stablenode_compare(const void *a, const void *b)
 {
     const MangoStringData *stna = (const MangoStringData *)a;
     const MangoStringData *stnb = (const MangoStringData *)b;
-    return memcmp(stna->strValue, stnb->strValue, stna->strLength <= stnb->strLength ? stna->strLength : stnb->strLength);
+
+    int cmp = memcmp(stna->strValue, stnb->strValue, stna->strLength <= stnb->strLength ? stna->strLength : stnb->strLength);
+    if (cmp == 0)
+        cmp = stna->strLength - stnb->strLength;
+    return cmp;
 }
 
 /**

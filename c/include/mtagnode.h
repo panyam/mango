@@ -19,7 +19,8 @@ extern "C" {
  */
 extern MangoNode *mango_tagnode_extract_with_parser(MangoParser *parser,
                                                     MangoTemplateLoader *loader,
-                                                    MangoError **error);
+                                                    MangoError **error,
+                                                    MangoLibrary *tagParserLib);
 
 #ifdef __cplusplus
 }

@@ -143,7 +143,6 @@ TEST_FIXTURE(StringTableTestFixture, TestIncRefOnStringCopy)
 TEST_FIXTURE(StringTableTestFixture, TestIncRefOnStringFree)
 {
     MangoString *mstr1 = mango_string_new("Hello World", -1, mstable);
-    MangoString *mstr2 = mango_string_new("Hello World", -1, mstable);
     const MangoStringData *msdata = mango_string_table_get(mstable, mstr1->internId);
     CHECK_EQUAL(msdata->refCount, 2);
     mango_string_free(mstr1);

@@ -8,8 +8,6 @@
 extern "C" {
 #endif
 
-typedef void *(*CreatorFunc)(const MangoString *name, ...);
-
 /**
  * A generic library that acts as a factory of objects.
  */
@@ -17,7 +15,9 @@ struct MangoLibrary
 {
     //! Type of library - eg filter, tag etc
     MangoString *   name;
-    MangoList *     creators;
+
+    //! Items in the library ordered by their name
+    MangoBinTree *  entries;
 };
 
 /**
@@ -37,26 +37,19 @@ extern void mango_library_free(MangoLibrary *library, void (*deletor)(void *));
  * Registers a new creator method for a new type of object.
  * \param   library Library where the new creator is to be registered.
  * \param   name    Name of the creator to be registered.
- * \param   func    Creator method to be used.
+ * \param   entry   Entyr to be registered.
  */
 extern void mango_library_register(MangoLibrary *library,
                                    const MangoString *name,
-                                   CreatorFunc func);
+                                   void *entry);
 
 /**
- * Creates a new instance of a particular object by invoking the registered
- * creator method in the library.
- *
- * \param   library Library where the creator methods are stored.
- * \param   name    Name of the object class to be created.
- * \param   ...     Parameters to be passed to the creator.
- *
- * \return  A new instance of the object created by the registered creator
- * method or NULL if a creator was not found for the name.
+ * Gets a registered entry.
+ * \param   library Library where the entry is to be found
+ * \param   name    Name of the entry to be registered.
+ * \param   func    Creator method to be used.
  */
-extern void *mango_library_new_instance(MangoLibrary *library,
-                                        const MangoString *name,
-                                        ...);
+extern void *mango_library_get(const MangoLibrary *library, const MangoString *name);
 
 #ifdef __cplusplus
 }

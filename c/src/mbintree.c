@@ -34,6 +34,15 @@ size_t mango_bintree_size(MangoBinTree *mtree)
 }
 
 /**
+ * Clears the tree (and applies a deletor function to all entries).
+ * \param   tree    Tree to be cleared.
+ * \param   deletor Deletor method to be applied on all elements.
+ */
+void mango_bintree_free(MangoBinTree *mtree, void (*deletor)(void *))
+{
+}
+
+/**
  * Inserts an item into a tree.
  *
  * \param   mtree   Tree in which to insert the item.
@@ -104,7 +113,7 @@ MangoBinTreeNode *mango_bintree_insert(MangoBinTree *mtree,
  * found.
  */
 MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
-                                     void *data,
+                                     const void *data,
                                      CompareFunc compare)
 {
     MangoBinTreeNode *curr = mtree->root;

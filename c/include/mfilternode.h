@@ -58,7 +58,7 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar
  */
 extern BOOL mango_filternode_extract_filter_list(MangoParser *parser,
                                                  MangoList *filters,
-                                                 MangoFilterLibrary *filterlib,
+                                                 MangoLibrary *filterlib,
                                                  MangoError **error);
 
 /**
@@ -78,7 +78,7 @@ extern BOOL mango_filternode_extract_filter_list(MangoParser *parser,
  * \return A filternode instance on success, otherwise NULL.
  */
 extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
-                                                             MangoFilterLibrary *lib,
+                                                             MangoLibrary *lib,
                                                              MangoError **error);
 
 /**

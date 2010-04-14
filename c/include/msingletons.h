@@ -4,7 +4,6 @@
 
 #include "mfwddefs.h"
 #include "mlibrary.h"
-#include "mfilterlibrary.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,14 +12,13 @@ extern "C" {
 /**
  * Get the shared filter library instance.
  */
-extern MangoFilterLibrary *mango_filter_library_singleton();
-
+extern MangoLibrary *mango_filter_library_singleton(MangoStringTable *mstable);
 
 /**
- * Get the shared tag library instance.
+ * Get the shared tag parser library instance.
  * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_tag_library_singleton(MangoStringTable *mstable);
+extern MangoLibrary *mango_tagparser_library_singleton(MangoStringTable *mstable);
 
 /**
  * Get the shared variable library instance.

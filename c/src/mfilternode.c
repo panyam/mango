@@ -65,7 +65,7 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
  */
 int mango_filternode_apply(MangoFilterNode *fnode, const MangoValue *input, MangoValue *output, MangoTemplateContext *context)
 {
-    return mango_filter_apply(fnode->filter, input, output, context, fnode->arguments);
+    return mango_filter_apply(fnode->filter->data, input, output, context, fnode->arguments);
 }
 
 /**
@@ -97,7 +97,7 @@ void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar)
  */
 BOOL mango_filternode_extract_filter_list(MangoParser *parser,
                                           MangoList *filters,
-                                          MangoFilterLibrary *filterlib,
+                                          MangoLibrary *filterlib,
                                           MangoError **error)
 {
     const MangoToken *token = mango_parser_peek_token(parser, error);
@@ -136,7 +136,7 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser,
  * \return A filternode instance on success, otherwise NULL.
  */
 MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
-                                                      MangoFilterLibrary *lib,
+                                                      MangoLibrary *lib,
                                                       MangoError **error)
 {
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER,

@@ -1,36 +1,35 @@
 #include "msingletons.h"
-#include <string.h>
 #include "mstring.h"
 
 /**
  * Get the shared filter library instance.
  */
-MangoFilterLibrary *mango_filter_library_singleton()
+MangoLibrary *mango_filter_library_singleton(MangoStringTable *mstable)
 {
-    static MangoFilterLibrary *filter_library = NULL;
+    static MangoLibrary *filter_library = NULL;
 
     if (filter_library == NULL)
     {
-        filter_library = mango_filter_library_new();
+        filter_library = mango_library_new(mango_string_new("Filters", -1, mstable));
     }
 
     return filter_library;
 }
 
 /**
- * Get the shared tag library instance.
+ * Get the shared tag parser library instance.
  * \param   mstable String table from which pooled strings are fetched.
  */
-MangoLibrary *mango_tag_library_singleton(MangoStringTable *mstable)
+MangoLibrary *mango_tagparser_library_singleton(MangoStringTable *mstable)
 {
-    static MangoLibrary *tag_library = NULL;
+    static MangoLibrary *tag_parser_library = NULL;
 
-    if (tag_library == NULL)
+    if (tag_parser_library == NULL)
     {
-        tag_library = mango_library_new(mango_string_new("Tags", -1, mstable));
+        tag_parser_library = mango_library_new(mango_string_new("TagParsers", -1, mstable));
     }
 
-    return tag_library;
+    return tag_parser_library;
 }
 
 /**

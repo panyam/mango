@@ -106,7 +106,7 @@ MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
  * \return  A new Variable node instance.
  */
 MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
-                                             MangoFilterLibrary *filterlib,
+                                             MangoLibrary *filterlib,
                                              MangoLibrary *varlib,
                                              MangoError **error)
 {

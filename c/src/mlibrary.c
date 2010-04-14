@@ -1,9 +1,25 @@
 
-#define _GNU_SOURCE
 #include <stdarg.h>
 #include "mlibrary.h"
-#include "mlist.h"
+#include "mmemutils.h"
+#include "mbintree.h"
 #include "mstring.h"
+
+typedef struct MangoLibraryEntry
+{
+    MangoString *   name;
+    void *          entry;
+} MangoLibraryEntry;
+
+int libentry_name_cmp(const MangoString *name1, const MangoLibraryEntry *mle2)
+{
+    return mango_string_compare(name1, mle2->name);
+}
+
+int libentry_cmp(const MangoLibraryEntry *mle1, const MangoLibraryEntry *mle2)
+{
+    return mango_string_compare(mle1->name, mle2->name);
+}
 
 /**
  * Creates a new mango library.
@@ -14,6 +30,7 @@ MangoLibrary *mango_library_new(const MangoString *name)
 {
     MangoLibrary *mlib  = (MangoLibrary *)calloc(1, sizeof(MangoLibrary *));
     mlib->name          = mango_string_copy(name);
+    mlib->entries       = mango_bintree_new();
     return mlib;
 }
 
@@ -24,78 +41,50 @@ MangoLibrary *mango_library_new(const MangoString *name)
 void mango_library_free(MangoLibrary *library, void (*deletor)(void *))
 {
     if (library->name != NULL)
-    {
         mango_string_free(library->name);
-    }
-    if (library->creators != NULL)
-    {
-        if (deletor != NULL)
-            mango_list_clear(library->creators, deletor);
-        mango_list_free(library->creators);
-    }
+    if (library->entries != NULL)
+        mango_bintree_free(library->entries, deletor);
     free(library);
 }
 
 /**
- * Registers a new creator method for a new type of object.
- * \param   library Library where the new creator is to be registered.
- * \param   name    Name of the creator to be registered.
+ * Registers a new entry.
+ * \param   library Library where the new entry is to be registered.
+ * \param   name    Name of the entry to be registered.
  * \param   func    Creator method to be used.
  */
-void mango_library_register(MangoLibrary *library, const MangoString *name, CreatorFunc func)
+void mango_library_register(MangoLibrary *library, const MangoString *name, void *entry)
 {
-    if (library->creators == NULL)
+    if (library->entries == NULL)
     {
-        library->creators = mango_list_new();
+        library->entries = mango_bintree_new();
     }
 
-    // creators list contains name and creator func interleaved
-    for (MangoListNode *temp = library->creators->head;temp != NULL;temp = temp->next->next)
+    MangoBinTreeNode *node = mango_bintree_find(library->entries, name, (CompareFunc)libentry_name_cmp);
+    if (node == NULL)
     {
-        if (mango_strings_are_equal((MangoString *)temp->data, name))
-        {
-            temp->next->data = func;
-            return ;
-        }
+        MangoLibraryEntry *newentry = NEW(MangoLibraryEntry);
+        newentry->name  = mango_string_copy(name);
+        newentry->entry = entry;
+        mango_bintree_insert(library->entries, newentry, (CompareFunc)libentry_cmp);
     }
-
-    // add it otherwise
-    mango_list_push_back(library->creators, mango_string_copy(name));
-    mango_list_push_back(library->creators, func);
 }
 
 /**
- * Creates a new instance of a particular object by invoking the registered
- * creator method in the library.
- *
- * \param   library Library where the creator methods are stored.
- * \param   name    Name of the object class to be created.
- * \param   ...     Parameters to be passed to the creator.
- *
- * \return  A new instance of the object created by the registered creator
- * method or NULL if a creator was not found for the name.
+ * Gets a registered entry.
+ * \param   library Library where the entry is to be found
+ * \param   name    Name of the entry to be registered.
+ * \param   func    Creator method to be used.
  */
-void *mango_library_new_instance(MangoLibrary *library, const MangoString *name, ...)
+void *mango_library_get(const MangoLibrary *library, const MangoString *name)
 {
-    void *new_instance = NULL;
-    if (library != NULL && library->creators != NULL)
+    void *entry = NULL;
+    if (library->entries != NULL)
     {
-        // creators list contains name and creator func interleaved
-        for (MangoListNode *temp = library->creators->head;
-                            temp != NULL;
-                            temp = temp->next->next)
-        {
-            if (mango_strings_are_equal((MangoString *)temp->data, name))
-            {
-                CreatorFunc func = (CreatorFunc)temp->next->data;
-                va_list ap;
-                va_start(ap, name);
-                new_instance = func(name, ap);
-                va_end(ap);
-                break ;
-            }
-        }
+        MangoBinTreeNode *node = mango_bintree_find(library->entries, name, (CompareFunc)libentry_name_cmp);
+        if (node != NULL)
+            entry = node->data;
     }
-    return new_instance;
+    return entry;
 }
 

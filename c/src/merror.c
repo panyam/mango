@@ -1,8 +1,5 @@
 
-#define _GNU_SOURCE
 #include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
 #include "merror.h"
 
 /**

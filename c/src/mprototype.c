@@ -1,6 +1,4 @@
 
-#define _GNU_SOURCE
-#include <string.h>
 #include "mprototype.h"
 #include "mmemutils.h"
 #include "mbintree.h"
