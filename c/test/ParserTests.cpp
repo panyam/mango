@@ -27,8 +27,8 @@ public:
         loader(NULL),
         input_source(NULL),
         input_string(""),
-        filterLibrary(NULL),
-        tagLibrary(NULL)
+        filterLibrary(mango_filter_library_singleton(NULL)),
+        tagLibrary(mango_tagparser_library_singleton(NULL))
     {
         MangoFilter *newfilter = mango_filter_new(NULL);
         mango_addfilter_init(mango_string_new("add", -1, NULL), newfilter);
