@@ -12,6 +12,7 @@
 #include "mparser.h"
 #include "merror.h"
 #include "mlist.h"
+#include "mtable.h"
 #include "marray.h"
 #include "mbintree.h"
 #include "mvalue.h"

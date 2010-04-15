@@ -41,6 +41,7 @@ typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoArray MangoArray;
 typedef struct MangoList MangoList;
+typedef struct MangoTable MangoTable;
 typedef struct MangoListNode MangoListNode;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
