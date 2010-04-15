@@ -4,6 +4,10 @@
 
 #include "mfwddefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * General associate container
  */
@@ -86,6 +90,10 @@ extern void *mango_table_put(MangoTable *table, void *key, void *value);
  * \return The erased value if it exists.
  */
 extern void *mango_table_erase(MangoTable *table, void *key);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
