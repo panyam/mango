@@ -31,7 +31,7 @@ struct MangoPrototype
     /**
      * Compares the data of two objects.
      */
-    int (*compareObjectData)(const void *objData1, const void *objData2);
+    int (*objectDataCompare)(const void *objData1, const void *objData2);
 };
 
 /**

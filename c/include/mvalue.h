@@ -64,6 +64,11 @@ extern BOOL mango_valueiterator_has_next(MangoValueIterator *iter);
  */
 extern void *mango_valueiterator_next(MangoValueIterator *iter);
 
+
+extern int mango_valueiterator_unpack(MangoValueIterator *iter,
+                                      int numvals,
+                                      MangoValue *values);
+
 #ifdef __cplusplus
 }
 #endif

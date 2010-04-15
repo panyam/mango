@@ -7,9 +7,9 @@
  */
 void mango_table_free(MangoTable *table)
 {
-    if (table->entries != NULL && table->freeFunc != NULL)
+    if (table->entries != NULL && table->freeTableFunc != NULL)
     {
-        table->freeFunc(table->entries);
+        table->freeTableFunc(table->entries);
         table->entries = NULL;
     }
 }

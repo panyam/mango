@@ -65,8 +65,8 @@ MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
 {
     MangoNode *node         = mango_node_new(mango_varnodedata_new(mvar, filter_nodes));
     node->nodeClass         = mango_class_for_name("Variable", true);
-    node->deleteNodeData    = (DeleteFunc)mango_varnodedata_free;
-    node->nodeDataEquals    = (EqualsFunc)mango_varnodedata_equals;
+    node->deleteNodeFunc    = (DeleteFunc)mango_varnodedata_free;
+    node->nodeEqualsFunc    = (EqualsFunc)mango_varnodedata_equals;
     return node;
 }
 

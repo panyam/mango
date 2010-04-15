@@ -76,7 +76,7 @@ public:
     {
         MangoError *error   = NULL;
 		MangoNode *node     = mango_parser_parse(parser, loader, &error, tagLibrary);
-        int nodeCount       = node->nodeCount(node->nodeData);
+        int nodeCount       = mango_node_childcount(node);
         if (nodeCount > 0)
         {
             CHECK_EQUAL(nodeCount, numNodes);
@@ -86,7 +86,7 @@ public:
             for (int i = 0;i < nodeCount;i++)
             {
                 MangoNode *expectedNode = va_arg(ap, MangoNode *);
-                MangoNode *childNode = node->getChildNode(node->nodeData, i);
+                MangoNode *childNode = mango_node_childat(node, i);
                 CHECK(mango_nodes_are_equal(expectedNode, childNode));
             }
             va_end(ap);

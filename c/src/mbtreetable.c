@@ -28,14 +28,14 @@ void *mango_btreetable_put(MangoBinTree *btree, void *key, void *entry)
  */
 MangoTable *mango_btree_table_new()
 {
-    MangoTable *table   = ZNEW(MangoTable);
-    table->entries      = ZNEW(MangoBinTree);
-    table->sizeFunc     = mango_bintree_size;
-    table->freeFunc     = mango_bintree_free;
-    table->getFunc      = mango_btreetable_get;
-    table->containsFunc = mango_btreetable_contains;
-    table->putFunc      = mango_btreetable_put;
-    table->eraseFunc    = mango_btreetable_erase;
+    MangoTable *table       = ZNEW(MangoTable);
+    table->entries          = ZNEW(MangoBinTree);
+    table->sizeFunc         = mango_bintree_size;
+    table->freeTableFunc    = mango_bintree_free;
+    table->getFunc          = mango_btreetable_get;
+    table->containsFunc     = mango_btreetable_contains;
+    table->putFunc          = mango_btreetable_put;
+    table->eraseFunc        = mango_btreetable_erase;
     return table;
 }
 

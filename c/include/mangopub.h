@@ -30,6 +30,7 @@
 #include "mtemplateloader.h"
 #include "mtemplatecontext.h"
 #include "mnode.h"
+#include "mnoderenderer.h"
 #include "mnodelist.h"
 #include "mfreetext.h"
 #include "mvariable.h"

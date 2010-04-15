@@ -49,6 +49,16 @@ extern MangoObject *mango_object_new(MangoPrototype *proto, void *objData);
 extern void mango_object_free(MangoObject *obj);
 
 /**
+ * Increases the reference count of the object and returns int.
+ */
+extern MangoObject *mango_object_retain(MangoObject *obj);
+
+/**
+ * Decreases the reference count of the object and returns int.
+ */
+extern BOOL mango_object_release(MangoObject *obj);
+
+/**
  * Compares two objects to see if they are equal.
  *
  * \param   obj1    First obj in the comparison.
@@ -58,6 +68,16 @@ extern void mango_object_free(MangoObject *obj);
  * callback), false otherwise.
  */
 extern BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2);
+
+/**
+ * Compares two objects to check their relative order.
+ *
+ * \param   obj1    First obj in the comparison.
+ * \param   obj2    Second obj in the comparison.
+ *
+ * \return  -ve if obj1 < obj2, 0 if they are equal, +ve otherwise
+ */
+extern int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2);
 
 #ifdef __cplusplus
 }

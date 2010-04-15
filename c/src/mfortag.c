@@ -28,8 +28,7 @@ MangoNode *mango_fortag_new(MangoVariable * source,
 {
     MangoNode *node             = mango_node_new(NULL);
     node->nodeClass             = mango_class_for_name("ForTag", true);
-    node->deleteNodeData        = (DeleteFunc)mango_fortag_free;
-    node->createNodeContextData = (CreateNodeContextDataCallback)mango_fortagctx_new;
+    node->deleteNodeFunc        = (DeleteFunc)mango_fortag_free;
     // node->nodeCount             = (NodeCountCallback)mango_fortag_nodecount;
     // node->getChildNode          = (GetChildNodeCallback)mango_fortag_childat;
     return node;

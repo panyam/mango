@@ -3,17 +3,7 @@
 void default_delete_node_data(void *nodeData);
 int default_node_count(void *nodeData);
 MangoNode *default_get_child_node(void *nodeData, unsigned index);
-void *default_create_node_context_data(void *nodeData,
-                                       MangoTemplateContext *templateContext,
-                                       MangoNodeContext *topContext);
-void default_delete_node_context_data(void *node_context);
 BOOL default_node_compare(const void *nodedata1, const void *nodedata2);
-MangoNode *default_render_bit_more(void *nodeData, 
-                                   MangoTemplateContext *templateContext,
-                                   MangoNodeContext *topContext);
-MangoNode *default_child_exited(void *nodeData, 
-                                MangoTemplateContext *templateContext,
-                                MangoNodeContext *topContext);
 
 /**
  * Creates a node with default methods.
@@ -23,14 +13,10 @@ MangoNode *mango_node_new(void *nodeData)
     MangoNode *node             = (MangoNode *)calloc(1, sizeof(MangoNode));
     node->nodeClass             = mango_class_for_name("Node", true);
     node->nodeData              = nodeData;
-    node->deleteNodeData        = default_delete_node_data;
-    node->nodeCount             = default_node_count;
-    node->getChildNode          = default_get_child_node;
-    node->createNodeContextData = default_create_node_context_data;
-    node->deleteNodeContextData = default_delete_node_context_data;
-    node->nodeDataEquals        = default_node_compare;
-    node->renderBitMore         = default_render_bit_more;
-    node->childExited           = default_child_exited;
+    node->deleteNodeFunc        = default_delete_node_data;
+    node->nodeCountFunc         = default_node_count;
+    node->getChildNodeFunc      = default_get_child_node;
+    node->nodeEqualsFunc        = default_node_compare;
     return node;
 }
 
@@ -41,9 +27,9 @@ void mango_node_free(MangoNode *node)
 {
     if (node != NULL)
     {
-        if (node->deleteNodeData != NULL)
+        if (node->deleteNodeFunc != NULL)
         {
-            node->deleteNodeData(node->nodeData);
+            node->deleteNodeFunc(node->nodeData);
         }
         free(node);
     }
@@ -55,7 +41,7 @@ void mango_node_free(MangoNode *node)
  * \param   node1   First node in the comparison.
  * \param   node2   Second node in the comparison.
  *
- * \return  true if nodes are equal (as defined by their nodeDataEquals
+ * \return  true if nodes are equal (as defined by their nodeEqualsFunc
  * callback), false otherwise.
  */
 BOOL mango_nodes_are_equal(const MangoNode *node1, const MangoNode *node2)
@@ -78,13 +64,13 @@ BOOL mango_nodes_are_equal(const MangoNode *node1, const MangoNode *node2)
         {
             return false;
         }
-        else if (node1->nodeDataEquals != NULL)
+        else if (node1->nodeEqualsFunc != NULL)
         {
-            return node1->nodeDataEquals(node1->nodeData, node2->nodeData);
+            return node1->nodeEqualsFunc(node1->nodeData, node2->nodeData);
         }
-        else if (node2->nodeDataEquals != NULL)
+        else if (node2->nodeEqualsFunc != NULL)
         {
-            return node2->nodeDataEquals(node2->nodeData, node1->nodeData);
+            return node2->nodeEqualsFunc(node2->nodeData, node1->nodeData);
         }
         return true;
     }
@@ -107,35 +93,8 @@ MangoNode *default_get_child_node(void *nodeData, unsigned index)
     return NULL;
 }
 
-void *default_create_node_context_data(void *nodeData,
-                                       MangoTemplateContext *templateContext,
-                                       MangoNodeContext *topContext)
-{
-    return NULL;
-}
-
-void default_delete_node_context_data(void *node_context)
-{
-    if (node_context != NULL)
-        free(node_context);
-}
-
 BOOL default_node_compare(const void *nodedata1, const void *nodedata2)
 {
     return false;
-}
-
-MangoNode *default_render_bit_more(void *nodeData, 
-                                   MangoTemplateContext *templateContext,
-                                   MangoNodeContext *topContext)
-{
-    return NULL;
-}
-
-MangoNode *default_child_exited(void *nodeData, 
-                                MangoTemplateContext *templateContext,
-                                MangoNodeContext *topContext)
-{
-    return NULL;
 }
 

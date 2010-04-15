@@ -9,31 +9,11 @@
 extern "C" {
 #endif
 
-/**
- * Bit of context for a node for its rendering.
- */
-struct MangoNodeContext
-{
-    MangoNode *         node;
-    MangoNodeContext *  parent;
-    void *              contextData;
-};
-
 /*
  * Typedef of a few callback types.
  */
 typedef int (*NodeCountCallback)(void *nodeData);
 typedef MangoNode *(*GetChildNodeCallback)(void *nodeData, unsigned index);
-typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
-                                               MangoTemplateContext *templateContext,
-                                               MangoNodeContext *topContext);
-typedef void (*DeleteNodeContextDataCallback)(void *nodeContextData);
-typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
-                                         MangoTemplateContext *templateContext,
-                                         MangoNodeContext *topContext);
-typedef MangoNode *(*NodeChildExitedCallback)(void *nodeData,
-                                              MangoTemplateContext *templateContext,
-                                              MangoNodeContext *topContext);
 
 /**
  * A mango node object.
@@ -54,63 +34,22 @@ struct MangoNode
     /**
      * Callback to delete the node data.
      */
-    void (*deleteNodeData)(void *nodeData);
-
-    /**
-     * Returns the node count.
-     */
-    int (*nodeCount)(void *nodeData);
-
-    /**
-     * Returns a child node at a given index.
-     */
-    MangoNode *(*getChildNode)(void *nodeData, unsigned index);
-
-    /**
-     * Creates node context data for this node.
-     */
-    void *(*createNodeContextData)(void *nodeData,
-                                   MangoTemplateContext *templateContext,
-                                   MangoNodeContext *topContext);
-
-    /**
-     * Deletes node context data for this node.
-     */
-    void (*deleteNodeContextData)(void *nodeContextData);
+    void (*deleteNodeFunc)(void *nodeData);
 
     /**
      * Compares the node data of 2 nodes if the node classes are equal.
      */
-    BOOL (*nodeDataEquals)(const void *nodedata1, const void *nodedata2);
+    BOOL (*nodeEqualsFunc)(const void *nodedata1, const void *nodedata2);
 
     /**
-     * Renders a bit of the node and returns the next node (if a child node
-     * is being entered).
-     *
-     * \returns NULL if this node has finished and the control is to be
-     * transferred back to the parent, "this" if this node is to be
-     * continued with otherwise a child node to be rendered.
+     * Returns the node count.
      */
-    MangoNode *(*renderBitMore)(void *nodeData, 
-                                MangoTemplateContext *templateContext,
-                                MangoNodeContext *topContext);
+    int (*nodeCountFunc)(void *nodeData);
 
     /**
-     * Called when a child node (that was returned in renderBitMore) was
-     * exited having completed.  By doing this we are giving the parent
-     * node a chance to tell the renderer what the next node will be.
-     *
-     * \param   nodeData        Node data being processed.
-     * \param   childNode       Child node being exited.
-     * \param   templateContext
-     * \param   topContext
-     *
-     * \return null if this node is ALSO to be exited, otherwise a new
-     * child node to be pushed onto the renderer stack.
+     * Returns a child node at a given index.
      */
-    MangoNode *(*childExited)(void *nodeData, 
-                              MangoTemplateContext *templateContext,
-                              MangoNodeContext *topContext);
+    MangoNode *(*getChildNodeFunc)(void *nodeData, unsigned index);
 };
 
 /**
@@ -131,7 +70,7 @@ extern int mango_node_childcount(MangoNode *node);
 /**
  * Gets a particular child node.
  */
-extern int mango_node_childat(MangoNode *node, unsigned index);
+extern MangoNode *mango_node_childat(MangoNode *node, unsigned index);
 
 /**
  * Compares two nodes to see if they are equal.
