@@ -13,21 +13,6 @@ static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
 
 /**
- * Creates a new node context object.
- * \param   node    Node data for the for tag node.
- * \param   parent  The parent node context.
- * \param   ctxdata Context data
- *
- * \return  A new instance of the node context data.
- */
-MangoForTagContext *mango_fortagcontext_new(MangoForTagData *       nodedata,
-                                            MangoTemplateContext *  tmplCtx,
-                                            MangoNodeContext *      topCtx)
-{
-    return NULL;
-}
-
-/**
  * Creates a new fortag node.
  * \param   source      Source variable to be used.
  * \param   childNode   Nodes to be used on each iteration.
@@ -42,7 +27,7 @@ MangoNode *mango_fortag_new(MangoVariable * source,
     MangoNode *node             = mango_node_new(NULL);
     node->nodeClass             = mango_class_for_name("ForTag", true);
     node->deleteNodeData        = (DeleteFunc)mango_fortag_free;
-    node->createNodeContextData = (CreateNodeContextDataCallback)mango_fortagcontext_new;
+    node->createNodeContextData = (CreateNodeContextDataCallback)mango_fortagctx_new;
     // node->nodeCount             = (NodeCountCallback)mango_fortag_nodecount;
     // node->getChildNode          = (GetChildNodeCallback)mango_fortag_childat;
     return node;
@@ -207,6 +192,85 @@ BOOL mango_fortags_are_equal(const MangoForTagData *ftd1, const MangoForTagData 
     return false;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//              ForTag Render Context related methods
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Creates a new node context object.
+ * \param   node    Node data for the for tag node.
+ * \param   parent  The parent node context.
+ * \param   ctxdata Context data
+ *
+ * \return  A new instance of the node context data.
+ */
+MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
+                                        MangoTemplateContext *  tmplCtx,
+                                        MangoNodeContext *      topCtx)
+{
+    MangoForTagContext *ftc = ZNEW(MangoForTagContext);
+    mango_fortagctx_set_source(ftc, NULL);
+    return ftc;
+}
+
+/**
+ * Sets the source variable for the for-tag render context.
+ * \param   ftc     For tag context to be udpated.
+ * \param   source  Source variable to set.
+ */
+void mango_fortagctx_set_source(MangoForTagContext *ftc, void *source)
+{
+    ftc->isEmpty = true;
+    if (source != NULL)
+    {
+        ftc->isFirst        = true;
+        ftc->isLast         = false;
+        ftc->currIndex      = 0;
+        ftc->varIterator    = new VariableIterator(source);
+        ftc->isEmpty        = !mango_iterator_hase_next(ftc->varIterator);
+    }
+}
+    
+/**
+ * Unpacks numValues values from the next value in the iterator and
+ * returns the number of values unpacked.
+ * \param   ftc     Fortag context to be rendered.
+ * \param   numvals Number of values to be unpacked.
+ * \return number of values "really" unpacked.
+ */
+int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
+{
+    if (ftc->iterator == NULL || !iterator.hasNext())
+    {
+        // reached the end of the line so return 0;
+        return 0;
+    }
+
+    if (itemValues == NULL)
+    {
+        isFirst = true;
+        currIndex = 0;
+        itemValues = new ArrayList<Object>();
+    }
+    else
+    {
+        isFirst = false;
+        currIndex++;
+    }
+
+    for (int i = 0, count = itemValues.size();i < count;i++)
+        itemValues.set(i, NULL);
+    for (int i = itemValues.size(); i < numValues;i++)
+        itemValues.add(NULL);
+    
+    int outCount = iterator.unpackValues(numValues, itemValues);
+
+    if (!iterator.hasNext())
+        isLast = true;
+
+    // clear the item values and reset them to NULL
+    return outCount;
+}
+
 #if 0
     /**
      * Called when an instance of this tagnode is registered.
@@ -311,87 +375,6 @@ BOOL mango_fortags_are_equal(const MangoForTagData *ftd1, const MangoForTagData 
 			}
     	}
 		return NULL;
-    }
-}
-
-MangoNode *mango_fortag_new(
-    public ForTagContext(ForTag node, NodeContext parent) 
-    {
-        super(node, parent);
-        setSource(NULL);
-    }
-
-    public void setSource(Object sourceObject)
-    {
-    	isEmpty = true;
-        if (sourceObject != NULL)
-        {
-            isFirst = true;
-            isLast = false;
-            currIndex = 0;
-            iterator = new VariableIterator(sourceObject);
-            isEmpty = !iterator.hasNext();
-        }
-    }
-    
-    /**
-     * Unpacks numValues values from the next value in the iterator and
-     * returns the number of values unpacked.
-     * @param numValues
-     * @return
-     */
-    public int unpackValues(int numValues)
-    {
-    	if (iterator == NULL || !iterator.hasNext())
-    	{
-    		// reached the end of the line so return 0;
-    		return 0;
-    	}
-
-    	if (itemValues == NULL)
-    	{
-    		isFirst = true;
-    		currIndex = 0;
-    		itemValues = new ArrayList<Object>();
-    	}
-    	else
-    	{
-    		isFirst = false;
-    		currIndex++;
-    	}
-
-    	for (int i = 0, count = itemValues.size();i < count;i++)
-    		itemValues.set(i, NULL);
-    	for (int i = itemValues.size(); i < numValues;i++)
-    		itemValues.add(NULL);
-    	
-    	int outCount = iterator.unpackValues(numValues, itemValues);
-
-    	if (!iterator.hasNext())
-    		isLast = true;
-
-    	// clear the item values and reset them to NULL
-        return outCount;
-    }
-
-    public boolean isFirst()
-    {
-        return isFirst;
-    }
-
-    public boolean isLast()
-    {
-        return isLast;
-    }
-
-    public int getCounter()
-    {
-        return currIndex;
-    }
-
-    public int getOneBasedCounter()
-    {
-        return currIndex + 1;
     }
 }
 

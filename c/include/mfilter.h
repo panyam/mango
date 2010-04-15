@@ -10,20 +10,6 @@ extern "C" {
 #endif
 
 /**
- * Value of a variable after a filter is applied.
- */
-struct MangoValue
-{
-    int valueType;
-    union
-    {
-        int             intValue;
-        double          doubleValue;
-        MangoString *   stringValue;
-    } valueData;
-};
-
-/**
  * Filters get applied on variables in how they manipulate the value stored
  * in a variable.  We do not want to have multiple instances of the same
  * filter.  So it would be better to have a single instance of the filter

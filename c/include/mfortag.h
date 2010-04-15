@@ -40,7 +40,7 @@ typedef struct MangoForTagContext
     BOOL                isLast;
     int                 currIndex;
     BOOL                isEmpty;
-    // VariableIterator    iterator;
+    MangoIterator *     varIterator;
     MangoList *         itemValues;
 } MangoForTagContext;
 
@@ -91,9 +91,9 @@ extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd, MangoParser *pars
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagContext *mango_fortagcontext_new(MangoForTagData *       nodedata,
-                                                   MangoTemplateContext *  tmplCtx,
-                                                   MangoNodeContext *      topCtx);
+extern MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
+                                               MangoTemplateContext *  tmplCtx,
+                                               MangoNodeContext *      topCtx);
 
 #ifdef __cplusplus
 }

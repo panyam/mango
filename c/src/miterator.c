@@ -15,6 +15,16 @@ void mango_iterator_free(MangoIterator *miter)
 }
 
 /**
+ * Tells if there are more items in the iterator.
+ * \param   miter   Iterator to peek from.
+ * \return  true if more items are to follow, false otherwise.
+ */
+BOOL mango_iterator_hase_next(MangoIterator *miter)
+{
+    return miter->data != NULL && miter->hasNext != NULL && miter->hasNext(miter->data);
+}
+
+/**
  * Gets the next item pointed by the iterator.
  * \param   miter   Iterator to get the next item from.
  */

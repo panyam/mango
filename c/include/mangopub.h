@@ -14,6 +14,7 @@
 #include "mlist.h"
 #include "marray.h"
 #include "mbintree.h"
+#include "mvalue.h"
 #include "mfilterlibrary.h"
 #include "mvarlibrary.h"
 #include "mtagparserlibrary.h"
