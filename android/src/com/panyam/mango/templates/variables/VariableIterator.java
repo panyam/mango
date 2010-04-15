@@ -104,7 +104,7 @@ public class VariableIterator implements Iterator<Object>
 	{
 		if (!hasNext())
 			return 0;
-		
+
 		Object obj = next();
 		if (sourceMap != null)
 		{

@@ -8,13 +8,25 @@
 extern "C" {
 #endif
 
+typedef enum
+{
+    MV_NULL,
+    MV_BOOL,
+    MV_INT,
+    MV_DOUBLE,
+    MV_STRING,
+    MV_ARRAY,
+    MV_TABLE,
+    MV_ITERATOR,
+} MangoValueType;
+
 /**
  * Generic value objects.
  */
 struct MangoValue
 {
     // must be non-zero
-    int valueType;
+    MangoValueType valueType;
     void *valueData;
 };
 
@@ -30,7 +42,7 @@ extern BOOL mango_value_is_valid(const MangoValue *value);
  * \param   vType   Type of the value.
  * \param   vData   Data of the value.
  */
-extern MangoValue mango_value_make(int type, void *value);
+extern MangoValue mango_value_make(MangoValueType type, void *value);
 
 struct MangoValueIterator 
 {

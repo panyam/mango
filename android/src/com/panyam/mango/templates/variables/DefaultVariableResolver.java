@@ -28,9 +28,6 @@ public class DefaultVariableResolver extends VariableResolver
 	     * ((Array)source)[value] if value is an integer
 	     * ((Dictionary)source)[value] if value is NOT an integer
 	     *
-	     * If the object is 
-	     * If value is a quoted string or a variable then the object is
-	     *
 	     * Returns null if the variable cannot be resolved after applying the
 	     * above rules.
 	     */
