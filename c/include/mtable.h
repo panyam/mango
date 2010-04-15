@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 /**
- * General associate container
+ * General associate container for a set of homogeneous items.
  */
 struct MangoTable
 {
@@ -21,9 +21,14 @@ struct MangoTable
     int (*sizeFunc)(void *entries);
 
     /**
-     * Frees the table entries.
+     * Frees the entire table.
      */
-    void (*freeFunc)(void *entries);
+    void (*freeTableFunc)(void *entries);
+
+    /**
+     * Function to free each entry in the table on clearing.
+     */
+    void (*freeEntryFunc)(void *entries);
 
     /**
      * Gets a value by key.
