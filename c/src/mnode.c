@@ -58,7 +58,7 @@ void mango_node_free(MangoNode *node)
  * \return  true if nodes are equal (as defined by their nodeDataEquals
  * callback), false otherwise.
  */
-BOOL mango_node_equal(const MangoNode *node1, const MangoNode *node2)
+BOOL mango_nodes_are_equal(const MangoNode *node1, const MangoNode *node2)
 {
     if (node1 == node2)
     {

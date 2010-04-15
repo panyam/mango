@@ -14,6 +14,7 @@ extern "C" {
  */
 extern MangoTokenType IDENT_OR_STRING[3];
 extern MangoTokenType COMA_OR_CLOSE_PAREN[3];
+extern MangoTokenType IDENT_OR_OPEN_PAREN[3];
 extern MangoTokenType IDENT_STRING_OR_OPEN_PAREN[4];
 
 #ifdef __cplusplus

@@ -22,7 +22,6 @@ struct MangoNodeContext
 /*
  * Typedef of a few callback types.
  */
-typedef void (*DeleteNodeDataCallback)(void *nodeData);
 typedef int (*NodeCountCallback)(void *nodeData);
 typedef MangoNode *(*GetChildNodeCallback)(void *nodeData, unsigned index);
 typedef void *(*CreateNodeContextDataCallback)(void *nodeData,
@@ -125,6 +124,16 @@ extern MangoNode *mango_node_new(void *nodeData);
 extern void mango_node_free(MangoNode *node);
 
 /**
+ * Returns the number of child nodes of a node.
+ */
+extern int mango_node_childcount(MangoNode *node);
+
+/**
+ * Gets a particular child node.
+ */
+extern int mango_node_childat(MangoNode *node, unsigned index);
+
+/**
  * Compares two nodes to see if they are equal.
  *
  * \param   node1   First node in the comparison.
@@ -133,7 +142,7 @@ extern void mango_node_free(MangoNode *node);
  * \return  true if nodes are equal (as defined by their nodeEquals
  * callback), false otherwise.
  */
-extern BOOL mango_node_equal(const MangoNode *node1, const MangoNode *node2);
+extern BOOL mango_nodes_are_equal(const MangoNode *node1, const MangoNode *node2);
 
 #ifdef __cplusplus
 }
