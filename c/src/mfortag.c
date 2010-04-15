@@ -1,11 +1,13 @@
 
 #include "mfortag.h"
+#include "mvalue.h"
 #include "mmemutils.h"
 #include "mnode.h"
 #include "merror.h"
 #include "mvariable.h"
 #include "mstringbuffer.h"
 #include "mlist.h"
+#include "marray.h"
 #include "mtokenlists.h"
 #include "mparser.h"
 
@@ -208,7 +210,7 @@ MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
                                         MangoNodeContext *      topCtx)
 {
     MangoForTagContext *ftc = ZNEW(MangoForTagContext);
-    mango_fortagctx_set_source(ftc, NULL);
+    mango_fortagctx_set_source(ftc, NULL_VALUE);
     return ftc;
 }
 
@@ -217,21 +219,21 @@ MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source variable to set.
  */
-void mango_fortagctx_set_source(MangoForTagContext *ftc, void *source)
+void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source)
 {
     ftc->isEmpty = true;
-    if (source != NULL)
+    if (mango_value_is_valid(&source))
     {
         ftc->isFirst        = true;
         ftc->isLast         = false;
         ftc->currIndex      = 0;
-        ftc->varIterator    = new VariableIterator(source);
-        ftc->isEmpty        = !mango_iterator_hase_next(ftc->varIterator);
+        ftc->valIterator    = mango_valueiterator_new(source);
+        ftc->isEmpty        = !mango_valueiterator_has_next(ftc->valIterator);
     }
 }
     
 /**
- * Unpacks numValues values from the next value in the iterator and
+ * Unpacks numvals values from the next value in the iterator and
  * returns the number of values unpacked.
  * \param   ftc     Fortag context to be rendered.
  * \param   numvals Number of values to be unpacked.
@@ -239,33 +241,35 @@ void mango_fortagctx_set_source(MangoForTagContext *ftc, void *source)
  */
 int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
 {
-    if (ftc->iterator == NULL || !iterator.hasNext())
+    if (ftc->valIterator == NULL || !mango_valueiterator_has_next(ftc->valIterator))
     {
         // reached the end of the line so return 0;
         return 0;
     }
 
-    if (itemValues == NULL)
+    if (ftc->itemValues == NULL)
     {
-        isFirst = true;
-        currIndex = 0;
-        itemValues = new ArrayList<Object>();
+        ftc->isFirst = true;
+        ftc->currIndex = 0;
+        ftc->itemValues = mango_array_new();
     }
     else
     {
-        isFirst = false;
-        currIndex++;
+        ftc->isFirst = false;
+        ftc->currIndex++;
     }
 
-    for (int i = 0, count = itemValues.size();i < count;i++)
-        itemValues.set(i, NULL);
-    for (int i = itemValues.size(); i < numValues;i++)
-        itemValues.add(NULL);
-    
-    int outCount = iterator.unpackValues(numValues, itemValues);
+    int count = ftc->itemValues->length;
+    for (int i = 0;i < count;i++)
+        mango_array_set_itemat(ftc->itemValues, i, NULL);
 
-    if (!iterator.hasNext())
-        isLast = true;
+    for (int i = count; i < numvals;i++)
+        mango_array_insert(ftc->itemValues, NULL, -1);
+    
+    int outCount = mango_valueiterator_unpack(ftc->valIterator, numvals, ftc->itemValues);
+
+    if (!mango_valiterator_has_next(ftc->valIterator))
+        ftc->isLast = true;
 
     // clear the item values and reset them to NULL
     return outCount;

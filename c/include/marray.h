@@ -48,6 +48,11 @@ extern void mango_array_reserve(MangoArray *array, int capacity);
 extern void *mango_array_itemat(MangoArray *array, int index);
 
 /*
+ * Sets the item at a given index and returns the old item.
+ */
+extern void *mango_array_set_itemat(MangoArray *array, int index, void *newitem);
+
+/*
  * Insert an item at a given index in the array
  *
  * -ve index indicates an append operation

@@ -33,6 +33,16 @@ void * mango_array_itemat(MangoArray *array, int index)
 }
 
 /*
+ * Sets the item at a given index and returns the old item.
+ */
+void *mango_array_set_itemat(MangoArray *array, int index, void *newitem)
+{
+    void *olditem = array->items[index];
+    array->items[index] = newitem;
+    return olditem;
+}
+
+/*
  * Insert an item at a given index in the array
  *
  * -ve index indicates an append operation

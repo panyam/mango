@@ -30,6 +30,7 @@ typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoParser MangoParser;
 typedef struct MangoError MangoError;
 typedef struct MangoValue MangoValue;
+typedef struct MangoValueIterator MangoValueIterator;
 typedef struct MangoFilter MangoFilter;
 typedef struct MangoFilterNode MangoFilterNode;
 typedef struct MangoVariable MangoVariable;

@@ -40,8 +40,8 @@ typedef struct MangoForTagContext
     BOOL                isLast;
     int                 currIndex;
     BOOL                isEmpty;
-    MangoIterator *     varIterator;
-    MangoList *         itemValues;
+    MangoValueIterator *valIterator;
+    MangoArray *        itemValues;
 } MangoForTagContext;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -94,6 +94,13 @@ extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd, MangoParser *pars
 extern MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
                                                MangoTemplateContext *  tmplCtx,
                                                MangoNodeContext *      topCtx);
+
+/**
+ * Sets the source variable for the for-tag render context.
+ * \param   ftc     For tag context to be udpated.
+ * \param   source  Source variable to set.
+ */
+extern void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source);
 
 #ifdef __cplusplus
 }
