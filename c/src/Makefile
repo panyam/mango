@@ -163,6 +163,10 @@ dep:
 ../bld/./mparser.o: ../include/mnodelist.h
 ../bld/./mprototype.o: ../include/mprototype.h ../include/mfwddefs.h
 ../bld/./mprototype.o: ../include/mmemutils.h ../include/mbintree.h
+../bld/./mrcstring.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mrcstring.o: ../include/mrcstring.h ../include/mobject.h
+../bld/./mrcstring.o: ../include/mprototype.h ../include/mstringtable.h
+../bld/./mrcstring.o: ../include/mmemutils.h
 ../bld/./msingletons.o: ../include/msingletons.h ../include/mfwddefs.h
 ../bld/./msingletons.o: ../include/mlibrary.h ../include/mstring.h
 ../bld/./msingletons.o: ../include/mobject.h ../include/mprototype.h

@@ -8,57 +8,92 @@
 extern "C" {
 #endif
 
+
 /**
- * Immutable strings.
+ * A string prototype is like a class for a string.
+ * This contains the implementation specific function pointers to
+ * manipulate and query strings.  This is stored outside the MangoString
+ * because the pattern for using strings will be by copy/value so copying
+ * MangoStrings should be quick and cheap.  This obviously comes at the
+ * expense of an extra redirection (when accessing the prototype) but we
+ * will let the compiler/OS worry about caching that.
+ */
+struct MangoStringPrototype
+{
+    /**
+     * Gets the native string buffer.
+     */
+    const char *(*bufferFunc)(const void *data);
+
+    /**
+     * Gets the string size.
+     */
+    size_t (*sizeFunc)(const void *data);
+
+    /**
+     * Copies a string.
+     */
+    MangoString (*copyFunc)(void *data);
+
+    /**
+     * Releases a string.
+     */
+    void (*releaseFunc)(void *data);
+
+    /**
+     * Tells if two strings are equal.
+     */
+    int (*equalsFunc)(const void *mstr1, const void *mstr2);
+
+    /**
+     * Compares two strings.
+     */
+    int (*compareFunc)(const void *mstr1, const void *mstr2);
+};
+
+/**
+ * Generic string interface to allow different string implementations
+ * across platforms (eg std::strings, NSString or just MangoString etc).
  */
 struct MangoString
 {
     /**
-     * The Intern ID.
+     * String prototype - contains the methods 
+     * to manipulate and query the string in implementation specific ways.
      */
-    int                 internId;
+    MangoStringPrototype *prototype;
 
     /**
-     * The string table/pool to which the string belongs.
-     * If this is a waste of space, we can remove this and make it the
-     * caller's responsibility to ensure that the strings being compared
-     * belong to the same string table.
+     * Implementation specific string data.
      */
-    MangoStringTable *  mstable;
+    void *data;
 };
 
 /**
- * Creates a new immutale string.
- * \param   value   Value of the string.
- * \param   lenght  Length of the string.  If -ve then string is null
- *                  terminated.
- * \param   mstable The String table/pool from which the string is to be
- *                  sourced.  If NULL, then the default table is used.
- *
- * \return  A new instance of the immutable string.
+ * Creates a new string with its data and prototype.
+ * \param   proto   Prototype for the string.
+ * \param   data    Implementation specific data for the string.
  */
-extern MangoString *mango_string_new(const char *value,
-                                     int length,
-                                     MangoStringTable *mstable);
+extern MangoString mango_string_new(MangoStringPrototype *proto, void *data);
 
 /**
  * Copies another mango string.
  * \param   mstr    String to be copied.
  * \return  A new instance of the immutable string.
  */
-extern MangoString *mango_string_copy(const MangoString *mstr);
+extern MangoString mango_string_copy(MangoString *mstr);
 
 /**
- * Destroys a string.
+ * Releases a string.
  *
- * \param   mstr String to be destroyed.
+ * \param   mstr String to be released.
  */
-extern void mango_string_free(MangoString *mstr);
+extern void mango_string_release(MangoString *mstr);
 
 /**
  * Gets the buffer value of the string.
  */
-extern const char *mango_string_value(const MangoString *mstr);
+extern const char *mango_string_buffer(const MangoString *mstr);
 
 /**
  * Gets the length of the string.
@@ -68,9 +103,8 @@ extern size_t mango_string_length(const MangoString *mstr);
 /**
  * Compares the string contents with another buffer.
  *
- * \param   mstr    String being compared.
- * \param   value   String being compared to.
- * \param   length  Length of the string being compared to.
+ * \param   mstr1   String being compared.
+ * \param   mstr2   String being compared to.
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
@@ -78,6 +112,11 @@ extern int mango_string_compare(const MangoString *mstr1, const MangoString *mst
 
 /**
  * Tells if two strings are equal.
+ *
+ * \param   mstr1   String being compared.
+ * \param   mstr2   String being compared to.
+ *
+ * \return true if strings are equal, false otherwise.
  */
 extern BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2);
 

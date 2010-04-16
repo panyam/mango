@@ -23,6 +23,8 @@ typedef struct MangoPrototype MangoPrototype;
 typedef struct MangoObject MangoObject;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoString MangoString;
+typedef struct MangoStringPrototype MangoStringPrototype;
+typedef struct MangoRCString MangoRCString;
 typedef struct MangoStringBuffer MangoStringBuffer;
 typedef struct MangoStringTable MangoStringTable;
 typedef struct MangoToken MangoToken;
