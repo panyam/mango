@@ -36,6 +36,26 @@ void mango_node_free(MangoNode *node)
 }
 
 /**
+ * Returns the number of child nodes of a node.
+ */
+int mango_node_childcount(MangoNode *node)
+{
+    if (node->nodeData != NULL && node->nodeCountFunc != NULL)
+        return node->nodeCountFunc(node->nodeData);
+    return 0;
+}
+
+/**
+ * Gets a particular child node.
+ */
+MangoNode *mango_node_childat(MangoNode *node, unsigned index)
+{
+    if (node->nodeData != NULL && node->getChildNodeFunc != NULL)
+        return node->getChildNodeFunc(node->nodeData, index);
+    return NULL;
+}
+
+/**
  * Compares two nodes to see if they are equal.
  *
  * \param   node1   First node in the comparison.
