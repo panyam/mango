@@ -13,9 +13,6 @@ extern "C" {
  */
 struct MangoLibrary
 {
-    //! Type of library - eg filter, tag etc
-    MangoString *   name;
-
     //! Items in the library ordered by their name
     MangoBinTree *  entries;
 };
@@ -25,7 +22,7 @@ struct MangoLibrary
  * \param name  Name of the library.
  * \return  A new MangoLibrary instance.
  */
-extern MangoLibrary *mango_library_new(const MangoString *name);
+extern MangoLibrary *mango_library_new();
 
 /**
  * Frees a library created with the above new method.

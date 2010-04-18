@@ -26,10 +26,9 @@ int libentry_cmp(const MangoLibraryEntry *mle1, const MangoLibraryEntry *mle2)
  * \param name  Name of the library.
  * \return  A new MangoLibrary instance.
  */
-MangoLibrary *mango_library_new(const MangoString *name)
+MangoLibrary *mango_library_new()
 {
     MangoLibrary *mlib  = (MangoLibrary *)calloc(1, sizeof(MangoLibrary *));
-    mlib->name          = mango_string_copy(name);
     mlib->entries       = mango_bintree_new();
     return mlib;
 }
@@ -40,8 +39,6 @@ MangoLibrary *mango_library_new(const MangoString *name)
  */
 void mango_library_free(MangoLibrary *library, void (*deletor)(void *))
 {
-    if (library->name != NULL)
-        mango_string_free(library->name);
     if (library->entries != NULL)
         mango_bintree_free(library->entries, deletor);
     free(library);
@@ -64,7 +61,8 @@ void mango_library_register(MangoLibrary *library, const MangoString *name, void
     if (node == NULL)
     {
         MangoLibraryEntry *newentry = NEW(MangoLibraryEntry);
-        newentry->name  = mango_string_copy(name);
+        newentry->name  = NEW(MangoString);
+        mango_string_copy(name, newentry->name);
         newentry->entry = entry;
         mango_bintree_insert(library->entries, newentry, (CompareFunc)libentry_cmp);
     }

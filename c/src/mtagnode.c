@@ -31,7 +31,7 @@ MangoNode *mango_tagnode_extract_with_parser(MangoParser *parser,
     if (tagparser == NULL)
     {
         mango_error_set(error, -1, "Invalid tag type: %s", token->tokenValue);
-        mango_string_free(tagname);
+        mango_string_release(tagname);
         return NULL;
     }
 

@@ -27,12 +27,14 @@ public:
         loader(NULL),
         input_source(NULL),
         input_string(""),
-        filterLibrary(mango_filter_library_singleton(NULL)),
-        tagLibrary(mango_tagparser_library_singleton(NULL))
+        filterLibrary(mango_filter_library_singleton()),
+        tagLibrary(mango_tagparser_library_singleton())
     {
+        MangoString add = mango_rcstring_new("add", -1, NULL);
         MangoFilter *newfilter = mango_filter_new(NULL);
-        mango_addfilter_init(mango_string_new("add", -1, NULL), newfilter);
-        mango_library_register(filterLibrary, mango_string_new("add", -1, NULL), newfilter);
+        mango_addfilter_init(&add, newfilter);
+        mango_library_register(filterLibrary, &add, newfilter);
+        mango_string_release(&add);
     }
 
     virtual ~ParserTestFixture()
@@ -174,20 +176,22 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
 TEST_FIXTURE(ParserTestFixture, TestOnlyFreeText)
 {
     SetUpWithInputString("Hello World");
-    CheckParsedNodeWith(1, mango_freetext_new(mango_string_new("Hello World", -1, NULL)));
+    MangoString hello = mango_rcstring_new("Hello World", -1, NULL);
+    CheckParsedNodeWith(1, mango_freetext_new(&hello));
 }
 
 TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
 {
     SetUpWithInputString("Hello{# A Huge Comment#}World");
-    CheckParsedNodeWith(2, 
-                        mango_freetext_new(mango_string_new("Hello", -1, NULL)), 
-                        mango_freetext_new(mango_string_new("World", -1, NULL)));
+    MangoString hello = mango_rcstring_new("Hello", -1, NULL);
+    MangoString world = mango_rcstring_new("World", -1, NULL);
+    CheckParsedNodeWith(2, mango_freetext_new(&hello), mango_freetext_new(&world));
 }
 
 MangoVariable *create_variable(const char *value, bool isQuoted, bool isNum, MangoVariable *next)
 {
-    MangoVariable *var = mango_variable_new(mango_string_new(value, -1, NULL), isQuoted, next);
+    MangoString varValue = mango_rcstring_new(value, -1, NULL);
+    MangoVariable *var = mango_variable_new(&varValue, isQuoted, next);
     var->isNumber = isNum;
     if (isNum)
     {
@@ -246,10 +250,10 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
-    MangoString *add = mango_string_new("add", -1, NULL);
-    MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(add, filterLibrary);
-    MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(add, filterLibrary);
-    mango_string_free(add);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *f1 = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
+    MangoFilter *f2 = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
+    mango_string_release(&add);
     CHECK(f1 != NULL);
     CHECK(f2 != NULL);
     CHECK_EQUAL(f1, f2);
@@ -258,77 +262,82 @@ TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 TEST_FIXTURE(ParserTestFixture, TestSingleFilter)
 {
     SetUpWithInputString("{{a|add}}");
-    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *addfilter = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
     MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
-    mango_varnode_add_filter(expectedNode, mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL)));
-    mango_string_free(add);
+    mango_varnode_add_filter(expectedNode, mango_filternode_new(addfilter));
+    mango_string_release(&add);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneArgument)
 {
     SetUpWithInputString("{{a|add:3}}");
-    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *addfilter = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
     MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
-    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *filternode = mango_filternode_new(addfilter);
     mango_varnode_add_filter(expectedNode, filternode);
     mango_filternode_add_arg(filternode, create_variable("3", false, true, NULL));
-    mango_string_free(add);
+    mango_string_release(&add);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithOneQuotedArgument)
 {
     SetUpWithInputString("{{a|add:\"3\"}}");
-    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
     MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
-    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(&add, NULL));
     mango_varnode_add_filter(expectedNode, filternode);
     mango_filternode_add_arg(filternode, create_variable("3", true, true, NULL));
-    mango_string_free(add);
+    mango_string_release(&add);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSingleFilterWithMultipleArguments)
 {
     SetUpWithInputString("{{a|add:(3,'4',five)}}");
-    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *addfilter = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
     MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
-    MangoFilterNode *filternode = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *filternode = mango_filternode_new(addfilter);
     mango_varnode_add_filter(expectedNode, filternode);
     mango_filternode_add_arg(filternode, create_variable("3", false, true, NULL));
     mango_filternode_add_arg(filternode, create_variable("4", true, true, NULL));
     mango_filternode_add_arg(filternode, create_variable("five", false, false, NULL));
-    mango_string_free(add);
+    mango_string_release(&add);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestMultipleFilters)
 {
     SetUpWithInputString("{{a|add|add|add}}");
-    MangoString *add = mango_string_new("add", -1, NULL);
+    MangoString add = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *addfilter = (MangoFilter *)mango_filter_library_get(&add, filterLibrary);
     MangoNode *expectedNode = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
-    mango_varnode_add_filter(expectedNode, mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL)));
-    mango_varnode_add_filter(expectedNode, mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL)));
-    mango_varnode_add_filter(expectedNode, mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL)));
-    mango_string_free(add);
+    mango_varnode_add_filter(expectedNode, mango_filternode_new(addfilter));
+    mango_varnode_add_filter(expectedNode, mango_filternode_new(addfilter));
+    mango_varnode_add_filter(expectedNode, mango_filternode_new(addfilter));
+    mango_string_release(&add);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestMultipleFiltersWithArguments)
 {
     SetUpWithInputString("{{a|add|add:1|add:(2,'3')}}");
-    MangoString *add            = mango_string_new("add", -1, NULL);
+    MangoString add             = mango_rcstring_new("add", -1, NULL);
+    MangoFilter *addfilter      = (MangoFilter *)mango_filter_library_get(&add, NULL);
     MangoNode *expectedNode     = mango_varnode_new(create_variable("a", false, false, NULL), NULL);
 
-    MangoFilterNode *fnode1     = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *fnode1     = mango_filternode_new(addfilter);
     mango_varnode_add_filter(expectedNode, fnode1);
 
-    MangoFilterNode *fnode2     = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *fnode2     = mango_filternode_new(addfilter);
     mango_varnode_add_filter(expectedNode, fnode2);
     mango_filternode_add_arg(fnode2, create_variable("1", false, true, NULL));
 
-    MangoFilterNode *fnode3     = mango_filternode_new((MangoFilter *)mango_filter_library_get(add, NULL));
+    MangoFilterNode *fnode3     = mango_filternode_new(addfilter);
     mango_varnode_add_filter(expectedNode, fnode3);
     mango_filternode_add_arg(fnode3, create_variable("2", false, true, NULL));
     mango_filternode_add_arg(fnode3, create_variable("3", true, true, NULL));

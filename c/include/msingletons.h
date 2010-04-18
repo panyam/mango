@@ -12,19 +12,19 @@ extern "C" {
 /**
  * Get the shared filter library instance.
  */
-extern MangoLibrary *mango_filter_library_singleton(MangoStringTable *mstable);
+extern MangoLibrary *mango_filter_library_singleton();
 
 /**
  * Get the shared tag parser library instance.
  * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_tagparser_library_singleton(MangoStringTable *mstable);
+extern MangoLibrary *mango_tagparser_library_singleton();
 
 /**
  * Get the shared variable library instance.
  * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_variable_library_singleton(MangoStringTable *mstable);
+extern MangoLibrary *mango_variable_library_singleton();
 
 #ifdef __cplusplus
 }

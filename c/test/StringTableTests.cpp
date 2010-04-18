@@ -7,67 +7,68 @@
 #include <string.h>
 #include <stdarg.h>
 
-class StringTableTestFixture
+class RCStringTableTestFixture
 {
 protected:
-    MangoStringTable *mstable;
+    MangoRCStringTable *mstable;
 
 public:
-    StringTableTestFixture()
+    RCStringTableTestFixture()
     {
-        mstable = mango_string_table_new();
+        // mstable = mango_rcstring_table_new();
+        mstable = mango_rcstring_table_default();
     }
 
-    virtual ~StringTableTestFixture()
+    virtual ~RCStringTableTestFixture()
     {
-        if (mstable != NULL)
-            mango_string_table_free(mstable);
+        if (mstable != NULL && mstable != mango_rcstring_table_default())
+            mango_rcstring_table_free(mstable);
     }
 };
 
 /**
  * Tests the creation of a string table.
  */
-TEST_FIXTURE(StringTableTestFixture, TestCreate)
+TEST_FIXTURE(RCStringTableTestFixture, TestCreate)
 {
-    CHECK(mstable != NULL);
+    // CHECK(mstable != NULL);
 }
 
 /**
  * Test finding of a non-existent string.
  */
-TEST_FIXTURE(StringTableTestFixture, TestFindString)
+TEST_FIXTURE(RCStringTableTestFixture, TestFindString)
 {
-    int id = mango_string_table_find(mstable, "Hello World", -1, false, 0);
+    int id = mango_rcstring_table_find(mstable, "Hello World", -1, false, 0);
     CHECK(id == -1);
 }
 
 /**
  * Test finding of a string by adding it.
  */
-TEST_FIXTURE(StringTableTestFixture, TestFindStringByCreating)
+TEST_FIXTURE(RCStringTableTestFixture, TestFindStringByCreating)
 {
-    int id = mango_string_table_find(mstable, "Hello World", -1, true, 0);
+    int id = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     CHECK(id != -1);
 }
 
 /**
  * Test that two strings that are equal have the same ID.
  */
-TEST_FIXTURE(StringTableTestFixture, TestEqualStringsHaveSameId)
+TEST_FIXTURE(RCStringTableTestFixture, TestEqualStringsHaveSameId)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, 0);
-    int id2 = mango_string_table_find(mstable, "Hello World", -1, true, 0);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
+    int id2 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     CHECK_EQUAL(id1, id2);
 }
 
 /**
  * Test creation of an entry with an initial reference count.
  */
-TEST_FIXTURE(StringTableTestFixture, TestCreateWithRefCount)
+TEST_FIXTURE(RCStringTableTestFixture, TestCreateWithRefCount)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, 100);
-    const MangoStringData *msdata = mango_string_table_get(mstable, id1);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 100);
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 100);
 }
 
@@ -75,44 +76,44 @@ TEST_FIXTURE(StringTableTestFixture, TestCreateWithRefCount)
  * Test creation of an entry with an invalid reference count - refcount
  * should be set to 1.
  */
-TEST_FIXTURE(StringTableTestFixture, TestCreateWithInvalidRefCount)
+TEST_FIXTURE(RCStringTableTestFixture, TestCreateWithInvalidRefCount)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, -100);
-    const MangoStringData *msdata = mango_string_table_get(mstable, id1);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, -100);
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 1);
 }
 
 /**
  * Test refcount incrementing works
  */
-TEST_FIXTURE(StringTableTestFixture, TestIncRef)
+TEST_FIXTURE(RCStringTableTestFixture, TestIncRef)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, 1);
-    const MangoStringData *msdata = mango_string_table_get(mstable, id1);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 1);
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 1);
 }
 
 /**
  * Test refcount decrementing works
  */
-TEST_FIXTURE(StringTableTestFixture, TestDecRef)
+TEST_FIXTURE(RCStringTableTestFixture, TestDecRef)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, -1);
-    const MangoStringData *msdata = mango_string_table_get(mstable, id1);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, -1);
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 1);
-    mango_string_table_decref(mstable, id1);
+    mango_rcstring_table_decref(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 0);
 }
 
 /**
  * Test refcount decrementing doesnt decrement less than 0
  */
-TEST_FIXTURE(StringTableTestFixture, TestDecRefLimitAtZero)
+TEST_FIXTURE(RCStringTableTestFixture, TestDecRefLimitAtZero)
 {
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, -1);
-    const MangoStringData *msdata = mango_string_table_get(mstable, id1);
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, -1);
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 1);
-    mango_string_table_decref(mstable, id1);
+    mango_rcstring_table_decref(mstable, id1);
     CHECK_EQUAL(msdata->refCount, 0);
 }
 
@@ -120,34 +121,39 @@ TEST_FIXTURE(StringTableTestFixture, TestDecRefLimitAtZero)
  * Test that creating two mango strings of the same value increments
  * reference counts
  */
-TEST_FIXTURE(StringTableTestFixture, TestIncRefOnStringCopy)
+TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
 {
-    MangoString *mstr1 = mango_string_new("Hello World", -1, mstable);
-    MangoString *mstr2 = mango_string_new("Hello World", -1, mstable);
-    int id1 = mango_string_table_find(mstable, "Hello World", -1, true, 0);
-    int id2 = mango_string_table_find(mstable, "Hello World", -1, true, 0);
+    MangoString mstr1 = mango_rcstring_new("Hello World", -1, mstable);
+    MangoString mstr2 = mango_rcstring_new("Hello World", -1, mstable);
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1.data;
+    MangoRCString *rcstr2 = (MangoRCString *)mstr2.data;
+    int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
+    int id2 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     CHECK_EQUAL(id1, id2);
-    CHECK_EQUAL(mstr1->internId, mstr2->internId);
-    CHECK_EQUAL(mstr1->mstable, mstr2->mstable);
+    CHECK_EQUAL(rcstr1->internId, rcstr2->internId);
+    CHECK_EQUAL(rcstr1->mstable, rcstr2->mstable);
 
-    const MangoStringData *msdata1 = mango_string_table_get(mstable, id1);
-    const MangoStringData *msdata2 = mango_string_table_get(mstable, id2);
+    const MangoRCStringData *msdata1 = mango_rcstring_table_get(mstable, id1);
+    const MangoRCStringData *msdata2 = mango_rcstring_table_get(mstable, id2);
     CHECK_EQUAL(msdata1, msdata2);
     CHECK_EQUAL(2, msdata1->refCount);
+    mango_string_release(&mstr1);
+    mango_string_release(&mstr2);
 }
 
 /**
  * Test that creating two mango strings of the same value increments
  * reference counts
  */
-TEST_FIXTURE(StringTableTestFixture, TestIncRefOnStringFree)
+TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringFree)
 {
-    MangoString *mstr1 = mango_string_new("Hello World", -1, mstable);
-    MangoString *mstr2 = mango_string_new("Hello World", -1, mstable);
-    const MangoStringData *msdata = mango_string_table_get(mstable, mstr1->internId);
+    MangoString mstr1 = mango_rcstring_new("Hello World", -1, mstable);
+    MangoString mstr2 = mango_rcstring_new("Hello World", -1, mstable);
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1.data;
+    const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, rcstr1->internId);
     CHECK_EQUAL(msdata->refCount, 2);
-    mango_string_free(mstr1);
+    mango_string_release(&mstr1);
     CHECK_EQUAL(msdata->refCount, 1);
-    mango_string_free(mstr2);
+    mango_string_release(&mstr2);
 }
 

@@ -2,7 +2,7 @@
 #ifndef __MANGO_VARIABLE_H__
 #define __MANGO_VARIABLE_H__
 
-#include "mfwddefs.h"
+#include "mstring.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,7 +11,7 @@ extern "C" {
 struct MangoVariable
 {
     //! String value of the variable.
-    MangoString *   value;
+    MangoString     value;
 
     //! Is the value an identifier or a quoted value
     BOOL            isQuoted;

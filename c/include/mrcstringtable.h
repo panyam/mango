@@ -1,6 +1,6 @@
 
-#ifndef __MANGO_STRING_TABLE_H__
-#define __MANGO_STRING_TABLE_H__
+#ifndef __MANGO_RCSTRING_TABLE_H__
+#define __MANGO_RCSTRING_TABLE_H__
 
 #include "mfwddefs.h"
 
@@ -8,15 +8,15 @@
 extern "C" {
 #endif
 
-typedef struct MangoStringData
+typedef struct MangoRCStringData
 {
     int     strId;
     char *  strValue;
     int     strLength;
     int     refCount;
-} MangoStringData;
+} MangoRCStringData;
 
-struct MangoStringTable
+struct MangoRCStringTable
 {
     void *data;
 };
@@ -25,19 +25,19 @@ struct MangoStringTable
  * Gets the default string table.
  * \return  The default global string table.
  */
-extern MangoStringTable *mango_string_table_default();
+extern MangoRCStringTable *mango_rcstring_table_default();
 
 /**
  * Creates a new string table.
  * \return  A new mango string table instance.
  */
-extern MangoStringTable *mango_string_table_new();
+extern MangoRCStringTable *mango_rcstring_table_new();
 
 /**
  * Frees a string table created with the above new method.
  * \param   mstable The mango string table to be destroyed.
  */
-extern void mango_string_table_free(MangoStringTable *mstable);
+extern void mango_rcstring_table_free(MangoRCStringTable *mstable);
 
 /**
  * Finds the index of a particular string.
@@ -52,7 +52,7 @@ extern void mango_string_table_free(MangoStringTable *mstable);
  * \return  The index of the string if it exists or if it was created,
  * otherwise -1.
  */
-extern int mango_string_table_find(MangoStringTable *   stable,
+extern int mango_rcstring_table_find(MangoRCStringTable *   stable,
                                    const char *         str,
                                    int                  length,
                                    BOOL                 create,
@@ -63,7 +63,7 @@ extern int mango_string_table_find(MangoStringTable *   stable,
  * \param   mstable The mango string table to be searched.
  * \param   strid   ID of the string to be searched.
  */
-extern const MangoStringData *mango_string_table_get(const MangoStringTable *mstable,
+extern const MangoRCStringData *mango_rcstring_table_get(const MangoRCStringTable *mstable,
                                                      int strid);
 
 /**
@@ -71,14 +71,14 @@ extern const MangoStringData *mango_string_table_get(const MangoStringTable *mst
  * \param   mstable Table in which to find the string.
  * \param   strid   ID of the string.
  */
-extern void mango_string_table_incref(MangoStringTable *mstable, int strid);
+extern void mango_rcstring_table_incref(MangoRCStringTable *mstable, int strid);
 
 /**
  * Decrements the reference count of a string.
  * \param   mstable Table in which to find the string.
  * \param   strid   ID of the string.
  */
-extern void mango_string_table_decref(MangoStringTable *mstable, int strid);
+extern void mango_rcstring_table_decref(MangoRCStringTable *mstable, int strid);
 
 #ifdef __cplusplus
 }

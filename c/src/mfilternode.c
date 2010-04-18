@@ -144,7 +144,7 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
 
     MangoString *filtername = mango_stringbuffer_tostring(token->tokenValue);
     const MangoFilter *filter = mango_filter_library_get(filtername, lib);
-    mango_string_free(filtername);
+    mango_string_release(filtername);
     if (filter == NULL)
     {
         mango_error_set(error, -1, "Filter not found: %s", token->tokenValue->buffer);

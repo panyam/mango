@@ -3,6 +3,7 @@
 #define __MANGO_RCSTRING_H__
 
 #include "mobject.h"
+#include "mstring.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,6 +29,12 @@ struct MangoRCString
 };
 
 /**
+ * Creates a new immutale string factory.
+ * \return  A new instance of the immutable string.
+ */
+extern MangoStringFactory *mango_rcstringfactory_new();
+
+/**
  * Creates a new immutale string.
  * \param   value   Value of the string.
  * \param   lenght  Length of the string.  If -ve then string is null
@@ -37,16 +44,16 @@ struct MangoRCString
  *
  * \return  A new instance of the immutable string.
  */
-extern MangoRCString mango_rcstring_new(const char *value,
-                                     int length,
-                                     MangoRCStringTable *mstable);
+extern MangoString mango_rcstring_new(const char *value,
+                                      int length,
+                                      MangoRCStringTable *mstable);
 
 /**
  * Copies another mango string.
- * \param   mstr    String to be copied.
- * \return  A new instance of the immutable string.
+ * \param   source  String to be copied.
+ * \param   another Destination string to be copied to.
  */
-extern MangoRCString mango_rcstring_copy(MangoRCString *mstr);
+extern void mango_rcstring_copy(const MangoRCString *source, MangoString *another);
 
 /**
  * Destroys a string.
@@ -63,7 +70,7 @@ extern const char *mango_rcstring_buffer(const MangoRCString *mstr);
 /**
  * Gets the length of the string.
  */
-extern size_t mango_rcstring_size(const MangoRCString *mstr);
+extern size_t mango_rcstring_length(const MangoRCString *mstr);
 
 /**
  * Compares the string contents with another buffer.

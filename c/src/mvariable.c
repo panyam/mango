@@ -24,7 +24,7 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
     MangoVariable *mvar     = NEW(MangoVariable);
     mvar->next              = next;
     mvar->varData           = NULL;
-    mvar->value             = NULL;
+    bzero(&mvar->value, sizeof(mvar->value));
     mvar->setNextVariable   = mango_variable_set_next;
     mango_variable_set_value(mvar, mstr, isQuoted);
     return mvar;
@@ -36,8 +36,7 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
  */
 void mango_variable_free(MangoVariable *mvar)
 {
-    if (mvar->value != NULL)
-        mango_string_free(mvar->value);
+    mango_string_release(&mvar->value);
     MangoVariable *next = mvar->next;
     free(mvar);
     if (next != NULL)
@@ -53,14 +52,11 @@ void mango_variable_free(MangoVariable *mvar)
  */
 void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQuoted)
 {
-    if (mvar->value != NULL)
-    {
-        mango_string_free(mvar->value);
-    }
-    mvar->value     = value;
+    mango_string_release(&mvar->value);
+    mvar->value     = *value;
     mvar->isQuoted  = isQuoted;
     mvar->intValue  = 0;
-    mvar->isNumber  = is_integer(mango_string_value(value),
+    mvar->isNumber  = is_integer(mango_string_buffer(value),
                                  mango_string_length(value),
                                  &mvar->intValue);
 }
@@ -94,7 +90,7 @@ BOOL mango_variables_are_equal(const MangoVariable *var1, const MangoVariable *v
              var1->isNumber == var2->isNumber &&
              var1->intValue == var2->intValue)
     {
-        return (mango_string_compare(var1->value, var2->value) == 0) &&
+        return (mango_string_compare(&var1->value, &var2->value) == 0) &&
                     mango_variables_are_equal(var1->next, var2->next);
     }
     return false;

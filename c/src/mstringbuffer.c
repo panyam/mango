@@ -40,20 +40,6 @@ MangoStringBuffer *mango_stringbuffer_from_buffer(const char *buffer, int length
 }
 
 /**
- * Get an immutable copy of the buffer.
- *
- * \param   msbuffer    String buffer whose immutable copy is to be
- *                      returned.
- *
- * \return A MangoString instance that must be freed with mango_string_free
- * upon usage.
- */
-MangoString *mango_stringbuffer_tostring(const MangoStringBuffer *msbuffer)
-{
-    return mango_string_new(msbuffer->buffer, msbuffer->length, NULL);
-}
-
-/**
  * Makes a copy of another string.
  *
  * \param   buffer  Buffer of the values to copy.

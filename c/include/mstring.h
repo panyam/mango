@@ -33,7 +33,7 @@ struct MangoStringPrototype
     /**
      * Copies a string.
      */
-    MangoString (*copyFunc)(void *data);
+    void (*copyFunc)(void *data, MangoString *another);
 
     /**
      * Releases a string.
@@ -77,11 +77,11 @@ struct MangoString
 extern MangoString mango_string_new(MangoStringPrototype *proto, void *data);
 
 /**
- * Copies another mango string.
+ * Copies to another mango string.
  * \param   mstr    String to be copied.
- * \return  A new instance of the immutable string.
+ * \param   another String to which the copy is written to.
  */
-extern MangoString mango_string_copy(MangoString *mstr);
+extern void mango_string_copy(const MangoString *mstr, MangoString *another);
 
 /**
  * Releases a string.

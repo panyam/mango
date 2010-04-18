@@ -17,7 +17,8 @@ extern "C" {
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-extern const MangoFilter *mango_filter_library_get(const MangoString *name, const MangoLibrary *library);
+extern const MangoFilter *mango_filter_library_get(const MangoString *name,
+                                                   const MangoLibrary *library);
 
 #ifdef __cplusplus
 }

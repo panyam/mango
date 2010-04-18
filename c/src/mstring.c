@@ -1,7 +1,6 @@
 
 #include "merror.h"
 #include "mstring.h"
-#include "mstringtable.h"
 #include "mmemutils.h"
 
 /**
@@ -11,7 +10,10 @@
  */
 MangoString mango_string_new(MangoStringPrototype *proto, void *data)
 {
-    return MangoString { proto, data };
+    MangoString out;
+    out.prototype = proto;
+    out.data = data;
+    return out;
 }
 
 /**
@@ -19,9 +21,9 @@ MangoString mango_string_new(MangoStringPrototype *proto, void *data)
  * \param   mstr    String to be copied.
  * \return  A new instance of the immutable string.
  */
-MangoString mango_string_copy(MangoString *mstr)
+void mango_string_copy(const MangoString *mstr, MangoString *another)
 {
-    return mstr->prototype->copyFunc(mstr->data);
+    return mstr->prototype->copyFunc(mstr->data, another);
 }
 
 /**

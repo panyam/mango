@@ -1,6 +1,6 @@
 
 #include <string.h>
-#include "mstringtable.h"
+#include "mrcstringtable.h"
 #include "mmemutils.h"
 #include "mbintree.h"
 #include "marray.h"
@@ -16,8 +16,8 @@ typedef struct StringTableImpl
  */
 int stablenode_compare(const void *a, const void *b)
 {
-    const MangoStringData *stna = (const MangoStringData *)a;
-    const MangoStringData *stnb = (const MangoStringData *)b;
+    const MangoRCStringData *stna = (const MangoRCStringData *)a;
+    const MangoRCStringData *stnb = (const MangoRCStringData *)b;
 
     int cmp = memcmp(stna->strValue, stnb->strValue, stna->strLength <= stnb->strLength ? stna->strLength : stnb->strLength);
     if (cmp == 0)
@@ -28,7 +28,7 @@ int stablenode_compare(const void *a, const void *b)
 /**
  * Return the StringTable entries of a String Table by index.
  */
-MangoArray *mango_string_table_by_index(MangoStringTable *mstable)
+MangoArray *mango_rcstring_table_by_index(MangoRCStringTable *mstable)
 {
     return ((StringTableImpl *)mstable->data)->entriesByIndex;
 }
@@ -36,7 +36,7 @@ MangoArray *mango_string_table_by_index(MangoStringTable *mstable)
 /**
  * Return the StringTable entries of a String Table by name.
  */
-MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
+MangoBinTree *mango_rcstring_table_by_name(MangoRCStringTable *mstable)
 {
     return ((StringTableImpl *)mstable->data)->entriesByName;
 }
@@ -46,10 +46,10 @@ MangoBinTree *mango_string_table_by_name(MangoStringTable *mstable)
  * \param   mstable Table in which to find the string.
  * \param   strid   ID of the string.
  */
-void mango_string_table_incref(MangoStringTable *mstable, int strid)
+void mango_rcstring_table_incref(MangoRCStringTable *mstable, int strid)
 {
-    MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
-    MangoStringData *entry = mango_array_itemat(entriesByIndex, strid);
+    MangoArray *entriesByIndex = mango_rcstring_table_by_index(mstable);
+    MangoRCStringData *entry = mango_array_itemat(entriesByIndex, strid);
     entry->refCount++;
 }
 
@@ -58,10 +58,10 @@ void mango_string_table_incref(MangoStringTable *mstable, int strid)
  * \param   mstable Table in which to find the string.
  * \param   strid   ID of the string.
  */
-void mango_string_table_decref(MangoStringTable *mstable, int strid)
+void mango_rcstring_table_decref(MangoRCStringTable *mstable, int strid)
 {
-    MangoArray *entriesByIndex = mango_string_table_by_index(mstable);
-    MangoStringData *entry = mango_array_itemat(entriesByIndex, strid);
+    MangoArray *entriesByIndex = mango_rcstring_table_by_index(mstable);
+    MangoRCStringData *entry = mango_array_itemat(entriesByIndex, strid);
     entry->refCount--;
     if (entry->refCount <= 0)
     {
@@ -73,9 +73,9 @@ void mango_string_table_decref(MangoStringTable *mstable, int strid)
  * Creates a new string table.
  * \return  A new mango string table instance.
  */
-MangoStringTable *mango_string_table_new()
+MangoRCStringTable *mango_rcstring_table_new()
 {
-    MangoStringTable *mstable = NEW(MangoStringTable);
+    MangoRCStringTable *mstable = NEW(MangoRCStringTable);
     mstable->data = NEW(StringTableImpl);
     MangoArray *array = mango_array_new();
     mango_array_insert(array, NULL, -1);  // reserve index 0 for NULL entries
@@ -88,12 +88,12 @@ MangoStringTable *mango_string_table_new()
  * Gets the default string table.
  * \return  The default global string table.
  */
-MangoStringTable *mango_string_table_default()
+MangoRCStringTable *mango_rcstring_table_default()
 {
-    static MangoStringTable *DEFAULT_STRING_TABLE = NULL;
+    static MangoRCStringTable *DEFAULT_STRING_TABLE = NULL;
     if (DEFAULT_STRING_TABLE  == NULL)
     {
-        DEFAULT_STRING_TABLE = mango_string_table_new();
+        DEFAULT_STRING_TABLE = mango_rcstring_table_new();
     }
     return DEFAULT_STRING_TABLE;
 }
@@ -102,7 +102,7 @@ MangoStringTable *mango_string_table_default()
  * Frees a string table created with the above new method.
  * \param   mstable The mango string table to be destroyed.
  */
-void mango_string_table_free(MangoStringTable *mstable)
+void mango_rcstring_table_free(MangoRCStringTable *mstable)
 {
     if (mstable->data != NULL)
     {
@@ -125,7 +125,7 @@ void mango_string_table_free(MangoStringTable *mstable)
  * \return  The index of the string if it exists or if it was created,
  * otherwise -1.
  */
-int mango_string_table_find(MangoStringTable *  stable,
+int mango_rcstring_table_find(MangoRCStringTable *  stable,
                             const char *        str,
                             int                 length,
                             BOOL                create,
@@ -141,20 +141,20 @@ int mango_string_table_find(MangoStringTable *  stable,
     if (length < 0)
         length = strlen(str);
 
-    MangoBinTree *  bintree = mango_string_table_by_name(stable);
-    MangoArray *    array   = mango_string_table_by_index(stable);
-    MangoStringData stentry;
+    MangoBinTree *  bintree = mango_rcstring_table_by_name(stable);
+    MangoArray *    array   = mango_rcstring_table_by_index(stable);
+    MangoRCStringData stentry;
     stentry.strValue = (char *)str;
     stentry.strLength = length;
     MangoBinTreeNode *node = mango_bintree_find(bintree, &stentry, stablenode_compare);
     int strId = -1;
     BOOL created = false;
-    MangoStringData *msdata = NULL;
+    MangoRCStringData *msdata = NULL;
     if (node == NULL && create)
     {
         created             = true;
         strId               = mango_bintree_size(bintree) + 1;
-        msdata              = ZNEW(MangoStringData);
+        msdata              = ZNEW(MangoRCStringData);
         msdata->strId       = strId;
         msdata->strLength   = length;
         msdata->strValue    = NEW_ARRAY(char, length + 1);
@@ -166,7 +166,7 @@ int mango_string_table_find(MangoStringTable *  stable,
     }
     else if (node != NULL)
     {
-        msdata  = (MangoStringData *)node->data;
+        msdata  = (MangoRCStringData *)node->data;
         strId   = msdata->strId;
     }
 
@@ -190,8 +190,8 @@ int mango_string_table_find(MangoStringTable *  stable,
  * \param   mstable The mango string table to be searched.
  * \param   strid   ID of the string to be searched.
  */
-const MangoStringData *mango_string_table_get(const MangoStringTable *mstable, int strid)
+const MangoRCStringData *mango_rcstring_table_get(const MangoRCStringTable *mstable, int strid)
 {
-    return (const MangoStringData *)mango_array_itemat(((StringTableImpl *)mstable->data)->entriesByIndex, strid);
+    return (const MangoRCStringData *)mango_array_itemat(((StringTableImpl *)mstable->data)->entriesByIndex, strid);
 }
 
