@@ -1,5 +1,4 @@
 
-#include <stdarg.h>
 #include "merror.h"
 #include "mrcstring.h"
 #include "mrcstringtable.h"
@@ -36,7 +35,9 @@ MangoString *mango_rcstringfactory_new_string(MangoRCStringTable *mstable, const
  */
 MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable, const MangoStringBuffer *buffer)
 {
-    return mango_rcstring_new(msbuffer->buffer, msbuffer->length, mstable);
+    MangoString *out = NEW(MangoString);
+    *out = mango_rcstring_new(buffer->buffer, buffer->length, mstable);
+    return out;
 }
 
 /**
