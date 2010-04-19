@@ -115,7 +115,8 @@ void mango_array_clear(MangoArray *array, void (*deletor)(void *))
         {
             for (int i = 0;i < array->length;i++)
             {
-                deletor(array->items[i]);
+                if (array->items[i] != NULL)
+                    deletor(array->items[i]);
             }
         }
         array->length   = 0;
@@ -134,7 +135,8 @@ void mango_array_free(MangoArray *array, void (*deletor)(void *))
         {
             for (int i = 0;i < array->length;i++)
             {
-                deletor(array->items[i]);
+                if (array->items[i] != NULL)
+                    deletor(array->items[i]);
             }
         }
         free(array->items);

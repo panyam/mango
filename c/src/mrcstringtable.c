@@ -132,6 +132,7 @@ void mango_rcstring_table_clear(MangoRCStringTable *mstable)
         MangoArray *    array   = mango_rcstring_table_by_index(mstable);
         mango_bintree_clear(bintree, rcstringdata_free);
         mango_array_clear(array, NULL);
+        mango_array_insert(array, NULL, -1);  // reserve index 0 for NULL entries
     }
 }
 
