@@ -19,6 +19,7 @@ public:
     std::string             input_string;
     MangoLibrary *          filterLibrary;
     MangoLibrary *          tagLibrary;
+    MangoStringFactory *    string_factory;
 
 public:
     ParserTestFixture() :
@@ -28,13 +29,14 @@ public:
         input_source(NULL),
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
-        tagLibrary(mango_tagparser_library_singleton())
+        tagLibrary(mango_tagparser_library_singleton()),
+        string_factory(mango_rcstringfactory_new())
     {
-        MangoString add = mango_rcstring_new("add", -1, NULL);
+        MangoString *add = mango_stringfactory_new_string(string_factory, "add", -1);
         MangoFilter *newfilter = mango_filter_new(NULL);
         mango_addfilter_init(&add, newfilter);
         mango_library_register(filterLibrary, &add, newfilter);
-        mango_string_release(&add);
+        mango_stringfactory_free_string(string_factory, add);
     }
 
     virtual ~ParserTestFixture()

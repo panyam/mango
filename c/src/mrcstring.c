@@ -1,5 +1,7 @@
 
 #include "merror.h"
+#include "mstringbuffer.h"
+#include "mstringfactory.h"
 #include "mrcstring.h"
 #include "mrcstringtable.h"
 #include "mmemutils.h"
@@ -26,17 +28,19 @@ MangoStringPrototype *mango_rcstring_prototype()
 MangoString *mango_rcstringfactory_new_string(MangoRCStringTable *mstable, const char *buffer, int length)
 {
     MangoString *out = NEW(MangoString);
-    *out = mango_rcstring_new(buffer, length, mstable);
+    mango_rcstring_new(buffer, length, mstable, out);
     return out;
 }
 
 /**
  * Creates a new string from a string buffer.
  */
-MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable, const MangoStringBuffer *buffer)
+MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable,
+                                               const MangoStringBuffer *buffer)
 {
     MangoString *out = NEW(MangoString);
-    *out = mango_rcstring_new(buffer->buffer, buffer->length, mstable);
+    mango_rcstring_new(buffer->buffer, buffer->length, mstable, out);
+    // mango_rcstring_new(NULL, NULL, mstable, out);
     return out;
 }
 
@@ -64,7 +68,10 @@ MangoStringFactory *mango_rcstringfactory_new()
  *
  * \return  A new instance of the immutable string.
  */
-MangoString mango_rcstring_new(const char *value, int length, MangoRCStringTable *mstable)
+void mango_rcstring_new(const char *value,
+                        int length,
+                        MangoRCStringTable *mstable,
+                        MangoString *out)
 {
     if (mstable == NULL)
         mstable = mango_rcstring_table_default();
@@ -73,7 +80,8 @@ MangoString mango_rcstring_new(const char *value, int length, MangoRCStringTable
     MangoRCString *mstr = NEW(MangoRCString);
     mstr->internId  = mango_rcstring_table_find(mstable, value, length, true, 1);
     mstr->mstable   = mstable;
-    return mango_string_new(mango_rcstring_prototype(), mstr);
+    out->prototype  = mango_rcstring_prototype();
+    out->data       = mstr;
 }
 
 /**

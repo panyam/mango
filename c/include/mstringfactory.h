@@ -53,6 +53,11 @@ extern MangoString *mango_stringfactory_new_string(MangoStringFactory *factory,
 extern MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
                                                     const MangoStringBuffer *buffer);
 
+/**
+ * Frees a string.
+ */
+extern void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str);
+
 #ifdef __cplusplus
 }
 #endif

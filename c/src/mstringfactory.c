@@ -29,3 +29,12 @@ MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
     return factory->fromBufferFunc(factory->data, buffer);
 }
 
+/**
+ * Frees a string.
+ */
+void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str)
+{
+    str->prototype->releaseFunc(str->data);
+    free(str);
+}
+

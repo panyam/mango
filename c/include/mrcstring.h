@@ -44,9 +44,10 @@ extern MangoStringFactory *mango_rcstringfactory_new();
  *
  * \return  A new instance of the immutable string.
  */
-extern MangoString mango_rcstring_new(const char *value,
-                                      int length,
-                                      MangoRCStringTable *mstable);
+extern void mango_rcstring_new(const char *value,
+                               int length,
+                               MangoRCStringTable *mstable,
+                               MangoString *out);
 
 /**
  * Copies another mango string.
