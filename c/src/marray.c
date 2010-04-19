@@ -105,27 +105,38 @@ void mango_array_remove_range(MangoArray *array, int from, int to)
 }
 
 /*
- * Clear an array without freeing the array itself (but the buffer is
- * freed)
+ * Clear an array without freeing the array itself.
  */
-void mango_array_clear(MangoArray *array)
+void mango_array_clear(MangoArray *array, void (*deletor)(void *))
 {
     if (array && array->items)
     {
-        free(array->items);
-        array->items    = NULL;
+        if (deletor != NULL)
+        {
+            for (int i = 0;i < array->length;i++)
+            {
+                deletor(array->items[i]);
+            }
+        }
         array->length   = 0;
-        array->capacity = 0;
+        // keep the buffer and capacity unchanged
     }
 }
 
 /*
  * Destroys an array
  */
-void mango_array_free(MangoArray *array)
+void mango_array_free(MangoArray *array, void (*deletor)(void *))
 {
-    if (array)
+    if (array && array->items)
     {
+        if (deletor != NULL)
+        {
+            for (int i = 0;i < array->length;i++)
+            {
+                deletor(array->items[i]);
+            }
+        }
         free(array->items);
         free(array);
     }

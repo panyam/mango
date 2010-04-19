@@ -29,13 +29,13 @@ extern MangoArray *mango_array_new();
 /*
  * Destroys an array
  */
-extern void mango_array_free(MangoArray *array);
+extern void mango_array_free(MangoArray *array, void (*deletor)(void *));
 
 /*
  * Clear an array without freeing the array itself (but the buffer is
  * freed)
  */
-extern void mango_array_clear(MangoArray *array);
+extern void mango_array_clear(MangoArray *array, void (*deletor)(void *));
 
 /*
  * Initialise an array.

@@ -15,6 +15,21 @@ MangoBinTreeNode *mango_bintreenode_new(void *data)
 }
 
 /**
+ * Recursively deletes a binary tree node.
+ * \param   deletor Deletor method to call on the node.
+ */
+void mango_bintreenode_free(MangoBinTreeNode *node, void (*deletor)(void *))
+{
+    if (deletor && node->data)
+        deletor(node->data);
+    free(node);
+    if (node->left != NULL)
+        mango_bintreenode_free(node->left, deletor);
+    if (node->right != NULL)
+        mango_bintreenode_free(node->right, deletor);
+}
+
+/**
  * Creates a new binary tree.
  */
 MangoBinTree *mango_bintree_new()
@@ -34,12 +49,27 @@ size_t mango_bintree_size(MangoBinTree *mtree)
 }
 
 /**
- * Clears the tree (and applies a deletor function to all entries).
+ * Frees the tree (and applies a deletor function to all entries).
  * \param   tree    Tree to be cleared.
  * \param   deletor Deletor method to be applied on all elements.
  */
 void mango_bintree_free(MangoBinTree *mtree, void (*deletor)(void *))
 {
+    mango_bintree_clear(mtree, deletor);
+    free(mtree);
+}
+
+/**
+ * Clears the tree (and applies a deletor function to all entries).
+ * \param   tree    Tree to be cleared.
+ * \param   deletor Deletor method to be applied on all elements.
+ */
+void mango_bintree_clear(MangoBinTree *mtree, void (*deletor)(void *))
+{
+    if (mtree->root != NULL)
+        mango_bintreenode_free(mtree->root, deletor);
+    mtree->root = NULL;
+    mtree->size = 0;
 }
 
 /**

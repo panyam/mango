@@ -11,9 +11,9 @@ extern "C" {
 typedef struct MangoRCStringData
 {
     int     strId;
-    char *  strValue;
     int     strLength;
     int     refCount;
+    char *  strValue;
 } MangoRCStringData;
 
 struct MangoRCStringTable
@@ -38,6 +38,13 @@ extern MangoRCStringTable *mango_rcstring_table_new();
  * \param   mstable The mango string table to be destroyed.
  */
 extern void mango_rcstring_table_free(MangoRCStringTable *mstable);
+
+/**
+ * Clears all entries from the string table but the table itself is not
+ * destroyed.
+ * \param   mstable The mango string table to be cleared.
+ */
+extern void mango_rcstring_table_clear(MangoRCStringTable *mstable);
 
 /**
  * Finds the index of a particular string.

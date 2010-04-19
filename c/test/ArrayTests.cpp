@@ -1,13 +1,9 @@
 
 #include <UnitTest++.h>
 #include "mangopub.h"
-#include "mstring2.h"
-#include "stlinputsource.h"
 #include <vector>
 #include <sstream>
 #include <string.h>
-#include <stdarg.h>
-#include "maddfilter.h"
 
 class ArrayTestFixture
 {
@@ -32,7 +28,7 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
     CHECK(array->items == NULL);
     CHECK(array->length == 0);
     CHECK(array->capacity == 0);
-    mango_array_free(array);
+    mango_array_free(array, NULL);
 }
 
 /**
@@ -45,7 +41,28 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
     mango_array_insert(array, (void *)10, -1);
     CHECK(array->length == 1);
     CHECK((int)mango_array_itemat(array, 0) == 10);
-    mango_array_free(array);
+    mango_array_free(array, NULL);
 }
 
+
+/**
+ * Tests clearing and see array is empty at the end.
+ */
+TEST_FIXTURE(ArrayTestFixture, TestArrayClear)
+{
+    MangoArray *array = mango_array_new();
+    CHECK(array != NULL);
+    mango_array_insert(array, (void *)10, -1);
+    mango_array_insert(array, (void *)11, -1);
+    mango_array_insert(array, (void *)12, -1);
+    mango_array_insert(array, (void *)13, -1);
+    mango_array_insert(array, (void *)14, -1);
+    int capacity = array->capacity;
+    CHECK_EQUAL(array->length, 5);
+    mango_array_clear(array, NULL);
+    CHECK_EQUAL(array->length, 0);
+    CHECK_EQUAL(array->capacity, capacity);
+    CHECK(array->items != NULL);
+    mango_array_free(array, NULL);
+}
 

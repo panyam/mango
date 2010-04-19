@@ -20,6 +20,7 @@ public:
     MangoLibrary *          filterLibrary;
     MangoLibrary *          tagLibrary;
     MangoStringFactory *    string_factory;
+    MangoParserContext      parser_context;
 
 public:
     ParserTestFixture() :
@@ -32,6 +33,10 @@ public:
         tagLibrary(mango_tagparser_library_singleton()),
         string_factory(mango_rcstringfactory_new())
     {
+        parser_context.filterlib    = filterLibrary;
+        parser_context.taglib       = tagLibrary;
+        parser_context.strfactory   = string_factory;
+        parser_context.loader       = NULL;
         MangoString *add = mango_stringfactory_new_string(string_factory, "add", -1);
         MangoFilter *newfilter = mango_filter_new(NULL);
         mango_addfilter_init(add, newfilter);
@@ -93,7 +98,7 @@ public:
     virtual void CheckParsedNodeWith(int numNodes, ...)
     {
         MangoError *error   = NULL;
-		MangoNode *node     = mango_parser_parse(parser, loader, &error, tagLibrary);
+		MangoNode *node     = mango_parser_parse(&parser_context, &error);
         int nodeCount       = mango_node_childcount(node);
         if (nodeCount > 0)
         {
@@ -145,7 +150,7 @@ public:
     virtual void CheckParsedNodeForException(int code, std::string message)
     {
         MangoError *error   = NULL;
-		MangoNode *node     = mango_parser_parse(parser, loader, &error, tagLibrary);
+		MangoNode *node     = mango_parser_parse(&parser_context, &error);
         if (node != NULL)
             mango_node_free(node);
         CHECK(error != NULL);
@@ -165,6 +170,7 @@ protected:
         input_source = new_stl_input_source(new std::istringstream(input));
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
         parser = mango_parser_new(tokenizer);
+        parser_context.parser = parser;
     }
 };
 
@@ -175,7 +181,7 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
 {
     SetUpWithInputString("");
     MangoError *error = NULL;
-    MangoNode * nodeList = mango_parser_parse(parser, loader, &error, tagLibrary);
+    MangoNode * nodeList = mango_parser_parse(&parser_context, &error);
     CHECK(NULL == nodeList);
     mango_node_free(nodeList);
     if (error != NULL)

@@ -23,8 +23,17 @@ public:
 
     virtual ~RCStringTableTestFixture()
     {
-        if (mstable != NULL && mstable != mango_rcstring_table_default())
-            mango_rcstring_table_free(mstable);
+        if (mstable != NULL)
+        {
+            if (mstable != mango_rcstring_table_default())
+            {
+                mango_rcstring_table_free(mstable);
+            }
+            else
+            {
+                mango_rcstring_table_clear(mstable);
+            }
+        }
     }
 };
 

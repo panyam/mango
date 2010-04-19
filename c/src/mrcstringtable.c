@@ -11,6 +11,12 @@ typedef struct StringTableImpl
     MangoBinTree *  entriesByName;
 } StringTableImpl;
 
+void rcstringdata_free(MangoRCStringData *rcsdata)
+{
+    free(rcsdata->strValue);
+    free(rcsdata);
+}
+
 /**
  * Compare two string table nodes by their string value.
  */
@@ -104,12 +110,29 @@ MangoRCStringTable *mango_rcstring_table_default()
  */
 void mango_rcstring_table_free(MangoRCStringTable *mstable)
 {
+    mango_rcstring_table_clear(mstable);
     if (mstable->data != NULL)
     {
-        // NOT_IMPLEMENTED();
-        // mango_bintree_free((MangoBinTree *)mstable->data);
+        free(mstable->data);
+        mstable->data = NULL;
     }
     free(mstable);
+}
+
+/**
+ * Clears all entries from the string table but the table itself is not
+ * destroyed.
+ * \param   mstable The mango string table to be cleared.
+ */
+void mango_rcstring_table_clear(MangoRCStringTable *mstable)
+{
+    if (mstable->data != NULL)
+    {
+        MangoBinTree *  bintree = mango_rcstring_table_by_name(mstable);
+        MangoArray *    array   = mango_rcstring_table_by_index(mstable);
+        mango_bintree_clear(bintree, rcstringdata_free);
+        mango_array_clear(array, NULL);
+    }
 }
 
 /**
