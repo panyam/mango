@@ -10,6 +10,7 @@
 #include "mtokenlists.h"
 #include "mtokenizer.h"
 #include "mparser.h"
+#include "mparsercontext.h"
 #include "merror.h"
 #include "mlist.h"
 #include "mtable.h"

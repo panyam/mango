@@ -10,7 +10,9 @@
 #include "mlist.h"
 #include "mtokenlists.h"
 #include "mparser.h"
+#include "mparsercontext.h"
 #include "mstringbuffer.h"
+#include "mstringfactory.h"
 #include "mtemplatecontext.h"
 
 /**
@@ -85,9 +87,8 @@ void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar)
  * Reads a list of filter expressions with the parser and returns a list.
  * Also the final '}}' is discarded.
  *
- * \param   parser      The parser doing the parsing.
+ * \param   ctx     Parser context containing necessary items.
  * \param   filters     List storing all the parsed filters.
- * \param   filterlib   Filter library to extract filters from.
  * \param   error       Error value to be set in case of failure.
  *
  * \return true if filters were read successfully, false on error.  On
@@ -95,11 +96,11 @@ void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar)
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
-BOOL mango_filternode_extract_filter_list(MangoParser *parser,
+BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
                                           MangoList *filters,
-                                          MangoLibrary *filterlib,
                                           MangoError **error)
 {
+    MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_peek_token(parser, error);
     if (token == NULL)
         return false;
@@ -107,8 +108,7 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser,
     while (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
         mango_parser_get_token(parser, error);  // discard the "|"
-        MangoFilterNode *filternode =
-                mango_filternode_extract_with_parser(parser, filterlib, error);
+        MangoFilterNode *filternode = mango_filternode_extract_with_parser(ctx, error);
         if (filternode == NULL)
             return false;
         mango_list_push_back(filters, filternode);
@@ -129,21 +129,21 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser,
  *      ident COLON value
  *      ident COLON OPEN_PAREN value_list CLOSE_PAREN
  *
- * \param   parser  Parser doing the parsing.
- * \param   lib     Filter library from which to fetch the filters.
+ * \param   ctx     Parser context containing necessary items.
  * \param   error   Optional storage for the error if any.
  *
  * \return A filternode instance on success, otherwise NULL.
  */
-MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
-                                                      MangoLibrary *lib,
-                                                      MangoError **error)
+MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
 {
+    MangoParser *parser = ctx->parser;
+    MangoStringFactory *msf = ctx->strfactory;
+    MangoLibrary *filterlib = ctx->filterlib;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER,
                                                         false, error);
 
-    MangoString *filtername = mango_stringbuffer_tostring(token->tokenValue);
-    const MangoFilter *filter = mango_filter_library_get(filtername, lib);
+    MangoString *filtername = mango_stringfactory_from_buffer(msf, token->tokenValue);
+    const MangoFilter *filter = mango_filter_library_get(filtername, filterlib);
     mango_string_release(filtername);
     if (filter == NULL)
     {
@@ -159,7 +159,7 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
     {
         // consume the token
         token = mango_parser_get_token(parser, error);
-        mango_filternode_parse_filter_args(parser, filternode, error);
+        mango_filternode_parse_filter_args(ctx, filternode, error);
     }
     return filternode;
 }
@@ -168,7 +168,7 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
  * Parses the arguments of a filter expression.  This assumes that next token
  * that will be read is either a "(" or a variable.
  *
- * \param   parser      Parser doing the parsing!
+ * \param   ctx     Parser context containing necessary items.
  * \param   filternode  The filter node to which the arguments are to be
  *                      added.
  * \param   error       Error to be set in case of failure.
@@ -176,11 +176,13 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
  * \return TRUE if one or more arguments were added to the filter node,
  * false otherwise.
  */
-BOOL mango_filternode_parse_filter_args(MangoParser *parser,
+BOOL mango_filternode_parse_filter_args(MangoParserContext *ctx,
                                         MangoFilterNode *filternode,
                                         MangoError **error)
 {
     // now read the tokens
+    MangoParser *parser = ctx->parser;
+    MangoStringFactory *msf = ctx->strfactory;
     const MangoToken *token = mango_parser_expect_token_in_list(
                                 parser, IDENT_STRING_OR_OPEN_PAREN, false, error);
     if (token == NULL)
@@ -191,7 +193,7 @@ BOOL mango_filternode_parse_filter_args(MangoParser *parser,
         token = mango_parser_expect_token_in_list(parser, IDENT_OR_STRING, false, error);
         while (true)
         {
-            MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
+            MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
             MangoVariable *variable = mango_variable_new(
                                         varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
             mango_filternode_add_arg(filternode, variable);
@@ -215,7 +217,7 @@ BOOL mango_filternode_parse_filter_args(MangoParser *parser,
     else if (token->tokenType == TOKEN_IDENTIFIER || 
             token->tokenType == TOKEN_QUOTED_STRING)
     {
-        MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
+        MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
         BOOL isquoted = token->tokenType == TOKEN_QUOTED_STRING;
         MangoVariable *variable = mango_variable_new(varValue, isquoted, NULL);
         mango_filternode_add_arg(filternode, variable);

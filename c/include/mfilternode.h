@@ -46,19 +46,17 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar
  * Reads a list of filter expressions with the parser and returns a list.
  * Also the final '}}' is discarded.
  *
- * \param   parser      The parser doing the parsing.
- * \param   filters     List storing all the parsed filters.
- * \param   filterlib   Filter library to extract filters from.
- * \param   error       Error value to be set in case of failure.
+ * \param   ctx     Parser context containing necessary items.
+ * \param   filters List storing all the parsed filters.
+ * \param   error   Error value to be set in case of failure.
  *
  * \return true if filters were read successfully, false on error.  On
  * error, the error variable might be set if it is provided.  On error, the
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
-extern BOOL mango_filternode_extract_filter_list(MangoParser *parser,
+extern BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
                                                  MangoList *filters,
-                                                 MangoLibrary *filterlib,
                                                  MangoError **error);
 
 /**
@@ -71,21 +69,19 @@ extern BOOL mango_filternode_extract_filter_list(MangoParser *parser,
  *      ident COLON value
  *      ident COLON OPEN_PAREN value_list CLOSE_PAREN
  *
- * \param   parser  Parser doing the parsing.
- * \param   lib     Filter library from which to fetch the filters.
+ * \param   ctx     Parser context containing necessary items.
  * \param   error   Optional storage for the error if any.
  *
  * \return A filternode instance on success, otherwise NULL.
  */
-extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser,
-                                                             MangoLibrary *lib,
+extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext *ctx,
                                                              MangoError **error);
 
 /**
  * Parses the arguments of a filter expression.  This assumes that next token
  * that will be read is either a "(" or a variable.
  *
- * \param   parser      Parser doing the parsing!
+ * \param   ctx     Parser context containing necessary items.
  * \param   filternode  The filter node to which the arguments are to be
  *                      added.
  * \param   error       Error to be set in case of failure.
@@ -93,7 +89,7 @@ extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser
  * \return TRUE if one or more arguments were added to the filter node,
  * false otherwise.
  */
-extern BOOL mango_filternode_parse_filter_args(MangoParser *parser,
+extern BOOL mango_filternode_parse_filter_args(MangoParserContext *ctx,
                                                MangoFilterNode *filternode,
                                                MangoError **error);
 

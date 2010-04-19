@@ -70,13 +70,6 @@ struct MangoString
 };
 
 /**
- * Creates a new string with its data and prototype.
- * \param   proto   Prototype for the string.
- * \param   data    Implementation specific data for the string.
- */
-extern MangoString mango_string_new(MangoStringPrototype *proto, void *data);
-
-/**
  * Copies to another mango string.
  * \param   mstr    String to be copied.
  * \param   another String to which the copy is written to.

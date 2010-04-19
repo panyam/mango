@@ -72,12 +72,14 @@ extern BOOL mango_fortags_are_equal(const MangoForTagData *ftd1, const MangoForT
 /**
  * Parse the list of items before the "in".
  * \param   ftd     For-tag data whose items list is to be populated.
- * \param   parser  Parser reading the tokens.
+ * \param   ctx     Parser context containing necessary items for parsing.
  * \param   error   Error to be set incase of failure.
  *
  * \returns true if successful, false otherwise.
  */
-extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd, MangoParser *parser, MangoError **error);
+extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd,
+                                         MangoParserContext *ctx,
+                                         MangoError **error);
 
 ///////////////////////////////////////////////////////////////////////////
 //      Render Context specific methods

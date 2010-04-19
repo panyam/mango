@@ -24,8 +24,7 @@ struct MangoTagParser
 
     //! Parses the node
     MangoNode *(*parserFunc)(MangoTagParser *       tagparser,
-                             MangoParser *          parser,
-                             MangoTemplateLoader *  loader,
+                             MangoParserContext *   ctx,
                              MangoError **          error);
 };
 

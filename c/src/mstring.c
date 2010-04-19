@@ -4,19 +4,6 @@
 #include "mmemutils.h"
 
 /**
- * Creates a new string with its data and prototype.
- * \param   proto   Prototype for the string.
- * \param   data    Implementation specific data for the string.
- */
-MangoString mango_string_new(MangoStringPrototype *proto, void *data)
-{
-    MangoString out;
-    out.prototype = proto;
-    out.data = data;
-    return out;
-}
-
-/**
  * Copies another mango string.
  * \param   mstr    String to be copied.
  * \return  A new instance of the immutable string.

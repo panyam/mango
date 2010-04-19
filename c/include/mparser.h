@@ -95,30 +95,22 @@ extern void mango_parser_discard_till_token(MangoParser *parser,
 /**
  * Parses an input stream and returns a list of nodes.
  *
- * \param   parser  Parser doing the parsing.
- * \param   loader  The template loader driving this instance.
+ * \param   ctx     Parser context containing necessary items for parsing.
  * \param   error   Error to be set if any.
  *
  * \return  A Node instance.
  */
-extern MangoNode *mango_parser_parse(MangoParser *parser,
-                                     MangoTemplateLoader *loader,
-                                     MangoError **error,
-                                     MangoLibrary *tagParserLib);
+extern MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error);
 
 /**
  * Parses the next node off the stream.
  *
- * \param   parser  Parser doing the parsing.
- * \param   loader  The template loader driving this instance.
+ * \param   ctx     Parser context containing necessary items.
  * \param   error   Error to be set if any.
  *
  * \return  A Node instance.
  */
-extern MangoNode *mango_parser_parse_node(MangoParser *parser,
-                                          MangoTemplateLoader *loader,
-                                          MangoError **error,
-                                          MangoLibrary *tagParserLib);
+extern MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error);
 
 /**
  * This is called by a TagNode (or its derivative) to parse "upto" a certain 
@@ -131,16 +123,13 @@ extern MangoNode *mango_parser_parse_node(MangoParser *parser,
  * then the first empty (or end) node that is encountered must be given to the 
  * second forloop and not the first one.
  *
- * \param   parser  Parser doing the parsing.
- * \param   loader  Template loader
+ * \param   ctx     Parser context containing necessary items.
  * \param   names   NULL terminated list of names that can act as terminal nodes.
  * \param   error   Error value to be written to in case of error.
  */
-extern MangoNode *mango_parser_parse_till(MangoParser *parser,
-                                          MangoTemplateLoader *loader,
+extern MangoNode *mango_parser_parse_till(MangoParserContext *ctx,
                                           const char **name_list,
-                                          MangoError **error,
-                                          MangoLibrary *tagParserLib);
+                                          MangoError **error);
 
 #ifdef __cplusplus
 }

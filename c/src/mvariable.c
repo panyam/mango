@@ -3,7 +3,9 @@
 #include "mlibrary.h"
 #include "mvarlibrary.h"
 #include "mparser.h"
+#include "mparsercontext.h"
 #include "mstringbuffer.h"
+#include "mstringfactory.h"
 #include "mtemplatecontext.h"
 #include "mnode.h"
 #include "mmemutils.h"
@@ -118,17 +120,15 @@ MangoVariable *mango_variable_set_next(MangoVariable *mvar,
 /**
  * Extract a variable using the parser.
  *
- * \param   parser  Parser extracting the tokens.
+ * \param   ctx     Parser context containing necessary items for parsing.
  * \param   error   Errors to be set if any.
- * \param   varlib  Variable library to fetch "special" variables from.
  *
  * \return A MangoVariable instance if successful, otherwise NULL with the
  * error variable set (if it is supplied).
  */
-MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
-                                                  MangoError **error,
-                                                  MangoLibrary *varlib)
+MangoVariable *mango_variable_extract_with_parser(MangoParserContext *ctx, MangoError **error)
 {
+    MangoParser *parser = ctx->parser;
     MangoVariable *firstVar = NULL;
     MangoVariable *lastVar = NULL;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
@@ -137,14 +137,15 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
         return NULL;
     }
 
+    MangoStringFactory *msf = ctx->strfactory;
     while (true)
     {
         BOOL isQuoted = token->tokenType == TOKEN_QUOTED_STRING;
         if (firstVar == NULL)
         {
-            MangoString *varValue = mango_stringbuffer_tostring(token->tokenValue);
+            MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
             // see if the variable library returns a "special" variable
-            MangoVariable *nextVar = isQuoted ? NULL : mango_variable_library_new_instance(varValue, varlib);
+            MangoVariable *nextVar = isQuoted ? NULL : mango_variable_library_new_instance(varValue, ctx->varlib);
             if (nextVar == NULL)
             {
                 nextVar = mango_variable_new(varValue, isQuoted, NULL);
@@ -153,9 +154,8 @@ MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
         }
         else
         {
-            MangoVariable *nextVar = lastVar->setNextVariable(lastVar,
-                                        mango_stringbuffer_tostring(token->tokenValue),
-                                        isQuoted);
+            MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
+            MangoVariable *nextVar = lastVar->setNextVariable(lastVar, varValue, isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

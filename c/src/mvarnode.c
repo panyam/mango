@@ -2,6 +2,7 @@
 #include "mnode.h"
 #include "merror.h"
 #include "mparser.h"
+#include "mparsercontext.h"
 #include "mvariable.h"
 #include "mfilternode.h"
 #include "mlist.h"
@@ -97,24 +98,19 @@ MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
  *                  |   ident COMA filter_arg_list
  *                  ;
  *
- * \param   parser      Parser to extract with.  The parser at this point has
- *                      already read the "{{" token.
- * \param   filterlib   Filter library to fetch filters from.
- * \param   varlib      Variable library to fetch special variables from.
- * \param   error       Optional error variable to be filled in case of failure.
+ * \param   ctx     Parser context containing necessary items for parsing.
+ * \param   error   Optional error variable to be filled in case of failure.
  *
  * \return  A new Variable node instance.
  */
-MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
-                                             MangoLibrary *filterlib,
-                                             MangoLibrary *varlib,
-                                             MangoError **error)
+MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
 {
-    MangoVariable *variable = mango_variable_extract_with_parser(parser, error, varlib);
+    MangoVariable *variable = mango_variable_extract_with_parser(ctx, error);
     if (variable == NULL)
         return NULL;
 
     // read the next token - it should be a close or a filter starter
+    MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_peek_token(parser, error);
     if (token == NULL)
         return NULL;
@@ -122,7 +118,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParser *parser,
     MangoList *filter_nodes = mango_list_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
-        if (mango_filternode_extract_filter_list(parser, filter_nodes, filterlib, error))
+        if (mango_filternode_extract_filter_list(ctx, filter_nodes, error))
         {
             token = mango_parser_peek_token(parser, error);
         }

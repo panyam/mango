@@ -11,9 +11,11 @@ class RCStringTableTestFixture
 {
 protected:
     MangoRCStringTable *mstable;
+    MangoStringFactory *string_factory;
 
 public:
-    RCStringTableTestFixture()
+    RCStringTableTestFixture() :
+        string_factory(mango_rcstringfactory_new())
     {
         // mstable = mango_rcstring_table_new();
         mstable = mango_rcstring_table_default();
@@ -123,10 +125,10 @@ TEST_FIXTURE(RCStringTableTestFixture, TestDecRefLimitAtZero)
  */
 TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
 {
-    MangoString mstr1 = mango_rcstring_new("Hello World", -1, mstable);
-    MangoString mstr2 = mango_rcstring_new("Hello World", -1, mstable);
-    MangoRCString *rcstr1 = (MangoRCString *)mstr1.data;
-    MangoRCString *rcstr2 = (MangoRCString *)mstr2.data;
+    MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1->data;
+    MangoRCString *rcstr2 = (MangoRCString *)mstr2->data;
     int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     int id2 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     CHECK_EQUAL(id1, id2);
@@ -137,8 +139,8 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
     const MangoRCStringData *msdata2 = mango_rcstring_table_get(mstable, id2);
     CHECK_EQUAL(msdata1, msdata2);
     CHECK_EQUAL(2, msdata1->refCount);
-    mango_string_release(&mstr1);
-    mango_string_release(&mstr2);
+    mango_string_release(mstr1);
+    mango_string_release(mstr2);
 }
 
 /**
@@ -147,13 +149,13 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
  */
 TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringFree)
 {
-    MangoString mstr1 = mango_rcstring_new("Hello World", -1, mstable);
-    MangoString mstr2 = mango_rcstring_new("Hello World", -1, mstable);
-    MangoRCString *rcstr1 = (MangoRCString *)mstr1.data;
+    MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1->data;
     const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, rcstr1->internId);
     CHECK_EQUAL(msdata->refCount, 2);
-    mango_string_release(&mstr1);
+    mango_string_release(mstr1);
     CHECK_EQUAL(msdata->refCount, 1);
-    mango_string_release(&mstr2);
+    mango_string_release(mstr2);
 }
 

@@ -87,16 +87,13 @@ extern MangoVariable *mango_variable_set_next(MangoVariable *mvar, MangoString *
 /**
  * Extract a variable using the parser.
  *
- * \param   parser  Parser extracting the tokens.
+ * \param   ctx     Parser context containing necessary items for parsing.
  * \param   error   Errors to be set if any.
- * \param   varlib  Variable library to fetch "special" variables from.
  *
  * \return A MangoVariable instance if successful, otherwise NULL with the
  * error variable set (if it is supplied).
  */
-extern MangoVariable *mango_variable_extract_with_parser(MangoParser *parser,
-                                                         MangoError **error,
-                                                         MangoLibrary *varlib);
+extern MangoVariable *mango_variable_extract_with_parser(MangoParserContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }
