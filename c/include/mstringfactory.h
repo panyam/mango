@@ -36,9 +36,9 @@ struct MangoStringFactory
 };
 
 /**
- * Cleans up the string factory.
+ * Frees a string factory.
  */
-extern void mango_stringfactory_cleanup(MangoStringFactory *factory);
+extern void mango_stringfactory_free(MangoStringFactory *factory);
 
 /**
  * Creates a new string.

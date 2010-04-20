@@ -58,10 +58,10 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayClear)
     mango_array_insert(array, (void *)13, -1);
     mango_array_insert(array, (void *)14, -1);
     int capacity = array->capacity;
-    CHECK_EQUAL(array->length, 5);
+    CHECK_EQUAL(array->length, (unsigned)5);
     mango_array_clear(array, NULL);
-    CHECK_EQUAL(array->length, 0);
-    CHECK_EQUAL(array->capacity, capacity);
+    CHECK_EQUAL(array->length, (unsigned)0);
+    CHECK_EQUAL(array->capacity, (unsigned)capacity);
     CHECK(array->items != NULL);
     mango_array_free(array, NULL);
 }

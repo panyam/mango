@@ -2,11 +2,12 @@
 #include "mstringfactory.h"
 
 /**
- * Cleans up the string factory.
+ * Frees a string factory.
  */
-void mango_stringfactory_cleanup(MangoStringFactory *factory)
+void mango_stringfactory_free(MangoStringFactory *factory)
 {
     factory->cleanupFunc(factory->data);
+    free(factory);
 }
 
 /**

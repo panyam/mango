@@ -34,6 +34,12 @@ public:
                 mango_rcstring_table_clear(mstable);
             }
         }
+
+        if (string_factory != NULL)
+        {
+            mango_stringfactory_free(string_factory);
+            string_factory = NULL;
+        }
     }
 };
 
@@ -134,6 +140,7 @@ TEST_FIXTURE(RCStringTableTestFixture, TestDecRefLimitAtZero)
  */
 TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
 {
+    MangoRCStringTable *mstable = (MangoRCStringTable *)string_factory->data;
     MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoRCString *rcstr1 = (MangoRCString *)mstr1->data;

@@ -51,7 +51,7 @@ MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable,
 MangoStringFactory *mango_rcstringfactory_new()
 {
     MangoStringFactory *msfactory = NEW(MangoStringFactory);
-    msfactory->data             = mango_rcstring_table_new;
+    msfactory->data             = mango_rcstring_table_new();
     msfactory->cleanupFunc      = mango_rcstring_table_free;
     msfactory->newStringFunc    = mango_rcstringfactory_new_string;
     msfactory->fromBufferFunc   = mango_rcstringfactory_from_buffer;

@@ -22,11 +22,11 @@ void mango_bintreenode_free(MangoBinTreeNode *node, void (*deletor)(void *))
 {
     if (deletor && node->data)
         deletor(node->data);
-    free(node);
     if (node->left != NULL)
         mango_bintreenode_free(node->left, deletor);
     if (node->right != NULL)
         mango_bintreenode_free(node->right, deletor);
+    free(node);
 }
 
 /**
@@ -67,8 +67,10 @@ void mango_bintree_free(MangoBinTree *mtree, void (*deletor)(void *))
 void mango_bintree_clear(MangoBinTree *mtree, void (*deletor)(void *))
 {
     if (mtree->root != NULL)
+    {
         mango_bintreenode_free(mtree->root, deletor);
-    mtree->root = NULL;
+        mtree->root = NULL;
+    }
     mtree->size = 0;
 }
 
