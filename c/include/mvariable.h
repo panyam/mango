@@ -11,7 +11,7 @@ extern "C" {
 struct MangoVariable
 {
     //! String value of the variable.
-    MangoString     value;
+    MangoString *   value;
 
     //! Is the value an identifier or a quoted value
     BOOL            isQuoted;
