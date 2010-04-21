@@ -8,9 +8,21 @@
  * \param   mstr    String to be copied.
  * \return  A new instance of the immutable string.
  */
-void mango_string_copy(const MangoString *mstr, MangoString *another)
+void mango_string_copy_to(const MangoString *mstr, MangoString *another)
 {
     return mstr->prototype->copyFunc(mstr->data, another);
+}
+
+/**
+ * Returns a copy of a string.
+ * \param   mstr    String to be copied.
+ * \return  The new copy of the string.
+ */
+MangoString *mango_string_copy(const MangoString *mstr)
+{
+    MangoString *newstr = NEW(MangoString);
+    mstr->prototype->copyFunc(mstr->data, newstr);
+    return newstr;
 }
 
 /**

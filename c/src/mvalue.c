@@ -26,6 +26,29 @@ MangoValue mango_value_make(MangoValueType vType, void *vData)
 }
 
 /**
+ * Creates a new mango value.
+ * \param   vType   Type of the value.
+ * \param   vData   Data of the value.
+ */
+MangoValue *mango_value_new(MangoValueType type, void *value)
+{
+    MangoValue *out = NEW(MangoValue);
+    out->valueType = type;
+    out->valueData = value;
+    return out;
+}
+
+/**
+ * Frees a value created with the mango_value_new method.
+ * \param   value   Value to be freed.
+ */
+void mango_value_free(MangoValue *value)
+{
+    if (value != NULL)
+        free(value);
+}
+
+/**
  * Creates a new value iterator object.
  */
 MangoValueIterator *mango_valueiterator_new(MangoValue value)

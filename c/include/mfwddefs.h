@@ -19,39 +19,40 @@ extern "C" {
 #define false   0
 typedef int BOOL;
 
-typedef struct MangoPrototype MangoPrototype;
-typedef struct MangoObject MangoObject;
-typedef struct MangoInputSource MangoInputSource;
-typedef struct MangoString MangoString;
-typedef struct MangoStringFactory MangoStringFactory;
-typedef struct MangoStringPrototype MangoStringPrototype;
-typedef struct MangoRCString MangoRCString;
-typedef struct MangoRCStringTable MangoRCStringTable;
-typedef struct MangoStringBuffer MangoStringBuffer;
-typedef struct MangoToken MangoToken;
-typedef struct MangoTokenizer MangoTokenizer;
-typedef struct MangoParser MangoParser;
-typedef struct MangoParserContext MangoParserContext;
-typedef struct MangoError MangoError;
-typedef struct MangoValue MangoValue;
-typedef struct MangoValueIterator MangoValueIterator;
-typedef struct MangoFilter MangoFilter;
-typedef struct MangoFilterNode MangoFilterNode;
-typedef struct MangoVariable MangoVariable;
-typedef struct MangoNode MangoNode;
-typedef struct MangoNodeRenderer MangoNodeRenderer;
-typedef struct MangoNodeRenderContext MangoNodeRenderContext;
-typedef struct MangoTemplateLoader MangoTemplateLoader;
-typedef struct MangoTemplateContext MangoTemplateContext;
-typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoArray MangoArray;
-typedef struct MangoList MangoList;
-typedef struct MangoTable MangoTable;
-typedef struct MangoListNode MangoListNode;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
+typedef struct MangoError MangoError;
+typedef struct MangoFilter MangoFilter;
+typedef struct MangoFilterNode MangoFilterNode;
+typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoIterator MangoIterator;
+typedef struct MangoLibrary MangoLibrary;
+typedef struct MangoList MangoList;
+typedef struct MangoListNode MangoListNode;
+typedef struct MangoNode MangoNode;
+typedef struct MangoNodeRenderContext MangoNodeRenderContext;
+typedef struct MangoNodeRenderer MangoNodeRenderer;
+typedef struct MangoObject MangoObject;
+typedef struct MangoParser MangoParser;
+typedef struct MangoParserContext MangoParserContext;
+typedef struct MangoPrototype MangoPrototype;
+typedef struct MangoRCString MangoRCString;
+typedef struct MangoRCStringTable MangoRCStringTable;
+typedef struct MangoString MangoString;
+typedef struct MangoStringBuffer MangoStringBuffer;
+typedef struct MangoStringFactory MangoStringFactory;
+typedef struct MangoStringPrototype MangoStringPrototype;
+typedef struct MangoTable MangoTable;
 typedef struct MangoTagParser MangoTagParser;
+typedef struct MangoTemplateContext MangoTemplateContext;
+typedef struct MangoTemplateLoader MangoTemplateLoader;
+typedef struct MangoToken MangoToken;
+typedef struct MangoTokenizer MangoTokenizer;
+typedef struct MangoValue MangoValue;
+typedef struct MangoValueIterator MangoValueIterator;
+typedef struct MangoVariable MangoVariable;
+typedef struct MangoVariableResolver MangoVariableResolver;
 
 /**
  * Functions that check whether two items are equal.

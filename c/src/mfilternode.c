@@ -6,7 +6,7 @@
 #include "merror.h"
 #include "msingletons.h"
 #include "mlibrary.h"
-#include "mvariable.h"
+#include "mvar.h"
 #include "mlist.h"
 #include "mtokenlists.h"
 #include "mparser.h"

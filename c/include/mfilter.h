@@ -3,7 +3,7 @@
 #define __MANGO_FILTER_H__
 
 #include "mfwddefs.h"
-#include "mvariable.h"
+#include "mvar.h"
 
 #ifdef __cplusplus
 extern "C" {

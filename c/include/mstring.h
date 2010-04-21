@@ -74,7 +74,14 @@ struct MangoString
  * \param   mstr    String to be copied.
  * \param   another String to which the copy is written to.
  */
-extern void mango_string_copy(const MangoString *mstr, MangoString *another);
+extern void mango_string_copy_to(const MangoString *mstr, MangoString *another);
+
+/**
+ * Returns a copy of a string.
+ * \param   mstr    String to be copied.
+ * \return  The new copy of the string.
+ */
+extern MangoString *mango_string_copy(const MangoString *mstr);
 
 /**
  * Releases a string.

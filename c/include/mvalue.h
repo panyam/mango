@@ -18,6 +18,7 @@ typedef enum
     MV_ARRAY,
     MV_TABLE,
     MV_ITERATOR,
+    MV_CONTEXT
 } MangoValueType;
 
 /**
@@ -43,6 +44,19 @@ extern BOOL mango_value_is_valid(const MangoValue *value);
  * \param   vData   Data of the value.
  */
 extern MangoValue mango_value_make(MangoValueType type, void *value);
+
+/**
+ * Creates a new mango value.
+ * \param   vType   Type of the value.
+ * \param   vData   Data of the value.
+ */
+extern MangoValue *mango_value_new(MangoValueType type, void *value);
+
+/**
+ * Frees a value created with the mango_value_new method.
+ * \param   value   Value to be freed.
+ */
+extern void mango_value_free(MangoValue *value);
 
 struct MangoValueIterator 
 {

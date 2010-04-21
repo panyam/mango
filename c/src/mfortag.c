@@ -4,7 +4,7 @@
 #include "mmemutils.h"
 #include "mnode.h"
 #include "merror.h"
-#include "mvariable.h"
+#include "mvar.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
 #include "mlist.h"
