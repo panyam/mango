@@ -24,6 +24,12 @@ struct MangoTemplateContext
 extern MangoTemplateContext *mango_templatecontext_new();
 
 /**
+ * Frees the context and all values in it.
+ * \param   context Context to be freed.
+ */
+extern void mango_templatecontext_free(MangoTemplateContext *context);
+
+/**
  * Get the values for a particular variable in the context.
  * \param   context Context from which the values are extracted.
  * \param   key     Variable for which the values are extracted.

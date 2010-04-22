@@ -38,8 +38,8 @@ public:
         parser_context.taglib       = tagLibrary;
         parser_context.strfactory   = string_factory;
         parser_context.loader       = NULL;
-        context = new MangoTemplateContext();
-        resolver = new MangoDefaultVariableResolver();
+        context = mango_templatecontext_new();
+        resolver = mango_varresolver_default();
     }
 
     virtual ~ResolverTestFixture()
@@ -80,6 +80,12 @@ public:
             mango_templatecontext_free(context);
             context = NULL;
         }
+
+        if (resolver != NULL)
+        {
+            mango_varresolver_free(resolver);
+            resolver = NULL;
+        }
     }
 
     void setupParserAndParseVariable(const std::string &input)
@@ -98,7 +104,8 @@ public:
         mango_parser_expect_token(parser, TOKEN_OPEN_VARIABLE, false, &error);
         variable = mango_variable_extract_with_parser(&parser_context, &error);
         mango_parser_expect_token(parser, TOKEN_CLOSE_VARIABLE, false, &error);
-        MangoValue *resolvedValue = resolver.resolveVariableChain(context, variable);
+        MangoValue source = mango_value_make(MV_CONTEXT, context);
+        MangoValue *resolvedValue = mango_varresolver_resolve(resolver, &source, variable);
     }
 };
 

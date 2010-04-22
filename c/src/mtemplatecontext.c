@@ -13,6 +13,14 @@ MangoTemplateContext *mango_templatecontext_new()
 }
 
 /**
+ * Frees the context and all values in it.
+ * \param   context Context to be freed.
+ */
+void mango_templatecontext_free(MangoTemplateContext *context)
+{
+}
+
+/**
  * Merge the values of another dictionary into a context.
  * \param   context Context into which the values are being merged.
  * \param   dict    Dictionary from which the values are being merged.

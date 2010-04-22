@@ -2,7 +2,7 @@
 #ifndef __MANGO_VALUE_H__
 #define __MANGO_VALUE_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,12 +24,10 @@ typedef enum
 /**
  * Generic value objects.
  */
-struct MangoValue
-{
-    // must be non-zero
-    MangoValueType valueType;
-    void *valueData;
-};
+DECLARE_CLASS(MangoValue, 
+    MangoValueType  valueType;
+    void *          valueData;
+);
 
 extern MangoValue NULL_VALUE;
 

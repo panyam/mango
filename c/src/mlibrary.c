@@ -28,7 +28,7 @@ int libentry_cmp(const MangoLibraryEntry *mle1, const MangoLibraryEntry *mle2)
  */
 MangoLibrary *mango_library_new()
 {
-    MangoLibrary *mlib  = (MangoLibrary *)calloc(1, sizeof(MangoLibrary *));
+    MangoLibrary *mlib  = ZNEW(MangoLibrary);
     mlib->entries       = mango_bintree_new();
     return mlib;
 }
@@ -61,7 +61,7 @@ void mango_library_register(MangoLibrary *library, const MangoString *name, void
     if (node == NULL)
     {
         MangoLibraryEntry *newentry = NEW(MangoLibraryEntry);
-        newentry->name  = mango_string_copy(newentry->name);
+        newentry->name  = mango_string_copy(name);
         newentry->entry = entry;
         mango_bintree_insert(library->entries, newentry, (CompareFunc)libentry_cmp);
     }

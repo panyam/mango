@@ -27,9 +27,25 @@ struct MangoVariableResolver
 };
 
 /**
+ * Returns a default variable resolver.
+ */
+extern MangoVariableResolver *mango_varresolver_default();
+
+/**
  * Destroys a variable resolver.
  */
 extern void mango_varresolver_free(MangoVariableResolver *resolver);
+
+/**
+ * Resolves the variable value with the resolver.
+ * \param   resolver    Resolver doing the var resolving.
+ * \param   source      The source variable from which variables are resolved.
+ * \param   variable    Variable to be resolved.
+ * \return  A MangoValue instance that must be freed by the caller.
+ */
+extern MangoValue *mango_varresolver_resolve(MangoVariableResolver *resolver,
+                                             MangoValue *source,
+                                             MangoVariable *variable);
 
 /**
  * Resolves a variable chain starting from the first variable using the

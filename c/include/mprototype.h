@@ -19,19 +19,19 @@ struct MangoPrototype
     char *name;
 
     /**
-     * Deletes object data for this object.
+     * Cleans up the object when its reference count reaches 0.
      */
-    void (*deleteObjectData)(void *objData);
+    void (*cleanupFunc)(void *objData);
 
     /**
-     * Tells if the data of two objects are equal.
+     * Tells if two objects are equal.
      */
-    BOOL (*objectDataEquals)(const void *objData1, const void *objData2);
+    BOOL (*equalsFunc)(const MangoObject *obj1, const MangoObject *obj2);
 
     /**
      * Compares the data of two objects.
      */
-    int (*objectDataCompare)(const void *objData1, const void *objData2);
+    int (*compareFunc)(const MangoObject *obj1, const MangoObject *obj2);
 };
 
 /**

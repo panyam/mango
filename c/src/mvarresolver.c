@@ -3,6 +3,36 @@
 #include "mtemplatecontext.h"
 #include "mvar.h"
 #include "mvalue.h"
+#include "mmemutils.h"
+
+/**
+ * The default resolver method.
+ */
+MangoValue *default_resolve_func(void *resolver_data,
+                                 MangoValue *source,
+                                 MangoVariable *variable);
+
+/**
+ * Returns a default variable resolver.
+ */
+MangoVariableResolver *mango_varresolver_default()
+{
+    MangoVariableResolver *resolver = ZNEW(MangoVariableResolver);
+    resolver->resolveFunc = default_resolve_func;
+    return resolver;
+}
+
+/**
+ * Destroys a variable resolver.
+ */
+void mango_varresolver_free(MangoVariableResolver *resolver)
+{
+    if (resolver->data != NULL && resolver->freeFunc != NULL)
+    {
+        resolver->freeFunc(resolver->data);
+    }
+    free(resolver);
+}
 
 /**
  * Resolves the variable value with the resolver.
@@ -20,18 +50,6 @@ MangoValue *mango_varresolver_resolve(MangoVariableResolver *resolver,
         return resolver->resolveFunc(resolver->data, source, variable);
     }
     return NULL;
-}
-
-/**
- * Destroys a variable resolver.
- */
-void mango_varresolver_free(MangoVariableResolver *resolver)
-{
-    if (resolver->data != NULL && resolver->freeFunc != NULL)
-    {
-        resolver->freeFunc(resolver->data);
-    }
-    free(resolver);
 }
 
 /**
@@ -77,3 +95,13 @@ MangoValue *mango_varresolver_resolve_chain(MangoVariableResolver *resolver,
     return curr_src;
 }
 
+
+/**
+ * The default resolver method.
+ */
+MangoValue *default_resolve_func(void *resolver_data,
+                                 MangoValue *source,
+                                 MangoVariable *variable)
+{
+    return NULL;
+}

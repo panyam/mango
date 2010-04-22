@@ -19,11 +19,6 @@ struct MangoObject
      * Object's reference count.
      */
     int refCount;
-
-    /**
-     * Object specific data.
-     */
-    void *objData;
 };
 
 #define DECLARE_CLASS(CLASS_NAME, ...)              \
@@ -37,26 +32,19 @@ struct MangoObject
         __VA_ARGS__                                 \
     }
 
-
 /**
- * Creates a mango object with default methods.
- */
-extern MangoObject *mango_object_new(MangoPrototype *proto, void *objData);
-
-/**
- * Destroys a mango object.
- */
-extern void mango_object_free(MangoObject *obj);
-
-/**
- * Increases the reference count of the object and returns int.
- */
-extern MangoObject *mango_object_retain(MangoObject *obj);
-
-/**
- * Decreases the reference count of the object and returns int.
+ * Releases a reference to the object.
+ * \returns false if the object's reference count has reached 0 and has been
+ * deleted and is no longer valid, true otherwise.
  */
 extern BOOL mango_object_release(MangoObject *obj);
+
+/**
+ * Increases the reference count to an object.
+ * \param   obj Object whose reference count is to be increased.
+ * \return  Pointer to the same object to simplify copy semantics.
+ */
+extern MangoObject *mango_object_copy(MangoObject *obj);
 
 /**
  * Compares two objects to see if they are equal.

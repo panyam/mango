@@ -3,7 +3,7 @@
 #include "merror.h"
 #include "mparser.h"
 #include "mparsercontext.h"
-#include "mvariable.h"
+#include "mvar.h"
 #include "mfilternode.h"
 #include "mlist.h"
 #include "mmemutils.h"
