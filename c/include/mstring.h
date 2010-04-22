@@ -34,29 +34,9 @@ struct MangoStringPrototype
      * Copies a string.
      */
     void (*copyFunc)(void *data, MangoString *another);
-
-    /**
-     * Releases a string.
-     */
-    void (*releaseFunc)(void *data);
-
-    /**
-     * Tells if two strings are equal.
-     */
-    int (*equalsFunc)(const void *mstr1, const void *mstr2);
-
-    /**
-     * Compares two strings.
-     */
-    int (*compareFunc)(const void *mstr1, const void *mstr2);
 };
 
-/**
- * Generic string interface to allow different string implementations
- * across platforms (eg std::strings, NSString or just MangoString etc).
- */
-struct MangoString
-{
+DECLARE_CLASS(MangoString,
     /**
      * String prototype - contains the methods 
      * to manipulate and query the string in implementation specific ways.
@@ -67,14 +47,7 @@ struct MangoString
      * Implementation specific string data.
      */
     void *data;
-};
-
-/**
- * Copies to another mango string.
- * \param   mstr    String to be copied.
- * \param   another String to which the copy is written to.
- */
-extern void mango_string_copy_to(const MangoString *mstr, MangoString *another);
+);
 
 /**
  * Returns a copy of a string.

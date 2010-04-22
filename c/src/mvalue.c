@@ -5,6 +5,14 @@
 MangoValue NULL_VALUE = { 0, 0 };
 
 /**
+ * Gets the prototype for all mango values.
+ */
+MangoPrototype *mango_value_prototype()
+{
+    return NULL;
+}
+
+/**
  * Tells if a value is valid.
  */
 BOOL mango_value_is_valid(const MangoValue *value)
@@ -20,8 +28,10 @@ BOOL mango_value_is_valid(const MangoValue *value)
 MangoValue mango_value_make(MangoValueType vType, void *vData)
 {
     MangoValue value;
-    value.valueType = vType;
-    value.valueData = vData;
+    value.__base__.refCount     = 1;
+    value.__base__.prototype    = mango_value_prototype();
+    value.valueType             = vType;
+    value.valueData             = vData;
     return value;
 }
 

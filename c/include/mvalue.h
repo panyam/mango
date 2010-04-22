@@ -48,13 +48,7 @@ extern MangoValue mango_value_make(MangoValueType type, void *value);
  * \param   vType   Type of the value.
  * \param   vData   Data of the value.
  */
-extern MangoValue *mango_value_new(MangoValueType type, void *value);
-
-/**
- * Frees a value created with the mango_value_new method.
- * \param   value   Value to be freed.
- */
-extern void mango_value_free(MangoValue *value);
+extern MangoObject *mango_value_new(MangoValueType type, void *value);
 
 struct MangoValueIterator 
 {
