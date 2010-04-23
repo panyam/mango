@@ -19,9 +19,19 @@ struct MangoPrototype
     char *name;
 
     /**
-     * Cleans up the object when its reference count reaches 0.
+     * Called when reference is to be incremented.
      */
-    void (*cleanupFunc)(void *objData);
+    void (*incRefFunc)(MangoObject *object);
+
+    /**
+     * Called when reference is to be decremented.
+     */
+    void (*decRefFunc)(MangoObject *object);
+
+    /**
+     * Called when reference reaches 0.
+     */
+    void (*cleanUpFunc)(MangoObject *object);
 
     /**
      * Tells if two objects are equal.

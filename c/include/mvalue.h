@@ -24,7 +24,7 @@ typedef enum
 /**
  * Generic value objects.
  */
-DECLARE_CLASS(MangoValue, 
+DECLARE_CLASS(MangoValue, MangoObject, 
     MangoValueType  valueType;
     void *          valueData;
 );

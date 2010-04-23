@@ -16,8 +16,8 @@ MangoStringPrototype *mango_rcstring_prototype()
         RCSTRING_PROTOTYPE->sizeFunc    = mango_rcstring_length;
         RCSTRING_PROTOTYPE->copyFunc    = mango_rcstring_copy;
         RCSTRING_PROTOTYPE->releaseFunc = mango_rcstring_release;
-        RCSTRING_PROTOTYPE->equalsFunc  = mango_rcstrings_are_equal;
-        RCSTRING_PROTOTYPE->compareFunc = mango_rcstring_compare;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->equalsFunc  = mango_rcstrings_are_equal;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->compareFunc = mango_rcstring_compare;
     }
     return RCSTRING_PROTOTYPE;
 }

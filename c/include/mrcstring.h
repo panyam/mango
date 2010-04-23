@@ -12,7 +12,7 @@ extern "C" {
 /**
  * Immutable reference counted strings.
  */
-struct MangoRCString
+DECLARE_CLASS(MangoRCString, MangoString
 {
     /**
      * The Intern ID.

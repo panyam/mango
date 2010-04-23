@@ -21,6 +21,11 @@ extern "C" {
 struct MangoStringPrototype
 {
     /**
+     * Base Prototype Class.
+     */
+    MangoPrototype __base__;
+
+    /**
      * Gets the native string buffer.
      */
     const char *(*bufferFunc)(const void *data);
@@ -36,13 +41,7 @@ struct MangoStringPrototype
     void (*copyFunc)(void *data, MangoString *another);
 };
 
-DECLARE_CLASS(MangoString,
-    /**
-     * String prototype - contains the methods 
-     * to manipulate and query the string in implementation specific ways.
-     */
-    MangoStringPrototype *prototype;
-
+DECLARE_CLASS(MangoString, MangoObject,
     /**
      * Implementation specific string data.
      */
@@ -54,7 +53,7 @@ DECLARE_CLASS(MangoString,
  * \param   mstr    String to be copied.
  * \return  The new copy of the string.
  */
-extern MangoString *mango_string_copy(const MangoString *mstr);
+extern MangoString *mango_string_copy(MangoString *mstr);
 
 /**
  * Releases a string.
@@ -72,16 +71,6 @@ extern const char *mango_string_buffer(const MangoString *mstr);
  * Gets the length of the string.
  */
 extern size_t mango_string_length(const MangoString *mstr);
-
-/**
- * Compares the string contents with another buffer.
- *
- * \param   mstr1   String being compared.
- * \param   mstr2   String being compared to.
- *
- * \return -1 if mstr < value, 0 if equal else +1
- */
-extern int mango_string_compare(const MangoString *mstr1, const MangoString *mstr2);
 
 /**
  * Tells if two strings are equal.

@@ -18,7 +18,7 @@ void mango_string_copy_to(const MangoString *mstr, MangoString *another)
  * \param   mstr    String to be copied.
  * \return  The new copy of the string.
  */
-MangoString *mango_string_copy(const MangoString *mstr)
+MangoString *mango_string_copy(MangoString *mstr)
 {
     MangoString *newstr = NEW(MangoString);
     mstr->prototype->copyFunc(mstr->data, newstr);

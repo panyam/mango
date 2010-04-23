@@ -21,15 +21,15 @@ struct MangoObject
     int refCount;
 };
 
-#define DECLARE_CLASS(CLASS_NAME, ...)              \
-    struct CLASS_NAME                               \
-    {                                               \
-        /**                                         \
-         * Base object.                             \
-         */                                         \
-        MangoObject __base__;                       \
-                                                    \
-        __VA_ARGS__                                 \
+#define DECLARE_CLASS(CLASS_NAME, BASE_CLASS_NAME, ...)     \
+    struct CLASS_NAME                                       \
+    {                                                       \
+        /**                                                 \
+         * Base object.                                     \
+         */                                                 \
+        BASE_CLASS_NAME __base__;                           \
+                                                            \
+        __VA_ARGS__                                         \
     }
 
 /**
