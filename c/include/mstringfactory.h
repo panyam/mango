@@ -32,7 +32,7 @@ DECLARE_CLASS(MangoStringFactory, MangoPrototype,
 /**
  * Frees a string factory.
  */
-extern void mango_stringfactory_free(MangoStringFactory *factory);
+extern void mango_stringfactory_release(MangoStringFactory *factory);
 
 /**
  * Creates a new string.

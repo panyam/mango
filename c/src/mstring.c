@@ -41,3 +41,37 @@ size_t mango_string_length(const MangoString *mstr)
     return mstr->__prototype__->sizeFunc(mstr);
 }
 
+/**
+ * Releases a string.
+ */
+void mango_string_release(MangoString *str)
+{
+    mango_object_release((MangoObject *)str);
+}
+
+/**
+ * Compares two strings to see if they are equal.
+ *
+ * \param   str1    First str in the comparison.
+ * \param   str2    Second str in the comparison.
+ *
+ * \return  true if Strings are equal false otherwise.
+ */
+BOOL mango_strings_are_equal(const MangoString *str1, const MangoString *str2)
+{
+    return mango_objects_are_equal((const MangoObject *)str1, (const MangoObject *)str2);
+}
+
+/**
+ * Compares two objects to check their relative order.
+ *
+ * \param   str1    First str in the comparison.
+ * \param   str2    Second str in the comparison.
+ *
+ * \return  -ve if str1 < str2, 0 if they are equal, +ve otherwise
+ */
+int mango_string_compare(const MangoString *str1, const MangoString *str2)
+{
+    return mango_object_compare((const MangoObject *)str1, (const MangoObject *)str2);
+}
+

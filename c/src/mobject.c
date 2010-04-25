@@ -74,7 +74,7 @@ int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2)
  * \return  true if nodes are equal (as defined by their equalsFunc
  * callback), false otherwise.
  */
-BOOL mango_object_equal(const MangoObject *obj1, const MangoObject *obj2)
+BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2)
 {
     if (obj1 == obj2)
     {

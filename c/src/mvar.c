@@ -39,7 +39,7 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
 void mango_variable_free(MangoVariable *mvar)
 {
     if (mvar->value != NULL)
-        mango_string_release(mvar->value);
+        mango_object_release((MangoObject *)mvar->value);
     MangoVariable *next = mvar->next;
     free(mvar);
     if (next != NULL)
@@ -58,7 +58,7 @@ void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQu
     if (mvar->value != value)
     {
         if (mvar->value != NULL)
-            mango_string_release(mvar->value);
+            mango_object_release((MangoObject *)mvar->value);
         mvar->value     = value;
         mvar->isQuoted  = isQuoted;
         mvar->intValue  = 0;

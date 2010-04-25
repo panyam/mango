@@ -30,3 +30,11 @@ void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *s
         factory->freeStringFunc(factory, str);
 }
 
+
+/**
+ * Frees a string factory.
+ */
+void mango_stringfactory_release(MangoStringFactory *factory)
+{
+    return mango_object_release((MangoObject *)factory);
+}

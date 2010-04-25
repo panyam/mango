@@ -71,16 +71,6 @@ extern void mango_rcstring_decref(MangoRCString *mstr);
 extern void mango_rcstring_incref(MangoRCString *mstr);
 
 /**
- * Gets the buffer value of the string.
- */
-extern const char *mango_rcstring_buffer(const MangoRCString *mstr);
-
-/**
- * Gets the length of the string.
- */
-extern size_t mango_rcstring_length(const MangoRCString *mstr);
-
-/**
  * Compares the string contents with another buffer.
  *
  * \param   mstr    String being compared.
@@ -97,6 +87,16 @@ extern int mango_rcstring_compare(const MangoRCString *mstr1,
  */
 extern BOOL mango_rcstrings_are_equal(const MangoRCString *mstr1,
                                       const MangoRCString *mstr2);
+
+/**
+ * Gets the buffer value of the string.
+ */
+extern const char *mango_rcstring_buffer(const MangoRCString *mstr);
+
+/**
+ * Gets the length of the string.
+ */
+extern size_t mango_rcstring_length(const MangoRCString *mstr);
 
 #ifdef __cplusplus
 }

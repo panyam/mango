@@ -10,8 +10,8 @@
 class RCStringTableTestFixture
 {
 protected:
-    MangoRCStringTable *mstable;
-    MangoStringFactory *string_factory;
+    MangoRCStringTable *    mstable;
+    MangoStringFactory *    string_factory;
 
 public:
     RCStringTableTestFixture() :
@@ -37,7 +37,7 @@ public:
 
         if (string_factory != NULL)
         {
-            mango_stringfactory_free(string_factory);
+            mango_stringfactory_release(string_factory);
             string_factory = NULL;
         }
     }
@@ -140,11 +140,11 @@ TEST_FIXTURE(RCStringTableTestFixture, TestDecRefLimitAtZero)
  */
 TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
 {
-    MangoRCStringTable *mstable = (MangoRCStringTable *)string_factory->data;
+    MangoRCStringTable *mstable = ((MangoRCStringFactory *)string_factory)->mrcstable;
     MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
-    MangoRCString *rcstr1 = (MangoRCString *)mstr1->data;
-    MangoRCString *rcstr2 = (MangoRCString *)mstr2->data;
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1;
+    MangoRCString *rcstr2 = (MangoRCString *)mstr2;
     int id1 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     int id2 = mango_rcstring_table_find(mstable, "Hello World", -1, true, 0);
     CHECK_EQUAL(id1, id2);
@@ -167,7 +167,7 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringFree)
 {
     MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
-    MangoRCString *rcstr1 = (MangoRCString *)mstr1->data;
+    MangoRCString *rcstr1 = (MangoRCString *)mstr1;
     const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, rcstr1->internId);
     CHECK_EQUAL(msdata->refCount, 2);
     mango_string_release(mstr1);

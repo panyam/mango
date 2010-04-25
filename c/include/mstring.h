@@ -57,6 +57,31 @@ extern const char *mango_string_buffer(const MangoString *mstr);
  */
 extern size_t mango_string_length(const MangoString *mstr);
 
+/**
+ * Releases a string.
+ */
+extern void mango_string_release(MangoString *str);
+
+/**
+ * Compares two strings to see if they are equal.
+ *
+ * \param   str1    First str in the comparison.
+ * \param   str2    Second str in the comparison.
+ *
+ * \return  true if Strings are equal false otherwise.
+ */
+extern BOOL mango_strings_are_equal(const MangoString *str1, const MangoString *str2);
+
+/**
+ * Compares two objects to check their relative order.
+ *
+ * \param   str1    First str in the comparison.
+ * \param   str2    Second str in the comparison.
+ *
+ * \return  -ve if str1 < str2, 0 if they are equal, +ve otherwise
+ */
+extern int mango_string_compare(const MangoString *str1, const MangoString *str2);
+
 #ifdef __cplusplus
 }
 #endif
