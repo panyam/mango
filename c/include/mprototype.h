@@ -8,6 +8,12 @@
 extern "C" {
 #endif
 
+typedef void (*PrototypeIncRefFunc)(MangoObject *object);
+typedef void (*PrototypeDecRefFunc)(MangoObject *object);
+typedef void (*PrototypeCleanUpFunc)(MangoObject *object);
+typedef BOOL (*PrototypeEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef int (*PrototypeCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+
 /**
  * Prototypes are the blueprints for objects.  Almost like classes.
  */

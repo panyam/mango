@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+typedef const char *(*StringBufferFunc)(const MangoString *str);
+typedef size_t (*StringLengthFunc)(const MangoString *str);
+typedef void (*StringCopyFunc)(const MangoString *str, MangoString *another);
 
 /**
  * A string prototype is like a class for a string.

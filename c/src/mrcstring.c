@@ -8,21 +8,21 @@
 
 MangoStringPrototype *mango_rcstring_prototype()
 {
-    static MangoStringPrototype *RCSTRING_PROTOTYPE = NULL;
-    if (RCSTRING_PROTOTYPE == NULL)
+    static BOOL initialised = false;
+    static MangoStringPrototype RCSTRING_PROTOTYPE;
+    if (!initialised)
     {
-        RCSTRING_PROTOTYPE = NEW(MangoStringPrototype);
-        RCSTRING_PROTOTYPE->bufferFunc  = mango_rcstring_buffer;
-        RCSTRING_PROTOTYPE->sizeFunc    = mango_rcstring_length;
-        RCSTRING_PROTOTYPE->copyFunc    = mango_rcstring_copy;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->incRefFunc  = mango_rcstring_incref;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->decRefFunc  = mango_rcstring_decref;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->cleanUpFunc = mango_rcstring_release;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->cleanUpFunc = mango_rcstring_release;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->equalsFunc  = mango_rcstrings_are_equal;
-        ((MangoPrototype *)RCSTRING_PROTOTYPE)->compareFunc = mango_rcstring_compare;
+        RCSTRING_PROTOTYPE.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
+        RCSTRING_PROTOTYPE.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
+        RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
+        // ((MangoPrototype *)&RCSTRING_PROTOTYPE)->incRefFunc  = (PrototypeIncRefFunc)mango_rcstring_incref;
+        // ((MangoPrototype *)&RCSTRING_PROTOTYPE)->decRefFunc  = (PrototypeDecRefFunc)mango_rcstring_decref;
+        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->cleanUpFunc = (PrototypeCleanUpFunc)mango_rcstring_release;
+        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
+        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+        initialised = true;
     }
-    return RCSTRING_PROTOTYPE;
+    return &RCSTRING_PROTOTYPE;
 }
 
 /**
@@ -76,7 +76,6 @@ void mango_rcstring_copy(const MangoRCString *source, MangoString *another)
 void mango_rcstring_release(MangoRCString *mstr)
 {
     mango_rcstring_table_decref(mstr->mstable, mstr->internId);
-    free(mstr);
 }
 
 /**
