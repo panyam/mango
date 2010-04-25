@@ -21,14 +21,14 @@ extern MangoStringFactory *mango_rcstringfactory_new();
 /**
  * Creates a new string.
  */
-extern MangoString *mango_rcstringfactory_new_string(MangoRCStringTable *mstable,
+extern MangoString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
                                                      const char *buffer,
                                                      int length);
 
 /**
  * Creates a new string from a string buffer.
  */
-extern MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable,
+extern MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
                                                       const MangoStringBuffer *buffer);
 
 /**
