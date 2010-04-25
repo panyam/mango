@@ -97,10 +97,12 @@ dep:
 ../bld/./ArrayTests.o: ../include/mnoderenderer.h ../include/mparser.h
 ../bld/./ArrayTests.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./ArrayTests.o: ../include/mparsercontext.h ../include/mrcstring.h
-../bld/./ArrayTests.o: ../include/mrcstringtable.h ../include/msingletons.h
-../bld/./ArrayTests.o: ../include/mstringbuffer.h ../include/mstringfactory.h
-../bld/./ArrayTests.o: ../include/mtable.h ../include/mtagnode.h
-../bld/./ArrayTests.o: ../include/mtagparser.h ../include/mtagparserlibrary.h
+../bld/./ArrayTests.o: ../include/mrcstringtable.h
+../bld/./ArrayTests.o: ../include/mrcstringfactory.h
+../bld/./ArrayTests.o: ../include/mstringfactory.h ../include/msingletons.h
+../bld/./ArrayTests.o: ../include/mstringbuffer.h ../include/mtable.h
+../bld/./ArrayTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./ArrayTests.o: ../include/mtagparserlibrary.h
 ../bld/./ArrayTests.o: ../include/mtemplatecontext.h
 ../bld/./ArrayTests.o: ../include/mtemplateloader.h ../include/mtokenlists.h
 ../bld/./ArrayTests.o: ../include/mutils.h ../include/mvalue.h
@@ -119,9 +121,10 @@ dep:
 ../bld/./BinTreeTests.o: ../include/mnoderenderer.h ../include/mparser.h
 ../bld/./BinTreeTests.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./BinTreeTests.o: ../include/mparsercontext.h ../include/mrcstring.h
-../bld/./BinTreeTests.o: ../include/mrcstringtable.h ../include/msingletons.h
-../bld/./BinTreeTests.o: ../include/mstringbuffer.h
-../bld/./BinTreeTests.o: ../include/mstringfactory.h ../include/mtable.h
+../bld/./BinTreeTests.o: ../include/mrcstringtable.h
+../bld/./BinTreeTests.o: ../include/mrcstringfactory.h
+../bld/./BinTreeTests.o: ../include/mstringfactory.h ../include/msingletons.h
+../bld/./BinTreeTests.o: ../include/mstringbuffer.h ../include/mtable.h
 ../bld/./BinTreeTests.o: ../include/mtagnode.h ../include/mtagparser.h
 ../bld/./BinTreeTests.o: ../include/mtagparserlibrary.h
 ../bld/./BinTreeTests.o: ../include/mtemplatecontext.h
@@ -142,9 +145,10 @@ dep:
 ../bld/./ParserTests.o: ../include/mnoderenderer.h ../include/mparser.h
 ../bld/./ParserTests.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./ParserTests.o: ../include/mparsercontext.h ../include/mrcstring.h
-../bld/./ParserTests.o: ../include/mrcstringtable.h ../include/msingletons.h
-../bld/./ParserTests.o: ../include/mstringbuffer.h
-../bld/./ParserTests.o: ../include/mstringfactory.h ../include/mtable.h
+../bld/./ParserTests.o: ../include/mrcstringtable.h
+../bld/./ParserTests.o: ../include/mrcstringfactory.h
+../bld/./ParserTests.o: ../include/mstringfactory.h ../include/msingletons.h
+../bld/./ParserTests.o: ../include/mstringbuffer.h ../include/mtable.h
 ../bld/./ParserTests.o: ../include/mtagnode.h ../include/mtagparser.h
 ../bld/./ParserTests.o: ../include/mtagparserlibrary.h
 ../bld/./ParserTests.o: ../include/mtemplatecontext.h
@@ -167,9 +171,11 @@ dep:
 ../bld/./ResolverTests.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./ResolverTests.o: ../include/mparsercontext.h ../include/mrcstring.h
 ../bld/./ResolverTests.o: ../include/mrcstringtable.h
+../bld/./ResolverTests.o: ../include/mrcstringfactory.h
+../bld/./ResolverTests.o: ../include/mstringfactory.h
 ../bld/./ResolverTests.o: ../include/msingletons.h ../include/mstringbuffer.h
-../bld/./ResolverTests.o: ../include/mstringfactory.h ../include/mtable.h
-../bld/./ResolverTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./ResolverTests.o: ../include/mtable.h ../include/mtagnode.h
+../bld/./ResolverTests.o: ../include/mtagparser.h
 ../bld/./ResolverTests.o: ../include/mtagparserlibrary.h
 ../bld/./ResolverTests.o: ../include/mtemplatecontext.h
 ../bld/./ResolverTests.o: ../include/mtemplateloader.h
@@ -192,9 +198,10 @@ dep:
 ../bld/./stlinputsource.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./stlinputsource.o: ../include/mparsercontext.h ../include/mrcstring.h
 ../bld/./stlinputsource.o: ../include/mrcstringtable.h
+../bld/./stlinputsource.o: ../include/mrcstringfactory.h
+../bld/./stlinputsource.o: ../include/mstringfactory.h
 ../bld/./stlinputsource.o: ../include/msingletons.h
-../bld/./stlinputsource.o: ../include/mstringbuffer.h
-../bld/./stlinputsource.o: ../include/mstringfactory.h ../include/mtable.h
+../bld/./stlinputsource.o: ../include/mstringbuffer.h ../include/mtable.h
 ../bld/./stlinputsource.o: ../include/mtagnode.h ../include/mtagparser.h
 ../bld/./stlinputsource.o: ../include/mtagparserlibrary.h
 ../bld/./stlinputsource.o: ../include/mtemplatecontext.h
@@ -218,9 +225,10 @@ dep:
 ../bld/./StringTableTests.o: ../include/mparsercontext.h
 ../bld/./StringTableTests.o: ../include/mrcstring.h
 ../bld/./StringTableTests.o: ../include/mrcstringtable.h
+../bld/./StringTableTests.o: ../include/mrcstringfactory.h
+../bld/./StringTableTests.o: ../include/mstringfactory.h
 ../bld/./StringTableTests.o: ../include/msingletons.h
-../bld/./StringTableTests.o: ../include/mstringbuffer.h
-../bld/./StringTableTests.o: ../include/mstringfactory.h ../include/mtable.h
+../bld/./StringTableTests.o: ../include/mstringbuffer.h ../include/mtable.h
 ../bld/./StringTableTests.o: ../include/mtagnode.h ../include/mtagparser.h
 ../bld/./StringTableTests.o: ../include/mtagparserlibrary.h
 ../bld/./StringTableTests.o: ../include/mtemplatecontext.h
@@ -244,9 +252,10 @@ dep:
 ../bld/./TokenizerTests.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./TokenizerTests.o: ../include/mparsercontext.h ../include/mrcstring.h
 ../bld/./TokenizerTests.o: ../include/mrcstringtable.h
+../bld/./TokenizerTests.o: ../include/mrcstringfactory.h
+../bld/./TokenizerTests.o: ../include/mstringfactory.h
 ../bld/./TokenizerTests.o: ../include/msingletons.h
-../bld/./TokenizerTests.o: ../include/mstringbuffer.h
-../bld/./TokenizerTests.o: ../include/mstringfactory.h ../include/mtable.h
+../bld/./TokenizerTests.o: ../include/mstringbuffer.h ../include/mtable.h
 ../bld/./TokenizerTests.o: ../include/mtagnode.h ../include/mtagparser.h
 ../bld/./TokenizerTests.o: ../include/mtagparserlibrary.h
 ../bld/./TokenizerTests.o: ../include/mtemplatecontext.h

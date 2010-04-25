@@ -176,6 +176,14 @@ dep:
 ../bld/./mrcstring.o: ../include/mobject.h ../include/mprototype.h
 ../bld/./mrcstring.o: ../include/mstringfactory.h ../include/mrcstring.h
 ../bld/./mrcstring.o: ../include/mrcstringtable.h ../include/mmemutils.h
+../bld/./mrcstringfactory.o: ../include/merror.h ../include/mfwddefs.h
+../bld/./mrcstringfactory.o: ../include/mstringbuffer.h ../include/mstring.h
+../bld/./mrcstringfactory.o: ../include/mobject.h ../include/mprototype.h
+../bld/./mrcstringfactory.o: ../include/mrcstring.h
+../bld/./mrcstringfactory.o: ../include/mrcstringfactory.h
+../bld/./mrcstringfactory.o: ../include/mstringfactory.h
+../bld/./mrcstringfactory.o: ../include/mrcstringtable.h
+../bld/./mrcstringfactory.o: ../include/mmemutils.h
 ../bld/./mrcstringtable.o: ../include/mrcstringtable.h ../include/mfwddefs.h
 ../bld/./mrcstringtable.o: ../include/mmemutils.h ../include/mbintree.h
 ../bld/./mrcstringtable.o: ../include/marray.h

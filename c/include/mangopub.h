@@ -24,6 +24,7 @@
 #include "mparsercontext.h"
 #include "mrcstring.h"
 #include "mrcstringtable.h"
+#include "mrcstringfactory.h"
 #include "msingletons.h"
 #include "mstring.h"
 #include "mstringbuffer.h"
