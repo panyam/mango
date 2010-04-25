@@ -39,6 +39,7 @@ typedef struct MangoParserContext MangoParserContext;
 typedef struct MangoPrototype MangoPrototype;
 typedef struct MangoRCString MangoRCString;
 typedef struct MangoRCStringTable MangoRCStringTable;
+typedef struct MangoRCStringFactory MangoRCStringFactory;
 typedef struct MangoString MangoString;
 typedef struct MangoStringBuffer MangoStringBuffer;
 typedef struct MangoStringFactory MangoStringFactory;

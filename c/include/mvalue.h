@@ -24,7 +24,7 @@ typedef enum
 /**
  * Generic value objects.
  */
-DECLARE_CLASS(MangoValue, MangoObject, 
+INHERIT_CLASS(MangoValue, MangoObject, 
     MangoValueType  valueType;
     void *          valueData;
 );
@@ -48,7 +48,7 @@ extern MangoValue mango_value_make(MangoValueType type, void *value);
  * \param   vType   Type of the value.
  * \param   vData   Data of the value.
  */
-extern MangoObject *mango_value_new(MangoValueType type, void *value);
+MangoValue *mango_value_new(MangoValueType type, void *value);
 
 struct MangoValueIterator 
 {

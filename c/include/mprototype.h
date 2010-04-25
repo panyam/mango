@@ -44,6 +44,17 @@ struct MangoPrototype
     int (*compareFunc)(const MangoObject *obj1, const MangoObject *obj2);
 };
 
+#define DECLARE_PROTOTYPE(PROTO_NAME, BASE_PROTO_NAME, ...) \
+    struct PROTO_NAME                                       \
+    {                                                       \
+        /**                                                 \
+         * Base prototype.                                  \
+         */                                                 \
+        BASE_PROTO_NAME __base__;                           \
+                                                            \
+        __VA_ARGS__                                         \
+    }
+
 /**
  * Gets the prototype for a given name, registering it if necessary.
  *

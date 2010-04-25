@@ -2,7 +2,6 @@
 #ifndef __MANGO_RCSTRING_H__
 #define __MANGO_RCSTRING_H__
 
-#include "mobject.h"
 #include "mstring.h"
 
 #ifdef __cplusplus
@@ -12,8 +11,7 @@ extern "C" {
 /**
  * Immutable reference counted strings.
  */
-DECLARE_CLASS(MangoRCString, MangoString
-{
+DECLARE_CLASS(MangoRCString, MangoStringPrototype,
     /**
      * The Intern ID.
      */
@@ -26,13 +24,7 @@ DECLARE_CLASS(MangoRCString, MangoString
      * belong to the same string table.
      */
     MangoRCStringTable *  mstable;
-};
-
-/**
- * Creates a new immutale string factory.
- * \return  A new instance of the immutable string.
- */
-extern MangoStringFactory *mango_rcstringfactory_new();
+);
 
 /**
  * Creates a new immutale string.
@@ -44,17 +36,18 @@ extern MangoStringFactory *mango_rcstringfactory_new();
  *
  * \return  A new instance of the immutable string.
  */
-extern void mango_rcstring_new(const char *value,
-                               int length,
-                               MangoRCStringTable *mstable,
-                               MangoString *out);
+extern MangoString *mango_rcstring_new(const char *value,
+                                       int length,
+                                       MangoRCStringTable *mstable);
+                               
 
 /**
  * Copies another mango string.
  * \param   source  String to be copied.
  * \param   another Destination string to be copied to.
  */
-extern void mango_rcstring_copy(const MangoRCString *source, MangoString *another);
+extern void mango_rcstring_copy(const MangoRCString *source,
+                                MangoString *another);
 
 /**
  * Destroys a string.
@@ -62,6 +55,20 @@ extern void mango_rcstring_copy(const MangoRCString *source, MangoString *anothe
  * \param   mstr String to be destroyed.
  */
 extern void mango_rcstring_release(MangoRCString *mstr);
+
+/**
+ * Decreases the reference count of a string.
+ *
+ * \param   mstr String to be dec-refed.
+ */
+extern void mango_rcstring_decref(MangoRCString *mstr);
+
+/**
+ * Increases the reference count of a string.
+ *
+ * \param   mstr String to be inc-refed.
+ */
+extern void mango_rcstring_incref(MangoRCString *mstr);
 
 /**
  * Gets the buffer value of the string.
@@ -82,12 +89,14 @@ extern size_t mango_rcstring_length(const MangoRCString *mstr);
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-extern int mango_rcstring_compare(const MangoRCString *mstr1, const MangoRCString *mstr2);
+extern int mango_rcstring_compare(const MangoRCString *mstr1,
+                                  const MangoRCString *mstr2);
 
 /**
  * Tells if two strings are equal.
  */
-extern BOOL mango_rcstrings_are_equal(const MangoRCString *mstr1, const MangoRCString *mstr2);
+extern BOOL mango_rcstrings_are_equal(const MangoRCString *mstr1,
+                                      const MangoRCString *mstr2);
 
 #ifdef __cplusplus
 }

@@ -8,36 +8,51 @@
 extern "C" {
 #endif
 
-struct MangoObject
-{
-    /**
-     * Prototype for the object.
-     */
-    const MangoPrototype *  prototype;
-
-    /**
-     * Object's reference count.
-     */
-    int refCount;
-};
-
-#define DECLARE_CLASS(CLASS_NAME, BASE_CLASS_NAME, ...)     \
-    struct CLASS_NAME                                       \
-    {                                                       \
-        /**                                                 \
-         * Base object.                                     \
-         */                                                 \
-        BASE_CLASS_NAME __base__;                           \
-                                                            \
-        __VA_ARGS__                                         \
+/**
+ * Declares a class of name CLASS_NAME, which has a specific prototype and
+ * a reference count.
+ */
+#define DECLARE_CLASS(CLASS_NAME, PROTOTYPE_NAME, ...)  \
+    struct CLASS_NAME                                   \
+    {                                                   \
+        /**                                             \
+         * Base prototype.                              \
+         */                                             \
+        PROTOTYPE_NAME *__prototype__;                  \
+                                                        \
+        /**                                             \
+         * object reference count.                      \
+         */                                             \
+        int __refCount__;                               \
+                                                        \
+        /**                                             \
+         * The object specific data.                    \
+         */                                             \
+        __VA_ARGS__                                     \
     }
 
 /**
- * Releases a reference to the object.
- * \returns false if the object's reference count has reached 0 and has been
- * deleted and is no longer valid, true otherwise.
+ * "Inherits" a struct by including an instance of it as the first member of
+ * the new struct.
  */
-extern BOOL mango_object_release(MangoObject *obj);
+#define INHERIT_CLASS(CLASS_NAME, BASE_CLASS, ...)      \
+    struct CLASS_NAME                                   \
+    {                                                   \
+        /**                                             \
+         * Base class                                   \
+         */                                             \
+        BASE_CLASS __base__;                            \
+                                                        \
+        /**                                             \
+         * The object specific data.                    \
+         */                                             \
+        __VA_ARGS__                                     \
+    }
+
+/**
+ * Default class of all objects.
+ */
+DECLARE_CLASS(MangoObject, MangoPrototype);
 
 /**
  * Increases the reference count to an object.
@@ -45,6 +60,13 @@ extern BOOL mango_object_release(MangoObject *obj);
  * \return  Pointer to the same object to simplify copy semantics.
  */
 extern MangoObject *mango_object_copy(MangoObject *obj);
+
+/**
+ * Releases a reference to the object.
+ * \returns false if the object's reference count has reached 0 and has
+ * been deleted and is no longer valid, true otherwise.
+ */
+extern BOOL mango_object_release(MangoObject *obj);
 
 /**
  * Compares two objects to see if they are equal.

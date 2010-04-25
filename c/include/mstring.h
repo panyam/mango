@@ -18,35 +18,27 @@ extern "C" {
  * expense of an extra redirection (when accessing the prototype) but we
  * will let the compiler/OS worry about caching that.
  */
-struct MangoStringPrototype
-{
-    /**
-     * Base Prototype Class.
-     */
-    MangoPrototype __base__;
-
+DECLARE_PROTOTYPE(MangoStringPrototype, MangoPrototype,
     /**
      * Gets the native string buffer.
      */
-    const char *(*bufferFunc)(const void *data);
+    const char *(*bufferFunc)(const MangoString *str);
 
     /**
      * Gets the string size.
      */
-    size_t (*sizeFunc)(const void *data);
+    size_t (*sizeFunc)(const MangoString *str);
 
     /**
      * Copies a string.
      */
-    void (*copyFunc)(void *data, MangoString *another);
-};
-
-DECLARE_CLASS(MangoString, MangoObject,
-    /**
-     * Implementation specific string data.
-     */
-    void *data;
+    void (*copyFunc)(const MangoString *str, MangoString *another);
 );
+
+/**
+ * Base class of all string implementations.
+ */
+DECLARE_CLASS(MangoString, MangoStringPrototype);
 
 /**
  * Returns a copy of a string.
@@ -54,13 +46,6 @@ DECLARE_CLASS(MangoString, MangoObject,
  * \return  The new copy of the string.
  */
 extern MangoString *mango_string_copy(MangoString *mstr);
-
-/**
- * Releases a string.
- *
- * \param   mstr String to be released.
- */
-extern void mango_string_release(MangoString *mstr);
 
 /**
  * Gets the buffer value of the string.
@@ -71,16 +56,6 @@ extern const char *mango_string_buffer(const MangoString *mstr);
  * Gets the length of the string.
  */
 extern size_t mango_string_length(const MangoString *mstr);
-
-/**
- * Tells if two strings are equal.
- *
- * \param   mstr1   String being compared.
- * \param   mstr2   String being compared to.
- *
- * \return true if strings are equal, false otherwise.
- */
-extern BOOL mango_strings_are_equal(const MangoString *mstr1, const MangoString *mstr2);
 
 #ifdef __cplusplus
 }

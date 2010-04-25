@@ -15,47 +15,14 @@ MangoStringPrototype *mango_rcstring_prototype()
         RCSTRING_PROTOTYPE->bufferFunc  = mango_rcstring_buffer;
         RCSTRING_PROTOTYPE->sizeFunc    = mango_rcstring_length;
         RCSTRING_PROTOTYPE->copyFunc    = mango_rcstring_copy;
-        RCSTRING_PROTOTYPE->releaseFunc = mango_rcstring_release;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->incRefFunc  = mango_rcstring_incref;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->decRefFunc  = mango_rcstring_decref;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->cleanUpFunc = mango_rcstring_release;
+        ((MangoPrototype *)RCSTRING_PROTOTYPE)->cleanUpFunc = mango_rcstring_release;
         ((MangoPrototype *)RCSTRING_PROTOTYPE)->equalsFunc  = mango_rcstrings_are_equal;
         ((MangoPrototype *)RCSTRING_PROTOTYPE)->compareFunc = mango_rcstring_compare;
     }
     return RCSTRING_PROTOTYPE;
-}
-
-/**
- * Creates a new string.
- */
-MangoString *mango_rcstringfactory_new_string(MangoRCStringTable *mstable, const char *buffer, int length)
-{
-    MangoString *out = NEW(MangoString);
-    mango_rcstring_new(buffer, length, mstable, out);
-    return out;
-}
-
-/**
- * Creates a new string from a string buffer.
- */
-MangoString *mango_rcstringfactory_from_buffer(MangoRCStringTable *mstable,
-                                               const MangoStringBuffer *buffer)
-{
-    MangoString *out = NEW(MangoString);
-    mango_rcstring_new(buffer->buffer, buffer->length, mstable, out);
-    // mango_rcstring_new(NULL, NULL, mstable, out);
-    return out;
-}
-
-/**
- * Creates a new immutale string factory.
- * \return  A new instance of the immutable string.
- */
-MangoStringFactory *mango_rcstringfactory_new()
-{
-    MangoStringFactory *msfactory = NEW(MangoStringFactory);
-    msfactory->data             = mango_rcstring_table_new();
-    msfactory->cleanupFunc      = mango_rcstring_table_free;
-    msfactory->newStringFunc    = mango_rcstringfactory_new_string;
-    msfactory->fromBufferFunc   = mango_rcstringfactory_from_buffer;
-    return msfactory;
 }
 
 /**
@@ -68,20 +35,20 @@ MangoStringFactory *mango_rcstringfactory_new()
  *
  * \return  A new instance of the immutable string.
  */
-void mango_rcstring_new(const char *value,
-                        int length,
-                        MangoRCStringTable *mstable,
-                        MangoString *out)
+MangoString *mango_rcstring_new(const char *value,
+                                int length,
+                                MangoRCStringTable *mstable)
 {
     if (mstable == NULL)
         mstable = mango_rcstring_table_default();
     if (length < 0)
         length = strlen(value);
-    MangoRCString *mstr = NEW(MangoRCString);
-    mstr->internId  = mango_rcstring_table_find(mstable, value, length, true, 1);
-    mstr->mstable   = mstable;
-    out->prototype  = mango_rcstring_prototype();
-    out->data       = mstr;
+    MangoRCString *mstr = ZNEW(MangoRCString);
+    mstr->__prototype__ = mango_rcstring_prototype();
+    mstr->__refCount__  = 1;
+    mstr->mstable       = mstable;
+    mstr->internId      = mango_rcstring_table_find(mstable, value, length, true, 1);
+    return (MangoString *)mstr;
 }
 
 /**
@@ -94,12 +61,11 @@ void mango_rcstring_new(const char *value,
  */
 void mango_rcstring_copy(const MangoRCString *source, MangoString *another)
 {
-    MangoRCString *mstr   = NEW(MangoRCString);
+    MangoRCString *mstr     = ZNEW(MangoRCString);
     mango_rcstring_table_incref(source->mstable, source->internId);
-    mstr->internId      = source->internId;
-    mstr->mstable       = source->mstable;
-    another->data       = mstr;
-    another->prototype  = mango_rcstring_prototype();
+    mstr->internId          = source->internId;
+    mstr->mstable           = source->mstable;
+    another->__prototype__  = mango_rcstring_prototype();
 }
 
 /**
@@ -111,6 +77,26 @@ void mango_rcstring_release(MangoRCString *mstr)
 {
     mango_rcstring_table_decref(mstr->mstable, mstr->internId);
     free(mstr);
+}
+
+/**
+ * Decreases the reference count of a string.
+ *
+ * \param   mstr String to be dec-refed.
+ */
+void mango_rcstring_decref(MangoRCString *mstr)
+{
+    mango_rcstring_table_decref(mstr->mstable, mstr->internId);
+}
+
+/**
+ * Increases the reference count of a string.
+ *
+ * \param   mstr String to be inc-refed.
+ */
+void mango_rcstring_incref(MangoRCString *mstr)
+{
+    mango_rcstring_table_decref(mstr->mstable, mstr->internId);
 }
 
 /**

@@ -12,28 +12,22 @@ extern "C" {
 /**
  * A factory for creating strings.
  */
-struct MangoStringFactory
-{
-    /**
-     * Factory data.
-     */
-    void *data;
-
-    /**
-     * Function to cleanup the factory data.
-     */
-    void (*cleanupFunc)(void *factory_data);
-
+DECLARE_CLASS(MangoStringFactory, MangoPrototype,
     /**
      * Creates a new string.
      */
-    MangoString *(*newStringFunc)(void *factory_data, const char *buffer, int length);
+    MangoString *(*newStringFunc)(MangoStringFactory *factory, const char *buffer, int length);
 
     /**
      * Creates a new string from a string buffer.
      */
-    MangoString *(*fromBufferFunc)(void *factory_data, const MangoStringBuffer *buffer);
-};
+    MangoString *(*fromBufferFunc)(MangoStringFactory *factory, const MangoStringBuffer *buffer);
+
+    /**
+     * Frees a string created by the previous 2 functions.
+     */
+    void (*freeStringFunc)(MangoStringFactory *factory, MangoString *str);
+);
 
 /**
  * Frees a string factory.
@@ -54,7 +48,7 @@ extern MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
                                                     const MangoStringBuffer *buffer);
 
 /**
- * Frees a string.
+ * Frees a previously created string.
  */
 extern void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str);
 

@@ -2,8 +2,6 @@
 #include "mvalue.h"
 #include "mmemutils.h"
 
-MangoValue NULL_VALUE = { 0, 0 };
-
 /**
  * Gets the prototype for all mango values.
  */
@@ -28,10 +26,10 @@ BOOL mango_value_is_valid(const MangoValue *value)
 MangoValue mango_value_make(MangoValueType vType, void *vData)
 {
     MangoValue value;
-    value.__base__.refCount     = 1;
-    value.__base__.prototype    = mango_value_prototype();
-    value.valueType             = vType;
-    value.valueData             = vData;
+    ((MangoObject *)&value)->__refCount__   = 1;
+    ((MangoObject *)&value)->__prototype__  = mango_value_prototype();
+    value.valueType                         = vType;
+    value.valueData                         = vData;
     return value;
 }
 
@@ -43,6 +41,8 @@ MangoValue mango_value_make(MangoValueType vType, void *vData)
 MangoValue *mango_value_new(MangoValueType type, void *value)
 {
     MangoValue *out = NEW(MangoValue);
+    ((MangoObject *)out)->__refCount__   = 1;
+    ((MangoObject *)out)->__prototype__  = mango_value_prototype();
     out->valueType = type;
     out->valueData = value;
     return out;
