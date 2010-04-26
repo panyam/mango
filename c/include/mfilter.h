@@ -2,12 +2,33 @@
 #ifndef __MANGO_FILTER_H__
 #define __MANGO_FILTER_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 #include "mvar.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+DECLARE_PROTOTYPE(MangoFilterPrototype, MangoPrototype,
+    /**
+     * Transforms the string and returns the rendered value.
+     * The value is modified using the arguments and an optional filterContext.
+     * The filterContext holds "softened" version of the arguments that it can use
+     * on multiple invocations for the sake of efficiency.  For instance in an "add"
+     * filter that would increment the value of an input string by some amount, 
+     * it makes sense to cache the value as an integer instead of converting the
+     * stringified argument on each render call!
+     * @throws IOException 
+     */
+    int (*applyFunc)(MangoFilter *filter, const MangoValue *input, MangoValue *output,
+                     MangoTemplateContext *context, MangoList *arguments);
+
+    //! Creates an invocation specific context
+    void *(*makeInvocationContextFunc)(MangoFilter *filter, MangoList *arguments);
+
+    //! Creates an invocation specific context
+    void *(*makeInstanceContextFunc)(MangoFilter *filter, MangoList *arguments);
+);
 
 /**
  * Filters get applied on variables in how they manipulate the value stored
@@ -23,48 +44,12 @@ extern "C" {
  * invocation specific state can be relaxed by having a FilterContext
  * object associated with each filter if this is a paramount requirement.
  */
-struct MangoFilter
-{
-    //! Fiter specific data.
-    void *data;
-
-    // Deletes the filter data
-    void (*deleteFunc)(void *data);
-
-    /**
-     * Transforms the string and returns the rendered value.
-     * The value is modified using the arguments and an optional filterContext.
-     * The filterContext holds "softened" version of the arguments that it can use
-     * on multiple invocations for the sake of efficiency.  For instance in an "add"
-     * filter that would increment the value of an input string by some amount, 
-     * it makes sense to cache the value as an integer instead of converting the
-     * stringified argument on each render call!
-     * @throws IOException 
-     */
-    int (*applyFunc)(void *filter_data, const MangoValue *input, MangoValue *output,
-                     MangoTemplateContext *context, MangoList *arguments);
-
-    //! Creates an invocation specific context
-    void *(*makeInvocationContextFunc)(MangoList *arguments);
-
-    //! Creates an invocation specific context
-    void *(*makeInstanceContextFunc)(MangoList *arguments);
-};
-
-/**
- * Creates a new filter.
- */
-extern MangoFilter *mango_filter_new(void *data);
-
-/**
- * Resets the filter contents.
- */
-extern void mango_filter_reset(MangoFilter *filter, void *data);
+DECLARE_CLASS(MangoFilter, MangoFilterPrototype);
 
 /**
  * Destroys a filter created with mango_filter_new.
  */
-extern void mango_filter_free(MangoFilter *filter);
+extern void mango_filter_release(MangoFilter *filter);
 
 /**
  * Applies the filter on a value and returns the new value.

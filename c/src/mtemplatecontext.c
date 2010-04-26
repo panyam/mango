@@ -94,7 +94,6 @@ int mango_templatecontext_set(MangoTemplateContext *ctx,
  */
 void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...)
 {
-    return 0;
 }
 
 /**

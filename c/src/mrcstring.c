@@ -15,9 +15,7 @@ MangoStringPrototype *mango_rcstring_prototype()
         RCSTRING_PROTOTYPE.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
         RCSTRING_PROTOTYPE.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
         RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-        // ((MangoPrototype *)&RCSTRING_PROTOTYPE)->incRefFunc  = (PrototypeIncRefFunc)mango_rcstring_incref;
-        // ((MangoPrototype *)&RCSTRING_PROTOTYPE)->decRefFunc  = (PrototypeDecRefFunc)mango_rcstring_decref;
-        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->cleanUpFunc = (PrototypeCleanUpFunc)mango_rcstring_release;
+        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->deleteFunc = (PrototypeCleanUpFunc)mango_rcstring_release;
         ((MangoPrototype *)&RCSTRING_PROTOTYPE)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
         ((MangoPrototype *)&RCSTRING_PROTOTYPE)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
         initialised = true;
@@ -74,26 +72,6 @@ void mango_rcstring_copy(const MangoRCString *source, MangoString *another)
  * \param   mstr String to be destroyed.
  */
 void mango_rcstring_release(MangoRCString *mstr)
-{
-    mango_rcstring_table_decref(mstr->mstable, mstr->internId);
-}
-
-/**
- * Decreases the reference count of a string.
- *
- * \param   mstr String to be dec-refed.
- */
-void mango_rcstring_decref(MangoRCString *mstr)
-{
-    mango_rcstring_table_decref(mstr->mstable, mstr->internId);
-}
-
-/**
- * Increases the reference count of a string.
- *
- * \param   mstr String to be inc-refed.
- */
-void mango_rcstring_incref(MangoRCString *mstr)
 {
     mango_rcstring_table_decref(mstr->mstable, mstr->internId);
 }

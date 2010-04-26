@@ -25,19 +25,10 @@ struct MangoPrototype
     char *name;
 
     /**
-     * Called when reference is to be incremented.
+     * Called when reference reaches 0 and the destructor needs to be
+     * called.
      */
-    void (*incRefFunc)(MangoObject *object);
-
-    /**
-     * Called when reference is to be decremented.
-     */
-    void (*decRefFunc)(MangoObject *object);
-
-    /**
-     * Called when reference reaches 0.
-     */
-    void (*cleanUpFunc)(MangoObject *object);
+    void (*deleteFunc)(MangoObject *object);
 
     /**
      * Tells if two objects are equal.

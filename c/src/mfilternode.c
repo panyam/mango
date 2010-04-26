@@ -67,7 +67,7 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
  */
 int mango_filternode_apply(MangoFilterNode *fnode, const MangoValue *input, MangoValue *output, MangoTemplateContext *context)
 {
-    return mango_filter_apply(fnode->filter->data, input, output, context, fnode->arguments);
+    return mango_filter_apply(fnode->filter, input, output, context, fnode->arguments);
 }
 
 /**

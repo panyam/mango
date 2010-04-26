@@ -8,8 +8,6 @@
 MangoObject *mango_object_copy(MangoObject *obj)
 {
     obj->__refCount__++;
-    if (obj->__prototype__->incRefFunc != NULL)
-        obj->__prototype__->incRefFunc(obj);
     return obj;
 }
 
@@ -20,12 +18,10 @@ MangoObject *mango_object_copy(MangoObject *obj)
 BOOL mango_object_release(MangoObject *obj)
 {
     obj->__refCount__--;
-    if (obj->__prototype__->decRefFunc != NULL)
-        obj->__prototype__->decRefFunc(obj);
     if (obj->__refCount__ == 0)
     {
-        if (obj->__prototype__->cleanUpFunc != NULL)
-            obj->__prototype__->cleanUpFunc(obj);
+        if (obj->__prototype__->deleteFunc != NULL)
+            obj->__prototype__->deleteFunc(obj);
         free(obj);
         return false;
     }

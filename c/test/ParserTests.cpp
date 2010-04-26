@@ -38,8 +38,7 @@ public:
         parser_context.strfactory   = string_factory;
         parser_context.loader       = NULL;
         MangoString *add = mango_stringfactory_new_string(string_factory, "add", -1);
-        MangoFilter *newfilter = mango_filter_new(NULL);
-        mango_addfilter_init(add, newfilter);
+        MangoFilter *newfilter = mango_addfilter_new(NULL);
         mango_library_register(filterLibrary, add, newfilter);
         mango_stringfactory_free_string(string_factory, add);
     }

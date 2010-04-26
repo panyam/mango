@@ -36,5 +36,5 @@ void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *s
  */
 void mango_stringfactory_release(MangoStringFactory *factory)
 {
-    return mango_object_release((MangoObject *)factory);
+    mango_object_release((MangoObject *)factory);
 }

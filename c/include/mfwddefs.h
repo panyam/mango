@@ -24,6 +24,7 @@ typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
 typedef struct MangoError MangoError;
 typedef struct MangoFilter MangoFilter;
+typedef struct MangoFilterPrototype MangoFilterPrototype;
 typedef struct MangoFilterNode MangoFilterNode;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoIterator MangoIterator;

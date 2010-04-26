@@ -57,20 +57,6 @@ extern void mango_rcstring_copy(const MangoRCString *source,
 extern void mango_rcstring_release(MangoRCString *mstr);
 
 /**
- * Decreases the reference count of a string.
- *
- * \param   mstr String to be dec-refed.
- */
-extern void mango_rcstring_decref(MangoRCString *mstr);
-
-/**
- * Increases the reference count of a string.
- *
- * \param   mstr String to be inc-refed.
- */
-extern void mango_rcstring_incref(MangoRCString *mstr);
-
-/**
  * Compares the string contents with another buffer.
  *
  * \param   mstr    String being compared.
