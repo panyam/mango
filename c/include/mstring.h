@@ -21,7 +21,7 @@ typedef void (*StringCopyFunc)(const MangoString *str, MangoString *another);
  * expense of an extra redirection (when accessing the prototype) but we
  * will let the compiler/OS worry about caching that.
  */
-DECLARE_PROTOTYPE(MangoStringPrototype, MangoPrototype,
+INHERIT_STRUCT(MangoStringPrototype, MangoPrototype,
     /**
      * Gets the native string buffer.
      */

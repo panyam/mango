@@ -24,7 +24,7 @@ typedef enum
 /**
  * Generic value objects.
  */
-INHERIT_CLASS(MangoValue, MangoObject, 
+INHERIT_STRUCT(MangoValue, MangoObject, 
     MangoValueType  valueType;
     void *          valueData;
 );

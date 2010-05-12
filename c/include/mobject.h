@@ -2,11 +2,29 @@
 #ifndef __MANGO_OBJECT_H__
 #define __MANGO_OBJECT_H__
 
-#include "mprototype.h"
+#include "mfwddefs.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * "Inherits" a struct by including an instance of it as the first member of
+ * the new struct.
+ */
+#define INHERIT_STRUCT(STRUCT_NAME, BASE_STRUCT, ...)   \
+    struct STRUCT_NAME                                  \
+    {                                                   \
+        /**                                             \
+         * Base class                                   \
+         */                                             \
+        BASE_STRUCT __base__;                           \
+                                                        \
+        /**                                             \
+         * The object specific data.                    \
+         */                                             \
+        __VA_ARGS__                                     \
+    }
 
 /**
  * Declares a class of name CLASS_NAME, which has a specific prototype and
@@ -31,30 +49,56 @@ extern "C" {
         __VA_ARGS__                                     \
     }
 
-/**
- * "Inherits" a struct by including an instance of it as the first member of
- * the new struct.
- */
-#define INHERIT_CLASS(CLASS_NAME, BASE_CLASS, ...)      \
-    struct CLASS_NAME                                   \
-    {                                                   \
-        /**                                             \
-         * Base class                                   \
-         */                                             \
-        BASE_CLASS __base__;                            \
-                                                        \
-        /**                                             \
-         * The object specific data.                    \
-         */                                             \
-        __VA_ARGS__                                     \
-    }
 
-// CREATE_OBJECT(OBJ_CLASS, PROTO_CLASS);
+
+/**
+ * Set of Prototype related methods.
+ */
+typedef void (*PrototypeIncRefFunc)(MangoObject *object);
+typedef void (*PrototypeDecRefFunc)(MangoObject *object);
+typedef void (*PrototypeDeallocFunc)(MangoObject *object);
+typedef BOOL (*PrototypeEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef int (*PrototypeCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef void (*PrototypeCopyFunc)(const MangoObject *src, MangoObject *dest);
+
+/**
+ * Prototypes are the blueprints for objects.  Almost like classes.
+ */
+struct MangoPrototype
+{
+    /**
+     * Name of the prototype.
+     */
+    char *name;
+
+    /**
+     * Called when reference reaches 0 and the destructor/deallocator needs
+     * to be called.
+     */
+    void (*deallocFunc)(MangoObject *object);
+
+    /**
+     * Tells if two objects are equal.
+     */
+    BOOL (*equalsFunc)(const MangoObject *obj1, const MangoObject *obj2);
+
+    /**
+     * Compares the data of two objects.
+     */
+    int (*compareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+};
 
 /**
  * Default class of all objects.
  */
 DECLARE_CLASS(MangoObject, MangoPrototype);
+
+// CREATE_OBJECT(OBJ_CLASS, PROTO_CLASS);
+
+/**
+ * Create a new prototype object of a given name.
+ */
+extern MangoPrototype *mango_prototype_new(const char *name);
 
 /**
  * Increases the reference count to an object.

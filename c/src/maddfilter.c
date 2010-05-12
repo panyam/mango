@@ -17,7 +17,7 @@ MangoFilterPrototype *mango_addfilter_prototype()
     if (!initialised)
     {
         PROTO.__base__.name             = strdup("MangoAddFilter");
-        PROTO.__base__.deleteFunc       = NULL;
+        PROTO.__base__.deallocFunc      = NULL;
         PROTO.__base__.equalsFunc       = NULL;
         PROTO.__base__.compareFunc      = NULL;
         PROTO.applyFunc                 = mango_addfilter_apply;

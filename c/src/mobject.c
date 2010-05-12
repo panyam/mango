@@ -3,6 +3,19 @@
 #include "mclasses.h"
 
 /**
+ * Creates a new prototype object with a given name.
+ * \param   name    Name of the prototype.
+ * \return  The new prototype instance.
+ */
+MangoPrototype *mango_prototype_new(const char *name)
+{
+    MangoPrototype *proto = ZNEW(MangoPrototype);
+    proto->name = strdup(name == NULL ? "" : name);
+    return proto;
+}
+
+
+/**
  * Increases the reference count of the object and returns int.
  */
 MangoObject *mango_object_copy(MangoObject *obj)
@@ -20,8 +33,8 @@ BOOL mango_object_release(MangoObject *obj)
     obj->__refCount__--;
     if (obj->__refCount__ == 0)
     {
-        if (obj->__prototype__->deleteFunc != NULL)
-            obj->__prototype__->deleteFunc(obj);
+        if (obj->__prototype__->deallocFunc != NULL)
+            obj->__prototype__->deallocFunc(obj);
         free(obj);
         return false;
     }

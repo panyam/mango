@@ -15,7 +15,7 @@ MangoStringPrototype *mango_rcstring_prototype()
         RCSTRING_PROTOTYPE.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
         RCSTRING_PROTOTYPE.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
         RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->deleteFunc = (PrototypeCleanUpFunc)mango_rcstring_release;
+        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->deallocFunc = (PrototypeDeallocFunc)mango_rcstring_release;
         ((MangoPrototype *)&RCSTRING_PROTOTYPE)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
         ((MangoPrototype *)&RCSTRING_PROTOTYPE)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
         initialised = true;

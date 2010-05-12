@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-DECLARE_PROTOTYPE(MangoFilterPrototype, MangoPrototype,
+INHERIT_STRUCT(MangoFilterPrototype, MangoPrototype,
     /**
      * Transforms the string and returns the rendered value.
      * The value is modified using the arguments and an optional filterContext.

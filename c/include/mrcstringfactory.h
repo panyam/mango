@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-INHERIT_CLASS(MangoRCStringFactory, MangoStringFactory,
+INHERIT_STRUCT(MangoRCStringFactory, MangoStringFactory,
     MangoRCStringTable *mrcstable;
     );
 
