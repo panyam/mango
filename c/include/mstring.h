@@ -33,9 +33,9 @@ DECLARE_PROTOTYPE(MangoStringPrototype, MangoPrototype,
     size_t (*sizeFunc)(const MangoString *str);
 
     /**
-     * Copies a string.
+     * Copies a string to another.
      */
-    void (*copyFunc)(const MangoString *str, MangoString *another);
+    void (*copyFunc)(const MangoString *src, MangoString *dest);
 );
 
 /**

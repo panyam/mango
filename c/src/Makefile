@@ -94,10 +94,10 @@ dep:
 
 # DO NOT DELETE
 
-../bld/./maddfilter.o: ../include/mfilter.h ../include/mfwddefs.h
+../bld/./maddfilter.o: ../include/mfilter.h ../include/mobject.h
+../bld/./maddfilter.o: ../include/mprototype.h ../include/mfwddefs.h
 ../bld/./maddfilter.o: ../include/mvar.h ../include/mstring.h
-../bld/./maddfilter.o: ../include/mobject.h ../include/mprototype.h
-../bld/./maddfilter.o: ../include/maddfilter.h
+../bld/./maddfilter.o: ../include/maddfilter.h ../include/mmemutils.h
 ../bld/./marray.o: ../include/marray.h ../include/mfwddefs.h
 ../bld/./marray.o: ../include/mmemutils.h
 ../bld/./mbintree.o: ../include/mbintree.h ../include/mfwddefs.h
@@ -109,16 +109,16 @@ dep:
 ../bld/./mclasses.o: ../include/mbintree.h ../include/mmemutils.h
 ../bld/./merror.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mfilter.o: ../include/mmemutils.h ../include/mfwddefs.h
-../bld/./mfilter.o: ../include/mfilter.h ../include/mvar.h
-../bld/./mfilter.o: ../include/mstring.h ../include/mobject.h
-../bld/./mfilter.o: ../include/mprototype.h
+../bld/./mfilter.o: ../include/mfilter.h ../include/mobject.h
+../bld/./mfilter.o: ../include/mprototype.h ../include/mvar.h
+../bld/./mfilter.o: ../include/mstring.h
 ../bld/./mfilterlibrary.o: ../include/mfilterlibrary.h ../include/mfwddefs.h
 ../bld/./mfilterlibrary.o: ../include/msingletons.h ../include/mlibrary.h
 ../bld/./mfilterlibrary.o: ../include/mbintree.h
 ../bld/./mfilternode.o: ../include/mmemutils.h ../include/mfwddefs.h
 ../bld/./mfilternode.o: ../include/mfilternode.h ../include/mfilter.h
-../bld/./mfilternode.o: ../include/mvar.h ../include/mstring.h
 ../bld/./mfilternode.o: ../include/mobject.h ../include/mprototype.h
+../bld/./mfilternode.o: ../include/mvar.h ../include/mstring.h
 ../bld/./mfilternode.o: ../include/mfilterlibrary.h ../include/merror.h
 ../bld/./mfilternode.o: ../include/msingletons.h ../include/mlibrary.h
 ../bld/./mfilternode.o: ../include/mlist.h ../include/mtokenlists.h

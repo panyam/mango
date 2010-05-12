@@ -49,6 +49,8 @@ extern "C" {
         __VA_ARGS__                                     \
     }
 
+// CREATE_OBJECT(OBJ_CLASS, PROTO_CLASS);
+
 /**
  * Default class of all objects.
  */

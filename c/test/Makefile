@@ -87,9 +87,9 @@ dep:
 ../bld/./ArrayTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ArrayTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./ArrayTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./ArrayTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./ArrayTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./ArrayTests.o: ../include/mprototype.h ../include/mfilterlibrary.h
+../bld/./ArrayTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./ArrayTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./ArrayTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./ArrayTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./ArrayTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./ArrayTests.o: ../include/mlist.h ../include/mmemutils.h
@@ -111,9 +111,9 @@ dep:
 ../bld/./BinTreeTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./BinTreeTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./BinTreeTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./BinTreeTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./BinTreeTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./BinTreeTests.o: ../include/mprototype.h ../include/mfilterlibrary.h
+../bld/./BinTreeTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./BinTreeTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./BinTreeTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./BinTreeTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./BinTreeTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./BinTreeTests.o: ../include/mlist.h ../include/mmemutils.h
@@ -132,12 +132,36 @@ dep:
 ../bld/./BinTreeTests.o: ../include/mtokenlists.h ../include/mutils.h
 ../bld/./BinTreeTests.o: ../include/mvalue.h ../include/mvarresolver.h
 ../bld/./BinTreeTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./ObjectTests.o: ../include/mangopub.h ../include/marray.h
+../bld/./ObjectTests.o: ../include/mfwddefs.h ../include/mbintree.h
+../bld/./ObjectTests.o: ../include/mclasses.h ../include/merror.h
+../bld/./ObjectTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./ObjectTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./ObjectTests.o: ../include/mstring.h ../include/mfilterlibrary.h
+../bld/./ObjectTests.o: ../include/mfilternode.h ../include/mfreetext.h
+../bld/./ObjectTests.o: ../include/minputsource.h ../include/mlibrary.h
+../bld/./ObjectTests.o: ../include/mlist.h ../include/mmemutils.h
+../bld/./ObjectTests.o: ../include/mnode.h ../include/mnodelist.h
+../bld/./ObjectTests.o: ../include/mnoderenderer.h ../include/mparser.h
+../bld/./ObjectTests.o: ../include/mtokenizer.h ../include/mtoken.h
+../bld/./ObjectTests.o: ../include/mparsercontext.h ../include/mrcstring.h
+../bld/./ObjectTests.o: ../include/mrcstringtable.h
+../bld/./ObjectTests.o: ../include/mrcstringfactory.h
+../bld/./ObjectTests.o: ../include/mstringfactory.h ../include/msingletons.h
+../bld/./ObjectTests.o: ../include/mstringbuffer.h ../include/mtable.h
+../bld/./ObjectTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./ObjectTests.o: ../include/mtagparserlibrary.h
+../bld/./ObjectTests.o: ../include/mtemplatecontext.h
+../bld/./ObjectTests.o: ../include/mtemplateloader.h ../include/mtokenlists.h
+../bld/./ObjectTests.o: ../include/mutils.h ../include/mvalue.h
+../bld/./ObjectTests.o: ../include/mvarresolver.h ../include/mvarlibrary.h
+../bld/./ObjectTests.o: ../include/mvarnode.h stlinputsource.h
 ../bld/./ParserTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ParserTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./ParserTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./ParserTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./ParserTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./ParserTests.o: ../include/mprototype.h ../include/mfilterlibrary.h
+../bld/./ParserTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./ParserTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./ParserTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./ParserTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./ParserTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./ParserTests.o: ../include/mlist.h ../include/mmemutils.h
@@ -160,9 +184,9 @@ dep:
 ../bld/./ResolverTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ResolverTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./ResolverTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./ResolverTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./ResolverTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./ResolverTests.o: ../include/mprototype.h ../include/mfilterlibrary.h
+../bld/./ResolverTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./ResolverTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./ResolverTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./ResolverTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./ResolverTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./ResolverTests.o: ../include/mlist.h ../include/mmemutils.h
@@ -187,8 +211,8 @@ dep:
 ../bld/./stlinputsource.o: ../include/marray.h ../include/mfwddefs.h
 ../bld/./stlinputsource.o: ../include/mbintree.h ../include/mclasses.h
 ../bld/./stlinputsource.o: ../include/merror.h ../include/mfilter.h
-../bld/./stlinputsource.o: ../include/mvar.h ../include/mstring.h
 ../bld/./stlinputsource.o: ../include/mobject.h ../include/mprototype.h
+../bld/./stlinputsource.o: ../include/mvar.h ../include/mstring.h
 ../bld/./stlinputsource.o: ../include/mfilterlibrary.h
 ../bld/./stlinputsource.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./stlinputsource.o: ../include/minputsource.h ../include/mlibrary.h
@@ -212,10 +236,9 @@ dep:
 ../bld/./StringTableTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./StringTableTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./StringTableTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./StringTableTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./StringTableTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./StringTableTests.o: ../include/mprototype.h
-../bld/./StringTableTests.o: ../include/mfilterlibrary.h
+../bld/./StringTableTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./StringTableTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./StringTableTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./StringTableTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./StringTableTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./StringTableTests.o: ../include/mlist.h ../include/mmemutils.h
@@ -240,10 +263,9 @@ dep:
 ../bld/./TokenizerTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./TokenizerTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./TokenizerTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./TokenizerTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./TokenizerTests.o: ../include/mstring.h ../include/mobject.h
-../bld/./TokenizerTests.o: ../include/mprototype.h
-../bld/./TokenizerTests.o: ../include/mfilterlibrary.h
+../bld/./TokenizerTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./TokenizerTests.o: ../include/mprototype.h ../include/mvar.h
+../bld/./TokenizerTests.o: ../include/mstring.h ../include/mfilterlibrary.h
 ../bld/./TokenizerTests.o: ../include/mfilternode.h ../include/mfreetext.h
 ../bld/./TokenizerTests.o: ../include/minputsource.h ../include/mlibrary.h
 ../bld/./TokenizerTests.o: ../include/mlist.h ../include/mmemutils.h

@@ -9,6 +9,10 @@ extern "C" {
 #endif
 
 
+typedef MangoString *(*MangoStringFactoryNewStringFunc)(MangoStringFactory *factory, const char *buffer, int length);
+typedef MangoString *(*MangoStringFactoryFromBufferFunc)(MangoStringFactory *factory, const MangoStringBuffer *buffer);
+typedef void (*MangoStringFactoryFreeStringFunc)(MangoStringFactory *factory, MangoString *str);
+
 /**
  * A factory for creating strings.
  */

@@ -25,9 +25,9 @@ MangoStringFactory *mango_rcstringfactory_new()
     MangoRCStringFactory *msfactory = ZNEW(MangoRCStringFactory);
     msfactory->mrcstable            = mango_rcstring_table_new();
     ((MangoStringFactory *)msfactory)->__prototype__    = mango_rcstringfactory_prototype();
-    ((MangoStringFactory *)msfactory)->newStringFunc    = mango_rcstringfactory_new_string;
-    ((MangoStringFactory *)msfactory)->fromBufferFunc   = mango_rcstringfactory_from_buffer;
-    ((MangoStringFactory *)msfactory)->freeStringFunc   = mango_rcstringfactory_free_string;
+    ((MangoStringFactory *)msfactory)->newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
+    ((MangoStringFactory *)msfactory)->fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
+    ((MangoStringFactory *)msfactory)->freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
     return ((MangoStringFactory *)msfactory);
 }
 
