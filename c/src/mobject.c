@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include "mobject.h"
 #include "mmemutils.h"
 #include "mclasses.h"
@@ -14,6 +15,52 @@ MangoPrototype *mango_prototype_new(const char *name)
     return proto;
 }
 
+
+/**
+ * Allocates an object of a given size.
+ * \param   obj     Size of the object to be created.
+ * \param   proto   Object's prototype to be set as.
+ * \return  A bit of memory (of objSize) casted as a MangoObject.
+ */
+MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto)
+{
+    MangoObject *obj    = (MangoObject *)malloc(objSize);
+    mango_object_init(obj, proto);
+    return obj;
+}
+
+/**
+ * Initialises an already created mango object.
+ * \param   obj     Object to be initialised.
+ * \param   proto   Object's prototype to be set as.
+ * \return the original object being initialised.
+ */
+MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto)
+{
+    obj->__prototype__  = proto;
+    obj->__refCount__   = 1;
+    return obj;
+}
+
+/**
+ * An object initializer.  The object must be allocated first (perhaps with
+ * mango_object_alloc) or initialised with mango_object_init.
+ * \param   obj         Object to be initialised.
+ * \param   initFunc    INitialiser function to be called on the object.
+ * \param   ...         Variable arguments passed to the initialiser function.
+ * \return The original object.
+ */
+MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...)
+{
+    if (initFunc != NULL)
+    {
+        va_list ap;
+        va_start(ap, initFunc);
+        initFunc(obj, ap);
+        va_end(ap);
+    }
+    return obj;
+}
 
 /**
  * Increases the reference count of the object and returns int.

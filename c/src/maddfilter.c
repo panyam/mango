@@ -40,9 +40,7 @@ int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
  */
 MangoFilter *mango_addfilter_new(const MangoString *name, ...)
 {
-    MangoFilter *filter     = ZNEW(MangoFilter);
-    filter->__prototype__   = mango_addfilter_prototype();
-    filter->__refCount__    = 1;
+    MangoFilter *filter     = OBJ_ALLOC(MangoFilter, mango_addfilter_prototype());
     return filter;
 }
 

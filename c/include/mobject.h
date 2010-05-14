@@ -3,6 +3,7 @@
 #define __MANGO_OBJECT_H__
 
 #include "mfwddefs.h"
+#include <stdarg.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -93,12 +94,58 @@ struct MangoPrototype
  */
 DECLARE_CLASS(MangoObject, MangoPrototype);
 
-// CREATE_OBJECT(OBJ_CLASS, PROTO_CLASS);
+/**
+ * A function for initialising an object.
+ */
+typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
+
+/**
+ * Invokes an (quasi) object allocator.
+ */
+#define OBJ_ALLOC(OBJ_CLASS, proto)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), (MangoPrototype *)proto)
+
+/**
+ * Initialises a mango object's refcount and prototype.
+ */
+#define OBJ_INIT(obj, proto)   mango_object_init(obj, proto)
+
+/**
+ * Invokes an initialiser function on a mango object.
+ */
+#define OBJ_INIT_WITH_FUNC(OBJ, INIT_FUNC, ...)   mango_object_init_with_func(OBJ, INIT_FUNC, __VA_ARGS__)
+
+/**
+ * Invokes an (quasi) object allocator followed by an initialiser.
+ */
+#define OBJ_NEW(OBJ_CLASS, proto, initFunc)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), proto, initFunc)
 
 /**
  * Create a new prototype object of a given name.
  */
 extern MangoPrototype *mango_prototype_new(const char *name);
+
+/**
+ * Allocate an object of a given size with a prototype.
+ */
+extern MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto);
+
+/**
+ * Initialises an already created mango object.
+ * \param   obj     Object to be initialised.
+ * \param   proto   Object's prototype to be set as.
+ * \return the original object being initialised.
+ */
+extern MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto);
+
+/**
+ * An object initializer.  The object must be allocated first (perhaps with
+ * mango_object_alloc) or initialised with mango_object_init.
+ * \param   obj         Object to be initialised.
+ * \param   initFunc    INitialiser function to be called on the object.
+ * \param   ...         Variable arguments passed to the initialiser function.
+ * \return The original object.
+ */
+extern MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...);
 
 /**
  * Increases the reference count to an object.

@@ -41,9 +41,7 @@ MangoString *mango_rcstring_new(const char *value,
         mstable = mango_rcstring_table_default();
     if (length < 0)
         length = strlen(value);
-    MangoRCString *mstr = ZNEW(MangoRCString);
-    mstr->__prototype__ = mango_rcstring_prototype();
-    mstr->__refCount__  = 1;
+    MangoRCString *mstr = OBJ_ALLOC(MangoRCString, mango_rcstring_prototype());
     mstr->mstable       = mstable;
     mstr->internId      = mango_rcstring_table_find(mstable, value, length, true, 1);
     return (MangoString *)mstr;
