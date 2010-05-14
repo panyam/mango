@@ -2,11 +2,12 @@
 #ifndef __MANGO_FOR_TAG_NODE_H__
 #define __MANGO_FOR_TAG_NODE_H__
 
-#include "mfwddefs.h"
+#include "mnode.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /**
  * A tag for doing for loops.
@@ -16,8 +17,7 @@ extern "C" {
  * {% empty %}
  * {% endfor %}
  */
-typedef struct MangoForTagData
-{
+INHERIT_STRUCT(MangoForTagNode, MangoNode,
     // list of variables referred
     MangoList *items;
 
@@ -29,7 +29,8 @@ typedef struct MangoForTagData
      */
     MangoNode *childNodes;
     MangoNode *emptyNodes;
-} MangoForTagData;
+);
+typedef struct MangoForTagNode MangoForTagNode;
 
 /**
  * Context data for the for-tag during rendering.
@@ -52,14 +53,14 @@ typedef struct MangoForTagContext
  * Frees for-tag-node data.
  * \param   ftndata For-tag data to be deleted.
  */
-extern void mango_fortag_free(MangoForTagData *ftndata);
+extern void mango_fortag_free(MangoForTagNode *ftndata);
 
 /**
  * Adds a new variable to the list of "items" in the for-tag node.
  * \param   ftd     For tag to which an item is to be added.
  * \param   var     Variable to be added.
  */
-extern void mango_fortag_add_item(MangoForTagData *ftd, MangoVariable *var);
+extern void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var);
 
 /**
  * Compares the data of for-tag nodes to see if they are equal.
@@ -67,7 +68,7 @@ extern void mango_fortag_add_item(MangoForTagData *ftd, MangoVariable *var);
  * \param   ftd2    Second for-tag data in comparison.
  * \return true if the two objects are recursively equal, false otherwise.
  */
-extern BOOL mango_fortags_are_equal(const MangoForTagData *ftd1, const MangoForTagData *ftd2);
+extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode *ftd2);
 
 /**
  * Parse the list of items before the "in".
@@ -77,7 +78,7 @@ extern BOOL mango_fortags_are_equal(const MangoForTagData *ftd1, const MangoForT
  *
  * \returns true if successful, false otherwise.
  */
-extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd,
+extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
                                          MangoParserContext *ctx,
                                          MangoError **error);
 
@@ -93,7 +94,7 @@ extern BOOL mango_fortag_parse_item_list(MangoForTagData *ftd,
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagContext *mango_fortagctx_new(MangoForTagData *       nodedata,
+extern MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
                                                MangoTemplateContext *  tmplCtx,
                                                MangoNodeRenderContext *topCtx);
 

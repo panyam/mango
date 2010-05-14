@@ -13,10 +13,7 @@ typedef MangoString *(*MangoStringFactoryNewStringFunc)(MangoStringFactory *fact
 typedef MangoString *(*MangoStringFactoryFromBufferFunc)(MangoStringFactory *factory, const MangoStringBuffer *buffer);
 typedef void (*MangoStringFactoryFreeStringFunc)(MangoStringFactory *factory, MangoString *str);
 
-/**
- * A factory for creating strings.
- */
-DECLARE_CLASS(MangoStringFactory, MangoPrototype,
+INHERIT_STRUCT(MangoStringFactoryPrototype, MangoPrototype,
     /**
      * Creates a new string.
      */
@@ -32,6 +29,11 @@ DECLARE_CLASS(MangoStringFactory, MangoPrototype,
      */
     void (*freeStringFunc)(MangoStringFactory *factory, MangoString *str);
 );
+
+/**
+ * A factory for creating strings.
+ */
+DECLARE_CLASS(MangoStringFactory, MangoStringFactoryPrototype);
 
 /**
  * Frees a string factory.

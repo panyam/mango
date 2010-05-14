@@ -175,8 +175,8 @@ dep:
 ../bld/./ParserTests.o: ../include/mtemplateloader.h ../include/mtokenlists.h
 ../bld/./ParserTests.o: ../include/mutils.h ../include/mvalue.h
 ../bld/./ParserTests.o: ../include/mvarresolver.h ../include/mvarlibrary.h
-../bld/./ParserTests.o: ../include/mvarnode.h ../include/mstring2.h
-../bld/./ParserTests.o: stlinputsource.h ../include/maddfilter.h
+../bld/./ParserTests.o: ../include/mvarnode.h stlinputsource.h
+../bld/./ParserTests.o: ../include/maddfilter.h
 ../bld/./ResolverTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ResolverTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./ResolverTests.o: ../include/mclasses.h ../include/merror.h
@@ -228,6 +228,36 @@ dep:
 ../bld/./stlinputsource.o: ../include/mtokenlists.h ../include/mutils.h
 ../bld/./stlinputsource.o: ../include/mvalue.h ../include/mvarresolver.h
 ../bld/./stlinputsource.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./StringFactoryTests.o: ../include/mangopub.h ../include/marray.h
+../bld/./StringFactoryTests.o: ../include/mfwddefs.h ../include/mbintree.h
+../bld/./StringFactoryTests.o: ../include/mclasses.h ../include/merror.h
+../bld/./StringFactoryTests.o: ../include/mfilter.h ../include/mobject.h
+../bld/./StringFactoryTests.o: ../include/mvar.h ../include/mstring.h
+../bld/./StringFactoryTests.o: ../include/mfilterlibrary.h
+../bld/./StringFactoryTests.o: ../include/mfilternode.h
+../bld/./StringFactoryTests.o: ../include/mfreetext.h
+../bld/./StringFactoryTests.o: ../include/minputsource.h
+../bld/./StringFactoryTests.o: ../include/mlibrary.h ../include/mlist.h
+../bld/./StringFactoryTests.o: ../include/mmemutils.h ../include/mnode.h
+../bld/./StringFactoryTests.o: ../include/mnodelist.h
+../bld/./StringFactoryTests.o: ../include/mnoderenderer.h
+../bld/./StringFactoryTests.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./StringFactoryTests.o: ../include/mtoken.h
+../bld/./StringFactoryTests.o: ../include/mparsercontext.h
+../bld/./StringFactoryTests.o: ../include/mrcstring.h
+../bld/./StringFactoryTests.o: ../include/mrcstringtable.h
+../bld/./StringFactoryTests.o: ../include/mrcstringfactory.h
+../bld/./StringFactoryTests.o: ../include/mstringfactory.h
+../bld/./StringFactoryTests.o: ../include/msingletons.h
+../bld/./StringFactoryTests.o: ../include/mstringbuffer.h ../include/mtable.h
+../bld/./StringFactoryTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./StringFactoryTests.o: ../include/mtagparserlibrary.h
+../bld/./StringFactoryTests.o: ../include/mtemplatecontext.h
+../bld/./StringFactoryTests.o: ../include/mtemplateloader.h
+../bld/./StringFactoryTests.o: ../include/mtokenlists.h ../include/mutils.h
+../bld/./StringFactoryTests.o: ../include/mvalue.h ../include/mvarresolver.h
+../bld/./StringFactoryTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./StringFactoryTests.o: stlinputsource.h
 ../bld/./StringTableTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./StringTableTests.o: ../include/mfwddefs.h ../include/mbintree.h
 ../bld/./StringTableTests.o: ../include/mclasses.h ../include/merror.h

@@ -20,7 +20,7 @@ void mango_string_copy_to(const MangoString *mstr, MangoString *another)
  */
 MangoString *mango_string_copy(MangoString *mstr)
 {
-    MangoString *newstr = NEW(MangoString);
+    MangoString *newstr = OBJ_ALLOC(MangoString, MangoStringPrototype);
     mstr->__prototype__->copyFunc(mstr, newstr);
     return newstr;
 }
@@ -39,14 +39,6 @@ const char *mango_string_buffer(const MangoString *mstr)
 size_t mango_string_length(const MangoString *mstr)
 {
     return mstr->__prototype__->sizeFunc(mstr);
-}
-
-/**
- * Releases a string.
- */
-void mango_string_release(MangoString *str)
-{
-    mango_object_release((MangoObject *)str);
 }
 
 /**

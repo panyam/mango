@@ -3,14 +3,6 @@
 #include "mfilter.h"
 
 /**
- * Destroys a filter created with mango_filter_new.
- */
-void mango_filter_release(MangoFilter *filter)
-{
-    mango_object_release((MangoObject *)filter);
-}
-
-/**
  * Applies the filter on a value and returns the new value.
  * \param   filter      Filter being applied.
  * \param   input       Input value

@@ -1,7 +1,6 @@
 
 #include <UnitTest++.h>
 #include "mangopub.h"
-#include "mstring2.h"
 #include "stlinputsource.h"
 #include <vector>
 #include <sstream>
@@ -45,25 +44,6 @@ public:
 
     virtual ~ParserTestFixture()
     {
-        DeleteFixture();
-    }
-
-    MangoVariable *create_variable(const char *value,
-                                   bool isQuoted, bool isNum,
-                                   MangoVariable *next)
-    {
-        MangoString *varValue = mango_stringfactory_new_string(string_factory, value, -1);
-        MangoVariable *var = mango_variable_new(varValue, isQuoted, next);
-        var->isNumber = isNum;
-        if (isNum)
-        {
-            var->intValue = atoi(value);
-        }
-        return var;
-    }
-
-    void DeleteFixture()
-    {
         if (input_source != NULL)
         {
             if (input_source->inputStream != NULL)
@@ -89,6 +69,26 @@ public:
             delete loader;
             loader = NULL;
         }
+
+        if (string_factory != NULL)
+        {
+            // string_factory(mango_rcstringfactory_new())
+            string_factory = NULL;
+        }
+    }
+
+    MangoVariable *create_variable(const char *value,
+                                   bool isQuoted, bool isNum,
+                                   MangoVariable *next)
+    {
+        MangoString *varValue = mango_stringfactory_new_string(string_factory, value, -1);
+        MangoVariable *var = mango_variable_new(varValue, isQuoted, next);
+        var->isNumber = isNum;
+        if (isNum)
+        {
+            var->intValue = atoi(value);
+        }
+        return var;
     }
 
     /**
@@ -164,7 +164,6 @@ public:
 protected:
     void SetUpWithInputString(const std::string &input)
     {
-        DeleteFixture();
         input_string = input;
         input_source = new_stl_input_source(new std::istringstream(input));
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
@@ -173,6 +172,7 @@ protected:
     }
 };
 
+#if 0
 /**
  * Tests the creation of a parser.
  */
@@ -256,6 +256,8 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
                                             create_variable("d", false, false, NULL)))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
+
+#endif
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {

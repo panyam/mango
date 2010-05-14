@@ -2,11 +2,14 @@
 #ifndef __MANGO_ARRAY_H__
 #define __MANGO_ARRAY_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+INHERIT_STRUCT(MangoArrayPrototype, MangoPrototype,
+);
 
 /*
  * Array structures.

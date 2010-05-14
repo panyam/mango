@@ -10,7 +10,7 @@ extern "C" {
 
 INHERIT_STRUCT(MangoRCStringFactory, MangoStringFactory,
     MangoRCStringTable *mrcstable;
-    );
+);
 
 /**
  * Creates a new immutale string factory.

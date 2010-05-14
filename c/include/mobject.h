@@ -51,16 +51,23 @@ extern "C" {
     }
 
 
+#define DECLARE_PROTO_VARIABLE(VAR_CLASS_ID, VAR_TYPE, VAR_NAME, ...)       \
+    static VAR_TYPE VAR_NAME;                                               \
+    static BOOL initialised = false;                                        \
+    if (!initialised)                                                       \
+    {                                                                       \
+        mango_prototype_init((MangoProperty *)(&VAR_NAME), VAR_CLASS_ID);   \
+        __VA_ARGS__                                                         \
+        initialised = true;                                                 \
+    }                                                                       \
+    return &VAR_NAME;                                                       \
 
 /**
  * Set of Prototype related methods.
  */
-typedef void (*PrototypeIncRefFunc)(MangoObject *object);
-typedef void (*PrototypeDecRefFunc)(MangoObject *object);
 typedef void (*PrototypeDeallocFunc)(MangoObject *object);
 typedef BOOL (*PrototypeEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
 typedef int (*PrototypeCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
-typedef void (*PrototypeCopyFunc)(const MangoObject *src, MangoObject *dest);
 
 /**
  * Prototypes are the blueprints for objects.  Almost like classes.
@@ -112,17 +119,27 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Invokes an initialiser function on a mango object.
  */
-#define OBJ_INIT_WITH_FUNC(OBJ, INIT_FUNC, ...)   mango_object_init_with_func(OBJ, INIT_FUNC, __VA_ARGS__)
+#define OBJ_INIT_WITH_FUNC(OBJ, INIT_FUNC, ...)   mango_object_init_with_func(OBJ, INIT_FUNC __VA_ARGS__)
+
+/**
+ * Increase an object's reference count.
+ */
+#define OBJ_INCREF(obj) mango_object_incref((MangoObject *)obj)
+
+/**
+ * Decrease an object's reference count.
+ */
+#define OBJ_DECREF(obj) mango_object_decref((MangoObject *)obj)
 
 /**
  * Invokes an (quasi) object allocator followed by an initialiser.
  */
-#define OBJ_NEW(OBJ_CLASS, proto, initFunc)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), proto, initFunc)
+#define OBJ_NEW(OBJ_CLASS, proto, initFunc, ...)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), proto, initFunc __VA_ARGS__)
 
 /**
  * Create a new prototype object of a given name.
  */
-extern MangoPrototype *mango_prototype_new(const char *name);
+extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name);
 
 /**
  * Allocate an object of a given size with a prototype.
@@ -133,7 +150,7 @@ extern MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto);
  * Initialises an already created mango object.
  * \param   obj     Object to be initialised.
  * \param   proto   Object's prototype to be set as.
- * \return the original object being initialised.
+ * \return  Pointer to the same object to simplify copy semantics.
  */
 extern MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto);
 
@@ -143,23 +160,33 @@ extern MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto);
  * \param   obj         Object to be initialised.
  * \param   initFunc    INitialiser function to be called on the object.
  * \param   ...         Variable arguments passed to the initialiser function.
- * \return The original object.
+ * \return  Pointer to the same object to simplify copy semantics.
  */
 extern MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...);
+
+/**
+ * Clones an object.
+ * \param   obj     Object that needs to be cloned.
+ * \return  Returns a new object that is a clone of the original object.
+ * The semantics of the cloning are that the returned object has its
+ * reference count set to 1 and the original object's reference count is
+ * not changed.
+ */
+// extern MangoObject *mango_object_clone(MangoObject *obj);
 
 /**
  * Increases the reference count to an object.
  * \param   obj Object whose reference count is to be increased.
  * \return  Pointer to the same object to simplify copy semantics.
  */
-extern MangoObject *mango_object_copy(MangoObject *obj);
+extern MangoObject *mango_object_incref(MangoObject *obj);
 
 /**
  * Releases a reference to the object.
  * \returns false if the object's reference count has reached 0 and has
  * been deleted and is no longer valid, true otherwise.
  */
-extern BOOL mango_object_release(MangoObject *obj);
+extern BOOL mango_object_decref(MangoObject *obj);
 
 /**
  * Compares two objects to see if they are equal.

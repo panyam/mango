@@ -6,14 +6,20 @@
 #include "mrcstringtable.h"
 #include "mmemutils.h"
 
-MangoPrototype *mango_rcstringfactory_prototype()
+MangoStringFactoryPrototype *mango_rcstringfactory_prototype()
 {
-    static MangoPrototype *MRCSFACTORY_PROTOTYPE = NULL;
-    if (MRCSFACTORY_PROTOTYPE == NULL)
+    static MangoStringFactoryPrototype MRCSFACTORY_PROTOTYPE;
+    static BOOL initialised = false;
+    if (!initialised)
     {
-        MRCSFACTORY_PROTOTYPE = ZNEW(MangoPrototype);
+        mango_prototype_init((MangoPrototype *)(&MRCSFACTORY_PROTOTYPE), "MangoRCStringFactory");
+
+        MRCSFACTORY_PROTOTYPE.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
+        MRCSFACTORY_PROTOTYPE.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
+        MRCSFACTORY_PROTOTYPE.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
+        initialised = true;
     }
-    return MRCSFACTORY_PROTOTYPE;
+    return &MRCSFACTORY_PROTOTYPE;
 }
 
 /**
@@ -22,13 +28,9 @@ MangoPrototype *mango_rcstringfactory_prototype()
  */
 MangoStringFactory *mango_rcstringfactory_new()
 {
-    MangoRCStringFactory *msfactory = ZNEW(MangoRCStringFactory);
+    MangoRCStringFactory *msfactory = OBJ_ALLOC(MangoRCStringFactory, mango_rcstringfactory_prototype());
     msfactory->mrcstable            = mango_rcstring_table_new();
-    ((MangoStringFactory *)msfactory)->__prototype__    = mango_rcstringfactory_prototype();
-    ((MangoStringFactory *)msfactory)->newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
-    ((MangoStringFactory *)msfactory)->fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
-    ((MangoStringFactory *)msfactory)->freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
-    return ((MangoStringFactory *)msfactory);
+    return (MangoStringFactory *)msfactory;
 }
 
 /**

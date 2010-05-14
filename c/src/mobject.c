@@ -3,15 +3,28 @@
 #include "mmemutils.h"
 #include "mclasses.h"
 
-/**
- * Creates a new prototype object with a given name.
- * \param   name    Name of the prototype.
- * \return  The new prototype instance.
- */
-MangoPrototype *mango_prototype_new(const char *name)
+BOOL mango_prototype_default_equals(const MangoObject *obj1, const MangoObject *obj2)
 {
-    MangoPrototype *proto = ZNEW(MangoPrototype);
-    proto->name = strdup(name == NULL ? "" : name);
+    return obj1 == obj2;
+}
+
+int mango_prototype_default_compare(const MangoObject *obj1, const MangoObject *obj2)
+{
+    return obj1 - obj2;
+}
+
+/**
+ * Initialises a prototype object with a name and default methods.
+ * \param   proto   Prototype type object to initialise.
+ * \param   name    Name of the prototype.
+ * \return  The initialised prototype instance.
+ */
+MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name)
+{
+    proto->name         = strdup(name == NULL ? "" : name);
+    proto->deallocFunc  = NULL;
+    proto->equalsFunc   = mango_prototype_default_equals;
+    proto->compareFunc  = mango_prototype_default_compare;
     return proto;
 }
 
@@ -65,7 +78,7 @@ MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFu
 /**
  * Increases the reference count of the object and returns int.
  */
-MangoObject *mango_object_copy(MangoObject *obj)
+MangoObject *mango_object_incref(MangoObject *obj)
 {
     obj->__refCount__++;
     return obj;
@@ -75,7 +88,7 @@ MangoObject *mango_object_copy(MangoObject *obj)
  * Decreases the reference count of the object and deletes it if the
  * reference count reaches 0.
  */
-BOOL mango_object_release(MangoObject *obj)
+BOOL mango_object_decref(MangoObject *obj)
 {
     obj->__refCount__--;
     if (obj->__refCount__ == 0)

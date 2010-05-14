@@ -61,7 +61,7 @@ void mango_library_register(MangoLibrary *library, const MangoString *name, void
     if (node == NULL)
     {
         MangoLibraryEntry *newentry = NEW(MangoLibraryEntry);
-        newentry->name  = mango_string_copy(name);
+        newentry->name  = OBJ_INCREF(name);
         newentry->entry = entry;
         mango_bintree_insert(library->entries, newentry, (CompareFunc)libentry_cmp);
     }

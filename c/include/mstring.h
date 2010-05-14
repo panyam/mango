@@ -33,9 +33,9 @@ INHERIT_STRUCT(MangoStringPrototype, MangoPrototype,
     size_t (*sizeFunc)(const MangoString *str);
 
     /**
-     * Copies a string to another.
+     * Method to return the character at a given index.
      */
-    void (*copyFunc)(const MangoString *src, MangoString *dest);
+    int (*charAtFunc)(const MangoString *str, unsigned index);
 );
 
 /**
@@ -59,11 +59,6 @@ extern const char *mango_string_buffer(const MangoString *mstr);
  * Gets the length of the string.
  */
 extern size_t mango_string_length(const MangoString *mstr);
-
-/**
- * Releases a string.
- */
-extern void mango_string_release(MangoString *str);
 
 /**
  * Compares two strings to see if they are equal.

@@ -7,12 +7,10 @@
 /**
  * Creates a new mango node list.
  */
-MangoNode *mango_freetext_new(MangoString *value)
+MangoFreeTextNode *mango_freetext_init(MangoFreeTextNode *mftNode, MangoString *value);
 {
-    MangoNode *node         = mango_node_new(value);
-    node->nodeClass         = mango_class_for_name("FreeText", true);
-    node->deleteNodeFunc    = (DeleteFunc)mango_object_release;
-    node->nodeEqualsFunc    = (EqualsFunc)mango_objects_are_equal;
-    return node;
+    mango_node_init(mftNode, NULL);
+    mftNode->value = OBJ_INCREF(value);
+    return mftNode;
 }
 

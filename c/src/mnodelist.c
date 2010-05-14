@@ -5,30 +5,52 @@
 #include "mlist.h"
 
 /**
+ * Get the size of the node list.
+ * \param   nodelist    The node list whose size is to be returned.
+ * \return Number of child nodes in the nodelist.
+ */
+unsigned mango_nodelist_size(MangoNodeList *nodelist)
+{
+    return mango_list_size(nodelist->nodes);
+}
+
+/**
+ * Get the child at a given index.
+ * \param   nodelist    The node list whose child is to be extracted.
+ * \param   index       Index at which the child is to be extracted.
+ * \return A MangoNode at the given index.
+ */
+MangoNode *mango_nodelist_child_at(MangoNodeList *nodelist, unsigned index)
+{
+    return mango_list_item_at(nodelist->nodes, index);
+}
+
+/**
+ * The prototype for mango node lists.
+ */
+MangoNodePrototype *mango_nodelist_prototype()
+{
+    DECLARE_PROTO_INITIALISER("MangoNodeList", MangoNodePrototype, nodeListPrototype,
+        nodePrototype.nodeCountFunc     = mango_nodelist_size;
+        nodePrototype.getChildNodeFunc  = mango_nodelist_child_at;
+    );
+}
+
+/**
  * Creates a new mango node list.
  */
-MangoNode *mango_nodelist_new(MangoList *nodes)
+MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, MangoNodePrototype *prototype)
 {
-    MangoNode *node             = mango_node_new(nodes);
-    node->nodeClass             = mango_class_for_name("NodeList", true);
-    node->deleteNodeFunc        = (DeleteFunc)mango_list_free;
-    node->nodeCountFunc         = (NodeCountCallback)mango_list_size;
-    node->getChildNodeFunc      = (GetChildNodeCallback)mango_list_item_at;
-
-    /*
-    node->createNodeContextData = default_create_node_context_data;
-    node->deleteNodeContextData = default_delete_node_context_data;
-    node->equalsNode            = default_node_compare;
-    node->renderBitMore         = default_render_bit_more;
-    node->childExited           = default_child_exited;
-    */
-    return node;
+    mango_node_init((MangoNode *)nodelist, prototype);
+    // ((MangoObject *)nodelist)->__prototype__    = mango_nodelist_prototype();
+    nodelist->nodes                             = nodes;
+    return nodelist;
 }
 
 /**
  * Create a node list from a variable number of node arguments.
  */
-MangoNode *mango_nodelist_from_nodes(int numNodes, ...)
+MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
 {
     MangoList *nodes = mango_list_new();
 

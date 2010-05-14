@@ -2,16 +2,20 @@
 #ifndef __MANGO_FREE_TEXT_H__
 #define __MANGO_FREE_TEXT_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+INHERIT_STRUCT(MangoFreeTextNode, MangoNode,
+    MangoString *value;
+);
+
 /**
- * Creates a new mango node list.
+ * Initialises a free text node.
  */
-extern MangoNode *mango_freetext_new(MangoString *value);
+extern MangoFreeTextNode *mango_freetext_init(MangoFreeTextNode *mftNode, MangoString *value);
 
 #ifdef __cplusplus
 }

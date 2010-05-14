@@ -11,7 +11,7 @@ extern "C" {
 /**
  * Immutable reference counted strings.
  */
-DECLARE_CLASS(MangoRCString, MangoStringPrototype,
+INHERIT_STRUCT(MangoRCString, MangoString,
     /**
      * The Intern ID.
      */

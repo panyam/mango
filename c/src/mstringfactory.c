@@ -8,7 +8,7 @@ MangoString *mango_stringfactory_new_string(MangoStringFactory *factory,
                                             const char *buffer,
                                             int length)
 {
-    return factory->newStringFunc(factory, buffer, length);
+    return factory->__prototype__->newStringFunc(factory, buffer, length);
 }
 
 
@@ -18,7 +18,7 @@ MangoString *mango_stringfactory_new_string(MangoStringFactory *factory,
 MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
                                              const MangoStringBuffer *buffer)
 {
-    return factory->fromBufferFunc(factory, buffer);
+    return factory->__prototype__->fromBufferFunc(factory, buffer);
 }
 
 /**
@@ -26,8 +26,8 @@ MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
  */
 void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str)
 {
-    if (factory->freeStringFunc != NULL)
-        factory->freeStringFunc(factory, str);
+    if (factory->__prototype__->freeStringFunc != NULL)
+        factory->__prototype__->freeStringFunc(factory, str);
 }
 
 
