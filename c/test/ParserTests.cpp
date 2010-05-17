@@ -30,7 +30,7 @@ public:
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tagparser_library_singleton()),
-        string_factory(mango_rcstringfactory_new())
+        string_factory((MangoStringFactory *)mango_rcstringfactory_new())
     {
         parser_context.filterlib    = filterLibrary;
         parser_context.taglib       = tagLibrary;
@@ -109,7 +109,7 @@ public:
             {
                 MangoNode *expectedNode = va_arg(ap, MangoNode *);
                 MangoNode *childNode = mango_node_childat(node, i);
-                CHECK(mango_nodes_are_equal(expectedNode, childNode));
+                CHECK(OBJ_EQUALS(expectedNode, childNode));
             }
             va_end(ap);
         }
@@ -119,7 +119,7 @@ public:
             va_start(ap, numNodes);
             MangoNode *expectedNode = va_arg(ap, MangoNode *);
             CHECK_EQUAL(numNodes, 1);
-            CHECK(mango_nodes_are_equal(expectedNode, node));
+            CHECK(OBJ_EQUALS(expectedNode, node));
             va_end(ap);
         }
         else
@@ -137,7 +137,7 @@ public:
                 CHECK(false);
             }
         }
-        mango_node_free(node);
+        OBJ_DECREF(node);
         if (error != NULL)
         {
             printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
@@ -151,7 +151,7 @@ public:
         MangoError *error   = NULL;
 		MangoNode *node     = mango_parser_parse(&parser_context, &error);
         if (node != NULL)
-            mango_node_free(node);
+            OBJ_DECREF(node);
         CHECK(error != NULL);
         if (error != NULL)
         {
@@ -182,7 +182,7 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
     MangoError *error = NULL;
     MangoNode * nodeList = mango_parser_parse(&parser_context, &error);
     CHECK(NULL == nodeList);
-    mango_node_free(nodeList);
+    OBJ_DECREF(nodeList);
     if (error != NULL)
     {
         printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
@@ -256,8 +256,6 @@ TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
                                             create_variable("d", false, false, NULL)))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
-
-#endif
 
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
@@ -363,6 +361,8 @@ TEST_FIXTURE(ParserTestFixture, TestSingleUnclosedTag)
     SetUpWithInputString("{% for a in listofas %}");
     CheckParsedNodeForException(-1, "End nodes were not found");
 }
+#endif
+
 
 #if 0
 TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)

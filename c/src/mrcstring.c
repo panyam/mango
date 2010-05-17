@@ -8,19 +8,14 @@
 
 MangoStringPrototype *mango_rcstring_prototype()
 {
-    static BOOL initialised = false;
-    static MangoStringPrototype RCSTRING_PROTOTYPE;
-    if (!initialised)
-    {
-        RCSTRING_PROTOTYPE.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
-        RCSTRING_PROTOTYPE.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
+    DECLARE_PROTO_VARIABLE("RCString", MangoStringPrototype, stringProto,
+        stringProto.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
+        stringProto.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
         // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->deallocFunc = (PrototypeDeallocFunc)mango_rcstring_dealloc;
-        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
-        ((MangoPrototype *)&RCSTRING_PROTOTYPE)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
-        initialised = true;
-    }
-    return &RCSTRING_PROTOTYPE;
+        ((MangoPrototype *)&stringProto)->deallocFunc = (PrototypeDeallocFunc)mango_rcstring_dealloc;
+        ((MangoPrototype *)&stringProto)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
+        ((MangoPrototype *)&stringProto)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+    );
 }
 
 /**

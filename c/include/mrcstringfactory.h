@@ -16,7 +16,12 @@ INHERIT_STRUCT(MangoRCStringFactory, MangoStringFactory,
  * Creates a new immutale string factory.
  * \return  A new instance of the immutable string.
  */
-extern MangoStringFactory *mango_rcstringfactory_new();
+extern MangoRCStringFactory *mango_rcstringfactory_new();
+
+/**
+ * Initialises the string factory.
+ */
+extern MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactory);
 
 /**
  * Creates a new string.
@@ -36,6 +41,11 @@ extern MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcs
  */
 extern void mango_rcstringfactory_free_string(MangoRCStringFactory *factory,
                                               MangoRCString *string);
+
+/**
+ * String factory's dealloc method called when refcount reaches 0.
+ */
+extern void mango_rcstringfactory_dealloc(MangoRCStringFactory *factory);
 
 #ifdef __cplusplus
 }

@@ -115,7 +115,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Initialises a mango object's refcount and prototype.
  */
-#define OBJ_INIT(obj, proto)   mango_object_init(obj, proto)
+#define OBJ_INIT(obj, proto)   mango_object_init((MangoObject *)obj, (MangoPrototype *)proto)
 
 /**
  * Invokes an initialiser function on a mango object.
@@ -133,9 +133,9 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 #define OBJ_DECREF(obj) mango_object_decref((MangoObject *)obj)
 
 /**
- * Invokes an (quasi) object allocator followed by an initialiser.
+ * Compares two MangoObject derived objects.
  */
-#define OBJ_NEW(OBJ_CLASS, proto, initFunc, ...)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), proto, initFunc __VA_ARGS__)
+#define OBJ_EQUALS(obj1, obj2)  mango_objects_are_equal((MangoObject *)obj1, (MangoObject *)obj2)
 
 /**
  * Create a new prototype object of a given name.

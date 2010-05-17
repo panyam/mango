@@ -32,7 +32,7 @@ public:
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tagparser_library_singleton()),
-        string_factory(mango_rcstringfactory_new())
+        string_factory((MangoStringFactory *)mango_rcstringfactory_new())
     {
         parser_context.filterlib    = filterLibrary;
         parser_context.taglib       = tagLibrary;

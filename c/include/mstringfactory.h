@@ -36,9 +36,9 @@ INHERIT_STRUCT(MangoStringFactoryPrototype, MangoPrototype,
 DECLARE_CLASS(MangoStringFactory, MangoStringFactoryPrototype);
 
 /**
- * Frees a string factory.
+ * String factory's dealloc method called when refcount reaches 0.
  */
-extern void mango_stringfactory_release(MangoStringFactory *factory);
+extern void mango_stringfactory_dealloc(MangoStringFactory *factory);
 
 /**
  * Creates a new string.

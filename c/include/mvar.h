@@ -8,8 +8,12 @@
 extern "C" {
 #endif
 
-struct MangoVariable
-{
+INHERIT_STRUCT(MangoVariablePrototype, MangoPrototype,
+    //! Child specific setter of the next variable
+    MangoVariable *(*setNextVariable)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
+);
+
+DECLARE_CLASS(MangoVariable, MangoVariablePrototype,
     //! String value of the variable.
     MangoString *   value;
 
@@ -24,12 +28,6 @@ struct MangoVariable
     
     //! Next variable section of the variable (ie a.b.c)
     MangoVariable * next;
-
-    //! Extendible data.
-    void *          varData;
-
-    //! Child specific setter of the next variable
-    MangoVariable *(*setNextVariable)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
 };
 
 /**
@@ -42,10 +40,20 @@ struct MangoVariable
 extern MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariable *next);
 
 /**
- * Destroys a mango variable.
- * \param   mstr        Variable to be destroyed.
+ * Initialises a mango variable.
+ * \param   mvar        Variable to be initialised.
+ * \param   mstr        Value of the variable.
+ * \param   isQuoted    Whether the value is quoted or not.
+ * \param   next        Next variable in the chain.
+ * \return  A new MangoVariable instance.
  */
-extern void mango_variable_free(MangoVariable *mvar);
+extern MangoVariable *mango_variable_init(MangoVariable *mvar, MangoString *mstr, BOOL isQuoted, MangoVariable *next);
+
+/**
+ * Deallocs a mango variable when refcount reaches 0.
+ * \param   mvar        Variable to be dealloced.
+ */
+extern void mango_variable_dealloc(MangoVariable *mvar);
 
 /**
  * Sets the new value of a variable.

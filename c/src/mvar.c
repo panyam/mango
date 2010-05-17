@@ -13,6 +13,19 @@
 #include "mutils.h"
 #include "msingletons.h"
 
+/**
+ * The prototype for the MangoVariable.
+ */
+MangoVariablePrototype *mango_variable_prototype()
+{
+    DECLARE_PROTO_VARIABLE("Variable", MangoVariablePrototype, variableProto,
+        variableProto.setNextFunc = mango_variable_set_next;
+        // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
+        ((MangoPrototype *)&variableProto)->deallocFunc = (PrototypeDeallocFunc)mango_variable_dealloc;
+        ((MangoPrototype *)&variableProto)->equalsFunc  = (PrototypeEqualsFunc)mango_variables_are_equal;
+        // ((MangoPrototype *)&variableProto)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+    );
+}
 
 /**
  * Creates a new mango variable.
@@ -23,11 +36,24 @@
  */
 MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariable *next)
 {
-    MangoVariable *mvar     = NEW(MangoVariable);
+    MangoVariable *mvar = NEW(MangoVariable);
+    return mango_variable_init(mvar, mstr, isQuoted, next);
+}
+
+/**
+ * Initialises a mango variable.
+ * \param   mvar        Variable to be initialised.
+ * \param   mstr        Value of the variable.
+ * \param   isQuoted    Whether the value is quoted or not.
+ * \param   next        Next variable in the chain.
+ * \return  The same variable.
+ */
+MangoVariable *mango_variable_init(MangoVariable *mvar, MangoString *mstr, BOOL isQuoted, MangoVariable *next)
+{
+    OBJ_INIT(mvar, mango_variable_prototype());
     mvar->next              = next;
     mvar->varData           = NULL;
     bzero(&mvar->value, sizeof(mvar->value));
-    mvar->setNextVariable   = mango_variable_set_next;
     mango_variable_set_value(mvar, mstr, isQuoted);
     return mvar;
 }

@@ -9,6 +9,11 @@
 
 /**
  * A suite for testing out the MangoObject related methods.
+ * Test the following:
+ *
+ * 1. Inheritance
+ * 2. Incref, Decref, Release architecture
+ * 3. Prototypes
  */
 class ObjectTestFixture
 {

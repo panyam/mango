@@ -8,29 +8,32 @@
 
 MangoStringFactoryPrototype *mango_rcstringfactory_prototype()
 {
-    static MangoStringFactoryPrototype MRCSFACTORY_PROTOTYPE;
-    static BOOL initialised = false;
-    if (!initialised)
-    {
-        mango_prototype_init((MangoPrototype *)(&MRCSFACTORY_PROTOTYPE), "MangoRCStringFactory");
-
-        MRCSFACTORY_PROTOTYPE.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
-        MRCSFACTORY_PROTOTYPE.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
-        MRCSFACTORY_PROTOTYPE.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
-        initialised = true;
-    }
-    return &MRCSFACTORY_PROTOTYPE;
+    DECLARE_PROTO_VARIABLE("RCStringFactory", MangoStringFactoryPrototype, rcsfactoryProto,
+        rcsfactoryProto.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
+        rcsfactoryProto.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
+        rcsfactoryProto.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
+        ((MangoPrototype *)&rcsfactoryProto)->deallocFunc = (PrototypeDeallocFunc)mango_rcstringfactory_dealloc;
+    );
 }
 
 /**
  * Creates a new immutale string factory.
  * \return  A new instance of the immutable string.
  */
-MangoStringFactory *mango_rcstringfactory_new()
+MangoRCStringFactory *mango_rcstringfactory_new()
 {
-    MangoRCStringFactory *msfactory = OBJ_ALLOC(MangoRCStringFactory, mango_rcstringfactory_prototype());
-    msfactory->mrcstable            = mango_rcstring_table_new();
-    return (MangoStringFactory *)msfactory;
+    MangoRCStringFactory *msfactory = NEW(MangoRCStringFactory);
+    return mango_rcstringfactory_init(msfactory);
+}
+
+/**
+ * Initialises the string factory.
+ */
+MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactory)
+{
+    OBJ_INIT(rcsfactory, mango_rcstringfactory_prototype());
+    msfactory->mrcstable    = mango_rcstring_table_new();
+    return rcsfactory;
 }
 
 /**
@@ -56,5 +59,13 @@ MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory
  */
 void mango_rcstringfactory_free_string(MangoRCStringFactory *factory, MangoRCString *string)
 {
+}
+
+/**
+ * String factory's dealloc method called when refcount reaches 0.
+ */
+void mango_rcstringfactory_dealloc(MangoRCStringFactory *factory)
+{
+    mango_stringfactory_dealloc((MangoStringFactory *)factory);
 }
 

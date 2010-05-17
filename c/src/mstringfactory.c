@@ -30,11 +30,11 @@ void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *s
         factory->__prototype__->freeStringFunc(factory, str);
 }
 
-
 /**
- * Frees a string factory.
+ * String factory's dealloc method called when refcount reaches 0.
  */
-void mango_stringfactory_release(MangoStringFactory *factory)
+void mango_stringfactory_dealloc(MangoStringFactory *factory)
 {
-    mango_object_release((MangoObject *)factory);
+    mango_object_dealloc((MangoObject *)factory);
 }
+

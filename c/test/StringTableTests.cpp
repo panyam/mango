@@ -15,7 +15,7 @@ protected:
 
 public:
     RCStringTableTestFixture() :
-        string_factory(mango_rcstringfactory_new())
+        string_factory((MangoStringFactory *)mango_rcstringfactory_new())
     {
         // mstable = mango_rcstring_table_new();
         mstable = mango_rcstring_table_default();
@@ -37,7 +37,7 @@ public:
 
         if (string_factory != NULL)
         {
-            mango_stringfactory_release(string_factory);
+            OBJ_DECREF(string_factory);
             string_factory = NULL;
         }
     }
@@ -155,8 +155,8 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
     const MangoRCStringData *msdata2 = mango_rcstring_table_get(mstable, id2);
     CHECK_EQUAL(msdata1, msdata2);
     CHECK_EQUAL(2, msdata1->refCount);
-    mango_string_release(mstr1);
-    mango_string_release(mstr2);
+    OBJ_DECREF(mstr1);
+    OBJ_DECREF(mstr2);
 }
 
 /**
@@ -170,8 +170,8 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringFree)
     MangoRCString *rcstr1 = (MangoRCString *)mstr1;
     const MangoRCStringData *msdata = mango_rcstring_table_get(mstable, rcstr1->internId);
     CHECK_EQUAL(msdata->refCount, 2);
-    mango_string_release(mstr1);
+    OBJ_DECREF(mstr1);
     CHECK_EQUAL(msdata->refCount, 1);
-    mango_string_release(mstr2);
+    OBJ_DECREF(mstr2);
 }
 
