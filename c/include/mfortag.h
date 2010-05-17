@@ -50,10 +50,15 @@ typedef struct MangoForTagContext
 ///////////////////////////////////////////////////////////////////////////
 
 /**
+ * Returns the prototype for the mango fortag node.
+ */
+extern MangoNodePrototype *mango_fortag_prototype();
+
+/**
  * Frees for-tag-node data.
  * \param   ftndata For-tag data to be deleted.
  */
-extern void mango_fortag_free(MangoForTagNode *ftndata);
+extern void mango_fortag_dealloc(MangoForTagNode *ftndata);
 
 /**
  * Adds a new variable to the list of "items" in the for-tag node.

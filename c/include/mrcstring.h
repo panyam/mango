@@ -53,7 +53,7 @@ extern void mango_rcstring_copy(const MangoRCString *source, MangoString *anothe
  *
  * \param   mstr String to be destroyed.
  */
-extern void mango_rcstring_release(MangoRCString *mstr);
+extern void mango_rcstring_dealloc(MangoRCString *mstr);
 
 /**
  * Compares the string contents with another buffer.

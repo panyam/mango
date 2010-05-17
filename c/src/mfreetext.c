@@ -11,7 +11,9 @@ MangoNodePrototype *mango_freetext_prototype()
     DECLARE_PROTO_VARIABLE("FreeText", MangoNodePrototype, freetextPrototype,
         freetextPrototype.nodeCountFunc     = NULL;
         freetextPrototype.getChildNodeFunc  = NULL;
-        ((MangoPrototype *)&freetextPrototype)->deallocFunc = mango_freetext_dealloc;
+        ((MangoPrototype *)&freetextPrototype)->deallocFunc = (PrototypeDeallocFunc)mango_freetext_dealloc;
+        ((MangoPrototype *)&freetextPrototype)->equalsFunc  = (PrototypeEqualsFunc)mango_freetext_are_equal;
+        ((MangoPrototype *)&freetextPrototype)->compareFunc = (PrototypeCompareFunc)mango_freetext_compare;
     );
 }
 
@@ -39,9 +41,25 @@ MangoFreeTextNode *mango_freetext_init(MangoFreeTextNode *mftNode, MangoString *
  */
 void mango_freetext_dealloc(MangoFreeTextNode *mftnode)
 {
-    mango_object_release(mftnode->value);
+    OBJ_DECREF(mftnode->value);
 
     // call super class dealloc
     mango_node_dealloc((MangoNode *)mftnode);
+}
+
+/**
+ * Tells if two free text nodes are equal.
+ */
+BOOL mango_freetext_are_equal(const MangoFreeTextNode *mftn1, const MangoFreeTextNode *mftn2)
+{
+    return mango_objects_are_equal((const MangoObject *)mftn1->value, (const MangoObject *)mftn2->value);
+}
+
+/**
+ * Compares two free text nodes.
+ */
+int mango_freetext_compare(const MangoFreeTextNode *mftn1, const MangoFreeTextNode *mftn2)
+{
+    return mango_object_compare((const MangoObject *)mftn1->value, (const MangoObject *)mftn2->value);
 }
 

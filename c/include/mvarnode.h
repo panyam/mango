@@ -72,6 +72,11 @@ extern void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode
  */
 extern void mango_varnode_dealloc(MangoVarNode *varnode);
 
+/**
+ * Compares two mango varnode objects.
+ */
+extern BOOL mango_varnode_are_equal(const MangoVarNode *mvn1, const MangoVarNode *mvn2);
+
 #ifdef __cplusplus
 }
 #endif

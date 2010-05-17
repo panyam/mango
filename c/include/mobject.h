@@ -130,7 +130,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Decrease an object's reference count.
  */
-#define OBJ_DECREF(obj) (__typeof__(obj))mango_object_decref((MangoObject *)obj)
+#define OBJ_DECREF(obj) mango_object_decref((MangoObject *)obj)
 
 /**
  * Invokes an (quasi) object allocator followed by an initialiser.

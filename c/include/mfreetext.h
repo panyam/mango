@@ -23,6 +23,16 @@ extern MangoFreeTextNode *mango_freetext_new(MangoString *value);
 extern MangoFreeTextNode *mango_freetext_init(MangoFreeTextNode *mftNode, MangoString *value);
 
 /**
+ * Tells if two free text nodes are equal.
+ */
+extern BOOL mango_freetext_are_equal(const MangoFreeTextNode *mftn1, const MangoFreeTextNode *mftn2);
+
+/**
+ * Compares two free text nodes.
+ */
+extern int mango_freetext_compare(const MangoFreeTextNode *mftn1, const MangoFreeTextNode *mftn2);
+
+/**
  * Dealloc's a freetext node.
  */
 extern void mango_freetext_dealloc(MangoFreeTextNode *mftnode);

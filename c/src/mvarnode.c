@@ -17,7 +17,8 @@ MangoNodePrototype *mango_varnode_prototype()
     DECLARE_PROTO_VARIABLE("VarNode", MangoNodePrototype, varnodePrototype,
         varnodePrototype.nodeCountFunc      = NULL;
         varnodePrototype.getChildNodeFunc   = NULL;
-        ((MangoPrototype *)&varnodePrototype)->deallocFunc = mango_varnode_dealloc;
+        ((MangoPrototype *)&varnodePrototype)->deallocFunc  = (PrototypeDeallocFunc)mango_varnode_dealloc;
+        ((MangoPrototype *)&varnodePrototype)->equalsFunc   = (PrototypeEqualsFunc)mango_varnode_are_equal;
     );
 }
 
@@ -46,18 +47,6 @@ MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, Man
     varnode->variable       = mvar;
     varnode->filterNodes    = filters;
     return varnode;
-}
-
-/**
- * Compares and checks if two MangoVarNode objects are equal.
- *
- * \param data1     First object to be compared with.
- * \param data2     Second object to be compared to.
- */
-BOOL mango_varnodedata_equals(MangoVarNode *data1, MangoVarNode *data2)
-{
-    return mango_variables_are_equal(data1->variable, data2->variable) &&
-            mango_lists_are_equal(data1->filterNodes, data2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
 }
 
 /**
@@ -183,4 +172,16 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
     mango_node_dealloc((MangoNode *)varnode);
 }
 
+
+/**
+ * Compares and checks if two MangoVarNode objects are equal.
+ *
+ * \param data1     First object to be compared with.
+ * \param data2     Second object to be compared to.
+ */
+BOOL mango_varnode_are_equal(const MangoVarNode *mvn1, const MangoVarNode *mvn2)
+{
+    return mango_variables_are_equal(mvn1->variable, mvn2->variable) &&
+            mango_lists_are_equal(mvn1->filterNodes, mvn2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
+}
 
