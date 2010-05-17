@@ -46,8 +46,7 @@ extern MangoString *mango_rcstring_new(const char *value,
  * \param   source  String to be copied.
  * \param   another Destination string to be copied to.
  */
-extern void mango_rcstring_copy(const MangoRCString *source,
-                                MangoString *another);
+extern void mango_rcstring_copy(const MangoRCString *source, MangoString *another);
 
 /**
  * Destroys a string.

@@ -10,7 +10,9 @@
  */
 void mango_string_copy_to(const MangoString *mstr, MangoString *another)
 {
+    /*
     mstr->__prototype__->copyFunc(mstr, another);
+    */
 }
 
 /**
@@ -20,9 +22,12 @@ void mango_string_copy_to(const MangoString *mstr, MangoString *another)
  */
 MangoString *mango_string_copy(MangoString *mstr)
 {
+    /*
     MangoString *newstr = OBJ_ALLOC(MangoString, MangoStringPrototype);
     mstr->__prototype__->copyFunc(mstr, newstr);
     return newstr;
+    */
+    return NULL;
 }
 
 /**

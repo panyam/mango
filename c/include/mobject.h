@@ -3,6 +3,7 @@
 #define __MANGO_OBJECT_H__
 
 #include "mfwddefs.h"
+#include "mmemutils.h"
 #include <stdarg.h>
 
 #ifdef __cplusplus
@@ -56,7 +57,7 @@ extern "C" {
     static BOOL initialised = false;                                        \
     if (!initialised)                                                       \
     {                                                                       \
-        mango_prototype_init((MangoProperty *)(&VAR_NAME), VAR_CLASS_ID);   \
+        mango_prototype_init((MangoPrototype *)(&VAR_NAME), VAR_CLASS_ID);  \
         __VA_ARGS__                                                         \
         initialised = true;                                                 \
     }                                                                       \
@@ -124,12 +125,12 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Increase an object's reference count.
  */
-#define OBJ_INCREF(obj) mango_object_incref((MangoObject *)obj)
+#define OBJ_INCREF(obj) (__typeof__(obj))mango_object_incref((MangoObject *)obj)
 
 /**
  * Decrease an object's reference count.
  */
-#define OBJ_DECREF(obj) mango_object_decref((MangoObject *)obj)
+#define OBJ_DECREF(obj) (__typeof__(obj))mango_object_decref((MangoObject *)obj)
 
 /**
  * Invokes an (quasi) object allocator followed by an initialiser.

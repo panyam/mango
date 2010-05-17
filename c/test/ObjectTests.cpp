@@ -39,7 +39,7 @@ TEST_FIXTURE(ObjectTestFixture, TestPrototypeInit)
  */
 TEST_FIXTURE(ObjectTestFixture, TestObjectCreate)
 {
-    MangoObject *obj = OBJ_ALLOC(MangoObject
+    // MangoObject *obj = OBJ_ALLOC(MangoObject
     // CHECK(mstable != NULL);
 }
 

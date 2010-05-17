@@ -16,6 +16,7 @@
 static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
 
+#if 0
 /**
  * Creates a new fortag node.
  * \param   source      Source variable to be used.
@@ -275,6 +276,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
     return outCount;
 }
 
+#endif 
 #if 0
     /**
      * Called when an instance of this tagnode is registered.

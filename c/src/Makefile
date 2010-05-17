@@ -95,11 +95,11 @@ dep:
 # DO NOT DELETE
 
 ../bld/./maddfilter.o: ../include/mfilter.h ../include/mobject.h
-../bld/./maddfilter.o: ../include/mfwddefs.h ../include/mvar.h
-../bld/./maddfilter.o: ../include/mstring.h ../include/maddfilter.h
-../bld/./maddfilter.o: ../include/mmemutils.h
-../bld/./marray.o: ../include/marray.h ../include/mfwddefs.h
-../bld/./marray.o: ../include/mmemutils.h
+../bld/./maddfilter.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./maddfilter.o: ../include/mvar.h ../include/mstring.h
+../bld/./maddfilter.o: ../include/maddfilter.h
+../bld/./marray.o: ../include/marray.h ../include/mobject.h
+../bld/./marray.o: ../include/mfwddefs.h ../include/mmemutils.h
 ../bld/./mbintree.o: ../include/mbintree.h ../include/mfwddefs.h
 ../bld/./mbintree.o: ../include/mmemutils.h
 ../bld/./mbtreetable.o: ../include/mbtreetable.h ../include/mtable.h
@@ -126,32 +126,34 @@ dep:
 ../bld/./mfilternode.o: ../include/mstringbuffer.h
 ../bld/./mfilternode.o: ../include/mstringfactory.h
 ../bld/./mfilternode.o: ../include/mtemplatecontext.h
-../bld/./mfortag.o: ../include/mfortag.h ../include/mfwddefs.h
-../bld/./mfortag.o: ../include/mvalue.h ../include/mobject.h
-../bld/./mfortag.o: ../include/mmemutils.h ../include/mnode.h
-../bld/./mfortag.o: ../include/mclasses.h ../include/merror.h
-../bld/./mfortag.o: ../include/mvar.h ../include/mstring.h
-../bld/./mfortag.o: ../include/mstringbuffer.h ../include/mstringfactory.h
-../bld/./mfortag.o: ../include/mlist.h ../include/marray.h
-../bld/./mfortag.o: ../include/mtokenlists.h ../include/mtoken.h
-../bld/./mfortag.o: ../include/mparser.h ../include/mtokenizer.h
-../bld/./mfortag.o: ../include/mparsercontext.h
-../bld/./mfreetext.o: ../include/mnode.h ../include/mobject.h
-../bld/./mfreetext.o: ../include/mfwddefs.h ../include/mclasses.h
-../bld/./mfreetext.o: ../include/mstring.h ../include/mfreetext.h
+../bld/./mfortag.o: ../include/mfortag.h ../include/mnode.h
+../bld/./mfortag.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./mfortag.o: ../include/mmemutils.h ../include/mclasses.h
+../bld/./mfortag.o: ../include/mvalue.h ../include/merror.h ../include/mvar.h
+../bld/./mfortag.o: ../include/mstring.h ../include/mstringbuffer.h
+../bld/./mfortag.o: ../include/mstringfactory.h ../include/mlist.h
+../bld/./mfortag.o: ../include/marray.h ../include/mtokenlists.h
+../bld/./mfortag.o: ../include/mtoken.h ../include/mparser.h
+../bld/./mfortag.o: ../include/mtokenizer.h ../include/mparsercontext.h
+../bld/./mfreetext.o: ../include/mstring.h ../include/mobject.h
+../bld/./mfreetext.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mfreetext.o: ../include/mfreetext.h ../include/mnode.h
+../bld/./mfreetext.o: ../include/mclasses.h
 ../bld/./miterator.o: ../include/miterator.h ../include/mfwddefs.h
 ../bld/./mlibrary.o: ../include/mlibrary.h ../include/mfwddefs.h
 ../bld/./mlibrary.o: ../include/mmemutils.h ../include/mbintree.h
 ../bld/./mlibrary.o: ../include/mstring.h ../include/mobject.h
 ../bld/./mlist.o: ../include/mlist.h ../include/mfwddefs.h
 ../bld/./mnode.o: ../include/mnode.h ../include/mobject.h
-../bld/./mnode.o: ../include/mfwddefs.h ../include/mclasses.h
-../bld/./mnodelist.o: ../include/mnodelist.h ../include/mfwddefs.h
-../bld/./mnodelist.o: ../include/mnode.h ../include/mobject.h
-../bld/./mnodelist.o: ../include/mclasses.h ../include/mlist.h
+../bld/./mnode.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mnode.o: ../include/mclasses.h
+../bld/./mnodelist.o: ../include/mmemutils.h ../include/mfwddefs.h
+../bld/./mnodelist.o: ../include/mnodelist.h ../include/mnode.h
+../bld/./mnodelist.o: ../include/mobject.h ../include/mclasses.h
+../bld/./mnodelist.o: ../include/mlist.h
 ../bld/./mnoderenderer.o: ../include/mnoderenderer.h ../include/mobject.h
-../bld/./mnoderenderer.o: ../include/mfwddefs.h ../include/mclasses.h
-../bld/./mnoderenderer.o: ../include/mmemutils.h
+../bld/./mnoderenderer.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mnoderenderer.o: ../include/mclasses.h
 ../bld/./mobject.o: ../include/mobject.h ../include/mfwddefs.h
 ../bld/./mobject.o: ../include/mmemutils.h ../include/mclasses.h
 ../bld/./mparser.o: ../include/merror.h ../include/mfwddefs.h
@@ -159,27 +161,29 @@ dep:
 ../bld/./mparser.o: ../include/mtemplateloader.h ../include/mparser.h
 ../bld/./mparser.o: ../include/mparsercontext.h ../include/mlist.h
 ../bld/./mparser.o: ../include/mstringbuffer.h ../include/mstring.h
-../bld/./mparser.o: ../include/mobject.h ../include/mstringfactory.h
-../bld/./mparser.o: ../include/mfreetext.h ../include/mvarnode.h
-../bld/./mparser.o: ../include/mtagnode.h ../include/mnodelist.h
+../bld/./mparser.o: ../include/mobject.h ../include/mmemutils.h
+../bld/./mparser.o: ../include/mstringfactory.h ../include/mfreetext.h
+../bld/./mparser.o: ../include/mnode.h ../include/mclasses.h
+../bld/./mparser.o: ../include/mvarnode.h ../include/mtagnode.h
+../bld/./mparser.o: ../include/mnodelist.h
 ../bld/./mrcstring.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mrcstring.o: ../include/mstringbuffer.h ../include/mstring.h
-../bld/./mrcstring.o: ../include/mobject.h ../include/mstringfactory.h
-../bld/./mrcstring.o: ../include/mrcstring.h ../include/mrcstringtable.h
-../bld/./mrcstring.o: ../include/mmemutils.h
+../bld/./mrcstring.o: ../include/mobject.h ../include/mmemutils.h
+../bld/./mrcstring.o: ../include/mstringfactory.h ../include/mrcstring.h
+../bld/./mrcstring.o: ../include/mrcstringtable.h
 ../bld/./mrcstringfactory.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mrcstringfactory.o: ../include/mstringbuffer.h ../include/mstring.h
-../bld/./mrcstringfactory.o: ../include/mobject.h ../include/mrcstring.h
+../bld/./mrcstringfactory.o: ../include/mobject.h ../include/mmemutils.h
+../bld/./mrcstringfactory.o: ../include/mrcstring.h
 ../bld/./mrcstringfactory.o: ../include/mrcstringfactory.h
 ../bld/./mrcstringfactory.o: ../include/mstringfactory.h
 ../bld/./mrcstringfactory.o: ../include/mrcstringtable.h
-../bld/./mrcstringfactory.o: ../include/mmemutils.h
 ../bld/./mrcstringtable.o: ../include/mrcstringtable.h ../include/mfwddefs.h
 ../bld/./mrcstringtable.o: ../include/mmemutils.h ../include/mbintree.h
-../bld/./mrcstringtable.o: ../include/marray.h
+../bld/./mrcstringtable.o: ../include/marray.h ../include/mobject.h
 ../bld/./msingletons.o: ../include/msingletons.h ../include/mfwddefs.h
 ../bld/./msingletons.o: ../include/mlibrary.h ../include/mstring.h
-../bld/./msingletons.o: ../include/mobject.h
+../bld/./msingletons.o: ../include/mobject.h ../include/mmemutils.h
 ../bld/./mstringbuffer.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mstringbuffer.o: ../include/mstringbuffer.h ../include/mstring.h
 ../bld/./mstringbuffer.o: ../include/mobject.h ../include/mmemutils.h
@@ -188,14 +192,15 @@ dep:
 ../bld/./mstring.o: ../include/mmemutils.h
 ../bld/./mstringfactory.o: ../include/mstringfactory.h ../include/mstring.h
 ../bld/./mstringfactory.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./mstringfactory.o: ../include/mmemutils.h
 ../bld/./mtable.o: ../include/mtable.h ../include/mfwddefs.h
 ../bld/./mtagnode.o: ../include/mnode.h ../include/mobject.h
-../bld/./mtagnode.o: ../include/mfwddefs.h ../include/mclasses.h
-../bld/./mtagnode.o: ../include/merror.h ../include/mparser.h
-../bld/./mtagnode.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mtagnode.o: ../include/mparsercontext.h ../include/mtemplateloader.h
-../bld/./mtagnode.o: ../include/mtagnode.h ../include/mtagparser.h
-../bld/./mtagnode.o: ../include/mtagparserlibrary.h
+../bld/./mtagnode.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mtagnode.o: ../include/mclasses.h ../include/merror.h
+../bld/./mtagnode.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./mtagnode.o: ../include/mtoken.h ../include/mparsercontext.h
+../bld/./mtagnode.o: ../include/mtemplateloader.h ../include/mtagnode.h
+../bld/./mtagnode.o: ../include/mtagparser.h ../include/mtagparserlibrary.h
 ../bld/./mtagnode.o: ../include/mstringbuffer.h ../include/mstring.h
 ../bld/./mtagnode.o: ../include/mstringfactory.h
 ../bld/./mtagparserlibrary.o: ../include/mtagparserlibrary.h
@@ -211,31 +216,32 @@ dep:
 ../bld/./mtokenizer.o: ../include/merror.h ../include/mfwddefs.h
 ../bld/./mtokenizer.o: ../include/minputsource.h ../include/mstringbuffer.h
 ../bld/./mtokenizer.o: ../include/mstring.h ../include/mobject.h
-../bld/./mtokenizer.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mtokenizer.o: ../include/mmemutils.h
+../bld/./mtokenizer.o: ../include/mmemutils.h ../include/mtokenizer.h
+../bld/./mtokenizer.o: ../include/mtoken.h
 ../bld/./mtokenlists.o: ../include/mtokenlists.h ../include/mfwddefs.h
 ../bld/./mtokenlists.o: ../include/mtoken.h
 ../bld/./mutils.o: ../include/mutils.h ../include/mfwddefs.h
 ../bld/./mvalue.o: ../include/mvalue.h ../include/mobject.h
 ../bld/./mvalue.o: ../include/mfwddefs.h ../include/mmemutils.h
 ../bld/./mvar.o: ../include/mvar.h ../include/mstring.h ../include/mobject.h
-../bld/./mvar.o: ../include/mfwddefs.h ../include/mlibrary.h
-../bld/./mvar.o: ../include/mvarlibrary.h ../include/mparser.h
-../bld/./mvar.o: ../include/mtokenizer.h ../include/mtoken.h
-../bld/./mvar.o: ../include/mparsercontext.h ../include/mstringbuffer.h
-../bld/./mvar.o: ../include/mstringfactory.h ../include/mtemplatecontext.h
-../bld/./mvar.o: ../include/mnode.h ../include/mclasses.h
-../bld/./mvar.o: ../include/mmemutils.h ../include/mtokenlists.h
+../bld/./mvar.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mvar.o: ../include/mlibrary.h ../include/mvarlibrary.h
+../bld/./mvar.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./mvar.o: ../include/mtoken.h ../include/mparsercontext.h
+../bld/./mvar.o: ../include/mstringbuffer.h ../include/mstringfactory.h
+../bld/./mvar.o: ../include/mtemplatecontext.h ../include/mnode.h
+../bld/./mvar.o: ../include/mclasses.h ../include/mtokenlists.h
 ../bld/./mvar.o: ../include/mutils.h ../include/msingletons.h
 ../bld/./mvarlibrary.o: ../include/mvarlibrary.h ../include/mfwddefs.h
-../bld/./mvarnode.o: ../include/mnode.h ../include/mobject.h
-../bld/./mvarnode.o: ../include/mfwddefs.h ../include/mclasses.h
+../bld/./mvarnode.o: ../include/mvarnode.h ../include/mnode.h
+../bld/./mvarnode.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./mvarnode.o: ../include/mmemutils.h ../include/mclasses.h
 ../bld/./mvarnode.o: ../include/merror.h ../include/mparser.h
 ../bld/./mvarnode.o: ../include/mtokenizer.h ../include/mtoken.h
 ../bld/./mvarnode.o: ../include/mparsercontext.h ../include/mvar.h
 ../bld/./mvarnode.o: ../include/mstring.h ../include/mfilternode.h
-../bld/./mvarnode.o: ../include/mlist.h ../include/mmemutils.h
+../bld/./mvarnode.o: ../include/mlist.h
 ../bld/./mvarresolver.o: ../include/mvarresolver.h ../include/mvar.h
 ../bld/./mvarresolver.o: ../include/mstring.h ../include/mobject.h
-../bld/./mvarresolver.o: ../include/mfwddefs.h ../include/mtemplatecontext.h
-../bld/./mvarresolver.o: ../include/mvalue.h ../include/mmemutils.h
+../bld/./mvarresolver.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/./mvarresolver.o: ../include/mtemplatecontext.h ../include/mvalue.h

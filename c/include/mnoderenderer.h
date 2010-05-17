@@ -11,39 +11,24 @@ extern "C" {
 #endif
 
 /**
- * Bit of context for a node for its rendering.
+ * When nodes are rendered their rendering state is stored in a context.
+ * This struct stores that node specific context.
  */
-struct MangoNodeRenderContext
-{
+typedef struct MangoNodeRendererContext MangoNodeRendererContext;
+DECLARE_CLASS(MangoNodeRendererContext, MangoPrototype,
     MangoNode *             node;
     MangoNodeRenderContext *parent;
-    void *                  contextData;
-};
+);
 
-typedef void *(*CreateNodeRenderContextDataCallback)(void *nodeData,
-                                               MangoTemplateContext *templateContext,
-                                               MangoNodeRenderContext *topContext);
-typedef void (*DeleteNodeRenderContextDataCallback)(void *nodeContextData);
-typedef MangoNode *(*NodeRenderCallback)(void *nodeData,
-                                         MangoTemplateContext *templateContext,
-                                         MangoNodeRenderContext *topContext);
-typedef MangoNode *(*NodeChildExitedCallback)(void *nodeData,
-                                              MangoTemplateContext *templateContext,
-                                              MangoNodeRenderContext *topContext);
 
-struct MangoNodeRenderer
-{
+typedef struct MangoNodeRendererPrototype MangoNodeRendererPrototype;
+INHERIT_STRUCT(MangoNodeRendererPrototype, MangoPrototype,
     /**
      * Creates node context data for this node.
      */
-    void *(*createNodeContext)(MangoNode *node,
-                                   MangoTemplateContext *templateContext,
-                                   MangoNodeRenderContext *topContext);
-
-    /**
-     * Deletes node context data for this node.
-     */
-    void (*deleteNodeContext)(void *nodeContextData);
+    void *(*createContextFunc)(MangoNode *node,
+                               MangoTemplateContext *templateContext,
+                               MangoNodeRenderContext *topContext);
 
     /**
      * Renders a bit of the node and returns the next node (if a child node
@@ -73,7 +58,9 @@ struct MangoNodeRenderer
     MangoNode *(*childExited)(MangoNode *node, 
                               MangoTemplateContext *templateContext,
                               MangoNodeRenderContext *topContext);
-};
+);
+
+DECLARE_CLASS(MangoNodeRenderer, MangoNodeRendererPrototype);
 
 #ifdef __cplusplus
 }

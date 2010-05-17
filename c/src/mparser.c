@@ -237,11 +237,11 @@ MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
         {
             // easy
             MangoString *val = mango_stringfactory_from_buffer(ctx->strfactory, token->tokenValue);
-            return mango_freetext_new(val);
+            return (MangoNode *)mango_freetext_new(val);
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
-            return mango_varnode_extract_with_parser(ctx, error);
+            return (MangoNode *)mango_varnode_extract_with_parser(ctx, error);
         }
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {
@@ -261,7 +261,7 @@ MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
                 }
             }
             // its a normal (non-end) tag so extract it as usual
-            return mango_tagnode_extract_with_parser(ctx, error);
+            return (MangoNode *)mango_tagnode_extract_with_parser(ctx, error);
         }
         mango_error_set(error, -1, "Invalid token found: %d", token->tokenType);
     }

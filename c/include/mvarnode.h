@@ -2,16 +2,29 @@
 #ifndef __MANGO_VARIABLE_NODE_H__
 #define __MANGO_VARIABLE_NODE_H__
 
-#include "mfwddefs.h"
+#include "mnode.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+INHERIT_STRUCT(MangoVarNode, MangoNode,
+    MangoVariable * variable;
+    MangoList *     filterNodes;
+);
+
 /**
  * Creates a new mango node list.
  */
-extern MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes);
+extern MangoVarNode *mango_varnode_new(MangoVariable *mvar, MangoList *filters);
+
+/**
+ * Initialises a variable node with a variable and a list of filter.
+ * \param   varnode     Variable node to be initialised/reset.
+ * \param   mvar        Variable to set for the var node.
+ * \param   filters     List of filter nodes to be set to the variable.
+ */
+extern MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, MangoList *filters);
 
 /**
  * Extracts and builds a variable node with parser.
@@ -52,7 +65,12 @@ extern MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, Man
  * \param   mnode   Mango (variable) node to add to.
  * \param   fnode   The filter node to add.
  */
-extern void mango_varnode_add_filter(MangoNode *mnode, MangoFilterNode *fnode);
+extern void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode);
+
+/**
+ * Called when a varnode is to be dealloced.
+ */
+extern void mango_varnode_dealloc(MangoVarNode *varnode);
 
 #ifdef __cplusplus
 }

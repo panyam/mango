@@ -47,6 +47,11 @@ extern int mango_node_childcount(MangoNode *node);
  */
 extern MangoNode *mango_node_childat(MangoNode *node, unsigned index);
 
+/**
+ * Dealloc's a node.
+ */
+extern void mango_node_dealloc(MangoNode *node);
+
 #ifdef __cplusplus
 }
 #endif

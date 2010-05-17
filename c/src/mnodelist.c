@@ -1,5 +1,6 @@
 
 #include <stdarg.h>
+#include "mmemutils.h"
 #include "mnodelist.h"
 #include "mnode.h"
 #include "mlist.h"
@@ -30,10 +31,20 @@ MangoNode *mango_nodelist_child_at(MangoNodeList *nodelist, unsigned index)
  */
 MangoNodePrototype *mango_nodelist_prototype()
 {
-    DECLARE_PROTO_INITIALISER("MangoNodeList", MangoNodePrototype, nodeListPrototype,
-        nodePrototype.nodeCountFunc     = mango_nodelist_size;
-        nodePrototype.getChildNodeFunc  = mango_nodelist_child_at;
+    DECLARE_PROTO_VARIABLE("MangoNodeList", MangoNodePrototype, nodeListPrototype,
+        nodeListPrototype.nodeCountFunc     = (NodeCountFunc)mango_nodelist_size;
+        nodeListPrototype.getChildNodeFunc  = (NodeChildFunc)mango_nodelist_child_at;
+        ((MangoPrototype *)&nodeListPrototype)->deallocFunc = mango_nodelist_dealloc;
     );
+}
+
+/**
+ * Creates a new list node with a bunch of nodes.
+ */
+MangoNodeList *mango_nodelist_new(MangoList *nodes)
+{
+    MangoNodeList *nodelist = NEW(MangoNodeList *);
+    return mango_nodelist_init(nodelist, nodes, mango_nodelist_prototype());
 }
 
 /**
@@ -42,8 +53,7 @@ MangoNodePrototype *mango_nodelist_prototype()
 MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, MangoNodePrototype *prototype)
 {
     mango_node_init((MangoNode *)nodelist, prototype);
-    // ((MangoObject *)nodelist)->__prototype__    = mango_nodelist_prototype();
-    nodelist->nodes                             = nodes;
+    nodelist->nodes     = nodes;
     return nodelist;
 }
 
@@ -62,5 +72,14 @@ MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
         mango_list_push_back(nodes, node);
     }
     return mango_nodelist_new(nodes);
+}
+
+/**
+ * Dealloc's a node.
+ */
+void mango_nodelist_dealloc(MangoNodeList *nodelist)
+{
+    // simply call node's dealloc
+    mango_node_dealloc((MangoNode *)nodelist);
 }
 

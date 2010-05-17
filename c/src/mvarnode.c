@@ -1,5 +1,5 @@
 
-#include "mnode.h"
+#include "mvarnode.h"
 #include "merror.h"
 #include "mparser.h"
 #include "mparsercontext.h"
@@ -9,68 +9,56 @@
 #include "mmemutils.h"
 #include "mclasses.h"
 
-typedef struct MangoVarNodeData
-{
-    MangoVariable * variable;
-    MangoList *     filterNodes;
-} MangoVarNodeData;
-
 /**
- * Creates a new variable node data object.
- *
- * \param   mvar        Variable to be stored.
- * \param   filternodes A list of filter nodes to be used.
- *
- * \return  A MangoVarNodeData object.
+ * The prototype for mango var nodes.
  */
-MangoVarNodeData *mango_varnodedata_new(MangoVariable *mvar, MangoList *filterNodes)
+MangoNodePrototype *mango_varnode_prototype()
 {
-    MangoVarNodeData *nodedata  = NEW(MangoVarNodeData);
-    nodedata->variable          = mvar;
-    nodedata->filterNodes       = filterNodes;
-    return nodedata;
-}
-
-/**
- * Frees a MangoVarNodeData object created with mango_varnodedata_new.
- * \param data  MangoVarNodeData object to be destroyed.
- */
-void mango_varnodedata_free(MangoVarNodeData *data)
-{
-    if (data->variable != NULL)
-        mango_variable_free(data->variable);
-    if (data->filterNodes != NULL)
-    {
-        mango_list_clear(data->filterNodes, (DeleteFunc)mango_filternode_free);
-        mango_list_free(data->filterNodes);
-    }
-    free(data);
-}
-
-/**
- * Compares and checks if two MangoVarNodeData objects are equal.
- *
- * \param data1     First object to be compared with.
- * \param data2     Second object to be compared to.
- */
-BOOL mango_varnodedata_equals(MangoVarNodeData *data1, MangoVarNodeData *data2)
-{
-    return mango_variables_are_equal(data1->variable, data2->variable) &&
-            mango_lists_are_equal(data1->filterNodes, data2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
+    DECLARE_PROTO_VARIABLE("VarNode", MangoNodePrototype, varnodePrototype,
+        varnodePrototype.nodeCountFunc      = NULL;
+        varnodePrototype.getChildNodeFunc   = NULL;
+        ((MangoPrototype *)&varnodePrototype)->deallocFunc = mango_varnode_dealloc;
+    );
 }
 
 /**
  * Creates a new mango node list.
+ * \param   mvar        Variable to be stored.
+ * \param   filternodes A list of filter nodes to be used.
+ *
+ * \return  A MangoVarNode object.
  */
-MangoNode *mango_varnode_new(MangoVariable *mvar, MangoList *filter_nodes)
+MangoVarNode *mango_varnode_new(MangoVariable *mvar, MangoList *filters)
 {
-    MangoNode *node         = mango_node_new(mango_varnodedata_new(mvar, filter_nodes));
-    node->nodeClass         = mango_class_for_name("Variable", true);
-    node->deleteNodeFunc    = (DeleteFunc)mango_varnodedata_free;
-    node->nodeEqualsFunc    = (EqualsFunc)mango_varnodedata_equals;
-    return node;
+    MangoVarNode *mvnode = NEW(MangoVarNode);
+    return mango_varnode_init(mvnode, mvar, filters);
 }
 
+/**
+ * Initialises a variable node with a variable and a list of filter.
+ * \param   varnode     Variable node to be initialised/reset.
+ * \param   mvar        Variable to set for the var node.
+ * \param   filters     List of filter nodes to be set to the variable.
+ */
+MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, MangoList *filters)
+{
+    mango_node_init((MangoNode *)varnode, NULL);
+    varnode->variable       = mvar;
+    varnode->filterNodes    = filters;
+    return varnode;
+}
+
+/**
+ * Compares and checks if two MangoVarNode objects are equal.
+ *
+ * \param data1     First object to be compared with.
+ * \param data2     Second object to be compared to.
+ */
+BOOL mango_varnodedata_equals(MangoVarNode *data1, MangoVarNode *data2)
+{
+    return mango_variables_are_equal(data1->variable, data2->variable) &&
+            mango_lists_are_equal(data1->filterNodes, data2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
+}
 
 /**
  * Extracts and builds a variable node with parser.
@@ -158,7 +146,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
             mango_list_free(filter_nodes);
             filter_nodes = NULL;
         }
-        node = mango_varnode_new(variable, filter_nodes);
+        node = (MangoNode *)mango_varnode_new(variable, filter_nodes);
     }
     return node;
 }
@@ -169,14 +157,30 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
  * \param   mnode   Mango (variable) node to add to.
  * \param   fnode   The filter node to add.
  */
-void mango_varnode_add_filter(MangoNode *mnode, MangoFilterNode *fnode)
+void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
 {
-    assert(mnode->nodeClass == mango_class_for_name("Variable", true));
-    MangoVarNodeData *data = (MangoVarNodeData *)mnode->nodeData;
-    if (data->filterNodes == NULL)
+    if (mnode->filterNodes == NULL)
     {
-        data->filterNodes = mango_list_new();
+        mnode->filterNodes = mango_list_new();
     }
-    mango_list_push_back(data->filterNodes, fnode);
+    mango_list_push_back(mnode->filterNodes, fnode);
 }
+
+/**
+ * Called when a varnode is to be dealloced.
+ */
+void mango_varnode_dealloc(MangoVarNode *varnode)
+{
+    if (varnode->variable != NULL)
+        mango_variable_free(varnode->variable);
+    if (varnode->filterNodes != NULL)
+    {
+        mango_list_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);
+        mango_list_free(varnode->filterNodes);
+    }
+
+    // simply call node's dealloc
+    mango_node_dealloc((MangoNode *)varnode);
+}
+
 
