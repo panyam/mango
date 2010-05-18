@@ -15,8 +15,6 @@
 MangoNodePrototype *mango_varnode_prototype()
 {
     DECLARE_PROTO_VARIABLE("VarNode", MangoNodePrototype, varnodePrototype,
-        varnodePrototype.nodeCountFunc      = NULL;
-        varnodePrototype.getChildNodeFunc   = NULL;
         ((MangoPrototype *)&varnodePrototype)->deallocFunc  = (PrototypeDeallocFunc)mango_varnode_dealloc;
         ((MangoPrototype *)&varnodePrototype)->equalsFunc   = (PrototypeEqualsFunc)mango_varnode_are_equal;
     );

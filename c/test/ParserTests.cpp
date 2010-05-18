@@ -98,9 +98,19 @@ public:
     {
         MangoError *error   = NULL;
 		MangoNode *node     = mango_parser_parse(&parser_context, &error);
-        int nodeCount       = mango_node_childcount(node);
-        if (nodeCount > 0)
+
+        if (numNodes == 1)
         {
+            va_list ap;
+            va_start(ap, numNodes);
+            MangoNode *expectedNode = va_arg(ap, MangoNode *);
+            CHECK(OBJ_EQUALS(expectedNode, node));
+            va_end(ap);
+        }
+        else if (numNodes > 1)
+        {
+            MangoNodeList *nodelist = (MangoNodeList *)node;
+            int nodeCount       = mango_nodelist_childcount(nodelist);
             CHECK_EQUAL(nodeCount, numNodes);
 
             va_list ap;
@@ -108,34 +118,10 @@ public:
             for (int i = 0;i < nodeCount;i++)
             {
                 MangoNode *expectedNode = va_arg(ap, MangoNode *);
-                MangoNode *childNode = mango_node_childat(node, i);
+                MangoNode *childNode = mango_nodelist_childat(nodelist, i);
                 CHECK(OBJ_EQUALS(expectedNode, childNode));
             }
             va_end(ap);
-        }
-        else if (node != NULL)
-        {
-            va_list ap;
-            va_start(ap, numNodes);
-            MangoNode *expectedNode = va_arg(ap, MangoNode *);
-            CHECK_EQUAL(numNodes, 1);
-            CHECK(OBJ_EQUALS(expectedNode, node));
-            va_end(ap);
-        }
-        else
-        {
-            if (numNodes == 1)
-            {
-                va_list ap;
-                va_start(ap, numNodes);
-                MangoNode *expectedNode = va_arg(ap, MangoNode *);
-                CHECK(NULL == expectedNode);
-                va_end(ap);
-            }
-            else if (numNodes > 1)
-            {
-                CHECK(false);
-            }
         }
         OBJ_DECREF(node);
         if (error != NULL)

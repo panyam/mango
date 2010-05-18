@@ -20,11 +20,6 @@ INHERIT_STRUCT(MangoNodePrototype, MangoPrototype,
      * Returns the node count.
      */
     int (*nodeCountFunc)(void *nodeData);
-
-    /**
-     * Returns a child node at a given index.
-     */
-    MangoNode *(*getChildNodeFunc)(void *nodeData, unsigned index);
 );
 
 /**
@@ -36,16 +31,6 @@ DECLARE_CLASS(MangoNode, MangoNodePrototype);
  * Initialises a mango node.
  */
 extern MangoNode *mango_node_init(MangoNode *node, MangoNodePrototype *prototype);
-
-/**
- * Returns the number of child nodes of a node.
- */
-extern int mango_node_childcount(MangoNode *node);
-
-/**
- * Gets a particular child node.
- */
-extern MangoNode *mango_node_childat(MangoNode *node, unsigned index);
 
 /**
  * Dealloc's a node.

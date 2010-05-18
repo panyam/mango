@@ -6,35 +6,12 @@
 #include "mlist.h"
 
 /**
- * Get the size of the node list.
- * \param   nodelist    The node list whose size is to be returned.
- * \return Number of child nodes in the nodelist.
- */
-unsigned mango_nodelist_size(MangoNodeList *nodelist)
-{
-    return mango_list_size(nodelist->nodes);
-}
-
-/**
- * Get the child at a given index.
- * \param   nodelist    The node list whose child is to be extracted.
- * \param   index       Index at which the child is to be extracted.
- * \return A MangoNode at the given index.
- */
-MangoNode *mango_nodelist_child_at(MangoNodeList *nodelist, unsigned index)
-{
-    return mango_list_item_at(nodelist->nodes, index);
-}
-
-/**
  * The prototype for mango node lists.
  */
 MangoNodePrototype *mango_nodelist_prototype()
 {
     DECLARE_PROTO_VARIABLE("MangoNodeList", MangoNodePrototype, nodeListPrototype,
-        nodeListPrototype.nodeCountFunc     = (NodeCountFunc)mango_nodelist_size;
-        nodeListPrototype.getChildNodeFunc  = (NodeChildFunc)mango_nodelist_child_at;
-        ((MangoPrototype *)&nodeListPrototype)->deallocFunc = mango_nodelist_dealloc;
+        ((MangoPrototype *)&nodeListPrototype)->deallocFunc = (PrototypeDeallocFunc)mango_nodelist_dealloc;
     );
 }
 
@@ -79,7 +56,32 @@ MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
  */
 void mango_nodelist_dealloc(MangoNodeList *nodelist)
 {
+    // TODO: clear the nodelist
+    mango_list_clear(nodelist->nodes, (DeleteFunc)mango_object_decref);
+    mango_list_free(nodelist->nodes);
+
     // simply call node's dealloc
     mango_node_dealloc((MangoNode *)nodelist);
+}
+
+/**
+ * Get the size of the node list.
+ * \param   nodelist    The node list whose size is to be returned.
+ * \return Number of child nodes in the nodelist.
+ */
+unsigned mango_nodelist_childcount(MangoNodeList *nodelist)
+{
+    return mango_list_size(nodelist->nodes);
+}
+
+/**
+ * Get the child at a given index.
+ * \param   nodelist    The node list whose child is to be extracted.
+ * \param   index       Index at which the child is to be extracted.
+ * \return A MangoNode at the given index.
+ */
+MangoNode *mango_nodelist_childat(MangoNodeList *nodelist, unsigned index)
+{
+    return mango_list_item_at(nodelist->nodes, index);
 }
 

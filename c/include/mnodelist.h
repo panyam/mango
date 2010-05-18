@@ -4,6 +4,10 @@
 
 #include "mnode.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 INHERIT_STRUCT(MangoNodeList, MangoNode,
     MangoList *nodes;
 );
@@ -27,6 +31,20 @@ extern MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...);
  * Called when a nodelist is to be dealloced.
  */
 extern void mango_nodelist_dealloc(MangoNodeList *nodelist);
+
+/**
+ * Returns the number of child nodes of a node.
+ */
+extern unsigned mango_nodelist_childcount(MangoNodeList *nodelist);
+
+/**
+ * Gets a particular child node.
+ */
+extern MangoNode *mango_nodelist_childat(MangoNodeList *nodelist, unsigned index);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
