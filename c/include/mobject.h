@@ -138,6 +138,11 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 #define OBJ_EQUALS(obj1, obj2)  mango_objects_are_equal((MangoObject *)obj1, (MangoObject *)obj2)
 
 /**
+ * Compares two MangoObject derived objects.
+ */
+#define OBJ_COMPARE(obj1, obj2)  mango_object_compare((MangoObject *)obj1, (MangoObject *)obj2)
+
+/**
  * Create a new prototype object of a given name.
  */
 extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name);
