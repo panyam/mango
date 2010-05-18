@@ -47,9 +47,19 @@ INHERIT_STRUCT(MangoFilterPrototype, MangoPrototype,
 DECLARE_CLASS(MangoFilter, MangoFilterPrototype);
 
 /**
+ * Returns the mango filter prototype.
+ */
+extern MangoFilterPrototype *mango_filter_prototype();
+
+/**
+ * Initialises a mango filter prototype.
+ */
+MangoFilterPrototype *mango_filter_prototype_init(MangoFilterPrototype *proto, const char *name);
+
+/**
  * Destroys a filter created with mango_filter_new.
  */
-extern void mango_filter_release(MangoFilter *filter);
+extern void mango_filter_dealloc(MangoFilter *filter);
 
 /**
  * Applies the filter on a value and returns the new value.

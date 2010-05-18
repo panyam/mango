@@ -208,7 +208,7 @@ BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode 
  */
 MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
                                         MangoTemplateContext *  tmplCtx,
-                                        MangoNodeRenderContext *      topCtx)
+                                        MangoNodeRendererContext *      topCtx)
 {
     MangoForTagContext *ftc = ZNEW(MangoForTagContext);
     mango_fortagctx_set_source(ftc, NULL_VALUE);
@@ -291,7 +291,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
         VariableLibrary.getSharedInstance().registerObjectClass("forloop", ForLoopVariable.class);
     }
 
-    public NodeRenderContext createNodeRenderContext(TemplateContext context, NodeRenderContext parentContext)
+    public NodeRendererContext createNodeRendererContext(TemplateContext context, NodeRendererContext parentContext)
     {
     	ForTagContext ftnContext = NULL;
     	if (sourceVariable != NULL && items != NULL)
@@ -312,7 +312,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
     /**
      * Renders the for loop.
      */
-    public Node renderBitMore(Writer writer, TemplateContext context, NodeRenderContext currContext) throws IOException
+    public Node renderBitMore(Writer writer, TemplateContext context, NodeRendererContext currContext) throws IOException
     {
     	if (currContext instanceof ForTagContext)
     	{
@@ -335,7 +335,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
      * @return NULL if this node is ALSO to be exited, otherwise a new child node to be pushed 
      * onto the renderer stack.
      */
-	public Node childExited(Node childNode, TemplateContext context, NodeRenderContext currContext) 
+	public Node childExited(Node childNode, TemplateContext context, NodeRendererContext currContext) 
 	{
 		if (currContext instanceof ForTagContext)
 			return nodeEntered(context, (ForTagContext)currContext, childNode);
@@ -417,11 +417,11 @@ class ForLoopVariable extends Variable
     	return super.setNextVariable(value, isquoted);
     }
 	
-    public Object resolve(TemplateContext context, NodeRenderContext currContext)
+    public Object resolve(TemplateContext context, NodeRendererContext currContext)
     {
     	// find the first ForLoop anywhere along the node context stack!!
     	int parentsLeft = parentCount;
-    	NodeRenderContext tempContext = currContext;
+    	NodeRendererContext tempContext = currContext;
     	while (parentsLeft >= 0)
     	{
 	    	while (tempContext != NULL && !(tempContext instanceof ForTagContext))

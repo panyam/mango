@@ -32,7 +32,7 @@ MangoRCStringFactory *mango_rcstringfactory_new()
 MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactory)
 {
     OBJ_INIT(rcsfactory, mango_rcstringfactory_prototype());
-    msfactory->mrcstable    = mango_rcstring_table_new();
+    rcsfactory->mrcstable    = mango_rcstring_table_new();
     return rcsfactory;
 }
 

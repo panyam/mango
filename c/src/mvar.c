@@ -19,7 +19,7 @@
 MangoVariablePrototype *mango_variable_prototype()
 {
     DECLARE_PROTO_VARIABLE("Variable", MangoVariablePrototype, variableProto,
-        variableProto.setNextFunc = mango_variable_set_next;
+        variableProto.setNextVarFunc = mango_variable_set_next;
         // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
         ((MangoPrototype *)&variableProto)->deallocFunc = (PrototypeDeallocFunc)mango_variable_dealloc;
         ((MangoPrototype *)&variableProto)->equalsFunc  = (PrototypeEqualsFunc)mango_variables_are_equal;
@@ -51,9 +51,10 @@ MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariabl
 MangoVariable *mango_variable_init(MangoVariable *mvar, MangoString *mstr, BOOL isQuoted, MangoVariable *next)
 {
     OBJ_INIT(mvar, mango_variable_prototype());
-    mvar->next              = next;
-    mvar->varData           = NULL;
-    bzero(&mvar->value, sizeof(mvar->value));
+    mvar->next      = next;
+    mvar->isQuoted  = isQuoted;
+    mvar->isNumber  = false;
+    mvar->value     = NULL;
     mango_variable_set_value(mvar, mstr, isQuoted);
     return mvar;
 }
@@ -65,11 +66,9 @@ MangoVariable *mango_variable_init(MangoVariable *mvar, MangoString *mstr, BOOL 
 void mango_variable_dealloc(MangoVariable *mvar)
 {
     if (mvar->value != NULL)
-        mango_object_decref((MangoObject *)mvar->value);
-    MangoVariable *next = mvar->next;
-    free(mvar);
-    if (next != NULL)
-        mango_variable_free(next);
+        OBJ_DECREF(mvar->value);
+    if (mvar->next != NULL)
+        OBJ_DECREF(mvar->next);
 }
 
 /**
@@ -83,9 +82,8 @@ void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQu
 {
     if (mvar->value != value)
     {
-        if (mvar->value != NULL)
-            mango_object_decref((MangoObject *)mvar->value);
-        mvar->value     = value;
+        OBJ_DECREF(mvar->value);
+        mvar->value     = OBJ_INCREF(value);
         mvar->isQuoted  = isQuoted;
         mvar->intValue  = 0;
         mvar->isNumber  = is_integer(mango_string_buffer(value),
@@ -100,7 +98,7 @@ void mango_variable_set_value(MangoVariable *mvar, MangoString *value, BOOL isQu
  */
 int mango_variable_resolve(MangoVariable *mvar,
                            MangoTemplateContext *context,
-                           MangoNodeRenderContext *topContext,
+                           MangoNodeRendererContext *topContext,
                            void **value)
 {
     return 0;
@@ -186,7 +184,7 @@ MangoVariable *mango_variable_extract_with_parser(MangoParserContext *ctx, Mango
         else
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            MangoVariable *nextVar = lastVar->setNextVariable(lastVar, varValue, isQuoted);
+            MangoVariable *nextVar = lastVar->__prototype__->setNextVarFunc(lastVar, varValue, isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

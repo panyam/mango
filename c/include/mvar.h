@@ -10,7 +10,7 @@ extern "C" {
 
 INHERIT_STRUCT(MangoVariablePrototype, MangoPrototype,
     //! Child specific setter of the next variable
-    MangoVariable *(*setNextVariable)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
+    MangoVariable *(*setNextVarFunc)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
 );
 
 DECLARE_CLASS(MangoVariable, MangoVariablePrototype,
@@ -28,7 +28,7 @@ DECLARE_CLASS(MangoVariable, MangoVariablePrototype,
     
     //! Next variable section of the variable (ie a.b.c)
     MangoVariable * next;
-};
+);
 
 /**
  * Creates a new mango variable.
@@ -72,7 +72,7 @@ extern void mango_variable_set_value(MangoVariable *mvar,
  */
 extern int mango_variable_resolve(MangoVariable *           mvar,
                                   MangoTemplateContext *    context,
-                                  MangoNodeRenderContext *  topContext,
+                                  MangoNodeRendererContext *topContext,
                                   void **                   value);
 
 /**

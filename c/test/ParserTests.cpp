@@ -172,7 +172,6 @@ protected:
     }
 };
 
-#if 0
 /**
  * Tests the creation of a parser.
  */
@@ -218,45 +217,46 @@ TEST_FIXTURE(ParserTestFixture, TestSingleVariable)
 TEST_FIXTURE(ParserTestFixture, TestMultipleVariables)
 {
     SetUpWithInputString("{{a.b.c}}");
-    MangoNode *expectedNode = mango_varnode_new(
-                                create_variable("a", false, false,
-                                    create_variable("b", false, false,
-                                        create_variable("c", false, false, NULL))), NULL);
+    MangoNode *expectedNode = (MangoNode *)mango_varnode_new(
+                                            create_variable("a", false, false,
+                                                create_variable("b", false, false,
+                                                    create_variable("c", false, false, NULL))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestMultipleQuotedVariables)
 {
     SetUpWithInputString("{{a.'b'.'c'}}");
-    MangoNode *expectedNode = mango_varnode_new(
-                                create_variable("a", false, false,
-                                    create_variable("b", true, false,
-                                        create_variable("c", true, false, NULL))), NULL);
+    MangoNode *expectedNode = (MangoNode *)mango_varnode_new(
+                                            create_variable("a", false, false,
+                                                create_variable("b", true, false,
+                                                    create_variable("c", true, false, NULL))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestVariableWithNumericIndexes)
 {
     SetUpWithInputString("{{a.0.1.d}}");
-    MangoNode *expectedNode = mango_varnode_new(
-                                create_variable("a", false, false,
-                                    create_variable("0", false, true,
-                                        create_variable("1", false, true,
-                                            create_variable("d", false, false, NULL)))), NULL);
+    MangoNode *expectedNode = (MangoNode *)mango_varnode_new(
+                                            create_variable("a", false, false,
+                                                create_variable("0", false, true,
+                                                    create_variable("1", false, true,
+                                                        create_variable("d", false, false, NULL)))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestVariableWithQuotedIndexes)
 {
     SetUpWithInputString("{{a.0.'1'.d}}");
-    MangoNode *expectedNode = mango_varnode_new(
-                                create_variable("a", false, false, 
-                                    create_variable("0", false, true,
-                                        create_variable("1", true, true,
-                                            create_variable("d", false, false, NULL)))), NULL);
+    MangoNode *expectedNode = (MangoNode *)mango_varnode_new(
+                                            create_variable("a", false, false, 
+                                                create_variable("0", false, true,
+                                                    create_variable("1", true, true,
+                                                        create_variable("d", false, false, NULL)))), NULL);
     CheckParsedNodeWith(1, expectedNode);
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestFiltersAreSingletons)
 {
     MangoString *add = mango_stringfactory_new_string(string_factory, "add", -1);

@@ -101,7 +101,7 @@ extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
  */
 extern MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
                                                MangoTemplateContext *  tmplCtx,
-                                               MangoNodeRenderContext *topCtx);
+                                               MangoNodeRendererContext *topCtx);
 
 /**
  * Sets the source variable for the for-tag render context.

@@ -1,7 +1,7 @@
 #ifndef __MANGO_ADD_FILTER_H__
 #define __MANGO_ADD_FILTER_H__
 
-#include "mfwddefs.h"
+#include "mfilter.h"
 
 #ifdef __cplusplus
 extern "C" {

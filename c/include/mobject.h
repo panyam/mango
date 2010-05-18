@@ -210,6 +210,11 @@ extern BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *
  */
 extern int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2);
 
+/**
+ * Deallocates an object.
+ */
+extern void mango_object_dealloc(MangoObject *obj);
+
 #ifdef __cplusplus
 }
 #endif

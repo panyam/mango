@@ -36,8 +36,9 @@ typedef struct MangoNodeList MangoNodeList;
 typedef struct MangoFreeTextNode MangoFreeTextNode;
 typedef struct MangoVarNode MangoVarNode;
 typedef struct MangoNodePrototype MangoNodePrototype;
-typedef struct MangoNodeRenderContext MangoNodeRenderContext;
+typedef struct MangoNodeRendererPrototype MangoNodeRendererPrototype;
 typedef struct MangoNodeRenderer MangoNodeRenderer;
+typedef struct MangoNodeRendererContext MangoNodeRendererContext;
 typedef struct MangoObject MangoObject;
 typedef struct MangoParser MangoParser;
 typedef struct MangoParserContext MangoParserContext;
@@ -59,6 +60,7 @@ typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoValue MangoValue;
 typedef struct MangoValueIterator MangoValueIterator;
 typedef struct MangoVariable MangoVariable;
+typedef struct MangoVariablePrototype MangoVariablePrototype;
 typedef struct MangoVariableResolver MangoVariableResolver;
 
 /**

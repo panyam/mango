@@ -90,6 +90,9 @@ MangoObject *mango_object_incref(MangoObject *obj)
  */
 BOOL mango_object_decref(MangoObject *obj)
 {
+    if (obj == NULL)
+        return false;
+
     obj->__refCount__--;
     if (obj->__refCount__ == 0)
     {
@@ -166,5 +169,12 @@ BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2)
         return true;
     }
     return false;
+}
+
+/**
+ * Deallocates an object.
+ */
+void mango_object_dealloc(MangoObject *obj)
+{
 }
 

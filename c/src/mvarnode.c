@@ -43,7 +43,7 @@ MangoVarNode *mango_varnode_new(MangoVariable *mvar, MangoList *filters)
  */
 MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, MangoList *filters)
 {
-    mango_node_init((MangoNode *)varnode, NULL);
+    mango_node_init((MangoNode *)varnode, mango_varnode_prototype());
     varnode->variable       = mvar;
     varnode->filterNodes    = filters;
     return varnode;
@@ -121,7 +121,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     // was there an error?
     if (error != NULL && *error != NULL)
     {
-        mango_variable_free(variable);
+        OBJ_DECREF(variable);
         if (filter_nodes != NULL)
         {
             mango_list_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
@@ -161,7 +161,7 @@ void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
 void mango_varnode_dealloc(MangoVarNode *varnode)
 {
     if (varnode->variable != NULL)
-        mango_variable_free(varnode->variable);
+        OBJ_DECREF(varnode->variable);
     if (varnode->filterNodes != NULL)
     {
         mango_list_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);

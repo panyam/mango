@@ -12,20 +12,10 @@ int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
  */
 MangoFilterPrototype *mango_addfilter_prototype()
 {
-    static BOOL initialised = false;
-    static MangoFilterPrototype PROTO;
-    if (!initialised)
-    {
-        PROTO.__base__.name             = strdup("MangoAddFilter");
-        PROTO.__base__.deallocFunc      = NULL;
-        PROTO.__base__.equalsFunc       = NULL;
-        PROTO.__base__.compareFunc      = NULL;
-        PROTO.applyFunc                 = mango_addfilter_apply;
-        PROTO.makeInvocationContextFunc = NULL;
-        PROTO.makeInstanceContextFunc   = NULL;
-        initialised = true;
-    }
-    return &PROTO;
+    DECLARE_PROTO_VARIABLE("AddFilter", MangoFilterPrototype, filterProto,
+        mango_filter_prototype_init(&filterProto, "AddFilter");
+        filterProto.applyFunc = mango_addfilter_apply;
+    );
 }
 
 int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,

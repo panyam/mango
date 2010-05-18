@@ -34,7 +34,7 @@ void mango_filternode_free(MangoFilterNode *fnode)
     // do not delete filter as they are shared
     if (fnode->arguments != NULL)
     {
-        mango_list_clear(fnode->arguments, (DeleteFunc)mango_variable_free);
+        mango_list_clear(fnode->arguments, (DeleteFunc)mango_object_decref);
         mango_list_free(fnode->arguments);
     }
     free(fnode);

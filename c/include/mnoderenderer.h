@@ -14,21 +14,19 @@ extern "C" {
  * When nodes are rendered their rendering state is stored in a context.
  * This struct stores that node specific context.
  */
-typedef struct MangoNodeRendererContext MangoNodeRendererContext;
 DECLARE_CLASS(MangoNodeRendererContext, MangoPrototype,
     MangoNode *             node;
-    MangoNodeRenderContext *parent;
+    MangoNodeRendererContext *parent;
 );
 
 
-typedef struct MangoNodeRendererPrototype MangoNodeRendererPrototype;
 INHERIT_STRUCT(MangoNodeRendererPrototype, MangoPrototype,
     /**
      * Creates node context data for this node.
      */
     void *(*createContextFunc)(MangoNode *node,
                                MangoTemplateContext *templateContext,
-                               MangoNodeRenderContext *topContext);
+                               MangoNodeRendererContext *topContext);
 
     /**
      * Renders a bit of the node and returns the next node (if a child node
@@ -40,7 +38,7 @@ INHERIT_STRUCT(MangoNodeRendererPrototype, MangoPrototype,
      */
     MangoNode *(*renderBitMore)(MangoNode *node, 
                                 MangoTemplateContext *templateContext,
-                                MangoNodeRenderContext *topContext);
+                                MangoNodeRendererContext *topContext);
 
     /**
      * Called when a child node (that was returned in renderBitMore) was
@@ -57,7 +55,7 @@ INHERIT_STRUCT(MangoNodeRendererPrototype, MangoPrototype,
      */
     MangoNode *(*childExited)(MangoNode *node, 
                               MangoTemplateContext *templateContext,
-                              MangoNodeRenderContext *topContext);
+                              MangoNodeRendererContext *topContext);
 );
 
 DECLARE_CLASS(MangoNodeRenderer, MangoNodeRendererPrototype);

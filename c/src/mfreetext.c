@@ -31,7 +31,7 @@ MangoFreeTextNode *mango_freetext_new(MangoString *value)
  */
 MangoFreeTextNode *mango_freetext_init(MangoFreeTextNode *mftNode, MangoString *value)
 {
-    mango_node_init((MangoNode *)mftNode, NULL);
+    mango_node_init((MangoNode *)mftNode, mango_freetext_prototype());
     mftNode->value = OBJ_INCREF(value);
     return mftNode;
 }
