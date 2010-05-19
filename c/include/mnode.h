@@ -9,18 +9,10 @@
 extern "C" {
 #endif
 
-/*
- * Typedef of a few callback types.
+/**
+ * Declare empty node prototype.
  */
-typedef int (*NodeCountFunc)(void *nodeData);
-typedef MangoNode *(*NodeChildFunc)(void *nodeData, unsigned index);
-
-INHERIT_STRUCT(MangoNodePrototype, MangoPrototype,
-    /**
-     * Returns the node count.
-     */
-    int (*nodeCountFunc)(void *nodeData);
-);
+INHERIT_STRUCT(MangoNodePrototype, MangoPrototype);
 
 /**
  * A mango node object.

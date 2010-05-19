@@ -2,31 +2,26 @@
 #ifndef __MANGO_TAGPARSER_H__
 #define __MANGO_TAGPARSER_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * Parsers responsible for parsing tags.  Custom tags can be parsed by
- * extending this structure.
+ * Base prototype for all tag parsers.
  */
-struct MangoTagParser
-{
-    /**
-     * Data for the parser.
-     */
-    void *parser_data;
-
-    //! Deletes the tag parser data
-    void (*deleteFunc)(MangoTagParser *parser);
-
+INHERIT_STRUCT(MangoTagParserPrototype, MangoPrototype,
     //! Parses the node
-    MangoNode *(*parserFunc)(MangoTagParser *       tagparser,
-                             MangoParserContext *   ctx,
-                             MangoError **          error);
-};
+    MangoTagNode *(*parserFunc)(MangoTagParser *       tagparser,
+                                MangoParserContext *   ctx,
+                                MangoError **          error);
+);
+
+/**
+ * Super class of all tag parsers.
+ */
+DECLARE_CLASS(MangoTagParser, MangoTagParserPrototype);
 
 #ifdef __cplusplus
 }

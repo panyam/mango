@@ -2,11 +2,17 @@
 #ifndef __MANGO_TAGNODE_H__
 #define __MANGO_TAGNODE_H__
 
-#include "mfwddefs.h"
+#include "mnode.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+/**
+ * Superclass for all tag nodes.
+ */
+DECLARE_CLASS(MangoTagNode, MangoNode);
 
 /**
  * Extracts a tag node using a given parser.
@@ -16,7 +22,7 @@ extern "C" {
  *
  * \return  NULL if failure otherwise a MangoNode.
  */
-extern MangoNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

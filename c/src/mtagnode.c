@@ -18,7 +18,7 @@
  *
  * \return  NULL if failure otherwise a MangoNode.
  */
-MangoNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
 {
     MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
@@ -34,5 +34,5 @@ MangoNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError
         return NULL;
     }
 
-    return tagparser->parserFunc(tagparser, ctx, error);
+    return tagparser->__prototype__->parserFunc(tagparser, ctx, error);
 }

@@ -9,7 +9,6 @@
 MangoNodePrototype *mango_freetext_prototype()
 {
     DECLARE_PROTO_VARIABLE("FreeText", MangoNodePrototype, freetextPrototype,
-        freetextPrototype.nodeCountFunc     = NULL;
         ((MangoPrototype *)&freetextPrototype)->deallocFunc = (PrototypeDeallocFunc)mango_freetext_dealloc;
         ((MangoPrototype *)&freetextPrototype)->equalsFunc  = (PrototypeEqualsFunc)mango_freetext_are_equal;
         ((MangoPrototype *)&freetextPrototype)->compareFunc = (PrototypeCompareFunc)mango_freetext_compare;

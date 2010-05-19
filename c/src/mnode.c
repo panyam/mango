@@ -9,7 +9,6 @@ MangoNode *default_get_child_node(void *nodeData, unsigned index);
 MangoNodePrototype *mango_node_prototype()
 {
     DECLARE_PROTO_VARIABLE("Node", MangoNodePrototype, nodePrototype,
-        nodePrototype.nodeCountFunc     = NULL;
         ((MangoPrototype *)&nodePrototype)->deallocFunc = mango_node_dealloc;
     );
 }

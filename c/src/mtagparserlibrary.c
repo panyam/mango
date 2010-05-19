@@ -19,3 +19,4 @@ const MangoTagParser *mango_tagparser_library_get(const MangoString *name,
 
     return (const MangoTagParser *)mango_library_get(library, name);
 }
+
