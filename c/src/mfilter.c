@@ -3,26 +3,13 @@
 #include "mfilter.h"
 
 /**
- * Initialises a mango filter prototype.
- */
-MangoFilterPrototype *mango_filter_prototype_init(MangoFilterPrototype *proto, const char *name)
-{
-    mango_prototype_init((MangoPrototype *)proto, name);
-    ((MangoPrototype *)proto)->deallocFunc      = mango_filter_dealloc;
-    proto->makeInvocationContextFunc = NULL;
-    proto->makeInstanceContextFunc   = NULL;
-    return proto;
-}
-
-/**
  * Returns the mango filter prototype.
  */
-MangoFilterPrototype *mango_filter_prototype()
-{
-    DECLARE_PROTO_VARIABLE("Filter", MangoFilterPrototype, filterProto,
-        mango_filter_prototype_init(&filterProto, "Filter");
-    );
-}
+DECLARE_PROTO_FUNC("Filter", MangoFilterPrototype, mango_filter_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc = mango_filter_dealloc;
+    __proto__.makeInvocationContextFunc = NULL;
+    __proto__.makeInstanceContextFunc   = NULL;
+);
 
 /**
  * Dealloc's a filter when its refcount reaches 0.

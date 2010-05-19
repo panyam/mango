@@ -12,7 +12,12 @@ extern "C" {
 /**
  * Superclass for all tag nodes.
  */
-DECLARE_CLASS(MangoTagNode, MangoNode);
+INHERIT_STRUCT(MangoTagNode, MangoNode);
+
+/**
+ * Initialises a tag node.
+ */
+extern MangoTagNode *mango_tagnode_init(MangoTagNode *tagnode, MangoNodePrototype *proto);
 
 /**
  * Extracts a tag node using a given parser.

@@ -16,7 +16,14 @@
 static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
 
-#if 0
+/**
+ * Get the prototype for the fortag.
+ */
+DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_fortag_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc = (PrototypeEqualsFunc)mango_fortags_are_equal;
+);
+
 /**
  * Creates a new fortag node.
  * \param   source      Source variable to be used.
@@ -29,39 +36,55 @@ MangoForTagNode *mango_fortag_new(MangoVariable * source,
                                   MangoNode * childNode,
                                   MangoNode * emptyNode)
 {
-    MangoForTagNode *node       = OBJ_ALLOC(MangoForTagNode, MangoNodePrototype);
-    MangoNode *node             = mango_node_new(NULL);
-    node->nodeClass             = mango_class_for_name("ForTag", true);
-    node->deleteNodeFunc        = (DeleteFunc)mango_fortag_free;
-    return node;
+    MangoForTagNode *node   = NEW(MangoForTagNode);
+    return mango_fortag_init(node, source, childNode, emptyNode, NULL);
 }
 
 /**
- * Frees the data for a for tag node.
- * \param ftndata   The for-tag node data.
+ * Initialises a fortag object.
+ * \param   mftnode     Fortag node to be initialised.
+ * \param   source      Source variable to be used.
+ * \param   childNode   Nodes to be used on each iteration.
+ * \param   emptyNode   Nodes to be used if body of the loop was never hit.
+ * \param   proto       Fortag prototype or its children to be used as
+ *                      base.
+ *
+ * \return  The node passed into be intialised.
  */
-void mango_fortag_free(MangoForTagNode *ftndata)
+MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
+                                   MangoVariable * source,
+                                   MangoNode * childNode,
+                                   MangoNode * emptyNode,
+                                   MangoNodePrototype *proto)
 {
-    if (ftndata->childNodes != NULL)
-    {
-        mango_node_free(ftndata->childNodes);
-    }
-    if (ftndata->emptyNodes != NULL)
-    {
-        mango_node_free(ftndata->emptyNodes);
-    }
+    if (proto == NULL)
+        proto = mango_fortag_prototype();
+    mango_tagnode_init((MangoTagNode *)mftnode, proto);
+    mftnode->items          = NULL;
+    mftnode->sourceVariable = source;
+    mftnode->childNodes     = childNode;
+    mftnode->emptyNodes     = emptyNode;
+    return mftnode;
+}
 
-    if (ftndata->sourceVariable != NULL)
-    {
-        mango_variable_free(ftndata->sourceVariable);
-    }
+/**
+ * Deallocs the for tag data when ref count reaches 0.
+ * \param ftn   The for-tag node to be dealloced.
+ */
+void mango_fortag_dealloc(MangoForTagNode *ftn)
+{
+    OBJ_DECREF(ftn->childNodes);
+    OBJ_DECREF(ftn->emptyNodes);
+    OBJ_DECREF(ftn->sourceVariable);
 
-    if (ftndata->items != NULL)
+    if (ftn->items != NULL)
     {
-        mango_list_clear(ftndata->items, (DeleteFunc)mango_variable_free);
-        mango_list_free(ftndata->items);
+        mango_list_clear(ftn->items, (DeleteFunc)mango_object_decref);
+        mango_list_free(ftn->items);
     }
 }
+
+#if 0
 
 /**
  * Extracts a for-tag from the token stream usign the parser.

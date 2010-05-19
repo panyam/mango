@@ -11,6 +11,15 @@
 #include "mstringfactory.h"
 
 /**
+ * Initialises a tag node.
+ */
+MangoTagNode *mango_tagnode_init(MangoTagNode *tagnode, MangoNodePrototype *proto)
+{
+    mango_node_init((MangoNode *)tagnode, proto);
+    return tagnode;
+}
+
+/**
  * Extracts a tag node using a given parser.
  *
  * \param   ctx     Parser context containing necessary items for parsing.

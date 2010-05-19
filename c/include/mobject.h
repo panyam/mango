@@ -52,16 +52,22 @@ extern "C" {
     }
 
 
-#define DECLARE_PROTO_VARIABLE(VAR_CLASS_ID, VAR_TYPE, VAR_NAME, ...)       \
-    static VAR_TYPE VAR_NAME;                                               \
-    static BOOL initialised = false;                                        \
-    if (!initialised)                                                       \
-    {                                                                       \
-        mango_prototype_init((MangoPrototype *)(&VAR_NAME), VAR_CLASS_ID);  \
-        __VA_ARGS__                                                         \
-        initialised = true;                                                 \
-    }                                                                       \
-    return &VAR_NAME;                                                       \
+/**
+ * Macro for generating a function that returns a specific prototype
+ * object.
+ */
+#define DECLARE_PROTO_FUNC(VAR_CLASS_ID, VAR_TYPE, VAR_FUNC, ...)               \
+    VAR_TYPE *VAR_FUNC() {                                                      \
+        static VAR_TYPE __proto__;                                              \
+        static BOOL initialised = false;                                        \
+        if (!initialised)                                                       \
+        {                                                                       \
+            mango_prototype_init((MangoPrototype *)(&__proto__), VAR_CLASS_ID); \
+            __VA_ARGS__                                                         \
+            initialised = true;                                                 \
+        }                                                                       \
+        return &__proto__;                                                      \
+    }                                                                           \
 
 /**
  * Set of Prototype related methods.

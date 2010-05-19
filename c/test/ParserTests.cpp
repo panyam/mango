@@ -184,6 +184,7 @@ TEST_FIXTURE(ParserTestFixture, TestOnlyFreeText)
     SetUpWithInputString("Hello World");
     MangoString *hello = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     CheckParsedNodeWith(1, mango_freetext_new(hello));
+    OBJ_DECREF(hello);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestFreeTextWithComments)
@@ -341,22 +342,28 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleFiltersWithArguments)
 
 ///////////////	Testing tags now!!!
 
+TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)
+{
+    SetUpWithInputString("{% a b c %}Hello World");
+    MangoError *error = NULL;
+    mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, &error);
+    MangoString *hello = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    CheckParsedNodeWith(1, mango_freetext_new(hello));
+    OBJ_DECREF(hello);
+    if (error != NULL)
+    {
+        printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
+        CHECK(false);
+        mango_error_free(error);
+        CHECK(false);
+    }
+}
+
 #if 0
 TEST_FIXTURE(ParserTestFixture, TestSingleUnclosedTag)
 {
     SetUpWithInputString("{% for a in listofas %}");
     CheckParsedNodeForException(-1, "End nodes were not found");
-}
-
-TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)
-{
-    SetUpWithInputString("{% a b c %}Hello World");
-    try {
-        parser.discardTokensTill(TokenType.TOKEN_CLOSE_TAG);
-        CheckParsedNodeWith(mango_freetext_new(mango_string_from_buffer("Hello World", -1)));
-    } catch (ParserException e) {
-        e.printStackTrace();
-    }
 }
 
 TEST_FIXTURE(ParserTestFixture, TestSimpleForTag)

@@ -16,16 +16,13 @@
 /**
  * The prototype for the MangoVariable.
  */
-MangoVariablePrototype *mango_variable_prototype()
-{
-    DECLARE_PROTO_VARIABLE("Variable", MangoVariablePrototype, variableProto,
-        variableProto.setNextVarFunc = mango_variable_set_next;
-        // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-        ((MangoPrototype *)&variableProto)->deallocFunc = (PrototypeDeallocFunc)mango_variable_dealloc;
-        ((MangoPrototype *)&variableProto)->equalsFunc  = (PrototypeEqualsFunc)mango_variables_are_equal;
-        // ((MangoPrototype *)&variableProto)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
-    );
-}
+DECLARE_PROTO_FUNC("Variable", MangoVariablePrototype, mango_variable_prototype,
+    __proto__.setNextVarFunc = mango_variable_set_next;
+    // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_variable_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc  = (PrototypeEqualsFunc)mango_variables_are_equal;
+    // ((MangoPrototype *)&__proto__)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+);
 
 /**
  * Creates a new mango variable.

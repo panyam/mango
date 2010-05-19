@@ -8,12 +8,9 @@
 /**
  * The prototype for mango node lists.
  */
-MangoNodePrototype *mango_nodelist_prototype()
-{
-    DECLARE_PROTO_VARIABLE("MangoNodeList", MangoNodePrototype, nodeListPrototype,
-        ((MangoPrototype *)&nodeListPrototype)->deallocFunc = (PrototypeDeallocFunc)mango_nodelist_dealloc;
-    );
-}
+DECLARE_PROTO_FUNC("MangoNodeList", MangoNodePrototype, mango_nodelist_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_nodelist_dealloc;
+);
 
 /**
  * Creates a new list node with a bunch of nodes.
@@ -29,6 +26,8 @@ MangoNodeList *mango_nodelist_new(MangoList *nodes)
  */
 MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, MangoNodePrototype *prototype)
 {
+    if (prototype == NULL)
+        prototype = mango_nodelist_prototype();
     mango_node_init((MangoNode *)nodelist, prototype);
     nodelist->nodes     = nodes;
     return nodelist;

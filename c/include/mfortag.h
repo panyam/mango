@@ -2,7 +2,8 @@
 #ifndef __MANGO_FOR_TAG_NODE_H__
 #define __MANGO_FOR_TAG_NODE_H__
 
-#include "mnode.h"
+#include "mtagnode.h"
+#include "mnoderenderer.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +18,7 @@ extern "C" {
  * {% empty %}
  * {% endfor %}
  */
-INHERIT_STRUCT(MangoForTagNode, MangoNode,
+INHERIT_STRUCT(MangoForTagNode, MangoTagNode,
     // list of variables referred
     MangoList *items;
 
@@ -35,15 +36,15 @@ typedef struct MangoForTagNode MangoForTagNode;
 /**
  * Context data for the for-tag during rendering.
  */
-typedef struct MangoForTagContext
-{
+INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeRendererContext,
     BOOL                isFirst;
     BOOL                isLast;
     int                 currIndex;
     BOOL                isEmpty;
     MangoValueIterator *valIterator;
     MangoArray *        itemValues;
-} MangoForTagContext;
+);
+typedef struct MangoForTagRendererContext MangoForTagRendererContext;
 
 ///////////////////////////////////////////////////////////////////////////
 //      Tag data specific methods
@@ -53,6 +54,35 @@ typedef struct MangoForTagContext
  * Returns the prototype for the mango fortag node.
  */
 extern MangoNodePrototype *mango_fortag_prototype();
+
+/**
+ * Creates a new fortag node.
+ * \param   source      Source variable to be used.
+ * \param   childNode   Nodes to be used on each iteration.
+ * \param   emptyNode   Nodes to be used if body of the loop was never hit.
+ *
+ * \return  A new MangoNode instance.
+ */
+extern MangoForTagNode *mango_fortag_new(MangoVariable * source,
+                                         MangoNode * childNode,
+                                         MangoNode * emptyNode);
+
+/**
+ * Initialises a fortag object.
+ * \param   mftnode     Fortag node to be initialised.
+ * \param   source      Source variable to be used.
+ * \param   childNode   Nodes to be used on each iteration.
+ * \param   emptyNode   Nodes to be used if body of the loop was never hit.
+ * \param   proto       Fortag prototype or its children to be used as
+ *                      base.
+ *
+ * \return  The node passed into be intialised.
+ */
+extern MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
+                                          MangoVariable * source,
+                                          MangoNode * childNode,
+                                          MangoNode * emptyNode,
+                                          MangoNodePrototype *proto);
 
 /**
  * Frees for-tag-node data.
@@ -99,16 +129,16 @@ extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
-                                               MangoTemplateContext *  tmplCtx,
-                                               MangoNodeRendererContext *topCtx);
+extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
+                                                       MangoTemplateContext *  tmplCtx,
+                                                       MangoNodeRendererContext *topCtx);
 
 /**
  * Sets the source variable for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source variable to set.
  */
-extern void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source);
+extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoValue source);
 
 #ifdef __cplusplus
 }

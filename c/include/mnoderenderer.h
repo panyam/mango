@@ -15,8 +15,8 @@ extern "C" {
  * This struct stores that node specific context.
  */
 DECLARE_CLASS(MangoNodeRendererContext, MangoPrototype,
-    MangoNode *             node;
-    MangoNodeRendererContext *parent;
+    MangoNode *                 node;
+    MangoNodeRendererContext *  parent;
 );
 
 

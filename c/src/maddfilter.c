@@ -10,13 +10,9 @@ int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
 /**
  * Returns the prototype for the add filter.
  */
-MangoFilterPrototype *mango_addfilter_prototype()
-{
-    DECLARE_PROTO_VARIABLE("AddFilter", MangoFilterPrototype, filterProto,
-        mango_filter_prototype_init(&filterProto, "AddFilter");
-        filterProto.applyFunc = mango_addfilter_apply;
-    );
-}
+DECLARE_PROTO_FUNC("AddFilter", MangoFilterPrototype, mango_addfilter_prototype,
+    __proto__.applyFunc = mango_addfilter_apply;
+);
 
 int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
                           MangoValue *output, MangoTemplateContext *context,

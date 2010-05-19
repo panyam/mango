@@ -12,13 +12,10 @@
 /**
  * The prototype for mango var nodes.
  */
-MangoNodePrototype *mango_varnode_prototype()
-{
-    DECLARE_PROTO_VARIABLE("VarNode", MangoNodePrototype, varnodePrototype,
-        ((MangoPrototype *)&varnodePrototype)->deallocFunc  = (PrototypeDeallocFunc)mango_varnode_dealloc;
-        ((MangoPrototype *)&varnodePrototype)->equalsFunc   = (PrototypeEqualsFunc)mango_varnode_are_equal;
-    );
-}
+DECLARE_PROTO_FUNC("VarNode", MangoNodePrototype, mango_varnode_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc  = (PrototypeDeallocFunc)mango_varnode_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc   = (PrototypeEqualsFunc)mango_varnode_are_equal;
+);
 
 /**
  * Creates a new mango node list.

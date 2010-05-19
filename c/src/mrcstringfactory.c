@@ -6,15 +6,12 @@
 #include "mrcstringtable.h"
 #include "mmemutils.h"
 
-MangoStringFactoryPrototype *mango_rcstringfactory_prototype()
-{
-    DECLARE_PROTO_VARIABLE("RCStringFactory", MangoStringFactoryPrototype, rcsfactoryProto,
-        rcsfactoryProto.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
-        rcsfactoryProto.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
-        rcsfactoryProto.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
-        ((MangoPrototype *)&rcsfactoryProto)->deallocFunc = (PrototypeDeallocFunc)mango_rcstringfactory_dealloc;
-    );
-}
+DECLARE_PROTO_FUNC("RCStringFactory", MangoStringFactoryPrototype, mango_rcstringfactory_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_rcstringfactory_dealloc;
+    __proto__.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
+    __proto__.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
+    __proto__.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
+);
 
 /**
  * Creates a new immutale string factory.
