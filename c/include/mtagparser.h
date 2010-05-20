@@ -8,6 +8,10 @@
 extern "C" {
 #endif
 
+//! Parses the node
+typedef MangoTagNode *(*TagParserFunc)(MangoTagParser *     tagparser,
+                                       MangoParserContext * ctx,
+                                       MangoError **        error);
 /**
  * Base prototype for all tag parsers.
  */

@@ -80,7 +80,7 @@ void *mango_library_get(const MangoLibrary *library, const MangoString *name)
     {
         MangoBinTreeNode *node = mango_bintree_find(library->entries, name, (CompareFunc)libentry_name_cmp);
         if (node != NULL)
-            entry = node->data;
+            entry = ((MangoLibraryEntry *)node->data)->entry;
     }
     return entry;
 }

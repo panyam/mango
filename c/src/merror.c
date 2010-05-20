@@ -47,7 +47,8 @@ int mango_error_set(MangoError **error, int code, const char *format, ...)
         char buffer[MAX_MESSAGE_SIZE];
         int result = vsnprintf(buffer, MAX_MESSAGE_SIZE, format, ap);
         va_end(ap);
-        (*error)->errorMessage = strdup(buffer);
+        (*error)->errorCode     = code;
+        (*error)->errorMessage  = strdup(buffer);
         return result;
     }
     return 0;

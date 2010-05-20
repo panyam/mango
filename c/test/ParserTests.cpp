@@ -116,6 +116,9 @@ public:
             MangoNode *expectedNode = va_arg(ap, MangoNode *);
             CHECK(OBJ_EQUALS(expectedNode, node));
             va_end(ap);
+
+            // delete the expected node now that we are done with it
+            OBJ_DECREF(expectedNode);
         }
         else if (numNodes > 1)
         {
@@ -130,10 +133,15 @@ public:
                 MangoNode *expectedNode = va_arg(ap, MangoNode *);
                 MangoNode *childNode = mango_nodelist_childat(nodelist, i);
                 CHECK(OBJ_EQUALS(expectedNode, childNode));
+
+                // delete the expected node now that we are done with it
+                OBJ_DECREF(expectedNode);
             }
             va_end(ap);
         }
+
         OBJ_DECREF(node);
+
         if (error != NULL)
         {
             printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
@@ -152,7 +160,7 @@ public:
         if (error != NULL)
         {
             CHECK_EQUAL(code, error->errorCode);
-            CHECK_EQUAL(message.c_str(), message.c_str());
+            CHECK_EQUAL(message.c_str(), error->errorMessage);
             mango_error_free(error);
         }
     }
@@ -369,13 +377,13 @@ TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)
     }
 }
 
-#if 0
 TEST_FIXTURE(ParserTestFixture, TestSingleUnclosedTag)
 {
     SetUpWithInputString("{% for a in listofas %}");
-    CheckParsedNodeForException(-1, "End nodes were not found");
+    CheckParsedNodeForException(-1, "Unexpected EOF encountered without reaching end node.");
 }
 
+#if 0
 TEST_FIXTURE(ParserTestFixture, TestSimpleForTag)
 {
     SetUpWithInputString("{% for a in listofas %}{%endfor%}");

@@ -21,9 +21,10 @@
  */
 MangoParser *mango_parser_new(MangoTokenizer *tokenizer)
 {
-    MangoParser *parser = (MangoParser *)calloc(1, sizeof(MangoParser));
-    parser->tokenizer = tokenizer;
-    parser->currToken   = (MangoToken *)calloc(1, sizeof(MangoToken));
+    MangoParser *parser     = (MangoParser *)calloc(1, sizeof(MangoParser));
+    parser->tokenizer       = tokenizer;
+    parser->currToken       = (MangoToken *)calloc(1, sizeof(MangoToken));
+    parser->endNodeStack    = mango_list_new();
     return parser;
 }
 
@@ -110,7 +111,7 @@ const MangoToken *mango_parser_expect_token(MangoParser *parser,
     const MangoToken *token = mango_parser_next_token(parser, peekOnly, error);
     if (token == NULL)
     {
-        mango_error_set(error, -1, "Expected %d but found EOF instead!", tokenType);
+        mango_error_set(error, -1, "Expected %s but found EOF instead!", MangoTokenStrings[tokenType]);
         return NULL;
     }
     if (token->tokenType == TOKEN_ERROR)
@@ -119,7 +120,7 @@ const MangoToken *mango_parser_expect_token(MangoParser *parser,
     }
     if (token->tokenType != tokenType)
     {
-        mango_error_set(error, -1, "Expected %d, Found %d instead.", tokenType, token->tokenType);
+        mango_error_set(error, -1, "Expected %s, Found %s instead.", MangoTokenStrings[tokenType], MangoTokenStrings[token->tokenType]);
         return NULL;
     }
     return token;
@@ -296,6 +297,10 @@ MangoNode *mango_parser_parse_till(MangoParserContext *ctx,
         if (parsedNodes != NULL)
         {
             mango_error_set(error, -1, "End nodes do not match");
+        }
+        else
+        {
+            mango_error_set(error, -1, "Unexpected EOF encountered without reaching end node.");
         }
     }
     return parsedNodes;

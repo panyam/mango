@@ -176,7 +176,8 @@ dep:
 ../bld/./ParserTests.o: ../include/mtemplateloader.h ../include/mtokenlists.h
 ../bld/./ParserTests.o: ../include/mutils.h ../include/mvalue.h
 ../bld/./ParserTests.o: ../include/mvarresolver.h ../include/mvarlibrary.h
-../bld/./ParserTests.o: ../include/mvarnode.h stlinputsource.h
+../bld/./ParserTests.o: ../include/mvarnode.h ../include/ext/mangoextpub.h
+../bld/./ParserTests.o: ../include/ext/mfortag.h stlinputsource.h
 ../bld/./ParserTests.o: ../include/maddfilter.h
 ../bld/./ResolverTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ResolverTests.o: ../include/mobject.h ../include/mfwddefs.h

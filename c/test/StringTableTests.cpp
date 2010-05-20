@@ -165,6 +165,7 @@ TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringCopy)
  */
 TEST_FIXTURE(RCStringTableTestFixture, TestIncRefOnStringFree)
 {
+    MangoRCStringTable *mstable = ((MangoRCStringFactory *)string_factory)->mrcstable;
     MangoString *mstr1 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoString *mstr2 = mango_stringfactory_new_string(string_factory, "Hello World", -1);
     MangoRCString *rcstr1 = (MangoRCString *)mstr1;

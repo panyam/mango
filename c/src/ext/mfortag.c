@@ -24,6 +24,10 @@ DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
     ((MangoPrototype *)&__proto__)->equalsFunc = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
 
+DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_prototype,
+    __proto__.parserFunc = (TagParserFunc)mango_fortag_extract_with_parser;
+);
+
 /**
  * Creates a new fortag node.
  * \param   source      Source variable to be used.
@@ -125,7 +129,7 @@ MangoTagParser *mango_fortagparser_default()
     static BOOL initialised = false;
     if (!initialised)
     {
-        OBJ_INIT(&tagparser, mango_fortag_prototype());
+        OBJ_INIT(&tagparser, mango_fortagparser_prototype());
         initialised = true;
     }
     return &tagparser;
@@ -154,23 +158,29 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
     // parse child nodes till the endfor tag.
     ftn->childNodes = mango_parser_parse_till(ctx, EMPTY_OR_ENDFOR, error);
 
-    // see if this is the end of it or if there is an "empty" bit
-    const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
-
-    // see what the node name was if it was "empty" then read again
-    BOOL isEmptyTag = strcmp("empty", token->tokenValue->buffer) == 0;
-    mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
-    if (isEmptyTag)
+    if (error == NULL || *error == NULL)
     {
-        // read till end-tag variable
-        ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
-        token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
-        mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
-    }
-    return ftn;
-}
+        // see if this is the end of it or if there is an "empty" bit
+        const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
 
-#if 0
+        // see what the node name was if it was "empty" then read again
+        if (token != NULL)
+        {
+            BOOL isEmptyTag = strcmp("empty", token->tokenValue->buffer) == 0;
+            mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
+            if (isEmptyTag)
+            {
+                // read till end-tag variable
+                ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
+                token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
+                mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
+            }
+            return ftn;
+        }
+    }
+    OBJ_DECREF(ftn);
+    return NULL;
+}
 
 /**
  * Parse the list of items before the "in".
@@ -236,6 +246,8 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var)
         ftd->items = mango_list_new();
     mango_list_push_back(ftd->items, var);
 }
+
+#if 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //              ForTag Render Context related methods
@@ -319,6 +331,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
 }
 
 #endif 
+
 #if 0
     /**
      * Called when an instance of this tagnode is registered.
