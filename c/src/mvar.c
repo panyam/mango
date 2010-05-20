@@ -19,9 +19,8 @@
 DECLARE_PROTO_FUNC("Variable", MangoVariablePrototype, mango_variable_prototype,
     __proto__.setNextVarFunc = mango_variable_set_next;
     // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_variable_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc  = (PrototypeEqualsFunc)mango_variables_are_equal;
-    // ((MangoPrototype *)&__proto__)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_variable_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_variables_are_equal;
 );
 
 /**

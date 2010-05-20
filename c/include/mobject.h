@@ -72,9 +72,9 @@ extern "C" {
 /**
  * Set of Prototype related methods.
  */
-typedef void (*PrototypeDeallocFunc)(MangoObject *object);
-typedef BOOL (*PrototypeEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
-typedef int (*PrototypeCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef void (*ObjectDeallocFunc)(MangoObject *object);
+typedef BOOL (*ObjectEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef int (*ObjectCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
 
 /**
  * Prototypes are the blueprints for objects.  Almost like classes.

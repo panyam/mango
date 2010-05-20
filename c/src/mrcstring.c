@@ -10,9 +10,9 @@ DECLARE_PROTO_FUNC("RCString", MangoStringPrototype, mango_rcstring_prototype,
     __proto__.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
     __proto__.sizeFunc    = (StringLengthFunc)mango_rcstring_length;
     // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_rcstring_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc  = (PrototypeEqualsFunc)mango_rcstrings_are_equal;
-    ((MangoPrototype *)&__proto__)->compareFunc = (PrototypeCompareFunc)mango_rcstring_compare;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstring_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_rcstrings_are_equal;
+    ((MangoPrototype *)&__proto__)->compareFunc = (ObjectCompareFunc)mango_rcstring_compare;
 );
 
 /**

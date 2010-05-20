@@ -20,8 +20,8 @@ static const char *ENDFOR[2] = { "endfor", NULL };
  * Get the prototype for the fortag.
  */
 DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_fortag_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc = (PrototypeEqualsFunc)mango_fortags_are_equal;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_fortag_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
 
 /**
@@ -82,6 +82,34 @@ void mango_fortag_dealloc(MangoForTagNode *ftn)
         mango_list_clear(ftn->items, (DeleteFunc)mango_object_decref);
         mango_list_free(ftn->items);
     }
+}
+
+/**
+ * Compares the data of for-tag nodes to see if they are equal.
+ * \param   ftd1    First for-tag data in comparison.
+ * \param   ftd2    Second for-tag data in comparison.
+ * \return true if the two objects are recursively equal, false otherwise.
+ */
+BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode *ftd2)
+{
+    if (ftd1 == ftd2)
+    {
+        return true;
+    }
+    else if (ftd1 == NULL || ftd2 == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        if (mango_variables_are_equal(ftd1->sourceVariable, ftd2->sourceVariable))
+        {
+            return mango_lists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_variables_are_equal) &&
+                    OBJ_EQUALS(ftd1->childNodes, ftd2->childNodes) &&
+                    OBJ_EQUALS(ftd1->emptyNodes, ftd2->emptyNodes);
+        }
+    }
+    return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -207,34 +235,6 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var)
     if (ftd->items == NULL)
         ftd->items = mango_list_new();
     mango_list_push_back(ftd->items, var);
-}
-
-/**
- * Compares the data of for-tag nodes to see if they are equal.
- * \param   ftd1    First for-tag data in comparison.
- * \param   ftd2    Second for-tag data in comparison.
- * \return true if the two objects are recursively equal, false otherwise.
- */
-BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode *ftd2)
-{
-    if (ftd1 == ftd2)
-    {
-        return true;
-    }
-    else if (ftd1 == NULL || ftd2 == NULL)
-    {
-        return false;
-    }
-    else
-    {
-        if (mango_variables_are_equal(ftd1->sourceVariable, ftd2->sourceVariable))
-        {
-            return mango_lists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_variables_are_equal) &&
-                    mango_nodes_are_equal(ftd1->childNodes, ftd2->childNodes) &&
-                    mango_nodes_are_equal(ftd1->emptyNodes, ftd2->emptyNodes);
-        }
-    }
-    return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,7 @@
 #include "mmemutils.h"
 
 DECLARE_PROTO_FUNC("RCStringFactory", MangoStringFactoryPrototype, mango_rcstringfactory_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_rcstringfactory_dealloc;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstringfactory_dealloc;
     __proto__.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
     __proto__.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
 );
