@@ -1,6 +1,7 @@
 
 #include <UnitTest++.h>
 #include "mangopub.h"
+#include "mangoextpub.h"
 #include "stlinputsource.h"
 #include <vector>
 #include <sstream>
@@ -36,10 +37,19 @@ public:
         parser_context.taglib       = tagLibrary;
         parser_context.strfactory   = string_factory;
         parser_context.loader       = NULL;
-        MangoString *add = mango_stringfactory_new_string(string_factory, "add", -1);
-        MangoFilter *newfilter = mango_addfilter_new(NULL);
-        mango_library_register(filterLibrary, add, newfilter);
-        mango_stringfactory_free_string(string_factory, add);
+
+        // register filters
+        register_in_library(filterLibrary, string_factory, "add", mango_addfilter_default());
+
+        // and register the "for" tag
+        register_in_library(tagLibrary, string_factory, "for", mango_fortagparser_default());
+    }
+
+    static void register_in_library(MangoLibrary *library, MangoStringFactory *string_factory, const char *key, void *value)
+    {
+        MangoString *mkey = mango_stringfactory_new_string(string_factory, key, -1);
+        mango_library_register(library, mkey, value);
+        OBJ_DECREF(mkey);
     }
 
     virtual ~ParserTestFixture()

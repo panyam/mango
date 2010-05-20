@@ -22,15 +22,6 @@ MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
 }
 
 /**
- * Frees a previously created string.
- */
-void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str)
-{
-    if (factory->__prototype__->freeStringFunc != NULL)
-        factory->__prototype__->freeStringFunc(factory, str);
-}
-
-/**
  * String factory's dealloc method called when refcount reaches 0.
  */
 void mango_stringfactory_dealloc(MangoStringFactory *factory)

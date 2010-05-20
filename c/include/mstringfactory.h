@@ -23,11 +23,6 @@ INHERIT_STRUCT(MangoStringFactoryPrototype, MangoPrototype,
      * Creates a new string from a string buffer.
      */
     MangoString *(*fromBufferFunc)(MangoStringFactory *factory, const MangoStringBuffer *buffer);
-
-    /**
-     * Frees a string created by the previous 2 functions.
-     */
-    void (*freeStringFunc)(MangoStringFactory *factory, MangoString *str);
 );
 
 /**
@@ -52,11 +47,6 @@ extern MangoString *mango_stringfactory_new_string(MangoStringFactory *factory,
  */
 extern MangoString *mango_stringfactory_from_buffer(MangoStringFactory *factory,
                                                     const MangoStringBuffer *buffer);
-
-/**
- * Frees a previously created string.
- */
-extern void mango_stringfactory_free_string(MangoStringFactory *factory, MangoString *str);
 
 #ifdef __cplusplus
 }

@@ -31,6 +31,7 @@ BIN_INSTALL_DIR         = /usr/local/bin
 UNITTEST_PP_DIR     = ../../UnitTest++
 
 TEST_SOURCE_FOLDERS = .
+INCLUDE_FOLDERS     = ../include ../include/ext
 TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.cpp))
 TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/$(obj))
 TEST_OUTPUT         = $(OUTPUT_DIR)/$(MAIN_EXE_NAME)
@@ -81,7 +82,7 @@ distclean: cleanall
 	@rm -f Makefile
 
 dep:
-	makedepend -Y -p"$(OUTPUT_DIR)/" -I../include   -- $(TEST_SOURCES)
+	makedepend -Y -p"$(OUTPUT_DIR)/" $(INCLUDE_FLAGS)  -- $(TEST_SOURCES)
 # DO NOT DELETE
 
 ../bld/./ArrayTests.o: ../include/mangopub.h ../include/marray.h

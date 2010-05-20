@@ -45,3 +45,4 @@ MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoEr
 
     return tagparser->__prototype__->parserFunc(tagparser, ctx, error);
 }
+

@@ -14,7 +14,6 @@
 #
 
 PROJECT_FOLDER          := `pwd`
-INCLUDE_FOLDERS         = include
 
 # 
 # Version/Product information
@@ -47,7 +46,8 @@ OUTPUT_DIR              := $(OUTPUT_DIR)/$(BUILD_MODE)
 DEBUG_CFLAGS            =   -g -fno-inline
 PROFILE_CFLAGS          =   -g -fno-inline -pg
 RELEASE_CFLAGS          =   -O3
-CORE_CFLAGS             =   -Wall -I../$(INCLUDE_FOLDERS)
+INCLUDE_FLAGS           =   $(foreach dir,$(INCLUDE_FOLDERS), -I$(dir)) 
+CORE_CFLAGS             =   -Wall $(INCLUDE_FLAGS)
 
 ifeq ($(BUILD_MODE), debug)
     CFLAGS              =   $(CORE_CFLAGS) $(DEBUG_CFLAGS)              \

@@ -14,6 +14,9 @@ DECLARE_PROTO_FUNC("AddFilter", MangoFilterPrototype, mango_addfilter_prototype,
     __proto__.applyFunc = mango_addfilter_apply;
 );
 
+/**
+ * The apply method of the add filter.
+ */
 int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
                           MangoValue *output, MangoTemplateContext *context,
                           MangoList *arguments)
@@ -24,9 +27,15 @@ int mango_addfilter_apply(MangoFilter *filter, const MangoValue *input,
 /**
  * Creates a new "add" filter.
  */
-MangoFilter *mango_addfilter_new(const MangoString *name, ...)
+MangoFilter *mango_addfilter_default()
 {
-    MangoFilter *filter     = OBJ_ALLOC(MangoFilter, mango_addfilter_prototype());
-    return filter;
+    static MangoFilter addfilter;
+    static BOOL initialised = false;
+    if (!initialised)
+    {
+        OBJ_INIT(&addfilter, mango_addfilter_prototype());
+        initialised = true;
+    }
+    return &addfilter;
 }
 

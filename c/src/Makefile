@@ -33,7 +33,8 @@ endif
 SHARED_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(SHARED_LIB_NAME)"
 STATIC_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(STATIC_LIB_NAME)"
 
-SOURCE_FOLDERS  =   .
+SOURCE_FOLDERS  =   . ext
+INCLUDE_FOLDERS := $(foreach dir,$(SOURCE_FOLDERS),../include/$(dir))
 MANGO_SOURCES   := $(foreach dir,$(SOURCE_FOLDERS),$(wildcard $(dir)/*.c))
 MANGO_OBJS      = $(foreach obj, $(patsubst %.c,%.o,$(MANGO_SOURCES)), $(OUTPUT_DIR)/$(obj))
 LIBS            = 
@@ -43,7 +44,7 @@ LIBS            =
 # Implicit rule to build .o into the build directory from .c
 $(OUTPUT_DIR)/%.o : %.c
 	@echo Building $@
-	@$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
+	$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
 
 all: base static shared
 	@echo LIB_INSTALL_DIR     = $(LIB_INSTALL_DIR)
@@ -90,7 +91,7 @@ distclean: cleanall
 	@rm -f Makefile
 
 dep:
-	makedepend -Y -p"$(OUTPUT_DIR)/" -I../include -- $(MANGO_SOURCES)
+	makedepend -Y -p"$(OUTPUT_DIR)/" $(INCLUDE_FLAGS) -- $(MANGO_SOURCES)
 
 # DO NOT DELETE
 
@@ -126,15 +127,6 @@ dep:
 ../bld/./mfilternode.o: ../include/mstringbuffer.h
 ../bld/./mfilternode.o: ../include/mstringfactory.h
 ../bld/./mfilternode.o: ../include/mtemplatecontext.h
-../bld/./mfortag.o: ../include/mfortag.h ../include/mnode.h
-../bld/./mfortag.o: ../include/mobject.h ../include/mfwddefs.h
-../bld/./mfortag.o: ../include/mmemutils.h ../include/mclasses.h
-../bld/./mfortag.o: ../include/mvalue.h ../include/merror.h ../include/mvar.h
-../bld/./mfortag.o: ../include/mstring.h ../include/mstringbuffer.h
-../bld/./mfortag.o: ../include/mstringfactory.h ../include/mlist.h
-../bld/./mfortag.o: ../include/marray.h ../include/mtokenlists.h
-../bld/./mfortag.o: ../include/mtoken.h ../include/mparser.h
-../bld/./mfortag.o: ../include/mtokenizer.h ../include/mparsercontext.h
 ../bld/./mfreetext.o: ../include/mstring.h ../include/mobject.h
 ../bld/./mfreetext.o: ../include/mfwddefs.h ../include/mmemutils.h
 ../bld/./mfreetext.o: ../include/mfreetext.h ../include/mnode.h
@@ -206,6 +198,7 @@ dep:
 ../bld/./mtagparserlibrary.o: ../include/mtagparserlibrary.h
 ../bld/./mtagparserlibrary.o: ../include/mfwddefs.h ../include/msingletons.h
 ../bld/./mtagparserlibrary.o: ../include/mlibrary.h ../include/mtagparser.h
+../bld/./mtagparserlibrary.o: ../include/mobject.h ../include/mmemutils.h
 ../bld/./mtemplatecontext.o: ../include/mtemplatecontext.h
 ../bld/./mtemplatecontext.o: ../include/mfwddefs.h ../include/mstring.h
 ../bld/./mtemplatecontext.o: ../include/mobject.h ../include/mmemutils.h
@@ -245,3 +238,12 @@ dep:
 ../bld/./mvarresolver.o: ../include/mstring.h ../include/mobject.h
 ../bld/./mvarresolver.o: ../include/mfwddefs.h ../include/mmemutils.h
 ../bld/./mvarresolver.o: ../include/mtemplatecontext.h ../include/mvalue.h
+../bld/ext/mfortag.o: ../include/mvalue.h ../include/mobject.h
+../bld/ext/mfortag.o: ../include/mfwddefs.h ../include/mmemutils.h
+../bld/ext/mfortag.o: ../include/mnode.h ../include/mclasses.h
+../bld/ext/mfortag.o: ../include/merror.h ../include/mvar.h
+../bld/ext/mfortag.o: ../include/mstring.h ../include/mstringbuffer.h
+../bld/ext/mfortag.o: ../include/mstringfactory.h ../include/mlist.h
+../bld/ext/mfortag.o: ../include/marray.h ../include/mtokenlists.h
+../bld/ext/mfortag.o: ../include/mtoken.h ../include/mparser.h
+../bld/ext/mfortag.o: ../include/mtokenizer.h ../include/mparsercontext.h

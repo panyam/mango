@@ -10,7 +10,6 @@ DECLARE_PROTO_FUNC("RCStringFactory", MangoStringFactoryPrototype, mango_rcstrin
     ((MangoPrototype *)&__proto__)->deallocFunc = (PrototypeDeallocFunc)mango_rcstringfactory_dealloc;
     __proto__.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
     __proto__.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
-    __proto__.freeStringFunc   = (MangoStringFactoryFreeStringFunc)mango_rcstringfactory_free_string;
 );
 
 /**
@@ -52,17 +51,11 @@ MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory
 }
 
 /**
- * Frees a string.
- */
-void mango_rcstringfactory_free_string(MangoRCStringFactory *factory, MangoRCString *string)
-{
-}
-
-/**
  * String factory's dealloc method called when refcount reaches 0.
  */
 void mango_rcstringfactory_dealloc(MangoRCStringFactory *factory)
 {
+    mango_rcstring_table_free(factory->mrcstable);
     mango_stringfactory_dealloc((MangoStringFactory *)factory);
 }
 
