@@ -3,6 +3,7 @@
 #define __MANGO_FOR_TAG_NODE_H__
 
 #include "mtagnode.h"
+#include "mtagparser.h"
 #include "mnoderenderer.h"
 
 #ifdef __cplusplus
@@ -105,18 +106,6 @@ extern void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var);
  */
 extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode *ftd2);
 
-/**
- * Parse the list of items before the "in".
- * \param   ftd     For-tag data whose items list is to be populated.
- * \param   ctx     Parser context containing necessary items for parsing.
- * \param   error   Error to be set incase of failure.
- *
- * \returns true if successful, false otherwise.
- */
-extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
-                                         MangoParserContext *ctx,
-                                         MangoError **error);
-
 ///////////////////////////////////////////////////////////////////////////
 //      Render Context specific methods
 ///////////////////////////////////////////////////////////////////////////
@@ -139,6 +128,36 @@ extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *       n
  * \param   source  Source variable to set.
  */
 extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoValue source);
+
+///////////////////////////////////////////////////////////////////////////
+//      Parser specific methods
+///////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the default fortag parser.
+ */
+extern MangoTagParser *mango_fortagparser_default();
+
+/**
+ * Extracts a for-tag from the token stream usign the parser.
+ *
+ * \param   tagparser   The tag parser.
+ * \param   ctx         Parser context containing necessary items for parsing.
+ * \param   error       Error variable to set in case of failure.
+ *
+ * \return Parsed for-tag node data.
+ */
+extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error);
+
+/**
+ * Parse the list of items before the "in".
+ * \param   ftd     For-tag data whose items list is to be populated.
+ * \param   ctx     Parser context containing necessary items for parsing.
+ * \param   error   Error to be set incase of failure.
+ *
+ * \returns true if successful, false otherwise.
+ */
+extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd, MangoParserContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

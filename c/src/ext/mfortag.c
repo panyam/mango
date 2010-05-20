@@ -84,28 +84,47 @@ void mango_fortag_dealloc(MangoForTagNode *ftn)
     }
 }
 
-#if 0
+////////////////////////////////////////////////////////////////////////////////////
+//          Parser related methods
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Returns the default fortag parser.
+ */
+MangoTagParser *mango_fortagparser_default()
+{
+    static MangoTagParser tagparser;
+    static BOOL initialised = false;
+    if (!initialised)
+    {
+        OBJ_INIT(&tagparser, mango_fortag_prototype());
+        initialised = true;
+    }
+    return &tagparser;
+}
+
 
 /**
  * Extracts a for-tag from the token stream usign the parser.
  *
- * \param   ctx     Parser context containing necessary items for parsing.
- * \param   error   Error variable to set in case of failure.
+ * \param   tagparser   The tag parser.
+ * \param   ctx         Parser context containing necessary items for parsing.
+ * \param   error       Error variable to set in case of failure.
  *
  * \return Parsed for-tag node data.
  */
-MangoForTagNode *mango_fortag_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error)
 {
     MangoParser *parser     = ctx->parser;
-    MangoForTagNode *ftd    = ZNEW(MangoForTagNode);
-    mango_fortag_parse_item_list(ftd, ctx, error);
+    MangoForTagNode *ftn    = mango_fortag_new(NULL, NULL, NULL);
+    mango_fortag_parse_item_list(ftn, ctx, error);
 
     // parse the source variable and discared the '%}' token
-    ftd->sourceVariable = mango_variable_extract_with_parser(ctx, error);
+    ftn->sourceVariable = mango_variable_extract_with_parser(ctx, error);
     mango_parser_expect_token(parser, TOKEN_CLOSE_TAG, false, error);
 
     // parse child nodes till the endfor tag.
-    ftd->childNodes = mango_parser_parse_till(ctx, EMPTY_OR_ENDFOR, error);
+    ftn->childNodes = mango_parser_parse_till(ctx, EMPTY_OR_ENDFOR, error);
 
     // see if this is the end of it or if there is an "empty" bit
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
@@ -116,12 +135,14 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoParserContext *ctx, Mango
     if (isEmptyTag)
     {
         // read till end-tag variable
-        ftd->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
+        ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
         token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
         mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
     }
-    return ftd;
+    return ftn;
 }
+
+#if 0
 
 /**
  * Parse the list of items before the "in".
