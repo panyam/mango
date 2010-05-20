@@ -130,7 +130,7 @@ extern void *mango_list_remove_back(MangoList *mlist);
 /**
  * Tells if a list is empty or not.
  */
-extern BOOL mango_list_is_empty(MangoList *mlistd);
+extern BOOL mango_list_is_empty(MangoList *mlist);
 
 /**
  * Tells if two lists are equal using a comparator function.
