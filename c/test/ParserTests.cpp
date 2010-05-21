@@ -383,32 +383,30 @@ TEST_FIXTURE(ParserTestFixture, TestSingleUnclosedTag)
     CheckParsedNodeForException(-1, "Unexpected EOF encountered without reaching end node.");
 }
 
-#if 0
 TEST_FIXTURE(ParserTestFixture, TestSimpleForTag)
 {
     SetUpWithInputString("{% for a in listofas %}{%endfor%}");
-    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
-    ftn.addItem(create_variable("a"));
-    CheckParsedNodeWith(ftn);
+    MangoForTagNode *ftn = mango_fortag_new(create_variable("listofas", false, false, NULL), NULL, NULL);
+    mango_fortag_add_item(ftn, create_variable("a", false, false, NULL));
+    CheckParsedNodeWith(1, ftn);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestForTagWithChild)
 {
     SetUpWithInputString("{% for a in listofas %}Hello World{%endfor%}");
-    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
-    ftn.addItem(create_variable("a"));
-    ftn.childNodes = mango_freetext_new(mango_string_from_buffer("Hello World", -1));
-    CheckParsedNodeWith(ftn);
+    MangoForTagNode *ftn = mango_fortag_new(create_variable("listofas", false, false, NULL), NULL, NULL);
+    mango_fortag_add_item(ftn, create_variable("a", false, false, NULL));
+    ftn->childNodes = (MangoNode *)mango_freetext_new(mango_stringfactory_new_string(string_factory, "Hello World", -1));
+    CheckParsedNodeWith(1, ftn);
 }
 
 TEST_FIXTURE(ParserTestFixture, TestForTagWithChildAndEmpty)
 {
     SetUpWithInputString("{% for a in listofas %}Hello World{%empty%}Empty Content{%endfor%}");
-    ForTagNode ftn = new ForTagNode(create_variable("listofas"));
-    ftn.addItem(create_variable("a"));
-    ftn.childNodes = mango_freetext_new(mango_string_from_buffer("Hello World", -1));
-    ftn.emptyNodes = mango_freetext_new(mango_string_from_buffer("Empty Content", -1));
-    CheckParsedNodeWith(ftn);
+    MangoForTagNode *ftn = mango_fortag_new(create_variable("listofas", false, false, NULL), NULL, NULL);
+    mango_fortag_add_item(ftn, create_variable("a", false, false, NULL));
+    ftn->childNodes = (MangoNode *)mango_freetext_new(mango_stringfactory_new_string(string_factory, "Hello World", -1));
+    ftn->emptyNodes = (MangoNode *)mango_freetext_new(mango_stringfactory_new_string(string_factory, "Empty Content", -1));
+    CheckParsedNodeWith(1, ftn);
 }
 
-#endif

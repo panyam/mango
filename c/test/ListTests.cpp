@@ -60,6 +60,33 @@ TEST_FIXTURE(ListTestFixture, TestListPushFrontOnEmpty)
 }
 
 /**
+ * Tests an insertion at the back of a non empty list
+ */
+TEST_FIXTURE(ListTestFixture, TestListPushBackOnNonEmpty)
+{
+    MangoList * list = mango_list_new();
+    mango_list_push_back(list, (void *)10);
+    mango_list_push_back(list, (void *)11);
+    CHECK_EQUAL((unsigned)2, list->size);
+    CHECK_EQUAL(11, (int)mango_list_back(list));
+    mango_list_free(list);
+}
+
+/**
+ * Tests an insertion at the front of a non empty list
+ */
+TEST_FIXTURE(ListTestFixture, TestListPushFrontOnNonEmpty)
+{
+    MangoList * list = mango_list_new();
+    mango_list_push_front(list, (void *)10);
+    mango_list_push_front(list, (void *)11);
+    CHECK_EQUAL((unsigned)2, list->size);
+    CHECK_EQUAL(11, (int)mango_list_front(list));
+    mango_list_free(list);
+}
+
+
+/**
  * Tests clearing of a non-empty list.
  */
 TEST_FIXTURE(ListTestFixture, TestListClear)
@@ -68,9 +95,32 @@ TEST_FIXTURE(ListTestFixture, TestListClear)
     mango_list_push_front(list, (void *)10);
     CHECK_EQUAL((unsigned)1, list->size);
     mango_list_clear(list, NULL);
-    CHECK_EQUAL(0, list->size);
+    CHECK(list->size == 0);
     CHECK(NULL == mango_list_front(list));
     CHECK(NULL == mango_list_back(list));
     mango_list_free(list);
 }
+
+
+static int deletor_int = 5;
+void my_deletor(void *obj) { deletor_int --; }
+
+/**
+ * Tests clearing of a non-empty list with a deletor function
+ */
+TEST_FIXTURE(ListTestFixture, TestListClearWithDeletor)
+{
+    MangoList * list = mango_list_new();
+    for (int i = 0;i < 5;i++)
+    {
+        mango_list_push_back(list, (void *)(10 + i));
+    }
+    CHECK_EQUAL((unsigned)5, list->size);
+
+    mango_list_clear(list, my_deletor);
+    CHECK(list->size == 0);
+    CHECK_EQUAL(0, deletor_int);
+    mango_list_free(list);
+}
+
 
