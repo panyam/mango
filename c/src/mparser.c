@@ -97,7 +97,7 @@ const MangoToken *mango_parser_peek_token(MangoParser *parser, MangoError **erro
  * \param   tokenType   The token type being expected.
  * \param   peekOnly    Whether to only peek at the token instead of
  *                      extracting it from the stream.
- * \param   error       Output variable indicating any errors that may have
+ * \param   error       Output var indicating any errors that may have
  *                      occurred.
  *
  * \return  The next token.  This object is readonly and must be copied by

@@ -15,16 +15,16 @@ extern "C" {
  * A tag for doing for loops.
  * Loops would be as:
  *
- * {% for (item1, item2, item3...itemn) in sourceVariable %}
+ * {% for (item1, item2, item3...itemn) in sourceVar %}
  * {% empty %}
  * {% endfor %}
  */
 INHERIT_STRUCT(MangoForTagNode, MangoTagNode,
-    // list of variables referred
+    // list of vars referred
     MangoList *items;
 
-    // The source variable
-    MangoVariable *sourceVariable;
+    // The source var
+    MangoVar *sourceVar;
 
     /**
      * The child nodes for the this tag, since tags can have hierarchies.
@@ -58,20 +58,20 @@ extern MangoNodePrototype *mango_fortag_prototype();
 
 /**
  * Creates a new fortag node.
- * \param   source      Source variable to be used.
+ * \param   source      Source var to be used.
  * \param   childNode   Nodes to be used on each iteration.
  * \param   emptyNode   Nodes to be used if body of the loop was never hit.
  *
  * \return  A new MangoNode instance.
  */
-extern MangoForTagNode *mango_fortag_new(MangoVariable * source,
+extern MangoForTagNode *mango_fortag_new(MangoVar * source,
                                          MangoNode * childNode,
                                          MangoNode * emptyNode);
 
 /**
  * Initialises a fortag object.
  * \param   mftnode     Fortag node to be initialised.
- * \param   source      Source variable to be used.
+ * \param   source      Source var to be used.
  * \param   childNode   Nodes to be used on each iteration.
  * \param   emptyNode   Nodes to be used if body of the loop was never hit.
  * \param   proto       Fortag prototype or its children to be used as
@@ -80,7 +80,7 @@ extern MangoForTagNode *mango_fortag_new(MangoVariable * source,
  * \return  The node passed into be intialised.
  */
 extern MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
-                                          MangoVariable * source,
+                                          MangoVar * source,
                                           MangoNode * childNode,
                                           MangoNode * emptyNode,
                                           MangoNodePrototype *proto);
@@ -92,11 +92,11 @@ extern MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
 extern void mango_fortag_dealloc(MangoForTagNode *ftndata);
 
 /**
- * Adds a new variable to the list of "items" in the for-tag node.
+ * Adds a new var to the list of "items" in the for-tag node.
  * \param   ftd     For tag to which an item is to be added.
- * \param   var     Variable to be added.
+ * \param   var     Var to be added.
  */
-extern void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var);
+extern void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var);
 
 /**
  * Compares the data of for-tag nodes to see if they are equal.
@@ -123,9 +123,9 @@ extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *       n
                                                        MangoNodeRendererContext *topCtx);
 
 /**
- * Sets the source variable for the for-tag render context.
+ * Sets the source var for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
- * \param   source  Source variable to set.
+ * \param   source  Source var to set.
  */
 extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoValue source);
 
@@ -143,7 +143,7 @@ extern MangoTagParser *mango_fortagparser_default();
  *
  * \param   tagparser   The tag parser.
  * \param   ctx         Parser context containing necessary items for parsing.
- * \param   error       Error variable to set in case of failure.
+ * \param   error       Error var to set in case of failure.
  *
  * \return Parsed for-tag node data.
  */

@@ -21,10 +21,10 @@ extern MangoLibrary *mango_filter_library_singleton();
 extern MangoLibrary *mango_tagparser_library_singleton();
 
 /**
- * Get the shared variable library instance.
+ * Get the shared var library instance.
  * \param   mstable String table from which pooled strings are fetched.
  */
-extern MangoLibrary *mango_variable_library_singleton();
+extern MangoLibrary *mango_var_library_singleton();
 
 #ifdef __cplusplus
 }

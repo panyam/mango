@@ -8,13 +8,13 @@
 extern "C" {
 #endif
 
-INHERIT_STRUCT(MangoVariablePrototype, MangoPrototype,
-    //! Child specific setter of the next variable
-    MangoVariable *(*setNextVarFunc)(MangoVariable *mvar, MangoString *value, BOOL isquoted);
+INHERIT_STRUCT(MangoVarPrototype, MangoPrototype,
+    //! Child specific setter of the next var
+    MangoVar *(*setNextVarFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
 );
 
-DECLARE_CLASS(MangoVariable, MangoVariablePrototype,
-    //! String value of the variable.
+DECLARE_CLASS(MangoVar, MangoVarPrototype,
+    //! String value of the var.
     MangoString *   value;
 
     //! Is the value an identifier or a quoted value
@@ -26,82 +26,82 @@ DECLARE_CLASS(MangoVariable, MangoVariablePrototype,
     //! Integer value if value can be converted to a number
     int             intValue;
     
-    //! Next variable section of the variable (ie a.b.c)
-    MangoVariable * next;
+    //! Next var section of the var (ie a.b.c)
+    MangoVar * next;
 );
 
 /**
- * Creates a new mango variable.
- * \param   mstr        Value of the variable.
+ * Creates a new mango var.
+ * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
- * \param   next        Next variable in the chain.
- * \return  A new MangoVariable instance.
+ * \param   next        Next var in the chain.
+ * \return  A new MangoVar instance.
  */
-extern MangoVariable *mango_variable_new(MangoString *mstr, BOOL isQuoted, MangoVariable *next);
+extern MangoVar *mango_var_new(MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
- * Initialises a mango variable.
- * \param   mvar        Variable to be initialised.
- * \param   mstr        Value of the variable.
+ * Initialises a mango var.
+ * \param   mvar        Var to be initialised.
+ * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
- * \param   next        Next variable in the chain.
- * \return  A new MangoVariable instance.
+ * \param   next        Next var in the chain.
+ * \return  A new MangoVar instance.
  */
-extern MangoVariable *mango_variable_init(MangoVariable *mvar, MangoString *mstr, BOOL isQuoted, MangoVariable *next);
+extern MangoVar *mango_var_init(MangoVar *mvar, MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
- * Deallocs a mango variable when refcount reaches 0.
- * \param   mvar        Variable to be dealloced.
+ * Deallocs a mango var when refcount reaches 0.
+ * \param   mvar        Var to be dealloced.
  */
-extern void mango_variable_dealloc(MangoVariable *mvar);
+extern void mango_var_dealloc(MangoVar *mvar);
 
 /**
- * Sets the new value of a variable.
+ * Sets the new value of a var.
  *
- * \param   mvar        Variable whose value is to be changed.
+ * \param   mvar        Var whose value is to be changed.
  * \param   isQuoted    Is the value quoted?
- * \param   value       New Value.  The variable gets ownership of this string.
+ * \param   value       New Value.  The var gets ownership of this string.
  */
-extern void mango_variable_set_value(MangoVariable *mvar,
+extern void mango_var_set_value(MangoVar *mvar,
                                      MangoString *value,
                                      BOOL isQuoted);
 
 /**
- * Resolves the value of a variable (for rendering purposes) given the
+ * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-extern int mango_variable_resolve(MangoVariable *           mvar,
+extern int mango_var_resolve(MangoVar *           mvar,
                                   MangoTemplateContext *    context,
                                   MangoNodeRendererContext *topContext,
                                   void **                   value);
 
 /**
- * Returns if two variables are equal.
+ * Returns if two vars are equal.
  */
-extern BOOL mango_variables_are_equal(const MangoVariable *var1,
-                                      const MangoVariable *var2);
+extern BOOL mango_vars_are_equal(const MangoVar *var1,
+                                      const MangoVar *var2);
 
 /**
- * Sets the next variable for a particular variable.
+ * Sets the next var for a particular var.
  *
- * \param   mvar    The variable whose next variable is to be set.
- * \param   value   Value of the next variable.
+ * \param   mvar    The var whose next var is to be set.
+ * \param   value   Value of the next var.
  * \param   iquote  Is the value quoted?
  *
- * \return  A new variable if it is set.
+ * \return  A new var if it is set.
  */
-extern MangoVariable *mango_variable_set_next(MangoVariable *mvar, MangoString *value, BOOL isquoted);
+extern MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isquoted);
 
 /**
- * Extract a variable using the parser.
+ * Extract a var using the parser.
  *
  * \param   ctx     Parser context containing necessary items for parsing.
  * \param   error   Errors to be set if any.
  *
- * \return A MangoVariable instance if successful, otherwise NULL with the
- * error variable set (if it is supplied).
+ * \return A MangoVar instance if successful, otherwise NULL with the
+ * error var set (if it is supplied).
  */
-extern MangoVariable *mango_variable_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

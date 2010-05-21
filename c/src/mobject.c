@@ -60,7 +60,7 @@ MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto)
  * mango_object_alloc) or initialised with mango_object_init.
  * \param   obj         Object to be initialised.
  * \param   initFunc    INitialiser function to be called on the object.
- * \param   ...         Variable arguments passed to the initialiser function.
+ * \param   ...         Var arguments passed to the initialiser function.
  * \return The original object.
  */
 MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...)

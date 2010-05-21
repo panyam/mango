@@ -61,9 +61,10 @@ typedef struct MangoTokenizer MangoTokenizer;
 typedef struct MangoValue MangoValue;
 typedef struct MangoValueIterator MangoValueIterator;
 typedef struct MangoVarNode MangoVarNode;
-typedef struct MangoVariable MangoVariable;
-typedef struct MangoVariablePrototype MangoVariablePrototype;
-typedef struct MangoVariableResolver MangoVariableResolver;
+typedef struct MangoVar MangoVar;
+typedef struct MangoVarPrototype MangoVarPrototype;
+typedef struct MangoVarResolver MangoVarResolver;
+typedef struct MangoVarResolverPrototype MangoVarResolverPrototype;
 
 /**
  * Functions that check whether two items are equal.

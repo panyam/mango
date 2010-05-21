@@ -144,7 +144,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
             // we are doing free text
             if (char1 == BRACE)
             {
-                // starting a node, variable or comment
+                // starting a node, var or comment
                 int char2 = mango_tokenizer_next_char(tokenizer);
                 tokenizer->_nodeEndChar = char2;
                 if (char2 == '#')

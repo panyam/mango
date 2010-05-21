@@ -30,13 +30,13 @@ DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_p
 
 /**
  * Creates a new fortag node.
- * \param   source      Source variable to be used.
+ * \param   source      Source var to be used.
  * \param   childNode   Nodes to be used on each iteration.
  * \param   emptyNode   Nodes to be used if body of the loop was never hit.
  *
  * \return  A new MangoNode instance.
  */
-MangoForTagNode *mango_fortag_new(MangoVariable * source,
+MangoForTagNode *mango_fortag_new(MangoVar * source,
                                   MangoNode * childNode,
                                   MangoNode * emptyNode)
 {
@@ -47,7 +47,7 @@ MangoForTagNode *mango_fortag_new(MangoVariable * source,
 /**
  * Initialises a fortag object.
  * \param   mftnode     Fortag node to be initialised.
- * \param   source      Source variable to be used.
+ * \param   source      Source var to be used.
  * \param   childNode   Nodes to be used on each iteration.
  * \param   emptyNode   Nodes to be used if body of the loop was never hit.
  * \param   proto       Fortag prototype or its children to be used as
@@ -56,7 +56,7 @@ MangoForTagNode *mango_fortag_new(MangoVariable * source,
  * \return  The node passed into be intialised.
  */
 MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
-                                   MangoVariable * source,
+                                   MangoVar * source,
                                    MangoNode * childNode,
                                    MangoNode * emptyNode,
                                    MangoNodePrototype *proto)
@@ -65,7 +65,7 @@ MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
         proto = mango_fortag_prototype();
     mango_tagnode_init((MangoTagNode *)mftnode, proto);
     mftnode->items          = NULL;
-    mftnode->sourceVariable = source;
+    mftnode->sourceVar = source;
     mftnode->childNodes     = childNode;
     mftnode->emptyNodes     = emptyNode;
     return mftnode;
@@ -79,7 +79,7 @@ void mango_fortag_dealloc(MangoForTagNode *ftn)
 {
     OBJ_DECREF(ftn->childNodes);
     OBJ_DECREF(ftn->emptyNodes);
-    OBJ_DECREF(ftn->sourceVariable);
+    OBJ_DECREF(ftn->sourceVar);
 
     if (ftn->items != NULL)
     {
@@ -106,9 +106,9 @@ BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode 
     }
     else
     {
-        if (mango_variables_are_equal(ftd1->sourceVariable, ftd2->sourceVariable))
+        if (mango_vars_are_equal(ftd1->sourceVar, ftd2->sourceVar))
         {
-            return mango_lists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_variables_are_equal) &&
+            return mango_lists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_vars_are_equal) &&
                     OBJ_EQUALS(ftd1->childNodes, ftd2->childNodes) &&
                     OBJ_EQUALS(ftd1->emptyNodes, ftd2->emptyNodes);
         }
@@ -141,7 +141,7 @@ MangoTagParser *mango_fortagparser_default()
  *
  * \param   tagparser   The tag parser.
  * \param   ctx         Parser context containing necessary items for parsing.
- * \param   error       Error variable to set in case of failure.
+ * \param   error       Error var to set in case of failure.
  *
  * \return Parsed for-tag node data.
  */
@@ -151,8 +151,8 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
     MangoForTagNode *ftn    = mango_fortag_new(NULL, NULL, NULL);
     mango_fortag_parse_item_list(ftn, ctx, error);
 
-    // parse the source variable and discared the '%}' token
-    ftn->sourceVariable = mango_variable_extract_with_parser(ctx, error);
+    // parse the source var and discared the '%}' token
+    ftn->sourceVar = mango_var_extract_with_parser(ctx, error);
     mango_parser_expect_token(parser, TOKEN_CLOSE_TAG, false, error);
 
     // parse child nodes till the endfor tag.
@@ -170,7 +170,7 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
             mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
             if (isEmptyTag)
             {
-                // read till end-tag variable
+                // read till end-tag var
                 ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
                 token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
                 mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
@@ -204,7 +204,7 @@ BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
         while (true)
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            MangoVariable *nextVar = mango_variable_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
+            MangoVar *nextVar = mango_var_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
             mango_fortag_add_item(ftd, nextVar);
             token = mango_parser_expect_token_in_list(parser, COMA_OR_CLOSE_PAREN, false, error);
             if (token->tokenType == TOKEN_CLOSE_PAREN)
@@ -216,7 +216,7 @@ BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
     else if (token->tokenType == TOKEN_IDENTIFIER) 
     {
         MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-        MangoVariable *nextVar = mango_variable_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
+        MangoVar *nextVar = mango_var_new(varValue, token->tokenType == TOKEN_QUOTED_STRING, NULL);
         mango_fortag_add_item(ftd, nextVar);
     }
     else
@@ -236,11 +236,11 @@ BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
 }
 
 /**
- * Adds a new variable to the list of "items" in the for-tag node.
+ * Adds a new var to the list of "items" in the for-tag node.
  * \param   ftd     For tag to which an item is to be added.
- * \param   var     Variable to be added.
+ * \param   var     Var to be added.
  */
-void mango_fortag_add_item(MangoForTagNode *ftd, MangoVariable *var)
+void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
 {
     if (ftd->items == NULL)
         ftd->items = mango_list_new();
@@ -270,9 +270,9 @@ MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
 }
 
 /**
- * Sets the source variable for the for-tag render context.
+ * Sets the source var for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
- * \param   source  Source variable to set.
+ * \param   source  Source var to set.
  */
 void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source)
 {
@@ -340,24 +340,24 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
      */
     public static void onClassRegistered()
     {
-        // now register the special variable class as well...
+        // now register the special var class as well...
         // so the next time a forloop gets called it will do its magic
         // on the parent items.
-        VariableLibrary.getSharedInstance().registerObjectClass("forloop", ForLoopVariable.class);
+        VarLibrary.getSharedInstance().registerObjectClass("forloop", ForLoopVar.class);
     }
 
     public NodeRendererContext createNodeRendererContext(TemplateContext context, NodeRendererContext parentContext)
     {
     	ForTagContext ftnContext = NULL;
-    	if (sourceVariable != NULL && items != NULL)
+    	if (sourceVar != NULL && items != NULL)
     	{
         	ftnContext = new ForTagContext(this, parentContext);
-    		ftnContext.setSource(sourceVariable.resolve(context, parentContext));
+    		ftnContext.setSource(sourceVar.resolve(context, parentContext));
     		
-    		// push NULL values on the context stack for the variables referred by the items
-			for (Iterator<Variable> iter = items.iterator(); iter.hasNext();)
+    		// push NULL values on the context stack for the vars referred by the items
+			for (Iterator<Var> iter = items.iterator(); iter.hasNext();)
 			{
-				Variable var = iter.next();
+				Var var = iter.next();
 				context.pushValue(var.value(), NULL);
 			}
     	}
@@ -415,23 +415,23 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
     	else
     	{
 	    	// update the values of all values in the items
-			int numVariables = ftnContext.unpackValues(items.size()); 
-			if (numVariables > 0)
+			int numVars = ftnContext.unpackValues(items.size()); 
+			if (numVars > 0)
 			{
 				// push all the values onto the context stack
 				for (int i = 0, count = items.size();i < count;i++)
 				{
 					Object itemValue = ftnContext.itemValues.get(i);
-					Variable var = items.get(i);
+					Var var = items.get(i);
 					context.setValue(var.value(), itemValue);
 				}
 				return childNodes;
 			}
 	
 			// we are exiting the node so pop the values out of the context
-			for (Iterator<Variable> iter = items.iterator(); iter.hasNext();)
+			for (Iterator<Var> iter = items.iterator(); iter.hasNext();)
 			{
-				Variable var = iter.next();
+				Var var = iter.next();
 				context.popValue(var.value());
 			}
     	}
@@ -441,11 +441,11 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
 
 
 /**
- * Special variables to extract info about the for loops.
+ * Special vars to extract info about the for loops.
  * 
  * @author Sri Panyam
  */
-class ForLoopVariable extends Variable
+class ForLoopVar extends Var
 {
 	/**
 	 * Tells how many grandparents are we looking up.
@@ -453,23 +453,23 @@ class ForLoopVariable extends Variable
 	 */
 	int parentCount;
 	
-	public ForLoopVariable()
+	public ForLoopVar()
 	{
 		parentCount = 0;
 	}
 	
 	/**
-	 * Does a bit of optimisation on the value of the "next" variable 
+	 * Does a bit of optimisation on the value of the "next" var 
 	 * by folding all parentloops into a counter.
 	 */
-    public MangoVariable *setNextVariable(String value, boolean isquoted)
+    public MangoVar *setNextVar(String value, boolean isquoted)
     {
     	if (value.equals("parentloop"))
     	{
     		parentCount++;
     		return NULL;
     	}
-    	return super.setNextVariable(value, isquoted);
+    	return super.setNextVar(value, isquoted);
     }
 	
     public Object resolve(TemplateContext context, NodeRendererContext currContext)

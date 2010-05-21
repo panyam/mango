@@ -181,27 +181,27 @@ TEST_FIXTURE(TokenizerTestFixture, TestEmptyNodes)
 }
 
 
-// tests to do with variables and tags
-TEST_FIXTURE(TokenizerTestFixture, TestSingleVariable)
+// tests to do with vars and tags
+TEST_FIXTURE(TokenizerTestFixture, TestSingleVar)
 {
-	setUpWithInputString("{{variable}}");
+	setUpWithInputString("{{var}}");
 	expectToken(TOKEN_OPEN_VARIABLE);
-	expectToken(TOKEN_IDENTIFIER, "variable");
+	expectToken(TOKEN_IDENTIFIER, "var");
 	expectToken(TOKEN_CLOSE_VARIABLE);
     satisfyExpectations();
 }
 
-// tests to do with variables and tags
-TEST_FIXTURE(TokenizerTestFixture, TestSingleVariableWithSpaces)
+// tests to do with vars and tags
+TEST_FIXTURE(TokenizerTestFixture, TestSingleVarWithSpaces)
 {
-	setUpWithInputString("{{ variable }}");
+	setUpWithInputString("{{ var }}");
 	expectToken(TOKEN_OPEN_VARIABLE);
-	expectToken(TOKEN_IDENTIFIER, "variable");
+	expectToken(TOKEN_IDENTIFIER, "var");
 	expectToken(TOKEN_CLOSE_VARIABLE);
     satisfyExpectations();
 }
 
-// tests to do with variables and tags
+// tests to do with vars and tags
 TEST_FIXTURE(TokenizerTestFixture, TestMultipleIdentifiers)
 {
 	setUpWithInputString("{{ abc  de f }}");

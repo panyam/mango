@@ -31,6 +31,8 @@ INHERIT_STRUCT(MangoValue, MangoObject,
 
 extern MangoValue NULL_VALUE;
 
+#define MV_NEW(mt, mv)  mango_value_new(mt, (void *)mv)
+
 /**
  * Tells if a value is valid.
  */

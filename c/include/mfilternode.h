@@ -37,10 +37,10 @@ extern int mango_filternode_apply(MangoFilterNode *fnode, const MangoValue *inpu
 /**
  * Adds an argument to a filter node.
  *
- * \param   fnode   Filter node to add the variable to.
+ * \param   fnode   Filter node to add the var to.
  * \param   mvar    Argument to add.
  */
-extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar);
+extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVar *mvar);
 
 /**
  * Reads a list of filter expressions with the parser and returns a list.
@@ -51,7 +51,7 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVariable *mvar
  * \param   error   Error value to be set in case of failure.
  *
  * \return true if filters were read successfully, false on error.  On
- * error, the error variable might be set if it is provided.  On error, the
+ * error, the error var might be set if it is provided.  On error, the
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
@@ -79,7 +79,7 @@ extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext 
 
 /**
  * Parses the arguments of a filter expression.  This assumes that next token
- * that will be read is either a "(" or a variable.
+ * that will be read is either a "(" or a var.
  *
  * \param   ctx     Parser context containing necessary items.
  * \param   filternode  The filter node to which the arguments are to be

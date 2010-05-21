@@ -131,6 +131,31 @@ dep:
 ../bld/./BinTreeTests.o: ../include/mtokenlists.h ../include/mutils.h
 ../bld/./BinTreeTests.o: ../include/mvalue.h ../include/mvarresolver.h
 ../bld/./BinTreeTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./ListTests.o: ../include/mangopub.h ../include/marray.h
+../bld/./ListTests.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./ListTests.o: ../include/mmemutils.h ../include/mbintree.h
+../bld/./ListTests.o: ../include/mclasses.h ../include/merror.h
+../bld/./ListTests.o: ../include/mfilter.h ../include/mvar.h
+../bld/./ListTests.o: ../include/mstring.h ../include/mfilterlibrary.h
+../bld/./ListTests.o: ../include/mfilternode.h ../include/mfreetext.h
+../bld/./ListTests.o: ../include/mnode.h ../include/minputsource.h
+../bld/./ListTests.o: ../include/mlibrary.h ../include/mlist.h
+../bld/./ListTests.o: ../include/mnodelist.h ../include/mnoderenderer.h
+../bld/./ListTests.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./ListTests.o: ../include/mtoken.h ../include/mparsercontext.h
+../bld/./ListTests.o: ../include/mrcstring.h ../include/mrcstringtable.h
+../bld/./ListTests.o: ../include/mrcstringfactory.h
+../bld/./ListTests.o: ../include/mstringfactory.h ../include/msingletons.h
+../bld/./ListTests.o: ../include/mstringbuffer.h ../include/mtable.h
+../bld/./ListTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./ListTests.o: ../include/mtagparserlibrary.h
+../bld/./ListTests.o: ../include/mtemplatecontext.h
+../bld/./ListTests.o: ../include/mtemplateloader.h ../include/mtokenlists.h
+../bld/./ListTests.o: ../include/mutils.h ../include/mvalue.h
+../bld/./ListTests.o: ../include/mvarresolver.h ../include/mvarlibrary.h
+../bld/./ListTests.o: ../include/mvarnode.h ../include/ext/mangoextpub.h
+../bld/./ListTests.o: ../include/ext/mfortag.h stlinputsource.h
+../bld/./ListTests.o: ../include/maddfilter.h
 ../bld/./ObjectTests.o: ../include/mangopub.h ../include/marray.h
 ../bld/./ObjectTests.o: ../include/mobject.h ../include/mfwddefs.h
 ../bld/./ObjectTests.o: ../include/mmemutils.h ../include/mbintree.h

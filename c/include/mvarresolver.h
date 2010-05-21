@@ -8,56 +8,47 @@
 extern "C" {
 #endif
 
-struct MangoVariableResolver
-{
-    /**
-     * Implementation specific data.
-     */
-    void *data;
-
-    /**
-     * Frees the resolver data.
-     */
-    void (*freeFunc)(void *data);
-
+INHERIT_STRUCT(MangoVarResolverPrototype, MangoPrototype,
     /**
      * Callback to do the actual resolution.
      */
-    MangoValue *(*resolveFunc)(void *data, MangoValue *source, MangoVariable *variable);
-};
+    MangoValue *(*resolveFunc)(MangoVarResolver *data, MangoValue *source, MangoVar *var);
+);
+
+DECLARE_CLASS(MangoVarResolver, MangoVarResolverPrototype);
 
 /**
- * Returns a default variable resolver.
+ * Returns a default var resolver.
  */
-extern MangoVariableResolver *mango_varresolver_default();
+extern MangoVarResolver *mango_varresolver_default();
 
 /**
- * Destroys a variable resolver.
+ * Destroys a var resolver.
  */
-extern void mango_varresolver_free(MangoVariableResolver *resolver);
+extern void mango_varresolver_free(MangoVarResolver *resolver);
 
 /**
- * Resolves the variable value with the resolver.
+ * Resolves the var value with the resolver.
  * \param   resolver    Resolver doing the var resolving.
- * \param   source      The source variable from which variables are resolved.
- * \param   variable    Variable to be resolved.
+ * \param   source      The source var from which vars are resolved.
+ * \param   var    Var to be resolved.
  * \return  A MangoValue instance that must be freed by the caller.
  */
-extern MangoValue *mango_varresolver_resolve(MangoVariableResolver *resolver,
+extern MangoValue *mango_varresolver_resolve(MangoVarResolver *resolver,
                                              MangoValue *source,
-                                             MangoVariable *variable);
+                                             MangoVar *var);
 
 /**
- * Resolves a variable chain starting from the first variable using the
+ * Resolves a var chain starting from the first var using the
  * template context.
  * \param   resolver    Main resolver object.
- * \param   ctx         Context with which the variable is resolved.
- * \param   first       First variable to start resolving with.
- * \return  The value corresponding to the variable.
+ * \param   ctx         Context with which the var is resolved.
+ * \param   first       First var to start resolving with.
+ * \return  The value corresponding to the var.
  */
-extern MangoValue *mango_varresolver_resolve_chain(MangoVariableResolver *resolver,
+extern MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
                                                    MangoTemplateContext *ctx,
-                                                   MangoVariable *first);
+                                                   MangoVar *first);
 
 #ifdef __cplusplus
 }

@@ -36,6 +36,7 @@ MangoString *mango_rcstring_new(const char *value,
     MangoRCString *mstr = OBJ_ALLOC(MangoRCString, mango_rcstring_prototype());
     mstr->mstable       = mstable;
     mstr->internId      = mango_rcstring_table_find(mstable, value, length, true, 1);
+    mstr->strPtr        = mango_rcstring_buffer(mstr);
     return (MangoString *)mstr;
 }
 
@@ -53,6 +54,7 @@ void mango_rcstring_copy(const MangoRCString *source, MangoString *another)
     mango_rcstring_table_incref(source->mstable, source->internId);
     mstr->internId          = source->internId;
     mstr->mstable           = source->mstable;
+    mstr->strPtr            = mango_rcstring_buffer(mstr);
     another->__prototype__  = mango_rcstring_prototype();
 }
 

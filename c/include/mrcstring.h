@@ -24,6 +24,9 @@ INHERIT_STRUCT(MangoRCString, MangoString,
      * belong to the same string table.
      */
     MangoRCStringTable *  mstable;
+
+    //! A reference to the string for easy checking
+    const char *strPtr;
 );
 
 /**

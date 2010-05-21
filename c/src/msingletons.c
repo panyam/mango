@@ -32,17 +32,17 @@ MangoLibrary *mango_tagparser_library_singleton()
 }
 
 /**
- * Get the shared variable library instance.
+ * Get the shared var library instance.
  */
-MangoLibrary *mango_variable_library_singleton()
+MangoLibrary *mango_var_library_singleton()
 {
-    static MangoLibrary *variable_library = NULL;
+    static MangoLibrary *var_library = NULL;
 
-    if (variable_library == NULL)
+    if (var_library == NULL)
     {
-        variable_library = mango_library_new();
+        var_library = mango_library_new();
     }
 
-    return variable_library;
+    return var_library;
 }
 

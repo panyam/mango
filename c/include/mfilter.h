@@ -31,8 +31,8 @@ INHERIT_STRUCT(MangoFilterPrototype, MangoPrototype,
 );
 
 /**
- * Filters get applied on variables in how they manipulate the value stored
- * in a variable.  We do not want to have multiple instances of the same
+ * Filters get applied on vars in how they manipulate the value stored
+ * in a var.  We do not want to have multiple instances of the same
  * filter.  So it would be better to have a single instance of the filter
  * through out the application to save memory and their performance wouldnt
  * be bad either.  Since only a certain number of filter instances are

@@ -8,12 +8,12 @@
 extern "C" {
 #endif
 
-struct MangoVariableIterator
+struct MangoVarIterator
 {
 };
 
 #if 0
-public class VariableIterator implements Iterator<Object> 
+public class VarIterator implements Iterator<Object> 
 {
 	protected Object		sourceValue;
 	protected Iterator<?> 	iterator;
@@ -21,7 +21,7 @@ public class VariableIterator implements Iterator<Object>
 	protected Method 		hasNextMethod;
 	protected Method 		nextMethod;
 	
-	public VariableIterator(Object source)
+	public VarIterator(Object source)
 	{
 		setSource(source);
 	}

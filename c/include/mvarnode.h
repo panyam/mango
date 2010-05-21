@@ -9,29 +9,29 @@ extern "C" {
 #endif
 
 INHERIT_STRUCT(MangoVarNode, MangoNode,
-    MangoVariable * variable;
+    MangoVar * var;
     MangoList *     filterNodes;
 );
 
 /**
  * Creates a new mango node list.
  */
-extern MangoVarNode *mango_varnode_new(MangoVariable *mvar, MangoList *filters);
+extern MangoVarNode *mango_varnode_new(MangoVar *mvar, MangoList *filters);
 
 /**
- * Initialises a variable node with a variable and a list of filter.
- * \param   varnode     Variable node to be initialised/reset.
- * \param   mvar        Variable to set for the var node.
- * \param   filters     List of filter nodes to be set to the variable.
+ * Initialises a var node with a var and a list of filter.
+ * \param   varnode     Var node to be initialised/reset.
+ * \param   mvar        Var to set for the var node.
+ * \param   filters     List of filter nodes to be set to the var.
  */
-extern MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, MangoList *filters);
+extern MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVar *mvar, MangoList *filters);
 
 /**
- * Extracts and builds a variable node with parser.
+ * Extracts and builds a var node with parser.
  *
- * Variable Nodes have the following structure:
+ * Var Nodes have the following structure:
  *
- * VariableNode :=      OPEN_VARIABLE_NODE var_exp CLOSE_VARIABLE_NODE 
+ * VarNode :=      OPEN_VARIABLE_NODE var_exp CLOSE_VARIABLE_NODE 
  *                  |   OPEN_VARIABLE_NODE var_exp filter_list CLOSE_VARIABLE_NODE 
  *                  ;
  *
@@ -53,16 +53,16 @@ extern MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mv
  *                  ;
  *
  * \param   ctx     Parser context containing necessary items for parsing.
- * \param   error   Optional error variable to be filled in case of failure.
+ * \param   error   Optional error var to be filled in case of failure.
  *
- * \return  A new Variable node instance.
+ * \return  A new Var node instance.
  */
 extern MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError **error);
 
 /**
  * Adds a new filter node.
  *
- * \param   mnode   Mango (variable) node to add to.
+ * \param   mnode   Mango (var) node to add to.
  * \param   fnode   The filter node to add.
  */
 extern void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode);

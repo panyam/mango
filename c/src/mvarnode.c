@@ -19,37 +19,37 @@ DECLARE_PROTO_FUNC("VarNode", MangoNodePrototype, mango_varnode_prototype,
 
 /**
  * Creates a new mango node list.
- * \param   mvar        Variable to be stored.
+ * \param   mvar        Var to be stored.
  * \param   filternodes A list of filter nodes to be used.
  *
  * \return  A MangoVarNode object.
  */
-MangoVarNode *mango_varnode_new(MangoVariable *mvar, MangoList *filters)
+MangoVarNode *mango_varnode_new(MangoVar *mvar, MangoList *filters)
 {
     MangoVarNode *mvnode = NEW(MangoVarNode);
     return mango_varnode_init(mvnode, mvar, filters);
 }
 
 /**
- * Initialises a variable node with a variable and a list of filter.
- * \param   varnode     Variable node to be initialised/reset.
- * \param   mvar        Variable to set for the var node.
- * \param   filters     List of filter nodes to be set to the variable.
+ * Initialises a var node with a var and a list of filter.
+ * \param   varnode     Var node to be initialised/reset.
+ * \param   mvar        Var to set for the var node.
+ * \param   filters     List of filter nodes to be set to the var.
  */
-MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, MangoList *filters)
+MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVar *mvar, MangoList *filters)
 {
     mango_node_init((MangoNode *)varnode, mango_varnode_prototype());
-    varnode->variable       = mvar;
+    varnode->var       = mvar;
     varnode->filterNodes    = filters;
     return varnode;
 }
 
 /**
- * Extracts and builds a variable node with parser.
+ * Extracts and builds a var node with parser.
  *
- * Variable Nodes have the following structure:
+ * Var Nodes have the following structure:
  *
- * VariableNode :=      OPEN_VARIABLE_NODE var_exp CLOSE_VARIABLE_NODE 
+ * VarNode :=      OPEN_VARIABLE_NODE var_exp CLOSE_VARIABLE_NODE 
  *                  |   OPEN_VARIABLE_NODE var_exp filter_list CLOSE_VARIABLE_NODE 
  *                  ;
  *
@@ -71,14 +71,14 @@ MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVariable *mvar, Man
  *                  ;
  *
  * \param   ctx     Parser context containing necessary items for parsing.
- * \param   error   Optional error variable to be filled in case of failure.
+ * \param   error   Optional error var to be filled in case of failure.
  *
- * \return  A new Variable node instance.
+ * \return  A new Var node instance.
  */
 MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
 {
-    MangoVariable *variable = mango_variable_extract_with_parser(ctx, error);
-    if (variable == NULL)
+    MangoVar *var = mango_var_extract_with_parser(ctx, error);
+    if (var == NULL)
         return NULL;
 
     // read the next token - it should be a close or a filter starter
@@ -116,7 +116,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     // was there an error?
     if (error != NULL && *error != NULL)
     {
-        OBJ_DECREF(variable);
+        OBJ_DECREF(var);
         if (filter_nodes != NULL)
         {
             mango_list_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
@@ -130,7 +130,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
             mango_list_free(filter_nodes);
             filter_nodes = NULL;
         }
-        node = (MangoNode *)mango_varnode_new(variable, filter_nodes);
+        node = (MangoNode *)mango_varnode_new(var, filter_nodes);
     }
     return node;
 }
@@ -138,7 +138,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
 /**
  * Adds a new filter node.
  *
- * \param   mnode   Mango (variable) node to add to.
+ * \param   mnode   Mango (var) node to add to.
  * \param   fnode   The filter node to add.
  */
 void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
@@ -155,8 +155,8 @@ void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
  */
 void mango_varnode_dealloc(MangoVarNode *varnode)
 {
-    if (varnode->variable != NULL)
-        OBJ_DECREF(varnode->variable);
+    if (varnode->var != NULL)
+        OBJ_DECREF(varnode->var);
     if (varnode->filterNodes != NULL)
     {
         mango_list_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);
@@ -176,7 +176,7 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
  */
 BOOL mango_varnode_are_equal(const MangoVarNode *mvn1, const MangoVarNode *mvn2)
 {
-    return mango_variables_are_equal(mvn1->variable, mvn2->variable) &&
+    return mango_vars_are_equal(mvn1->var, mvn2->var) &&
             mango_lists_are_equal(mvn1->filterNodes, mvn2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
 }
 

@@ -20,12 +20,12 @@ extern "C" {
  *
  * Here is the BNF of our templates.
  *
- * Template     := (String | Variable | tag | Comment ) *
- * Variable     := {{ <variable_exp> }}
- * var_exp      := variable |
- *                 variable "|" filter_list
+ * Template     := (String | Var | tag | Comment ) *
+ * Var     := {{ <var_exp> }}
+ * var_exp      := var |
+ *                 var "|" filter_list
  *                 ;
- * variable     := ID | ID "." variable ;
+ * var     := ID | ID "." var ;
  * filter_list  := filter |
  *                 filter "|" filter_list 
  *                 ;
@@ -34,7 +34,7 @@ extern "C" {
  * param_list   :=  ":" param   |
  *                  ":" param param_list
  *                  ;
- * param        := QuotedString | Number | Boolean | variable ;
+ * param        := QuotedString | Number | Boolean | var ;
  *
  * Comment      := {# .* #}
  * Tag          := {% ID StringList %} {% endID %}
@@ -51,8 +51,8 @@ extern "C" {
  * Block Node End                -   %}
  * Comment Start                -   {#
  * Comment End                  -   #}
- * Variable Node Start           -   {{
- * Variable Node End             -   }}
+ * Var Node Start           -   {{
+ * Var Node End             -   }}
  * String                       -   .+
  * QuotedString                 -   "[^"]*"
  */  
@@ -82,7 +82,7 @@ struct MangoTokenizer
     int                 currColumn;
 
     /**
-     * Tokenizer state variables.
+     * Tokenizer state vars.
      */
     int                 _insideNode;
     int                 _nodeEndChar;

@@ -30,12 +30,12 @@ void mango_templatecontext_merge(MangoTemplateContext *context, MangoBinTree *di
 }
 
 /**
- * Get the values for a particular variable in the context.
+ * Get the values for a particular var in the context.
  * \param   context Context from which the values are extracted.
- * \param   key     Variable for which the values are extracted.
+ * \param   key     Var for which the values are extracted.
  * \param   create  If the key was not found, this specifies whether a new
  *                  stack it to be created.
- * \return A MangoList of values for the variable.
+ * \return A MangoList of values for the var.
  */
 const MangoList *mango_templatecontext_get_values(
             MangoTemplateContext *context,
@@ -46,10 +46,10 @@ const MangoList *mango_templatecontext_get_values(
 }
 
 /**
- * Gets the value of a variable by a key.
+ * Gets the value of a var by a key.
  * \param   ctx     The context where values are stored.
- * \param   key     Variable whose value is to be fetched.
- * \return  Value of the variable.
+ * \param   key     Var whose value is to be fetched.
+ * \return  Value of the var.
  */
 MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoString *key)
 {
@@ -60,10 +60,10 @@ MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoStri
  * Sets the value of a particular key, overwriting an existing one or
  * pushing onto one if necessary.
  * \param   ctx     Context in which the value is to be set.
- * \param   key     Variable key
- * \param   value   Value of the variable.
+ * \param   key     Var key
+ * \param   value   Value of the var.
  * \param   push    Whether the value is to be pushed or replaced.
- * \param   The new size of the value stack for the variable.
+ * \param   The new size of the value stack for the var.
  */
 int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
                                       const MangoString *key,
@@ -76,9 +76,9 @@ int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
 /**
  * Sets the value of a particular key.
  * \param   ctx     Context in which the value is to be set.
- * \param   key     Variable key
- * \param   value   Value of the variable.
- * \return  The new size of the value stack for the variable.
+ * \param   key     Var key
+ * \param   value   Value of the var.
+ * \return  The new size of the value stack for the var.
  */
 int mango_templatecontext_set(MangoTemplateContext *ctx,
                               const MangoString *key,
@@ -99,9 +99,9 @@ void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...)
 /**
  * Pushes the value of a particular key.
  * \param   ctx     Context in which the value is to be pushed.
- * \param   key     Variable key
- * \param   value   Value of the variable.
- * \return  The new size of the value stack for the variable.
+ * \param   key     Var key
+ * \param   value   Value of the var.
+ * \return  The new size of the value stack for the var.
  */
 int mango_templatecontext_push(MangoTemplateContext *ctx,
                                const MangoString *key,
@@ -120,10 +120,10 @@ void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...)
 }
 
 /**
- * Pops the value of a variable and returns it.
+ * Pops the value of a var and returns it.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
- * \return  MangoValue for the variable.
+ * \return  MangoValue for the var.
  */
 MangoValue *mango_templatecontext_pop(MangoTemplateContext *ctx,
                                       const MangoString *key)
@@ -132,7 +132,7 @@ MangoValue *mango_templatecontext_pop(MangoTemplateContext *ctx,
 }
 
 /**
- * Deletes the value of a variable completely.
+ * Deletes the value of a var completely.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
  */
@@ -141,10 +141,10 @@ void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *
 }
 
 /**
- * Tells if a variable by a particular key exists.
+ * Tells if a var by a particular key exists.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
- * \return true if the variable exits, false otherwise.
+ * \return true if the var exits, false otherwise.
  */
 BOOL mango_templatecontext_contains(MangoTemplateContext *ctx, const MangoString *key)
 {
