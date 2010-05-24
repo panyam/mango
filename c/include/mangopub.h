@@ -4,6 +4,7 @@
 
 #include "marray.h"
 #include "mbintree.h"
+#include "mcollection.h"
 #include "mclasses.h"
 #include "merror.h"
 #include "mfilter.h"

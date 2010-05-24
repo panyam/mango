@@ -131,8 +131,6 @@ MangoValue *default_resolver_func(MangoVarResolver *resolver, MangoValue *source
         }
     }
     
-    MangoString *value = OBJ_INCREF(variable->value);
-
     // try as a dictionary lookup - ie using a Map
     if (source instanceof Map<?,?> && ((Map<?,?>)source).containsKey(value))
     {

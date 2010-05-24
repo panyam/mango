@@ -22,6 +22,8 @@ typedef int BOOL;
 typedef struct MangoArray MangoArray;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
+typedef struct MangoCollection MangoCollection;
+typedef struct MangoCollectionPrototype MangoCollectionPrototype;
 typedef struct MangoError MangoError;
 typedef struct MangoFilter MangoFilter;
 typedef struct MangoFilterNode MangoFilterNode;
