@@ -62,8 +62,6 @@ typedef struct MangoTemplateContext MangoTemplateContext;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
 typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;
-typedef struct MangoValue MangoValue;
-typedef struct MangoValueIterator MangoValueIterator;
 typedef struct MangoVarNode MangoVarNode;
 typedef struct MangoVar MangoVar;
 typedef struct MangoVarPrototype MangoVarPrototype;

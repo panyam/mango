@@ -19,9 +19,10 @@ int mango_prototype_default_compare(const MangoObject *obj1, const MangoObject *
  * \param   name    Name of the prototype.
  * \return  The initialised prototype instance.
  */
-MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name)
+MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, size_t size)
 {
     proto->name         = strdup(name == NULL ? "" : name);
+    proto->size         = size;
     proto->deallocFunc  = NULL;
     proto->equalsFunc   = mango_prototype_default_equals;
     proto->compareFunc  = mango_prototype_default_compare;
@@ -176,5 +177,18 @@ BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2)
  */
 void mango_object_dealloc(MangoObject *obj)
 {
+    // nothing!
+}
+
+/**
+ * Tells if an object can be casted to a particular prototype.
+ */
+BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto)
+{
+    if (obj->__prototype__->size >= proto->size)
+    {
+        return memcmp(obj->__prototype__, proto, proto->size) == 0;
+    }
+    return false;
 }
 

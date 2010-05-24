@@ -3,13 +3,12 @@
 #include "mvarresolver.h"
 #include "mtemplatecontext.h"
 #include "mvar.h"
-#include "mvalue.h"
 #include "mmemutils.h"
 
 /**
  * The default variable resolver function.
  */
-MangoValue *default_resolver_func(MangoVarResolver *resolver, MangoValue *source, MangoVar *var);
+MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *source, MangoVar *var);
 
 DECLARE_PROTO_FUNC("VarResolver", MangoVarResolverPrototype, mango_varresolver_prototype, 
     __proto__.resolveFunc = NULL;
@@ -43,10 +42,10 @@ void mango_varresolver_dealloc(MangoVarResolver *resolver)
  * \param   resolver    Resolver doing the var resolving.
  * \param   source      The source var from which vars are resolved.
  * \param   var    Var to be resolved.
- * \return  A MangoValue instance that must be freed by the caller.
+ * \return  A MangoObject instance that must be freed by the caller.
  */
-MangoValue *mango_varresolver_resolve(MangoVarResolver *resolver,
-                                      MangoValue *source,
+MangoObject *mango_varresolver_resolve(MangoVarResolver *resolver,
+                                      MangoObject *source,
                                       MangoVar *var)
 {
     if (resolver->__prototype__->resolveFunc != NULL && var != NULL)
@@ -64,15 +63,15 @@ MangoValue *mango_varresolver_resolve(MangoVarResolver *resolver,
  * \param   first       First var to start resolving with.
  * \return  The value corresponding to the var.
  */
-MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
+MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
                                             MangoTemplateContext *ctx,
                                             MangoVar *first)
 {
     // if the first item is a number then everything is ignored
     MangoVar *curr_var = first;
     MangoVar *prev_var = NULL;
-    MangoValue ctx_value = mango_value_make(MV_CONTEXT, ctx);
-    MangoValue *curr_src = &ctx_value;
+    MangoObject ctx_value = mango_value_make(MV_CONTEXT, ctx);
+    MangoObject *curr_src = &ctx_value;
     while (curr_src != NULL && curr_var != NULL)
     {
         if (prev_var == NULL)
@@ -88,7 +87,7 @@ MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
         }
         else
         {
-            MangoValue *newsrc = mango_varresolver_resolve(resolver, curr_src, curr_var);
+            MangoObject *newsrc = mango_varresolver_resolve(resolver, curr_src, curr_var);
             if (curr_src != &ctx_value)
                 OBJ_DECREF(curr_src);
             curr_src = newsrc;
@@ -104,7 +103,7 @@ MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
  * Unlike the android based resolver which has nice introspection, we do
  * nothing fancy, just check the source value type and so on.
  */
-MangoValue *default_resolver_func(MangoVarResolver *resolver, MangoValue *source, MangoVar *var)
+MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *source, MangoVar *var)
 {
     /**
      * Resolves the value of a variable using a particular value.

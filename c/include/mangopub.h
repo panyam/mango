@@ -40,7 +40,6 @@
 #include "mtokenizer.h"
 #include "mtokenlists.h"
 #include "mutils.h"
-#include "mvalue.h"
 #include "mvar.h"
 #include "mvarresolver.h"
 #include "mvarlibrary.h"

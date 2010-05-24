@@ -63,7 +63,8 @@ extern "C" {
         if (!initialised)                                                       \
         {                                                                       \
             bzero(&__proto__, sizeof(__proto__));                               \
-            mango_prototype_init((MangoPrototype *)(&__proto__), VAR_CLASS_ID); \
+            mango_prototype_init((MangoPrototype *)(&__proto__),                \
+                                 VAR_CLASS_ID, sizeof(__proto__));              \
             __VA_ARGS__                                                         \
             initialised = true;                                                 \
         }                                                                       \
@@ -86,6 +87,11 @@ struct MangoPrototype
      * Name of the prototype.
      */
     char *name;
+
+    /**
+     * Size of the proto struct.
+     */
+    size_t  size;
 
     /**
      * Called when reference reaches 0 and the destructor/deallocator needs
@@ -117,12 +123,12 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Invokes an (quasi) object allocator.
  */
-#define OBJ_ALLOC(OBJ_CLASS, proto)   (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), (MangoPrototype *)proto)
+#define OBJ_ALLOC(OBJ_CLASS, proto) (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), (MangoPrototype *)proto)
 
 /**
  * Initialises a mango object's refcount and prototype.
  */
-#define OBJ_INIT(obj, proto)   mango_object_init((MangoObject *)obj, (MangoPrototype *)proto)
+#define OBJ_INIT(obj, proto)        mango_object_init((MangoObject *)obj, (MangoPrototype *)proto)
 
 /**
  * Invokes an initialiser function on a mango object.
@@ -132,27 +138,32 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Increase an object's reference count.
  */
-#define OBJ_INCREF(obj) (__typeof__(obj))mango_object_incref((MangoObject *)obj)
+#define OBJ_INCREF(obj)             (__typeof__(obj))mango_object_incref((MangoObject *)obj)
 
 /**
  * Decrease an object's reference count.
  */
-#define OBJ_DECREF(obj) mango_object_decref((MangoObject *)obj)
+#define OBJ_DECREF(obj)             mango_object_decref((MangoObject *)obj)
 
 /**
  * Compares two MangoObject derived objects.
  */
-#define OBJ_EQUALS(obj1, obj2)  mango_objects_are_equal((MangoObject *)obj1, (MangoObject *)obj2)
+#define OBJ_EQUALS(obj1, obj2)      mango_objects_are_equal((MangoObject *)obj1, (MangoObject *)obj2)
 
 /**
  * Compares two MangoObject derived objects.
  */
-#define OBJ_COMPARE(obj1, obj2)  mango_object_compare((MangoObject *)obj1, (MangoObject *)obj2)
+#define OBJ_COMPARE(obj1, obj2)     mango_object_compare((MangoObject *)obj1, (MangoObject *)obj2)
+
+/**
+ * Tells if an object is instance of a particular prototype.
+ */
+#define OBJ_INSTANCEOF(obj, proto)       mango_object_instanceof((MangoObject *)obj, (const MangoPrototype *)proto)
 
 /**
  * Create a new prototype object of a given name.
  */
-extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name);
+extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, size_t size);
 
 /**
  * Allocate an object of a given size with a prototype.
@@ -221,6 +232,11 @@ extern BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *
  * \return  -ve if obj1 < obj2, 0 if they are equal, +ve otherwise
  */
 extern int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2);
+
+/**
+ * Tells if an object can be casted to a particular prototype.
+ */
+extern BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto);
 
 /**
  * Deallocates an object.

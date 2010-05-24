@@ -48,7 +48,7 @@ extern const MangoList *mango_templatecontext_get_values(
  * \param   key     Var whose value is to be fetched.
  * \return  Value of the var.
  */
-extern MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx,
+extern MangoObject *mango_templatecontext_get(MangoTemplateContext *ctx,
                                              const MangoString *key);
 
 /**
@@ -62,7 +62,7 @@ extern MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx,
  */
 extern int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
                                              const MangoString *key,
-                                             MangoValue *value,
+                                             MangoObject *value,
                                              BOOL push);
 
 /**
@@ -74,7 +74,7 @@ extern int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
  */
 extern int mango_templatecontext_set(MangoTemplateContext *ctx,
                                      const MangoString *key,
-                                     MangoValue *value);
+                                     MangoObject *value);
 
 /**
  * Sets multiple values given by a list of key/value pairs.
@@ -92,7 +92,7 @@ extern void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...);
  */
 extern int mango_templatecontext_push(MangoTemplateContext *ctx,
                                       const MangoString *key,
-                                      MangoValue *value);
+                                      MangoObject *value);
 
 /**
  * Pushes multiple values given by a list of key/value pairs.
@@ -105,9 +105,9 @@ extern void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...);
  * Pops the value of a var and returns it.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
- * \return  MangoValue for the var.
+ * \return  MangoObject for the var.
  */
-extern MangoValue *mango_templatecontext_pop(MangoTemplateContext *ctx,
+extern MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
                                              const MangoString *key);
 
 /**

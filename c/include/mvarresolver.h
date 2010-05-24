@@ -12,7 +12,7 @@ INHERIT_STRUCT(MangoVarResolverPrototype, MangoPrototype,
     /**
      * Callback to do the actual resolution.
      */
-    MangoValue *(*resolveFunc)(MangoVarResolver *data, MangoValue *source, MangoVar *var);
+    MangoObject *(*resolveFunc)(MangoVarResolver *data, MangoObject *source, MangoVar *var);
 );
 
 DECLARE_CLASS(MangoVarResolver, MangoVarResolverPrototype);
@@ -32,10 +32,10 @@ extern void mango_varresolver_free(MangoVarResolver *resolver);
  * \param   resolver    Resolver doing the var resolving.
  * \param   source      The source var from which vars are resolved.
  * \param   var    Var to be resolved.
- * \return  A MangoValue instance that must be freed by the caller.
+ * \return  A MangoObject instance that must be freed by the caller.
  */
-extern MangoValue *mango_varresolver_resolve(MangoVarResolver *resolver,
-                                             MangoValue *source,
+extern MangoObject *mango_varresolver_resolve(MangoVarResolver *resolver,
+                                             MangoObject *source,
                                              MangoVar *var);
 
 /**
@@ -46,7 +46,7 @@ extern MangoValue *mango_varresolver_resolve(MangoVarResolver *resolver,
  * \param   first       First var to start resolving with.
  * \return  The value corresponding to the var.
  */
-extern MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
+extern MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
                                                    MangoTemplateContext *ctx,
                                                    MangoVar *first);
 

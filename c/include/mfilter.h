@@ -20,8 +20,8 @@ INHERIT_STRUCT(MangoFilterPrototype, MangoPrototype,
      * stringified argument on each render call!
      * @throws IOException 
      */
-    int (*applyFunc)(MangoFilter *filter, const MangoValue *input, MangoValue *output,
-                     MangoTemplateContext *context, MangoList *arguments);
+    MangoObject *(*applyFunc)(MangoFilter *filter, const MangoObject *input, 
+                              MangoTemplateContext *context, MangoList *arguments);
 
     //! Creates an invocation specific context
     void *(*makeInvocationContextFunc)(MangoFilter *filter, MangoList *arguments);
@@ -64,17 +64,14 @@ extern void mango_filter_dealloc(MangoFilter *filter);
 /**
  * Applies the filter on a value and returns the new value.
  * \param   filter      Filter being applied.
- * \param   inType      Input type
- * \param   inValue     Input value
- * \param   outValue    Output value.
+ * \param   input       Input value
  * \param   context     Template Context
  * \param   arguments   Arguments for the application.
  *
- * \return  Output type with the value stored in outValue.
+ * \return  Value after the filter is applied.
  */
-extern int mango_filter_apply(MangoFilter *filter,
-                              const MangoValue *input,
-                              MangoValue *output,
+extern MangoObject *mango_filter_apply(MangoFilter *filter,
+                              const MangoObject *input,
                               MangoTemplateContext *context,
                               MangoList *arguments);
 

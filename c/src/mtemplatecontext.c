@@ -51,7 +51,7 @@ const MangoList *mango_templatecontext_get_values(
  * \param   key     Var whose value is to be fetched.
  * \return  Value of the var.
  */
-MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoString *key)
+MangoObject *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoString *key)
 {
     return NULL;
 }
@@ -67,7 +67,7 @@ MangoValue *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoStri
  */
 int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
                                       const MangoString *key,
-                                      MangoValue *value,
+                                      MangoObject *value,
                                       BOOL push)
 {
     return 0;
@@ -82,7 +82,7 @@ int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
  */
 int mango_templatecontext_set(MangoTemplateContext *ctx,
                               const MangoString *key,
-                              MangoValue *value)
+                              MangoObject *value)
 {
     return 0;
 }
@@ -105,7 +105,7 @@ void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...)
  */
 int mango_templatecontext_push(MangoTemplateContext *ctx,
                                const MangoString *key,
-                               MangoValue *value)
+                               MangoObject *value)
 {
     return 0;
 }
@@ -123,9 +123,9 @@ void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...)
  * Pops the value of a var and returns it.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
- * \return  MangoValue for the var.
+ * \return  MangoObject for the var.
  */
-MangoValue *mango_templatecontext_pop(MangoTemplateContext *ctx,
+MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
                                       const MangoString *key)
 {
     return NULL;
