@@ -4,12 +4,37 @@
 #include "mmemutils.h"
 #include "mbintree.h"
 
+DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_templatecontext_prototype,
+    __proto__.getValuesFunc     = NULL;
+    __proto__.getFunc           = NULL;
+    __proto__.setFunc           = NULL;
+    __proto__.setValuesFunc     = NULL;
+    __proto__.pushFunc          = NULL;
+    __proto__.pushValuesFunc    = NULL;
+    __proto__.popFunc           = NULL;
+    __proto__.deleteFunc        = NULL;
+    __proto__.containsFunc      = NULL;
+    __proto__.mergeFunc         = NULL;
+);
+
 /**
  * Creates a new mango template context.
  */
 MangoTemplateContext *mango_templatecontext_new()
 {
-    return ZNEW(MangoTemplateContext);
+    return mango_templatecontext_init(ZNEW(MangoTemplateContext), mango_templatecontext_prototype());
+}
+
+/**
+ * Initialises the template context and returns it.
+ */
+MangoTemplateContext *mango_templatecontext_init(MangoTemplateContext *ctx, MangoTemplateContextPrototype *proto)
+{
+    if (proto == NULL)
+        proto = mango_templatecontext_prototype();
+    OBJ_INIT(ctx, proto);
+    ctx->values = NULL;
+    return proto;
 }
 
 /**

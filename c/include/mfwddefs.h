@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <assert.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
@@ -59,6 +60,7 @@ typedef struct MangoTagNode MangoTagNode;
 typedef struct MangoTagParser MangoTagParser;
 typedef struct MangoTagParserPrototype MangoTagParserPrototype;
 typedef struct MangoTemplateContext MangoTemplateContext;
+typedef struct MangoTemplateContextPrototype MangoTemplateContextPrototype;
 typedef struct MangoTemplateLoader MangoTemplateLoader;
 typedef struct MangoToken MangoToken;
 typedef struct MangoTokenizer MangoTokenizer;

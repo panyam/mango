@@ -43,12 +43,6 @@ DECLARE_CLASS(MangoCollection, MangoCollectionPrototype);
 extern MangoCollectionPrototype *mango_collection_prototype_init(MangoCollectionPrototype *proto);
 
 /**
- * Frees the collection.
- * \param   collection  Collection to be freed.
- */
-extern void mango_collection_dealloc(MangoCollection *collection);
-
-/**
  * Returns the collection size.
  * \param   collection  Collection whose size is to be returned.
  * \return size of the collection.
