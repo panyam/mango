@@ -1,16 +1,17 @@
 #include "msingletons.h"
+#include "mtreetable.h"
 #include "mstring.h"
 
 /**
  * Get the shared filter library instance.
  */
-MangoLibrary *mango_filter_library_singleton()
+MangoTable *mango_filter_library_singleton()
 {
-    static MangoLibrary *filter_library = NULL;
+    static MangoTable *filter_library = NULL;
 
     if (filter_library == NULL)
     {
-        filter_library = mango_library_new();
+        filter_library = (MangoTable *)mango_treetable_new();
     }
 
     return filter_library;
@@ -19,13 +20,13 @@ MangoLibrary *mango_filter_library_singleton()
 /**
  * Get the shared tag parser library instance.
  */
-MangoLibrary *mango_tagparser_library_singleton()
+MangoTable *mango_tagparser_library_singleton()
 {
-    static MangoLibrary *tag_parser_library = NULL;
+    static MangoTable *tag_parser_library = NULL;
 
     if (tag_parser_library == NULL)
     {
-        tag_parser_library = mango_library_new();
+        tag_parser_library = (MangoTable *)mango_treetable_new();
     }
 
     return tag_parser_library;
@@ -34,13 +35,13 @@ MangoLibrary *mango_tagparser_library_singleton()
 /**
  * Get the shared var library instance.
  */
-MangoLibrary *mango_var_library_singleton()
+MangoTable *mango_var_library_singleton()
 {
-    static MangoLibrary *var_library = NULL;
+    static MangoTable *var_library = NULL;
 
     if (var_library == NULL)
     {
-        var_library = mango_library_new();
+        var_library = (MangoTable *)mango_treetable_new();
     }
 
     return var_library;

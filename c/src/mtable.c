@@ -5,13 +5,9 @@
  * Frees the table.
  * \param   table   Table to be freed.
  */
-void mango_table_free(MangoTable *table)
+void mango_table_dealloc(MangoTable *table)
 {
-    if (table->entries != NULL && table->freeTableFunc != NULL)
-    {
-        table->freeTableFunc(table->entries);
-        table->entries = NULL;
-    }
+    mango_object_dealloc((MangoObject *)table);
 }
 
 /**
@@ -21,9 +17,9 @@ void mango_table_free(MangoTable *table)
  */
 int mango_table_size(MangoTable *table)
 {
-    if (table->entries != NULL && table->sizeFunc != NULL)
+    if (table->__prototype__->sizeFunc != NULL)
     {
-        return table->sizeFunc(table->entries);
+        table->__prototype__->sizeFunc(table);
     }
     return 0;
 }
@@ -33,11 +29,11 @@ int mango_table_size(MangoTable *table)
  * \param   table   Table to be searched.
  * \param   key     Key by which the element is to be searched.
  */
-void *mango_table_get(MangoTable *table, void *key)
+MangoObject *mango_table_get(MangoTable *table, MangoString *key)
 {
-    if (table->entries != NULL && table->getFunc != NULL)
+    if (table->__prototype__->getFunc != NULL)
     {
-        return table->getFunc(table->entries, key);
+        return table->__prototype__->getFunc(table, key);
     }
     return NULL;
 }
@@ -48,11 +44,11 @@ void *mango_table_get(MangoTable *table, void *key)
  * \param   key     key by which the element is to be searched.
  * \return  True if value exists for key, false otherwise.
  */
-BOOL mango_table_contains(MangoTable *table, void *key)
+BOOL mango_table_contains(MangoTable *table, MangoString *key)
 {
-    if (table->entries != NULL && table->containsFunc != NULL)
+    if (table->__prototype__->containsFunc != NULL)
     {
-        return table->containsFunc(table->entries, key);
+        table->__prototype__->containsFunc(table, key);
     }
     return false;
 }
@@ -64,11 +60,11 @@ BOOL mango_table_contains(MangoTable *table, void *key)
  * \param   value   New value.
  * \return old value if it exists, otherwise NULL.
  */
-void *mango_table_put(MangoTable *table, void *key, void *value)
+MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *value)
 {
-    if (table->entries != NULL && table->putFunc != NULL)
+    if (table->__prototype__->putFunc != NULL)
     {
-        return table->putFunc(table->entries, key, value);
+        table->__prototype__->putFunc(table, key, value);
     }
     return NULL;
 }
@@ -79,11 +75,11 @@ void *mango_table_put(MangoTable *table, void *key, void *value)
  * \param   key     Key by which the element is to be erased.
  * \return The erased value if it exists.
  */
-void *mango_table_erase(MangoTable *table, void *key)
+MangoObject *mango_table_erase(MangoTable *table, MangoString *key)
 {
-    if (table->entries != NULL && table->eraseFunc != NULL)
+    if (table->__prototype__->eraseFunc != NULL)
     {
-        return table->eraseFunc(table->entries, key);
+        table->__prototype__->eraseFunc(table, key);
     }
     return NULL;
 }

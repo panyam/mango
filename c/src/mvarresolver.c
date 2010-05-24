@@ -1,4 +1,5 @@
 
+#include "marray.h"
 #include "mvarresolver.h"
 #include "mtemplatecontext.h"
 #include "mvar.h"
@@ -89,7 +90,7 @@ MangoValue *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
         {
             MangoValue *newsrc = mango_varresolver_resolve(resolver, curr_src, curr_var);
             if (curr_src != &ctx_value)
-                mango_value_free(curr_src);
+                OBJ_DECREF(curr_src);
             curr_src = newsrc;
         }
         prev_var = curr_var;
@@ -118,61 +119,19 @@ MangoValue *default_resolver_func(MangoVarResolver *resolver, MangoValue *source
      * above rules.
      */
     // try as an integer first
-    BOOL performMethodAndAttributeCheck = true;
     if (var->isNumber)
     {
         int intValue = var->intValue;
 
         // set this flag to true so that if we fall through here and go to the map case
         // then we do not want this to be treated as a method or an attribute
-        performMethodAndAttributeCheck = false;
         if (source->valueType == MV_ARRAY)
         {
-            return mango_array_item_at((MangoArray *)source->valueData, intValue);
-        }
-        else
-        {
-            // convert to an array
-            if (source.getClass().isArray())
-            {
-                return Array.get(source, intValue);
-            }
-            else
-            {
-                // worst case - see if the object has a method
-                // atIndex or elementAt or something like that
-                // we will go with elementAtIndex for now.
-                Class<?> sourceClass = source.getClass();
-                Method method = null;
-                try {
-                    method = sourceClass.getMethod("elementAtIndex", int.class);
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-
-                if (method != null)
-                {
-                    try {
-                        method.setAccessible(true);
-                        return method.invoke(source, intValue);
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                }
-                
-                // here we fall through and let it be handled as a map/associative 
-                // container of some sort
-            }
+            return mango_array_itemat((MangoArray *)source->valueData, intValue);
         }
     }
     
-    String value = variable.value;
+    MangoString *value = OBJ_INCREF(variable->value);
 
     // try as a dictionary lookup - ie using a Map
     if (source instanceof Map<?,?> && ((Map<?,?>)source).containsKey(value))
@@ -186,44 +145,6 @@ MangoValue *default_resolver_func(MangoVarResolver *resolver, MangoValue *source
     if (source instanceof TemplateContext && ((TemplateContext)source).hasValue(value))
     {
         return ((TemplateContext)source).getValue(value);
-    }
-
-    // now check if we are a method or an attribute
-    if (performMethodAndAttributeCheck)
-    {
-        // first check for attributes
-        Class<?> sourceClass = source.getClass();
-        try {
-            Field field = sourceClass.getField(value);
-            try {
-                field.setAccessible(true);
-                return field.get(source);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-        }
-        
-        try {
-            Method method = sourceClass.getMethod(value, (Class [])null);
-            try {
-                method.setAccessible(true);
-                return method.invoke(source, (Object [])null);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-        }
     }
     return NULL;
 }

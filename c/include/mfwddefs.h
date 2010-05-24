@@ -51,6 +51,8 @@ typedef struct MangoStringFactory MangoStringFactory;
 typedef struct MangoStringFactoryPrototype MangoStringFactoryPrototype;
 typedef struct MangoStringPrototype MangoStringPrototype;
 typedef struct MangoTable MangoTable;
+typedef struct MangoTablePrototype MangoTablePrototype;
+typedef struct MangoTreeTable MangoTreeTable;
 typedef struct MangoTagNode MangoTagNode;
 typedef struct MangoTagParser MangoTagParser;
 typedef struct MangoTagParserPrototype MangoTagParserPrototype;

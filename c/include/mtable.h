@@ -2,60 +2,58 @@
 #ifndef __MANGO_TABLE_H__
 #define __MANGO_TABLE_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * General associate container for a set of homogeneous items.
- */
-struct MangoTable
-{
-    void *entries;
+typedef int (*TableSizeFunc)(MangoTable *table);
+typedef MangoObject *(*TableGetFunc)(MangoTable *table, MangoString *key);
+typedef BOOL (*TableContainsFunc)(MangoTable *table, MangoString *key);
+typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
+typedef MangoObject *(*TableEraseFunc)(MangoTable *table, MangoString *key);
 
+/**
+ * General associate container for a set of MangoObjects.
+ */
+INHERIT_STRUCT(MangoTablePrototype, MangoPrototype,
     /**
      * Returns the number of entries.
      */
-    int (*sizeFunc)(void *entries);
-
-    /**
-     * Frees the entire table.
-     */
-    void (*freeTableFunc)(void *entries);
-
-    /**
-     * Function to free each entry in the table on clearing.
-     */
-    void (*freeEntryFunc)(void *entries);
+    int (*sizeFunc)(MangoTable *table);
 
     /**
      * Gets a value by key.
      */
-    void *(*getFunc)(void *entries, void *key);
+    MangoObject *(*getFunc)(MangoTable *table, MangoString *key);
 
     /**
      * Tells if a value exists.
      */
-    BOOL (*containsFunc)(void *entries, void *key);
+    BOOL (*containsFunc)(MangoTable *table, MangoString *key);
 
     /**
      * Puts a value by key, replacing and returning the old value if any.
      */
-    void *(*putFunc)(void *entries, void *key, void *value);
+    MangoObject *(*putFunc)(MangoTable *table, MangoString *key, MangoObject *value);
 
     /**
      * Erases an element from the table.
      */
-    void *(*eraseFunc)(void *entries, void *key);
-};
+    MangoObject *(*eraseFunc)(MangoTable *table, MangoString *key);
+);
+
+/**
+ * Super class of all associative containers.
+ */
+DECLARE_CLASS(MangoTable, MangoTablePrototype);
 
 /**
  * Frees the table.
  * \param   table   Table to be freed.
  */
-extern void mango_table_free(MangoTable *table);
+extern void mango_table_dealloc(MangoTable *table);
 
 /**
  * Returns the table size.
@@ -69,7 +67,7 @@ extern int mango_table_size(MangoTable *table);
  * \param   table   Table to be searched.
  * \param   key     Key by which the element is to be searched.
  */
-extern void *mango_table_get(MangoTable *table, void *key);
+extern MangoObject *mango_table_get(MangoTable *table, MangoString *key);
 
 /**
  * Tells if a value exists.
@@ -77,7 +75,7 @@ extern void *mango_table_get(MangoTable *table, void *key);
  * \param   key     key by which the element is to be searched.
  * \return  True if value exists for key, false otherwise.
  */
-extern BOOL mango_table_contains(MangoTable *table, void *key);
+extern BOOL mango_table_contains(MangoTable *table, MangoString *key);
 
 /**
  * Puts a value by key, replacing and returning the old value if any.
@@ -86,7 +84,7 @@ extern BOOL mango_table_contains(MangoTable *table, void *key);
  * \param   value   New value.
  * \return old value if it exists, otherwise NULL.
  */
-extern void *mango_table_put(MangoTable *table, void *key, void *value);
+extern MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *value);
 
 /**
  * Erases an element from the table.
@@ -94,7 +92,7 @@ extern void *mango_table_put(MangoTable *table, void *key, void *value);
  * \param   key     Key by which the element is to be erased.
  * \return The erased value if it exists.
  */
-extern void *mango_table_erase(MangoTable *table, void *key);
+extern MangoObject *mango_table_erase(MangoTable *table, MangoString *key);
 
 #ifdef __cplusplus
 }

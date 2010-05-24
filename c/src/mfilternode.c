@@ -5,7 +5,6 @@
 #include "mfilterlibrary.h"
 #include "merror.h"
 #include "msingletons.h"
-#include "mlibrary.h"
 #include "mvar.h"
 #include "mlist.h"
 #include "mtokenlists.h"
