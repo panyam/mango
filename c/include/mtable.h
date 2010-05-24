@@ -2,13 +2,12 @@
 #ifndef __MANGO_TABLE_H__
 #define __MANGO_TABLE_H__
 
-#include "mobject.h"
+#include "mcollection.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef int (*TableSizeFunc)(MangoTable *table);
 typedef MangoObject *(*TableGetFunc)(MangoTable *table, MangoString *key);
 typedef BOOL (*TableContainsFunc)(MangoTable *table, MangoString *key);
 typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
@@ -17,12 +16,7 @@ typedef MangoObject *(*TableEraseFunc)(MangoTable *table, MangoString *key);
 /**
  * General associate container for a set of MangoObjects.
  */
-INHERIT_STRUCT(MangoTablePrototype, MangoPrototype,
-    /**
-     * Returns the number of entries.
-     */
-    int (*sizeFunc)(MangoTable *table);
-
+INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
      * Gets a value by key.
      */

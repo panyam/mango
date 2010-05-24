@@ -62,6 +62,7 @@ extern "C" {
         static BOOL initialised = false;                                        \
         if (!initialised)                                                       \
         {                                                                       \
+            bzero(&__proto__, sizeof(__proto__));                               \
             mango_prototype_init((MangoPrototype *)(&__proto__), VAR_CLASS_ID); \
             __VA_ARGS__                                                         \
             initialised = true;                                                 \

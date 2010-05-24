@@ -21,8 +21,9 @@ int tableentry_cmp(const MangoTableEntry *mle1, const MangoTableEntry *mle2)
 }
 
 DECLARE_PROTO_FUNC("MangoTreeTable", MangoTablePrototype, mango_treetable_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc  = (ObjectDeallocFunc)mango_treetable_dealloc;
-    __proto__.sizeFunc         = (TableSizeFunc)mango_treetable_size;
+    mango_collection_prototype_init((MangoCollectionPrototype *)&__proto__);
+    ((MangoPrototype *)&__proto__)->deallocFunc         = (ObjectDeallocFunc)mango_treetable_dealloc;
+    ((MangoCollectionPrototype *)&__proto__)->sizeFunc  = (CollectionSizeFunc)mango_treetable_size;
     __proto__.getFunc          = (TableGetFunc)mango_treetable_get;
     __proto__.containsFunc     = (TableContainsFunc)mango_treetable_contains;
     __proto__.putFunc          = (TablePutFunc)mango_treetable_put;
@@ -149,7 +150,7 @@ void mango_treetable_dealloc(MangoTreeTable *table)
 MangoTreeTable *mango_treetable_init(MangoTreeTable *ttable, MangoTablePrototype *proto)
 {
     if (proto == NULL)
-        proto = mango_treetable_prototype;
+        proto = mango_treetable_prototype();
     OBJ_INIT(ttable, proto);
     ttable->entries = NULL;
     return ttable;

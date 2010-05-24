@@ -7,21 +7,7 @@
  */
 void mango_table_dealloc(MangoTable *table)
 {
-    mango_object_dealloc((MangoObject *)table);
-}
-
-/**
- * Returns the table size.
- * \param   table   Table whose size is to be returned.
- * \return size of the table.
- */
-int mango_table_size(MangoTable *table)
-{
-    if (table->__prototype__->sizeFunc != NULL)
-    {
-        table->__prototype__->sizeFunc(table);
-    }
-    return 0;
+    mango_collection_dealloc((MangoCollection *)table);
 }
 
 /**
