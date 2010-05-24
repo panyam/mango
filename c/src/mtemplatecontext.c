@@ -2,15 +2,13 @@
 #include "mtemplatecontext.h"
 #include "mstring.h"
 #include "mmemutils.h"
-#include "mbintree.h"
+#include "mtreetable.h"
 
 DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_templatecontext_prototype,
     __proto__.getValuesFunc     = NULL;
     __proto__.getFunc           = NULL;
     __proto__.setFunc           = NULL;
-    __proto__.setValuesFunc     = NULL;
     __proto__.pushFunc          = NULL;
-    __proto__.pushValuesFunc    = NULL;
     __proto__.popFunc           = NULL;
     __proto__.deleteFunc        = NULL;
     __proto__.containsFunc      = NULL;
@@ -34,15 +32,16 @@ MangoTemplateContext *mango_templatecontext_init(MangoTemplateContext *ctx, Mang
         proto = mango_templatecontext_prototype();
     OBJ_INIT(ctx, proto);
     ctx->values = NULL;
-    return proto;
+    return ctx;
 }
 
 /**
  * Frees the context and all values in it.
  * \param   context Context to be freed.
  */
-void mango_templatecontext_free(MangoTemplateContext *context)
+void mango_templatecontext_dealloc(MangoTemplateContext *ctx)
 {
+    assert("not implemented" && false);
 }
 
 /**
@@ -50,8 +49,12 @@ void mango_templatecontext_free(MangoTemplateContext *context)
  * \param   context Context into which the values are being merged.
  * \param   dict    Dictionary from which the values are being merged.
  */
-void mango_templatecontext_merge(MangoTemplateContext *context, MangoBinTree *dict)
+void mango_templatecontext_merge(MangoTemplateContext *ctx, MangoTable *dict)
 {
+    if (ctx->__prototype__->mergeFunc != NULL)
+    {
+        ctx->__prototype__->mergeFunc(ctx, dict);
+    }
 }
 
 /**
@@ -62,11 +65,12 @@ void mango_templatecontext_merge(MangoTemplateContext *context, MangoBinTree *di
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-const MangoList *mango_templatecontext_get_values(
-            MangoTemplateContext *context,
-            const MangoString *key,
-            BOOL create)
+const MangoList *mango_templatecontext_get_values(MangoTemplateContext *ctx, const MangoString *key, BOOL create)
 {
+    if (ctx->__prototype__->getValuesFunc != NULL)
+    {
+        ctx->__prototype__->getValuesFunc(ctx, key, create);
+    }
     return NULL;
 }
 
@@ -78,6 +82,10 @@ const MangoList *mango_templatecontext_get_values(
  */
 MangoObject *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoString *key)
 {
+    if (ctx->__prototype__->getFunc != NULL)
+    {
+        ctx->__prototype__->getFunc(ctx, key);
+    }
     return NULL;
 }
 
@@ -95,7 +103,7 @@ int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
                                       MangoObject *value,
                                       BOOL push)
 {
-    return 0;
+    return -1;
 }
 
 /**
@@ -109,6 +117,10 @@ int mango_templatecontext_set(MangoTemplateContext *ctx,
                               const MangoString *key,
                               MangoObject *value)
 {
+    if (ctx->__prototype__->setFunc != NULL)
+    {
+        return ctx->__prototype__->setFunc(ctx, key, value);
+    }
     return 0;
 }
 
@@ -132,6 +144,10 @@ int mango_templatecontext_push(MangoTemplateContext *ctx,
                                const MangoString *key,
                                MangoObject *value)
 {
+    if (ctx->__prototype__->pushFunc != NULL)
+    {
+        return ctx->__prototype__->pushFunc(ctx, key, value);
+    }
     return 0;
 }
 
@@ -153,6 +169,10 @@ void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...)
 MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
                                       const MangoString *key)
 {
+    if (ctx->__prototype__->popFunc != NULL)
+    {
+        return ctx->__prototype__->popFunc(ctx, key);
+    }
     return NULL;
 }
 
@@ -163,6 +183,10 @@ MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
  */
 void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *key)
 {
+    if (ctx->__prototype__->deleteFunc != NULL)
+    {
+        return ctx->__prototype__->deleteFunc(ctx, key);
+    }
 }
 
 /**
@@ -173,6 +197,10 @@ void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *
  */
 BOOL mango_templatecontext_contains(MangoTemplateContext *ctx, const MangoString *key)
 {
+    if (ctx->__prototype__->containsFunc != NULL)
+    {
+        return ctx->__prototype__->containsFunc(ctx, key);
+    }
     return false;
 }
 

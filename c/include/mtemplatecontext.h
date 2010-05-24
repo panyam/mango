@@ -37,13 +37,6 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
     int (*setFunc)(MangoTemplateContext *ctx, const MangoString *key, MangoObject *value);
 
     /**
-     * Sets multiple values given by a list of key/value pairs.
-     * \param   ctx     Context in which the value is to be set.
-     * \param   ...     Key/Value arguments, terminated by NULL.
-     */
-    void (*setValuesFunc)(MangoTemplateContext *ctx, ...);
-
-    /**
      * Pushes the value of a particular key.
      * \param   ctx     Context in which the value is to be pushed.
      * \param   key     Var key
@@ -51,13 +44,6 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \return  The new size of the value stack for the var.
      */
     int (*pushFunc)(MangoTemplateContext *ctx, const MangoString *key, MangoObject *value);
-
-    /**
-     * Pushes multiple values given by a list of key/value pairs.
-     * \param   ctx     Context in which the value is to be pushed.
-     * \param   ...     Key/Value arguments, terminated by NULL.
-     */
-    void (*pushValuesFunc)(MangoTemplateContext *ctx, ...);
 
     /**
      * Pops the value of a var and returns it.
@@ -87,7 +73,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   context Context into which the values are being merged.
      * \param   dict    Dictionary from which the values are being merged.
      */
-    void (*mergeFunc)(MangoTemplateContext *context, MangoBinTree *dict);
+    void (*mergeFunc)(MangoTemplateContext *context, MangoTable *dict);
 );
 
 /**
@@ -95,7 +81,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
  * template.
  */
 DECLARE_CLASS(MangoTemplateContext, MangoTemplateContextPrototype,
-    MangoBinTree *values;
+    MangoTable *values;
 );
 
 /**
@@ -112,7 +98,7 @@ extern MangoTemplateContext *mango_templatecontext_init(MangoTemplateContext *ct
  * Frees the context and all values in it.
  * \param   context Context to be freed.
  */
-extern void mango_templatecontext_free(MangoTemplateContext *context);
+extern void mango_templatecontext_dealloc(MangoTemplateContext *context);
 
 /**
  * Get the values for a particular var in the context.
@@ -192,16 +178,14 @@ extern void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...);
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return  MangoObject for the var.
  */
-extern MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
-                                             const MangoString *key);
+extern MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx, const MangoString *key);
 
 /**
  * Deletes the value of a var completely.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
  */
-extern void mango_templatecontext_delete(MangoTemplateContext *ctx,
-                                         const MangoString *key);
+extern void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *key);
 
 /**
  * Tells if a var by a particular key exists.
@@ -209,16 +193,14 @@ extern void mango_templatecontext_delete(MangoTemplateContext *ctx,
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return true if the var exits, false otherwise.
  */
-extern BOOL mango_templatecontext_contains(MangoTemplateContext *ctx,
-                                           const MangoString *key);
+extern BOOL mango_templatecontext_contains(MangoTemplateContext *ctx, const MangoString *key);
 
 /**
  * Merge the values of another dictionary into a context.
  * \param   context Context into which the values are being merged.
  * \param   dict    Dictionary from which the values are being merged.
  */
-extern void mango_templatecontext_merge(MangoTemplateContext *context,
-                                        MangoBinTree *dict);
+extern void mango_templatecontext_merge(MangoTemplateContext *context, MangoTable *dict);
 
 #ifdef __cplusplus
 }
