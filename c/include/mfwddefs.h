@@ -21,6 +21,7 @@ extern "C" {
 typedef int BOOL;
 
 typedef struct MangoArray MangoArray;
+typedef struct MangoArrayList MangoArrayList;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
 typedef struct MangoCollection MangoCollection;
@@ -36,6 +37,7 @@ typedef struct MangoIteratorPrototype MangoIteratorPrototype;
 typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoList MangoList;
 typedef struct MangoListNode MangoListNode;
+typedef struct MangoLinkedList MangoLinkedList;
 typedef struct MangoNode MangoNode;
 typedef struct MangoNodeList MangoNodeList;
 typedef struct MangoNodePrototype MangoNodePrototype;

@@ -11,6 +11,8 @@ extern "C" {
 typedef int (*CollectionSizeFunc)(MangoCollection *collection);
 typedef void (*CollectionClearFunc)(MangoCollection *collection);
 typedef BOOL (*CollectionIsEmptyFunc)(MangoCollection *collection);
+typedef BOOL (*CollectionRemoveFunc)(MangoCollection *collection, MangoObject *obj);
+typedef BOOL (*CollectionContainsFunc)(MangoCollection *collection, MangoObject *obj);
 
 /**
  * Base interface of all collections.
@@ -30,6 +32,17 @@ INHERIT_STRUCT(MangoCollectionPrototype, MangoPrototype,
      * Tells if the collection is empty.
      */
     BOOL (*isEmptyFunc)(MangoCollection *collection);
+
+    /**
+     * Tells if the collection contains an object.
+     */
+    BOOL (*containsFunc)(MangoCollection *collection, MangoObject *obj);
+
+    /**
+     * Removes the first occurence of an object from the collection and
+     * drecrements its count.
+     */
+    BOOL (*removeFunc)(MangoCollection *collection, MangoObject *obj);
 );
 
 /**

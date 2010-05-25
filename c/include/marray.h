@@ -8,9 +8,6 @@
 extern "C" {
 #endif
 
-INHERIT_STRUCT(MangoArrayPrototype, MangoPrototype,
-);
-
 /*
  * Array structures.
  */
