@@ -76,8 +76,11 @@ extern "C" {
 typedef void (*ObjectDeallocFunc)(MangoObject *object);
 typedef BOOL (*ObjectEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
 typedef int (*ObjectCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
-typedef MangoObject *(*ObjectGetIntAttrFunc)(const MangoObject *obj1, int index);
-typedef MangoObject *(*ObjectGetStrAttrFunc)(const MangoObject *obj1, const MangoString *key);
+typedef MangoObject *(*ObjectGetIntAttrFunc)(const MangoObject *obj, int index);
+typedef MangoObject *(*ObjectGetStrAttrFunc)(const MangoObject *obj, const MangoString *key);
+typedef BOOL (*ObjectHasIntAttrFunc)(const MangoObject *obj, int index);
+typedef BOOL (*ObjectHasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
+typedef MangoIterator *(*ObjectIteratorFunc)(const MangoObject *obj);
 
 /**
  * Prototypes are the blueprints for objects.  Almost like classes.
@@ -130,6 +133,11 @@ struct MangoPrototype
      * Tells if the object can return a an attribute value for a key.
      */
     BOOL (*hasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
+
+    /**
+     * Gets the iterator for the object.
+     */
+    MangoIterator *(*iterFunc)(MangoObject *obj);
 };
 
 /**
@@ -295,6 +303,11 @@ BOOL mango_object_has_int_attr(const MangoObject *obj, int index);
  * Tells if the object can return a an attribute value for a key.
  */
 BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key);
+
+/**
+ * Get an iterator for an object.
+ */
+extern MangoIterator *mango_object_iterator(MangoObject *obj);
 
 #ifdef __cplusplus
 }

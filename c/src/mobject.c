@@ -20,6 +20,7 @@ MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, s
     proto->getStrAttrFunc   = NULL;
     proto->hasIntAttrFunc   = NULL;
     proto->hasStrAttrFunc   = NULL;
+    proto->iterFunc         = NULL;
     return proto;
 }
 
@@ -213,5 +214,15 @@ BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key)
     if (obj->__prototype__->hasStrAttrFunc != NULL)
         return obj->__prototype__->hasStrAttrFunc(obj, key);
     return false;
+}
+
+/**
+ * Get an iterator for an object.
+ */
+MangoIterator *mango_object_iterator(MangoObject *obj)
+{
+    if (obj->__prototype__->iterFunc != NULL)
+        return obj->__prototype__->iterFunc(obj);
+    return NULL;
 }
 

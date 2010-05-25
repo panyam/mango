@@ -2,25 +2,32 @@
 #ifndef __MANGO_ITERATOR_H__
 #define __MANGO_ITERATOR_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-struct MangoIterator
-{
-    void *  data;
-    void    (*deleteFunc)(void *data);
-    BOOL    (*hasNext)(void *data);
-    void *  (*next)(void *data);
-};
+/**
+ * Prototypes of iterators.
+ */
+INHERIT_STRUCT(MangoIteratorPrototype, MangoPrototype,
+    BOOL        (*hasNextFunc)(MangoIterator *iterator);
+    MangoObject (*nextFunc)(MangoIterator *iterator);
+);
+
+DECLARE_CLASS(MangoIterator, MangoIteratorPrototype);
 
 /**
- * Frees an iterator
- * \param   miter   Iterator to be freed.
+ * Initialises a new iterator object.
  */
-extern void mango_iterator_free(MangoIterator *miter);
+extern MangoObject *mango_iterator_init(MangoIterator *iter, MangoIteratorPrototype *proto);
+
+/**
+ * Deallocs an iterator.
+ * \param   miter   Iterator to be dealloced.
+ */
+extern void mango_iterator_dealloc(MangoIterator *miter);
 
 /**
  * Tells if there are more items in the iterator.
@@ -33,7 +40,7 @@ extern BOOL mango_iterator_hase_next(MangoIterator *miter);
  * Gets the next item pointed by the iterator.
  * \param   miter   Iterator to get the next item from.
  */
-extern void *mango_iterator_next(MangoIterator *miter);
+extern MangoObject *mango_iterator_next(MangoIterator *miter);
 
 #ifdef __cplusplus
 }

@@ -2,16 +2,12 @@
 #include "miterator.h"
 
 /**
- * Frees an iterator
- * \param   miter   Iterator to be freed.
+ * Deallocs an iterator
+ * \param   miter   Iterator to be dealloced.
  */
-void mango_iterator_free(MangoIterator *miter)
+void mango_iterator_dealloc(MangoIterator *miter)
 {
-    if (miter->data != NULL && miter->deleteFunc != NULL)
-    {
-        miter->deleteFunc(miter->data);
-    }
-    free(miter);
+    mango_object_dealloc((MangoObject *)miter);
 }
 
 /**
@@ -21,17 +17,19 @@ void mango_iterator_free(MangoIterator *miter)
  */
 BOOL mango_iterator_hase_next(MangoIterator *miter)
 {
-    return miter->data != NULL && miter->hasNext != NULL && miter->hasNext(miter->data);
+    if (miter != NULL && miter->__prototype__->hasNextFunc != NULL)
+        miter->__prototype__->hasNextFunc(miter);
+    return false;
 }
 
 /**
  * Gets the next item pointed by the iterator.
  * \param   miter   Iterator to get the next item from.
  */
-void *mango_iterator_next(MangoIterator *miter)
+MangoObject *mango_iterator_next(MangoIterator *miter)
 {
-    if (miter->data == NULL || miter->hasNext == NULL || miter->next == NULL)
-        return NULL;
-    return miter->next(miter->data);
+    if (miter != NULL && miter->__prototype__->nextFunc != NULL)
+        miter->__prototype__->nextFunc(miter);
+    return NULL;
 }
 
