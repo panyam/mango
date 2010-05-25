@@ -33,7 +33,7 @@ public:
 TEST_FIXTURE(ObjectTestFixture, TestPrototypeInit)
 {
     MangoPrototype prototype;
-    mango_prototype_init(&prototype, "Hello World");
+    mango_prototype_init(&prototype, "Hello World", sizeof(MangoPrototype));
     CHECK_EQUAL(0, strcmp(prototype.name, "Hello World"));
     CHECK(prototype.deallocFunc == NULL);
 }

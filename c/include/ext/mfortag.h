@@ -42,7 +42,7 @@ INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeRendererContext,
     BOOL                isLast;
     int                 currIndex;
     BOOL                isEmpty;
-    MangoValueIterator *valIterator;
+    // MangoValueIterator *valIterator;
     MangoArray *        itemValues;
 );
 typedef struct MangoForTagRendererContext MangoForTagRendererContext;
@@ -127,7 +127,7 @@ extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *       n
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoValue source);
+extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoObject *source);
 
 ///////////////////////////////////////////////////////////////////////////
 //      Parser specific methods

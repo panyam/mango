@@ -15,8 +15,8 @@ protected:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
+    MangoTable *            filterLibrary;
+    MangoTable *            tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
     MangoTemplateContext *  context;
@@ -77,7 +77,7 @@ public:
 
         if (context != NULL)
         {
-            mango_templatecontext_free(context);
+            OBJ_DECREF(context);
             context = NULL;
         }
     }
@@ -91,14 +91,13 @@ public:
         parser_context.parser = parser;
     }
 
-    void CheckResolvedVar(const MangoValue *expectedValue)
+    void CheckResolvedVar(const MangoObject *expectedValue)
     {
         MangoError *error = NULL;
         mango_parser_expect_token(parser, TOKEN_OPEN_VARIABLE, false, &error);
         var = mango_var_extract_with_parser(&parser_context, &error);
         mango_parser_expect_token(parser, TOKEN_CLOSE_VARIABLE, false, &error);
-        MangoValue source = mango_value_make(MV_CONTEXT, context);
-        MangoValue *resolvedValue = mango_varresolver_resolve(resolver, &source, var);
+        MangoObject *resolvedValue = mango_varresolver_resolve(resolver, (MangoObject *)context, var);
         CHECK(OBJ_EQUALS(expectedValue, resolvedValue));
     }
 };
@@ -120,8 +119,10 @@ TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 {
     SetupParserAndParseVar("{{a}}");
-    mango_templatecontext_set(context, mango_stringfactory_new_string(string_factory, "a", -1), MV_NEW(MV_INT, 3));
-    CheckResolvedVar(MV_NEW(MV_INT, 3));
+    mango_templatecontext_set(context,
+                              mango_stringfactory_new_string(string_factory, "a", -1),
+                              (MangoObject *)mango_number_from_int(3));
+    CheckResolvedVar((MangoObject *)mango_number_from_int(3));
 }
 
 #if 0

@@ -17,8 +17,8 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
+    MangoTable *          filterLibrary;
+    MangoTable *          tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
 
@@ -39,16 +39,16 @@ public:
         parser_context.loader       = NULL;
 
         // register filters
-        register_in_library(filterLibrary, string_factory, "add", mango_addfilter_default());
+        register_in_library(filterLibrary, string_factory, "add", (MangoObject *)mango_addfilter_default());
 
         // and register the "for" tag
-        register_in_library(tagLibrary, string_factory, "for", mango_fortagparser_default());
+        register_in_library(tagLibrary, string_factory, "for", (MangoObject *)mango_fortagparser_default());
     }
 
-    static void register_in_library(MangoLibrary *library, MangoStringFactory *string_factory, const char *key, void *value)
+    static void register_in_library(MangoTable *library, MangoStringFactory *string_factory, const char *key, MangoObject *value)
     {
         MangoString *mkey = mango_stringfactory_new_string(string_factory, key, -1);
-        mango_library_register(library, mkey, value);
+        mango_table_put(library, mkey, value);
         OBJ_DECREF(mkey);
     }
 

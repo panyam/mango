@@ -14,7 +14,6 @@
 #include "mfreetext.h"
 #include "mfwddefs.h"
 #include "minputsource.h"
-#include "mlibrary.h"
 #include "mlist.h"
 #include "mmemutils.h"
 #include "mnode.h"
