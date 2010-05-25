@@ -185,22 +185,22 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Gets attribute of an object given an integer index.
  */
-#define OBJ_GETINTATTR(Obj, index)  mango_object_get_int_attr((MangoObject *)obj, index)
+#define OBJ_GETINTATTR(obj, index)  mango_object_get_int_attr((MangoObject *)obj, index)
 
 /**
  * Gets attribute of an object given a key.
  */
-#define OBJ_GETSTRATTR(Obj, key)    mango_object_get_str_attr((MangoObject *)obj, key)
+#define OBJ_GETSTRATTR(obj, key)    mango_object_get_str_attr((MangoObject *)obj, key)
 
 /**
  * Tells whether an attribute of an object given an integer index exists.
  */
-#define OBJ_HASINTATTR(Obj, index)  mango_object_has_int_attr((MangoObject *)obj, index)
+#define OBJ_HASINTATTR(obj, index)  mango_object_has_int_attr((MangoObject *)obj, index)
 
 /**
  * Tells whether an attribute of an object given a key exists.
  */
-#define OBJ_HASSTRATTR(Obj, key)    mango_object_has_str_attr((MangoObject *)obj, key)
+#define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)obj, key)
 
 /**
  * Create a new prototype object of a given name.
