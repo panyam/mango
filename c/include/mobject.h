@@ -4,7 +4,6 @@
 
 #include "mfwddefs.h"
 #include "mmemutils.h"
-#include <stdarg.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,6 +76,8 @@ extern "C" {
 typedef void (*ObjectDeallocFunc)(MangoObject *object);
 typedef BOOL (*ObjectEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
 typedef int (*ObjectCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+typedef MangoObject *(*ObjectGetIntAttrFunc)(const MangoObject *obj1, int index);
+typedef MangoObject *(*ObjectGetStrAttrFunc)(const MangoObject *obj1, const MangoString *key);
 
 /**
  * Prototypes are the blueprints for objects.  Almost like classes.
@@ -108,6 +109,27 @@ struct MangoPrototype
      * Compares the data of two objects.
      */
     int (*compareFunc)(const MangoObject *obj1, const MangoObject *obj2);
+
+    /**
+     * Gets an attribute of this object given an integer index.
+     */
+    MangoObject *(*getIntAttrFunc)(const MangoObject *obj, int index);
+
+    /**
+     * Gets an attribute of this object given a key.
+     */
+    MangoObject *(*getStrAttrFunc)(const MangoObject *obj, const MangoString *key);
+
+    /**
+     * Tells if the object can return a an attribute value for an integer
+     * index.
+     */
+    BOOL (*hasIntAttrFunc)(const MangoObject *obj, int index);
+
+    /**
+     * Tells if the object can return a an attribute value for a key.
+     */
+    BOOL (*hasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
 };
 
 /**
@@ -161,6 +183,26 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 #define OBJ_INSTANCEOF(obj, proto)       mango_object_instanceof((MangoObject *)obj, (const MangoPrototype *)proto)
 
 /**
+ * Gets attribute of an object given an integer index.
+ */
+#define OBJ_GETINTATTR(Obj, index)  mango_object_get_int_attr((MangoObject *)obj, index)
+
+/**
+ * Gets attribute of an object given a key.
+ */
+#define OBJ_GETSTRATTR(Obj, index)  mango_object_get_str_attr((MangoObject *)obj, key)
+
+/**
+ * Tells whether an attribute of an object given an integer index exists.
+ */
+#define OBJ_HASINTATTR(Obj, index)  mango_object_has_int_attr((MangoObject *)obj, index)
+
+/**
+ * Tells whether an attribute of an object given a key exists.
+ */
+#define OBJ_HASSTRATTR(Obj, index)  mango_object_has_str_attr((MangoObject *)obj, key)
+
+/**
  * Create a new prototype object of a given name.
  */
 extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, size_t size);
@@ -179,14 +221,9 @@ extern MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto);
 extern MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto);
 
 /**
- * An object initializer.  The object must be allocated first (perhaps with
- * mango_object_alloc) or initialised with mango_object_init.
- * \param   obj         Object to be initialised.
- * \param   initFunc    INitialiser function to be called on the object.
- * \param   ...         Var arguments passed to the initialiser function.
- * \return  Pointer to the same object to simplify copy semantics.
+ * Deallocates an object.
  */
-extern MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...);
+extern void mango_object_dealloc(MangoObject *obj);
 
 /**
  * Clones an object.
@@ -239,9 +276,25 @@ extern int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2
 extern BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto);
 
 /**
- * Deallocates an object.
+ * Gets an attribute of this object given an integer index.
  */
-extern void mango_object_dealloc(MangoObject *obj);
+MangoObject *mango_object_get_int_attr(const MangoObject *obj1, int index);
+
+/**
+ * Gets an attribute of this object given a key.
+ */
+MangoObject *mango_object_get_str_attr(const MangoObject *obj1, const MangoString *key);
+
+/**
+ * Tells if the object can return a an attribute value for an integer
+ * index.
+ */
+BOOL mango_object_has_int_attr(const MangoObject *obj1, int index);
+
+/**
+ * Tells if the object can return a an attribute value for a key.
+ */
+BOOL mango_object_has_str_attr(const MangoObject *obj1, const MangoString *key);
 
 #ifdef __cplusplus
 }

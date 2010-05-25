@@ -205,9 +205,10 @@ dep:
 ../bld/./mtagparserlibrary.o: ../include/./mtagparser.h
 ../bld/./mtagparserlibrary.o: ../include/./mobject.h ../include/./mmemutils.h
 ../bld/./mtemplatecontext.o: ../include/./mtemplatecontext.h
-../bld/./mtemplatecontext.o: ../include/./mfwddefs.h ../include/./mstring.h
-../bld/./mtemplatecontext.o: ../include/./mobject.h ../include/./mmemutils.h
-../bld/./mtemplatecontext.o: ../include/./mbintree.h
+../bld/./mtemplatecontext.o: ../include/./mobject.h ../include/./mfwddefs.h
+../bld/./mtemplatecontext.o: ../include/./mmemutils.h ../include/./mstring.h
+../bld/./mtemplatecontext.o: ../include/./mtreetable.h ../include/./mtable.h
+../bld/./mtemplatecontext.o: ../include/./mcollection.h
 ../bld/./mtoken.o: ../include/./mtoken.h ../include/./mfwddefs.h
 ../bld/./mtoken.o: ../include/./mmemutils.h ../include/./mstringbuffer.h
 ../bld/./mtoken.o: ../include/./mstring.h ../include/./mobject.h

@@ -41,6 +41,7 @@ typedef struct MangoNodePrototype MangoNodePrototype;
 typedef struct MangoNodeRenderer MangoNodeRenderer;
 typedef struct MangoNodeRendererContext MangoNodeRendererContext;
 typedef struct MangoNodeRendererPrototype MangoNodeRendererPrototype;
+typedef struct MangoNumber MangoNumber;
 typedef struct MangoObject MangoObject;
 typedef struct MangoParser MangoParser;
 typedef struct MangoParserContext MangoParserContext;

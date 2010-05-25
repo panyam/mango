@@ -4,8 +4,8 @@
 
 #include "marray.h"
 #include "mbintree.h"
-#include "mcollection.h"
 #include "mclasses.h"
+#include "mcollection.h"
 #include "merror.h"
 #include "mfilter.h"
 #include "mfilterlibrary.h"
@@ -20,12 +20,13 @@
 #include "mnode.h"
 #include "mnodelist.h"
 #include "mnoderenderer.h"
+#include "mnumber.h"
 #include "mobject.h"
 #include "mparser.h"
 #include "mparsercontext.h"
 #include "mrcstring.h"
-#include "mrcstringtable.h"
 #include "mrcstringfactory.h"
+#include "mrcstringtable.h"
 #include "msingletons.h"
 #include "mstring.h"
 #include "mstringbuffer.h"
@@ -41,9 +42,9 @@
 #include "mtokenlists.h"
 #include "mutils.h"
 #include "mvar.h"
-#include "mvarresolver.h"
 #include "mvarlibrary.h"
 #include "mvarnode.h"
+#include "mvarresolver.h"
 
 #endif
 

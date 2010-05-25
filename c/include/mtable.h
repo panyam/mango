@@ -44,6 +44,12 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
 DECLARE_CLASS(MangoTable, MangoTablePrototype);
 
 /**
+ * Frees the table.
+ * \param   table   Table to be freed.
+ */
+extern void mango_table_dealloc(MangoTable *table);
+
+/**
  * Returns the table size.
  * \param   table   Table whose size is to be returned.
  * \return size of the table.

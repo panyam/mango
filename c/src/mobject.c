@@ -3,16 +3,6 @@
 #include "mmemutils.h"
 #include "mclasses.h"
 
-BOOL mango_prototype_default_equals(const MangoObject *obj1, const MangoObject *obj2)
-{
-    return obj1 == obj2;
-}
-
-int mango_prototype_default_compare(const MangoObject *obj1, const MangoObject *obj2)
-{
-    return obj1 - obj2;
-}
-
 /**
  * Initialises a prototype object with a name and default methods.
  * \param   proto   Prototype type object to initialise.
@@ -21,11 +11,15 @@ int mango_prototype_default_compare(const MangoObject *obj1, const MangoObject *
  */
 MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, size_t size)
 {
-    proto->name         = strdup(name == NULL ? "" : name);
-    proto->size         = size;
-    proto->deallocFunc  = NULL;
-    proto->equalsFunc   = mango_prototype_default_equals;
-    proto->compareFunc  = mango_prototype_default_compare;
+    proto->name             = strdup(name == NULL ? "" : name);
+    proto->size             = size;
+    proto->deallocFunc      = NULL;
+    proto->equalsFunc       = NULL;
+    proto->compareFunc      = NULL;
+    proto->getIntAttrFunc   = NULL;
+    proto->getStrAttrFunc   = NULL;
+    proto->hasIntAttrFunc   = NULL;
+    proto->hasStrAttrFunc   = NULL;
     return proto;
 }
 
@@ -125,15 +119,9 @@ int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2)
     }
     else if (obj1->__prototype__ == obj2->__prototype__)
     {
-        if (obj1->__prototype__->compareFunc != NULL)
-        {
-            return obj1->__prototype__->compareFunc(obj1, obj2);
-        }
-        else if (obj2->__prototype__->compareFunc != NULL)
-        {
-            return obj2->__prototype__->compareFunc(obj2, obj1);
-        }
-        return 0;
+        assert("Object prototype cannot be NULL" && obj1->__prototype__ != NULL);
+
+        return obj1->__prototype__->compareFunc(obj1, obj2);
     }
     return obj1->__prototype__ - obj2->__prototype__;
 }
@@ -159,15 +147,9 @@ BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *obj2)
     }
     else if (obj1->__prototype__ == obj2->__prototype__)
     {
-        if (obj1->__prototype__->equalsFunc != NULL)
-        {
-            return obj1->__prototype__->equalsFunc(obj1, obj2);
-        }
-        else if (obj2->__prototype__->equalsFunc != NULL)
-        {
-            return obj2->__prototype__->equalsFunc(obj2, obj1);
-        }
-        return true;
+        assert("Object prototype cannot be NULL" && obj1->__prototype__ != NULL);
+
+        return obj1->__prototype__->equalsFunc(obj1, obj2);
     }
     return false;
 }
@@ -189,6 +171,47 @@ BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto
     {
         return memcmp(obj->__prototype__, proto, proto->size) == 0;
     }
+    return false;
+}
+
+/**
+ * Gets an attribute of this object given an integer index.
+ */
+MangoObject *mango_object_get_int_attr(const MangoObject *obj, int index)
+{
+    if (obj->__prototype__->getIntAttrFunc != NULL)
+        return obj->__prototype__->getIntAttrFunc(obj, index);
+    return NULL;
+}
+
+/**
+ * Gets an attribute of this object given a key.
+ */
+MangoObject *mango_object_get_str_attr(const MangoObject *obj, const MangoString *key)
+{
+    if (obj->__prototype__->getStrAttrFunc != NULL)
+        return obj->__prototype__->getStrAttrFunc(obj, key);
+    return NULL;
+}
+
+/**
+ * Tells if the object can return a an attribute value for an integer
+ * index.
+ */
+BOOL mango_object_has_int_attr(const MangoObject *obj, int index)
+{
+    if (obj->__prototype__->hasIntAttrFunc != NULL)
+        return obj->__prototype__->hasStrAttrFunc(obj, index);
+    return false;
+}
+
+/**
+ * Tells if the object can return a an attribute value for a key.
+ */
+BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key)
+{
+    if (obj->__prototype__->hasStrAttrFunc != NULL)
+        return obj->__prototype__->hasStrAttrFunc(obj, key);
     return false;
 }
 

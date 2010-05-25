@@ -70,27 +70,25 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
     // if the first item is a number then everything is ignored
     MangoVar *curr_var = first;
     MangoVar *prev_var = NULL;
-    MangoObject ctx_value = mango_value_make(MV_CONTEXT, ctx);
-    MangoObject *curr_src = &ctx_value;
+    MangoObject *curr_src = ((MangoObject *)ctx);
     while (curr_src != NULL && curr_var != NULL)
     {
         if (prev_var == NULL)
         {
             if (curr_var->isNumber)
-                return mango_value_new(MV_INT, (void*)curr_var->intValue);
+                return mango_number_from_int(curr_var->intValue);
             if (curr_var->isQuoted)
-                return mango_value_new(MV_STRING,
-                                        mango_string_copy(curr_var->value));
+                return OBJ_INCREF(curr_var->value);
             if (ctx == NULL)
                 return NULL;
             curr_src = mango_templatecontext_get(ctx, curr_var->value);
         }
         else
         {
-            MangoObject *newsrc = mango_varresolver_resolve(resolver, curr_src, curr_var);
-            if (curr_src != &ctx_value)
-                OBJ_DECREF(curr_src);
-            curr_src = newsrc;
+            // decref the previous value since it would have been increfed
+            // in varresolver_resolve
+            // if (curr_src != ctx) OBJ_DECREF(curr_src);
+            curr_src = mango_varresolver_resolve(resolver, curr_src, curr_var);
         }
         prev_var = curr_var;
         curr_var = curr_var->next;
@@ -121,28 +119,13 @@ MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *sour
     if (var->isNumber)
     {
         int intValue = var->intValue;
+        return OBJ_GETINTATTR(source, var->intValue);
+    }
+    else
+    {
+        return OBJ_GETSTRATTR(source, var->value);
+    }
 
-        // set this flag to true so that if we fall through here and go to the map case
-        // then we do not want this to be treated as a method or an attribute
-        if (source->valueType == MV_ARRAY)
-        {
-            return mango_array_itemat((MangoArray *)source->valueData, intValue);
-        }
-    }
-    
-    // try as a dictionary lookup - ie using a Map
-    if (source instanceof Map<?,?> && ((Map<?,?>)source).containsKey(value))
-    {
-        return ((Map<?,?>)source).get(value);
-    }
-    if (source instanceof Hashtable<?,?> && ((Hashtable<?,?>)source).containsKey(value))
-    {
-        return ((Hashtable<?,?>)source).get(value);
-    }
-    if (source instanceof TemplateContext && ((TemplateContext)source).hasValue(value))
-    {
-        return ((TemplateContext)source).getValue(value);
-    }
     return NULL;
 }
 

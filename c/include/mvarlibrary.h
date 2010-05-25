@@ -2,7 +2,7 @@
 #ifndef __MANGO_VARIABLE_LIBRARY_H__
 #define __MANGO_VARIABLE_LIBRARY_H__
 
-#include "mfwddefs.h"
+#include "mtable.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,7 +18,7 @@ extern "C" {
  *
  * \return  The var for a given name or NULL if it does not exist.
  */
-extern MangoVar *mango_var_library_new_instance(const MangoString *name, const MangoLibrary *library);
+extern MangoVar *mango_var_library_new_instance(const MangoString *name, MangoTable *library);
 
 #ifdef __cplusplus
 }

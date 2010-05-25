@@ -2,6 +2,7 @@
 #include "mtagparserlibrary.h"
 #include "msingletons.h"
 #include "mtagparser.h"
+#include "mtable.h"
 
 /**
  * Gets a tagparser by a given name.
@@ -12,11 +13,11 @@
  * \return  The tagparser by a given name or NULL if it does not exist.
  */
 const MangoTagParser *mango_tagparser_library_get(const MangoString *name, 
-                                                  const MangoLibrary *library)
+                                                  MangoTable *library)
 {
     if (library == NULL)
         library = mango_tagparser_library_singleton(NULL);
 
-    return (const MangoTagParser *)mango_library_get(library, name);
+    return (const MangoTagParser *)mango_table_get(library, name);
 }
 

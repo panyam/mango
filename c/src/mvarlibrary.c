@@ -11,7 +11,7 @@
  *
  * \return  The var for a given name or NULL if it does not exist.
  */
-MangoVar *mango_var_library_new_instance(const MangoString *name, const MangoLibrary *library)
+MangoVar *mango_var_library_new_instance(const MangoString *name, MangoTable *library)
 {
     return NULL;
 }
