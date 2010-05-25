@@ -1,10 +1,10 @@
 
-#include "mtemplatecontext.h"
+#include "mtmplctx.h"
 #include "mstring.h"
 #include "mmemutils.h"
 #include "mtreetable.h"
 
-DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_templatecontext_prototype,
+DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
     __proto__.getValuesFunc     = NULL;
     __proto__.getFunc           = NULL;
     __proto__.setFunc           = NULL;
@@ -18,18 +18,18 @@ DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_
 /**
  * Creates a new mango template context.
  */
-MangoTemplateContext *mango_templatecontext_new()
+MangoTemplateContext *mango_tmplctx_new()
 {
-    return mango_templatecontext_init(ZNEW(MangoTemplateContext), mango_templatecontext_prototype());
+    return mango_tmplctx_init(ZNEW(MangoTemplateContext), mango_tmplctx_prototype());
 }
 
 /**
  * Initialises the template context and returns it.
  */
-MangoTemplateContext *mango_templatecontext_init(MangoTemplateContext *ctx, MangoTemplateContextPrototype *proto)
+MangoTemplateContext *mango_tmplctx_init(MangoTemplateContext *ctx, MangoTemplateContextPrototype *proto)
 {
     if (proto == NULL)
-        proto = mango_templatecontext_prototype();
+        proto = mango_tmplctx_prototype();
     OBJ_INIT(ctx, proto);
     ctx->values = NULL;
     return ctx;
@@ -39,7 +39,7 @@ MangoTemplateContext *mango_templatecontext_init(MangoTemplateContext *ctx, Mang
  * Frees the context and all values in it.
  * \param   context Context to be freed.
  */
-void mango_templatecontext_dealloc(MangoTemplateContext *ctx)
+void mango_tmplctx_dealloc(MangoTemplateContext *ctx)
 {
     assert("not implemented" && false);
 }
@@ -49,11 +49,16 @@ void mango_templatecontext_dealloc(MangoTemplateContext *ctx)
  * \param   context Context into which the values are being merged.
  * \param   dict    Dictionary from which the values are being merged.
  */
-void mango_templatecontext_merge(MangoTemplateContext *ctx, MangoTable *dict)
+void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
 {
     if (ctx->__prototype__->mergeFunc != NULL)
     {
         ctx->__prototype__->mergeFunc(ctx, dict);
+    }
+    else
+    {
+        // back on default
+        assert("not implemented" && false);
     }
 }
 
@@ -65,11 +70,34 @@ void mango_templatecontext_merge(MangoTemplateContext *ctx, MangoTable *dict)
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-const MangoList *mango_templatecontext_get_values(MangoTemplateContext *ctx, const MangoString *key, BOOL create)
+const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, const MangoString *key, BOOL create)
 {
     if (ctx->__prototype__->getValuesFunc != NULL)
     {
-        ctx->__prototype__->getValuesFunc(ctx, key, create);
+        return ctx->__prototype__->getValuesFunc(ctx, key, create);
+    }
+    else // use default
+    {
+        if (ctx->values == NULL)
+        {
+            if (!create)
+                return NULL;
+            ctx->values = mango_treetable_new();
+        }
+
+        MangoList *valueStack = NULL;
+        if (!mango_table_contains(ctx->values, key))
+        {
+            if (!create)
+                return NULL;
+            valueStack = mango_list_new();
+            mango_table_put(ctx->values, key, valueStack);
+        }
+        else
+        {
+            valueStack = mango_table_get(ctx->values, key);
+        }
+        return valueStack;
     }
     return NULL;
 }
@@ -80,13 +108,18 @@ const MangoList *mango_templatecontext_get_values(MangoTemplateContext *ctx, con
  * \param   key     Var whose value is to be fetched.
  * \return  Value of the var.
  */
-MangoObject *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoString *key)
+MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, const MangoString *key)
 {
     if (ctx->__prototype__->getFunc != NULL)
     {
-        ctx->__prototype__->getFunc(ctx, key);
+        return ctx->__prototype__->getFunc(ctx, key);
     }
-    return NULL;
+    else
+    {
+        // fallback on our default implementation
+    }
+    // if not in the default impl then fallback on the get attr method
+    return OBJ_GETSTRATTR(ctx, key);
 }
 
 /**
@@ -98,12 +131,21 @@ MangoObject *mango_templatecontext_get(MangoTemplateContext *ctx, const MangoStr
  * \param   push    Whether the value is to be pushed or replaced.
  * \param   The new size of the value stack for the var.
  */
-int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
+int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
                                       const MangoString *key,
                                       MangoObject *value,
                                       BOOL push)
 {
-    return -1;
+    MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
+    if (push || mango_list_is_empty(valueStack))
+    {
+        mango_list_push_front(valueStack, value);
+    }
+    else
+    {
+        mango_list_set_at(valueStack, 0, value);
+    }
+    return mango_list_size(valueStack);
 }
 
 /**
@@ -113,7 +155,7 @@ int mango_templatecontext_set_or_push(MangoTemplateContext *ctx,
  * \param   value   Value of the var.
  * \return  The new size of the value stack for the var.
  */
-int mango_templatecontext_set(MangoTemplateContext *ctx,
+int mango_tmplctx_set(MangoTemplateContext *ctx,
                               const MangoString *key,
                               MangoObject *value)
 {
@@ -129,7 +171,7 @@ int mango_templatecontext_set(MangoTemplateContext *ctx,
  * \param   ctx     Context in which the value is to be set.
  * \param   ...     Key/Value arguments, terminated by NULL.
  */
-void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...)
+void mango_tmplctx_set_values(MangoTemplateContext *ctx, ...)
 {
 }
 
@@ -140,7 +182,7 @@ void mango_templatecontext_set_values(MangoTemplateContext *ctx, ...)
  * \param   value   Value of the var.
  * \return  The new size of the value stack for the var.
  */
-int mango_templatecontext_push(MangoTemplateContext *ctx,
+int mango_tmplctx_push(MangoTemplateContext *ctx,
                                const MangoString *key,
                                MangoObject *value)
 {
@@ -156,7 +198,7 @@ int mango_templatecontext_push(MangoTemplateContext *ctx,
  * \param   ctx     Context in which the value is to be pushed.
  * \param   ...     Key/Value arguments, terminated by NULL.
  */
-void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...)
+void mango_tmplctx_push_values(MangoTemplateContext *ctx, ...)
 {
 }
 
@@ -166,12 +208,20 @@ void mango_templatecontext_push_values(MangoTemplateContext *ctx, ...)
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return  MangoObject for the var.
  */
-MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
+MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
                                       const MangoString *key)
 {
     if (ctx->__prototype__->popFunc != NULL)
     {
         return ctx->__prototype__->popFunc(ctx, key);
+    }
+    else if (ctx->values != NULL)
+    {
+        MangoList *ctxStack = mango_table_get(ctx->values, key);
+        if (ctxStack != NULL && !mango_list_is_empty(ctxStack))
+        {
+            return mango_list_pop_front(ctxStack);
+        }
     }
     return NULL;
 }
@@ -181,11 +231,15 @@ MangoObject *mango_templatecontext_pop(MangoTemplateContext *ctx,
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
  */
-void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *key)
+void mango_tmplctx_delete(MangoTemplateContext *ctx, const MangoString *key)
 {
     if (ctx->__prototype__->deleteFunc != NULL)
     {
-        return ctx->__prototype__->deleteFunc(ctx, key);
+        ctx->__prototype__->deleteFunc(ctx, key);
+    }
+    else if (ctx->values != NULL)
+    {
+        mango_table_erase(ctx->values, key);
     }
 }
 
@@ -195,21 +249,22 @@ void mango_templatecontext_delete(MangoTemplateContext *ctx, const MangoString *
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return true if the var exits, false otherwise.
  */
-BOOL mango_templatecontext_contains(MangoTemplateContext *ctx, const MangoString *key)
+BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, const MangoString *key)
 {
     if (ctx->__prototype__->containsFunc != NULL)
     {
         return ctx->__prototype__->containsFunc(ctx, key);
     }
-    return false;
+    // default impl otherwise
+    return ctx->values != NULL && mango_table_contains(ctx->values, key);
 }
 
 #if 0
 public void mergeDictionary(HashMap<String, ?> dictionary)
 {
-    if (dictionary != null)
+    if (dictionary != NULL)
     {
-        if (values == null)
+        if (values == NULL)
         {
             values = new HashMap<String, Stack<Object>>();
             for (Iterator<String> iter = dictionary.keySet().iterator();iter.hasNext();)
@@ -223,49 +278,18 @@ public void mergeDictionary(HashMap<String, ?> dictionary)
 }
 
 /**
- * Gets the value stack for a particular key.
- * 
- * @param key
- * @param create
- * @return
- */
-public Stack<Object> getValueStack(String key, boolean create)
-{
-    if (values == null)
-    {
-        if (!create)
-            return null;
-        values = new HashMap<String, Stack<Object>>();
-    }
-
-    Stack<Object> valueStack = null;
-    if (!values.containsKey(key))
-    {
-        if (!create)
-            return null;
-        valueStack = new Stack<Object>();
-        values.put(key, valueStack);
-    }
-    else
-    {
-        valueStack = values.get(key);
-    }
-    return valueStack;
-}
-
-/**
  * Gets the object by a key.
  * This can return a nil if the context is a sequential or an iterative container.
  */
 public Object getValue(String key)
 {
-    if (values != null)
+    if (values != NULL)
     {
         Stack<Object> ctxStack = values.get(key);
-        if (ctxStack != null && !ctxStack.isEmpty())
+        if (ctxStack != NULL && !ctxStack.isEmpty())
             return ctxStack.firstElement();
     }
-    return null;
+    return NULL;
 }
 
 /**
@@ -274,16 +298,6 @@ public Object getValue(String key)
  */
 public int setValue(String key, Object value, boolean push)
 {
-    Stack<Object> valueStack = getValueStack(key, true);
-    if (push || valueStack.isEmpty())
-    {
-        valueStack.push(value);
-    }
-    else
-    {
-        valueStack.setElementAt(value, 0);
-    }
-    return valueStack.size();
 }
 
 /**
@@ -322,38 +336,5 @@ public void pushValues(Object ... keyValuePairs)
         pushValue((String)keyValuePairs[i], keyValuePairs[i + 1]);
 }
 
-/**
- * Pushes the value of a key to indicate entering of a new context.
- * Returns the old value.
- */
-public Object popValue(String key)
-{
-    if (values != null)
-    {
-        Stack<?> ctxStack   = values.get(key);
-        if (ctxStack != null && !ctxStack.isEmpty())
-        {
-            return ctxStack.pop();
-        }
-    }
-    return null;
-}
-
-/**
- * Deletes a value completely.
- */
-public void deleteValue(String key)
-{
-    if (values != null)
-        values.remove(key);
-}
-
-/**
- * Tells if a value exists in the context.
- */
-public boolean hasValue(String key)
-{
-    return values != null && values.containsKey(key);
-}
 #endif
 

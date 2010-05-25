@@ -12,7 +12,7 @@
 #include "mparsercontext.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
-#include "mtemplatecontext.h"
+#include "mtmplctx.h"
 
 /**
  * Creates a new filter node given a filter.

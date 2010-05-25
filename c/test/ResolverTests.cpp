@@ -38,7 +38,7 @@ public:
         parser_context.taglib       = tagLibrary;
         parser_context.strfactory   = string_factory;
         parser_context.loader       = NULL;
-        context                     = mango_templatecontext_new();
+        context                     = mango_tmplctx_new();
         resolver                    = mango_varresolver_default();
     }
 
@@ -119,7 +119,7 @@ TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 {
     SetupParserAndParseVar("{{a}}");
-    mango_templatecontext_set(context,
+    mango_tmplctx_set(context,
                               mango_stringfactory_new_string(string_factory, "a", -1),
                               (MangoObject *)mango_number_from_int(3));
     CheckResolvedVar((MangoObject *)mango_number_from_int(3));
@@ -129,14 +129,14 @@ TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 TEST_FIXTURE(ResolverTestFixture, TestStringVar)
 {
     SetupParserAndParseVar("{{a}}");
-    mango_templatecontext_set(context, "a", "Hello World");
+    mango_tmplctx_set(context, "a", "Hello World");
     CheckResolvedVar("Hello World");
 }
 
 TEST_FIXTURE(ResolverTestFixture, TestDeleteContextValue)
 {
     SetupParserAndParseVar("{{a}}");
-    mango_templatecontext_set(context, "a", "Hello World");
+    mango_tmplctx_set(context, "a", "Hello World");
     context.deleteValue("a");
     CheckResolvedVar(NULL);
 }
@@ -144,20 +144,20 @@ TEST_FIXTURE(ResolverTestFixture, TestDeleteContextValue)
 TEST_FIXTURE(ResolverTestFixture, TestValueAsHashTable)
 {
     SetupParserAndParseVar("{{a.b}}");
-    mango_templatecontext_set(context, "a", Utils.makeHashtable("b", 3));
+    mango_tmplctx_set(context, "a", Utils.makeHashtable("b", 3));
     CheckResolvedVar(3);
 }
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsMap)
 {
     SetupParserAndParseVar("{{a.b}}");
-    mango_templatecontext_set(context, "a", Utils.makeHashMap("b", 3));
+    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", 3));
     CheckResolvedVar(3);
 }
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsIndex)
 {
-    mango_templatecontext_set(context, "a", Utils.makeHashMap("b", Utils.makeArrayList(3, 4, 5)));
+    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", Utils.makeArrayList(3, 4, 5)));
     SetupParserAndParseVar("{{a.b.0}}");
     CheckResolvedVar(3);
     SetupParserAndParseVar("{{a.b.1}}");
@@ -168,7 +168,7 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsIndex)
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsClassWithSimpleMethod)
 {
-    mango_templatecontext_set(context, "a", Utils.makeHashMap("b", 
+    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", 
             new Object() { @SuppressWarnings("unused")
             public Object elementAtIndex(final int i) { return i; } } ));
     SetupParserAndParseVar("{{a.b.4}}");
@@ -177,7 +177,7 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsClassWithSimpleMethod)
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsClassWithComplexMethod)
 {
-    mango_templatecontext_set(context, "a", Utils.makeHashMap("b", 
+    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", 
             new Object() { 
                 @SuppressWarnings("unused")
                 public Object elementAtIndex(final int i) {
@@ -194,14 +194,14 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsClassWithComplexMethod)
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsSimpleField)
 {
-    mango_templatecontext_set(context, "a", new Object() { @SuppressWarnings("unused") public int b = 3; });
+    mango_tmplctx_set(context, "a", new Object() { @SuppressWarnings("unused") public int b = 3; });
     SetupParserAndParseVar("{{a.b}}");
     CheckResolvedVar(3);
 }
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsSimpleMethod)
 {
-    mango_templatecontext_set(context, "a", new Object() { @SuppressWarnings("unused") public int b() { return 666; } });
+    mango_tmplctx_set(context, "a", new Object() { @SuppressWarnings("unused") public int b() { return 666; } });
     SetupParserAndParseVar("{{a.b}}");
     CheckResolvedVar(666);
 }

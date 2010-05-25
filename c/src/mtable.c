@@ -61,7 +61,7 @@ MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *v
  * \param   key     Key by which the element is to be erased.
  * \return The erased value if it exists.
  */
-MangoObject *mango_table_erase(MangoTable *table, MangoString *key)
+MangoObject *mango_table_erase(MangoTable *table, const MangoString *key)
 {
     if (table->__prototype__->eraseFunc != NULL)
     {

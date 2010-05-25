@@ -1,7 +1,7 @@
 
 #include "marray.h"
 #include "mvarresolver.h"
-#include "mtemplatecontext.h"
+#include "mtmplctx.h"
 #include "mvar.h"
 #include "mnumber.h"
 #include "mmemutils.h"
@@ -12,7 +12,7 @@
 MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *source, MangoVar *var);
 
 DECLARE_PROTO_FUNC("VarResolver", MangoVarResolverPrototype, mango_varresolver_prototype, 
-    __proto__.resolveFunc = NULL;
+    __proto__.resolveFunc = default_resolver_func;
 );
 
 /**
@@ -82,7 +82,7 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
                 return OBJ_INCREF(curr_var->value);
             else if (ctx == NULL)
                 return NULL;
-            curr_src = mango_templatecontext_get(ctx, curr_var->value);
+            curr_src = mango_tmplctx_get(ctx, curr_var->value);
         }
         else
         {

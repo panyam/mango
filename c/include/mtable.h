@@ -9,9 +9,9 @@ extern "C" {
 #endif
 
 typedef MangoObject *(*TableGetFunc)(MangoTable *table, MangoString *key);
-typedef BOOL (*TableContainsFunc)(MangoTable *table, MangoString *key);
+typedef BOOL (*TableContainsFunc)(MangoTable *table, const MangoString *key);
 typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
-typedef MangoObject *(*TableEraseFunc)(MangoTable *table, MangoString *key);
+typedef MangoObject *(*TableEraseFunc)(MangoTable *table, const MangoString *key);
 
 /**
  * General associate container for a set of MangoObjects.
@@ -25,7 +25,7 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
      * Tells if a value exists.
      */
-    BOOL (*containsFunc)(MangoTable *table, MangoString *key);
+    BOOL (*containsFunc)(MangoTable *table, const MangoString *key);
 
     /**
      * Puts a value by key, replacing and returning the old value if any.
@@ -35,7 +35,7 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
      * Erases an element from the table.
      */
-    MangoObject *(*eraseFunc)(MangoTable *table, MangoString *key);
+    MangoObject *(*eraseFunc)(MangoTable *table, const MangoString *key);
 );
 
 /**
@@ -86,7 +86,7 @@ extern MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoOb
  * \param   key     Key by which the element is to be erased.
  * \return The erased value if it exists.
  */
-extern MangoObject *mango_table_erase(MangoTable *table, MangoString *key);
+extern MangoObject *mango_table_erase(MangoTable *table, const MangoString *key);
 
 #ifdef __cplusplus
 }

@@ -5,7 +5,7 @@
 #include "mparsercontext.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
-#include "mtemplatecontext.h"
+#include "mtmplctx.h"
 #include "mnode.h"
 #include "mmemutils.h"
 #include "mtokenlists.h"
