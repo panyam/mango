@@ -180,7 +180,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Tells if an object is instance of a particular prototype.
  */
-#define OBJ_INSTANCEOF(obj, proto)       mango_object_instanceof((MangoObject *)obj, (const MangoPrototype *)proto)
+#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)obj, (const MangoPrototype *)proto)
 
 /**
  * Gets attribute of an object given an integer index.
@@ -190,7 +190,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Gets attribute of an object given a key.
  */
-#define OBJ_GETSTRATTR(Obj, index)  mango_object_get_str_attr((MangoObject *)obj, key)
+#define OBJ_GETSTRATTR(Obj, key)    mango_object_get_str_attr((MangoObject *)obj, key)
 
 /**
  * Tells whether an attribute of an object given an integer index exists.
@@ -200,7 +200,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Tells whether an attribute of an object given a key exists.
  */
-#define OBJ_HASSTRATTR(Obj, index)  mango_object_has_str_attr((MangoObject *)obj, key)
+#define OBJ_HASSTRATTR(Obj, key)    mango_object_has_str_attr((MangoObject *)obj, key)
 
 /**
  * Create a new prototype object of a given name.
@@ -278,23 +278,23 @@ extern BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype
 /**
  * Gets an attribute of this object given an integer index.
  */
-MangoObject *mango_object_get_int_attr(const MangoObject *obj1, int index);
+MangoObject *mango_object_get_int_attr(const MangoObject *obj, int index);
 
 /**
  * Gets an attribute of this object given a key.
  */
-MangoObject *mango_object_get_str_attr(const MangoObject *obj1, const MangoString *key);
+MangoObject *mango_object_get_str_attr(const MangoObject *obj, const MangoString *key);
 
 /**
  * Tells if the object can return a an attribute value for an integer
  * index.
  */
-BOOL mango_object_has_int_attr(const MangoObject *obj1, int index);
+BOOL mango_object_has_int_attr(const MangoObject *obj, int index);
 
 /**
  * Tells if the object can return a an attribute value for a key.
  */
-BOOL mango_object_has_str_attr(const MangoObject *obj1, const MangoString *key);
+BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key);
 
 #ifdef __cplusplus
 }

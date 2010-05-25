@@ -3,6 +3,7 @@
 #include "mvarresolver.h"
 #include "mtemplatecontext.h"
 #include "mvar.h"
+#include "mnumber.h"
 #include "mmemutils.h"
 
 /**
@@ -77,9 +78,9 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
         {
             if (curr_var->isNumber)
                 return mango_number_from_int(curr_var->intValue);
-            if (curr_var->isQuoted)
+            else if (curr_var->isQuoted)
                 return OBJ_INCREF(curr_var->value);
-            if (ctx == NULL)
+            else if (ctx == NULL)
                 return NULL;
             curr_src = mango_templatecontext_get(ctx, curr_var->value);
         }
@@ -99,33 +100,14 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
 /**
  * The default variable resolver function.
  * Unlike the android based resolver which has nice introspection, we do
- * nothing fancy, just check the source value type and so on.
+ * nothing fancy, just check the source value type and move on.
  */
 MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *source, MangoVar *var)
 {
-    /**
-     * Resolves the value of a variable using a particular value.
-     * The resolution strategy used is slightly different from what django
-     * does, in order to make things a bit faster for the common case of
-     * dictionary and index based lookups.
-     *
-     * ((Array)source)[value] if value is an integer
-     * ((Dictionary)source)[value] if value is NOT an integer
-     *
-     * Returns null if the variable cannot be resolved after applying the
-     * above rules.
-     */
-    // try as an integer first
     if (var->isNumber)
     {
-        int intValue = var->intValue;
         return OBJ_GETINTATTR(source, var->intValue);
     }
-    else
-    {
-        return OBJ_GETSTRATTR(source, var->value);
-    }
-
-    return NULL;
+    return OBJ_GETSTRATTR(source, var->value);
 }
 
