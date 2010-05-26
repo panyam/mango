@@ -8,42 +8,42 @@
 extern "C" {
 #endif
 
-struct MangoListNode
+struct MangoLinkedListNode
 {
     void *          data;
-    MangoListNode   *next;
-    MangoListNode   *prev;
+    MangoLinkedListNode   *next;
+    MangoLinkedListNode   *prev;
 };
 
 /**
  * A mango error object.
  */
-struct MangoList
+struct MangoLinkedList
 {
-    MangoListNode * head;
-    MangoListNode * tail;
+    MangoLinkedListNode * head;
+    MangoLinkedListNode * tail;
     size_t          size;
 };
 
 /**
  * Creates a linked list node.
  *
- * \returns A new MangoListNode instance.
+ * \returns A new MangoLinkedListNode instance.
  */
-extern MangoListNode *mango_rawlist_node_new(void *data);
+extern MangoLinkedListNode *mango_linkedlist_node_new(void *data);
 
 /**
  * Creates a new mango list.
  *
- * \returns A new MangoList instance.
+ * \returns A new MangoLinkedList instance.
  */
-extern MangoList *mango_rawlist_new();
+extern MangoLinkedList *mango_linkedlist_new();
 
 /**
  * Frees a mango list.
  * \param   mlist    The mango list to be freed
  */
-extern void mango_rawlist_free(MangoList *mlist);
+extern void mango_linkedlist_free(MangoLinkedList *mlist);
 
 /**
  * Clears the list and optionally deletes entries within the list with a
@@ -52,14 +52,14 @@ extern void mango_rawlist_free(MangoList *mlist);
  * \param   mlist   List to be freed and cleared.
  * \param   deletor Method that will delete each entry.
  */
-extern void mango_rawlist_clear(MangoList *mlist, void (*deletor)(void *));
+extern void mango_linkedlist_clear(MangoLinkedList *mlist, void (*deletor)(void *));
 
 /**
  * Gets the number of items in the list.
  *
  * \returns A the list size.
  */
-extern size_t mango_rawlist_size(const MangoList *mlist);
+extern size_t mango_linkedlist_size(const MangoLinkedList *mlist);
 
 /**
  * Gets the node at a given index.
@@ -67,7 +67,7 @@ extern size_t mango_rawlist_size(const MangoList *mlist);
  * \param   index   Index at which the node is to be retrieved.
  * \return The node at the given index.
  */
-extern const MangoListNode *mango_rawlist_node_at(const MangoList *mlist, int index);
+extern const MangoLinkedListNode *mango_linkedlist_node_at(const MangoLinkedList *mlist, int index);
 
 /**
  * Gets the item at a given index.
@@ -75,67 +75,67 @@ extern const MangoListNode *mango_rawlist_node_at(const MangoList *mlist, int in
  * \param   index   Index at which the item is to be retrieved.
  * \return The data at the given index.
  */
-extern void *mango_rawlist_item_at(const MangoList *mlist, int index);
+extern void *mango_linkedlist_item_at(const MangoLinkedList *mlist, int index);
 
 /**
  * Returns (without removing) the item at the front of the list.
  *
  * \returns The value of the node at the front of the list.
  */
-extern void *mango_rawlist_front(MangoList *mlist);
+extern void *mango_linkedlist_front(MangoLinkedList *mlist);
 
 /**
  * Returns (without removing) the item at the back of the list.
  *
  * \returns The value of the node at the back of the list.
  */
-extern void *mango_rawlist_back(MangoList *mlist);
+extern void *mango_linkedlist_back(MangoLinkedList *mlist);
 
 /**
  * Adds a new object at the end of the list.
  *
  * \returns The node at which the object was added.
  */
-extern MangoListNode *mango_rawlist_push_back(MangoList *mlist, void *data);
+extern MangoLinkedListNode *mango_linkedlist_push_back(MangoLinkedList *mlist, void *data);
 
 /**
  * Adds a new object at the front of the list.
  *
  * \returns The node at which the object was added.
  */
-extern MangoListNode *mango_rawlist_push_front(MangoList *mlist, void *data);
+extern MangoLinkedListNode *mango_linkedlist_push_front(MangoLinkedList *mlist, void *data);
 
 /**
  * Adds a new object before a given node.
  *
  * \returns The node at which the object was added.
  */
-extern MangoListNode *mango_rawlist_insert(MangoList *mlist, void *data, MangoListNode *beforeNode);
+extern MangoLinkedListNode *mango_linkedlist_insert(MangoLinkedList *mlist, void *data, MangoLinkedListNode *beforeNode);
 
 /**
  * Removes a node from the list.
  */
-extern void *mango_rawlist_remove(MangoList *mlist, MangoListNode *node);
+extern void *mango_linkedlist_remove(MangoLinkedList *mlist, MangoLinkedListNode *node);
 
 /**
  * Removes a node from the front of the list.
  */
-extern void *mango_rawlist_remove_front(MangoList *mlist);
+extern void *mango_linkedlist_remove_front(MangoLinkedList *mlist);
 
 /**
  * Removes a node from the back of the list.
  */
-extern void *mango_rawlist_remove_back(MangoList *mlist);
+extern void *mango_linkedlist_remove_back(MangoLinkedList *mlist);
 
 /**
  * Tells if a list is empty or not.
  */
-extern BOOL mango_rawlist_is_empty(MangoList *mlist);
+extern BOOL mango_linkedlist_is_empty(MangoLinkedList *mlist);
 
 /**
  * Tells if two lists are equal using a comparator function.
  */
-extern BOOL mango_rawlists_are_equal(const MangoList *list1, const MangoList *list2, BOOL (*equalFn)(const void *item1, const void *item2));
+extern BOOL mango_linkedlists_are_equal(const MangoLinkedList *list1, const MangoLinkedList *list2, BOOL (*equalFn)(const void *item1, const void *item2));
 
 #ifdef __cplusplus
 }

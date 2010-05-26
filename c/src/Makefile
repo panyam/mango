@@ -162,6 +162,11 @@ dep:
 ../bld/./mparser.o: ../include/./mnode.h ../include/./mclasses.h
 ../bld/./mparser.o: ../include/./mvarnode.h ../include/./mtagnode.h
 ../bld/./mparser.o: ../include/./mnodelist.h
+../bld/./mrawarray.o: ../include/./mrawarray.h ../include/./mobject.h
+../bld/./mrawarray.o: ../include/./mfwddefs.h ../include/./mmemutils.h
+../bld/./mrawlist.o: ../include/./mlist.h ../include/./mcollection.h
+../bld/./mrawlist.o: ../include/./mobject.h ../include/./mfwddefs.h
+../bld/./mrawlist.o: ../include/./mmemutils.h
 ../bld/./mrcstring.o: ../include/./merror.h ../include/./mfwddefs.h
 ../bld/./mrcstring.o: ../include/./mstringbuffer.h ../include/./mstring.h
 ../bld/./mrcstring.o: ../include/./mobject.h ../include/./mmemutils.h

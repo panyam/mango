@@ -14,7 +14,8 @@ MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollect
 {
     if (proto == NULL)
         proto = mango_collection_prototype();
-    return OBJ_INIT(collection, proto);
+    OBJ_INIT(collection, proto);
+    return collection;
 }
 
 /**

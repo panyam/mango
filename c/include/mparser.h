@@ -17,7 +17,7 @@ struct MangoParser
     MangoTokenizer  *   tokenizer;
     MangoToken *        currToken;
     MangoToken *        peekedToken;
-    MangoList *         endNodeStack;
+    MangoRawList *      endNodeStack;
 };
 
 /**

@@ -1,14 +1,14 @@
 
-#include "mlist.h"
+#include "mrawlist.h"
 
 /**
  * Creates a linked list node.
  *
- * \returns A new MangoListNode instance.
+ * \returns A new MangoRawListNode instance.
  */
-MangoListNode *mango_list_node_new(void *data)
+MangoRawListNode *mango_rawlist_node_new(void *data)
 {
-    MangoListNode *newnode = (MangoListNode *)calloc(1, sizeof(MangoListNode));
+    MangoRawListNode *newnode = (MangoRawListNode *)calloc(1, sizeof(MangoRawListNode));
     newnode->data = data;
     return newnode;
 }
@@ -16,24 +16,24 @@ MangoListNode *mango_list_node_new(void *data)
 /**
  * Creates a linked list.
  *
- * \returns A new MangoList instance.
+ * \returns A new MangoRawList instance.
  */
-MangoList *mango_list_new()
+MangoRawList *mango_rawlist_new()
 {
-    return (MangoList *)calloc(1, sizeof(MangoList));
+    return (MangoRawList *)calloc(1, sizeof(MangoRawList));
 }
 
 /**
  * Frees a mango list.
  * \param   mlist    The mango list to be freed
  */
-void mango_list_free(MangoList *mlist)
+void mango_rawlist_free(MangoRawList *mlist)
 {
     if (mlist != NULL)
     {
-        for (MangoListNode *temp = mlist->head;temp != NULL;)
+        for (MangoRawListNode *temp = mlist->head;temp != NULL;)
         {
-            MangoListNode *next = temp->next;
+            MangoRawListNode *next = temp->next;
             free(temp);
             temp = next;
         }
@@ -48,11 +48,11 @@ void mango_list_free(MangoList *mlist)
  * \param   mlist   List to be freed and cleared.
  * \param   deletor Method that will delete each entry.
  */
-void mango_list_clear(MangoList *mlist, void (*deletor)(void *))
+void mango_rawlist_clear(MangoRawList *mlist, void (*deletor)(void *))
 {
-    for (MangoListNode *temp = mlist->head;temp != NULL;)
+    for (MangoRawListNode *temp = mlist->head;temp != NULL;)
     {
-        MangoListNode *next = temp->next;
+        MangoRawListNode *next = temp->next;
         if (deletor != NULL && temp->data != NULL)
             deletor(temp->data);
         free(temp);
@@ -67,7 +67,7 @@ void mango_list_clear(MangoList *mlist, void (*deletor)(void *))
  *
  * \returns A the list size.
  */
-size_t mango_list_size(const MangoList *mlist)
+size_t mango_rawlist_size(const MangoRawList *mlist)
 {
     return mlist->size;
 }
@@ -78,12 +78,12 @@ size_t mango_list_size(const MangoList *mlist)
  * \param   index   Index at which the node is to be retrieved.
  * \return The node at the given index.
  */
-const MangoListNode *mango_list_node_at(const MangoList *mlist, int index)
+const MangoRawListNode *mango_rawlist_node_at(const MangoRawList *mlist, int index)
 {
     if (index < 0 || index >= mlist->size)
         return NULL;
 
-    const MangoListNode *temp = mlist->head;
+    const MangoRawListNode *temp = mlist->head;
     for (int i = 0;i < index && temp != NULL;i++, temp = temp->next);
     return temp;
 }
@@ -94,9 +94,9 @@ const MangoListNode *mango_list_node_at(const MangoList *mlist, int index)
  * \param   index   Index at which the item is to be retrieved.
  * \return The data at the given index.
  */
-void *mango_list_item_at(const MangoList *mlist, int index)
+void *mango_rawlist_item_at(const MangoRawList *mlist, int index)
 {
-    const MangoListNode *node = mango_list_node_at(mlist, index);
+    const MangoRawListNode *node = mango_rawlist_node_at(mlist, index);
     return node == NULL ? NULL : node->data;
 }
 
@@ -105,7 +105,7 @@ void *mango_list_item_at(const MangoList *mlist, int index)
  *
  * \returns The value of the node at the front of the list.
  */
-void *mango_list_front(MangoList *mlist)
+void *mango_rawlist_front(MangoRawList *mlist)
 {
     return mlist->head != NULL ? mlist->head->data : NULL;
 }
@@ -115,7 +115,7 @@ void *mango_list_front(MangoList *mlist)
  *
  * \returns The value of the node at the back of the list.
  */
-void *mango_list_back(MangoList *mlist)
+void *mango_rawlist_back(MangoRawList *mlist)
 {
     return mlist->tail != NULL ? mlist->tail->data : NULL;
 }
@@ -125,9 +125,9 @@ void *mango_list_back(MangoList *mlist)
  *
  * \returns The node at which the object was added.
  */
-MangoListNode *mango_list_push_back(MangoList *mlist, void *data)
+MangoRawListNode *mango_rawlist_push_back(MangoRawList *mlist, void *data)
 {
-    return mango_list_insert(mlist, data, NULL);
+    return mango_rawlist_insert(mlist, data, NULL);
 }
 
 /**
@@ -135,9 +135,9 @@ MangoListNode *mango_list_push_back(MangoList *mlist, void *data)
  *
  * \returns The node at which the object was added.
  */
-MangoListNode *mango_list_push_front(MangoList *mlist, void *data)
+MangoRawListNode *mango_rawlist_push_front(MangoRawList *mlist, void *data)
 {
-    return mango_list_insert(mlist, data, mlist->head);
+    return mango_rawlist_insert(mlist, data, mlist->head);
 }
 
 /**
@@ -145,9 +145,9 @@ MangoListNode *mango_list_push_front(MangoList *mlist, void *data)
  *
  * \returns The node at which the object was added.
  */
-MangoListNode *mango_list_insert(MangoList *mlist, void *data, MangoListNode *beforeNode)
+MangoRawListNode *mango_rawlist_insert(MangoRawList *mlist, void *data, MangoRawListNode *beforeNode)
 {
-    MangoListNode *newnode = mango_list_node_new(data);
+    MangoRawListNode *newnode = mango_rawlist_node_new(data);
     mlist->size++;
     if (mlist->head == NULL)
     {
@@ -163,8 +163,8 @@ MangoListNode *mango_list_insert(MangoList *mlist, void *data, MangoListNode *be
         }
         else
         {
-            MangoListNode *prev = beforeNode->prev;
-            MangoListNode *next = beforeNode;
+            MangoRawListNode *prev = beforeNode->prev;
+            MangoRawListNode *next = beforeNode;
 
             newnode->prev = prev;
             newnode->next = next;
@@ -182,13 +182,13 @@ MangoListNode *mango_list_insert(MangoList *mlist, void *data, MangoListNode *be
 /**
  * Removes a node from the list.
  */
-void *mango_list_remove(MangoList *mlist, MangoListNode *node)
+void *mango_rawlist_remove(MangoRawList *mlist, MangoRawListNode *node)
 {
     void *data = node->data;
     if (mlist->size > 0)
     {
-        MangoListNode *prev = node->prev;
-        MangoListNode *next = node->next;
+        MangoRawListNode *prev = node->prev;
+        MangoRawListNode *next = node->next;
         mlist->size--;
         if (prev != NULL) prev->next = next;
         else mlist->head = next;
@@ -205,23 +205,23 @@ void *mango_list_remove(MangoList *mlist, MangoListNode *node)
 /**
  * Removes a node from the front of the list.
  */
-void *mango_list_remove_front(MangoList *mlist)
+void *mango_rawlist_remove_front(MangoRawList *mlist)
 {
-    return mango_list_remove(mlist, mlist->head);
+    return mango_rawlist_remove(mlist, mlist->head);
 }
 
 /**
  * Removes a node from the back of the list.
  */
-void *mango_list_remove_back(MangoList *mlist)
+void *mango_rawlist_remove_back(MangoRawList *mlist)
 {
-    return mango_list_remove(mlist, mlist->tail);
+    return mango_rawlist_remove(mlist, mlist->tail);
 }
 
 /**
  * Tells if a list is empty or not.
  */
-BOOL mango_list_is_empty(MangoList *mlist)
+BOOL mango_rawlist_is_empty(MangoRawList *mlist)
 {
     return mlist->head == NULL;
 }
@@ -229,7 +229,7 @@ BOOL mango_list_is_empty(MangoList *mlist)
 /**
  * Tells if two lists are equal using a comparator function.
  */
-BOOL mango_lists_are_equal(const MangoList *list1, const MangoList *list2, BOOL (*equalFn)(const void *item1, const void *item2))
+BOOL mango_rawlists_are_equal(const MangoRawList *list1, const MangoRawList *list2, BOOL (*equalFn)(const void *item1, const void *item2))
 {
     if (list1 == list2)
     {
@@ -248,7 +248,7 @@ BOOL mango_lists_are_equal(const MangoList *list1, const MangoList *list2, BOOL 
     }
     if (equalFn != NULL)
     {
-        for (MangoListNode *n1 = list1->head, *n2=list2->head;n1 != NULL;n1=n1->next,n2=n2->next)
+        for (MangoRawListNode *n1 = list1->head, *n2=list2->head;n1 != NULL;n1=n1->next,n2=n2->next)
         {
             if (!equalFn(n1->data, n2->data))
             {

@@ -2,6 +2,8 @@
 #ifndef __MANGO_PUBLIC_H__
 #define __MANGO_PUBLIC_H__
 
+#include "mrawarray.h"
+#include "mrawlist.h"
 #include "marraylist.h"
 #include "mbintree.h"
 #include "mclasses.h"

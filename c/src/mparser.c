@@ -5,7 +5,7 @@
 #include "mtemplateloader.h"
 #include "mparser.h"
 #include "mparsercontext.h"
-#include "mlinkedlist.h"
+#include "mrawlist.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
 #include "mfreetext.h"
