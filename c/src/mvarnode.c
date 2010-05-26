@@ -144,9 +144,9 @@ void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
 {
     if (mnode->filterNodes == NULL)
     {
-        mnode->filterNodes = mango_rawlist_new();
+        mnode->filterNodes = (MangoList *)mango_linkedlist_new();
     }
-    mango_rawlist_push_back(mnode->filterNodes, fnode);
+    LIST_PUSH_BACK(mnode->filterNodes, fnode);
 }
 
 /**
@@ -157,10 +157,7 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
     if (varnode->var != NULL)
         OBJ_DECREF(varnode->var);
     if (varnode->filterNodes != NULL)
-    {
-        mango_rawlist_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);
-        mango_rawlist_free(varnode->filterNodes);
-    }
+        OBJ_DECREF(varnode->filterNodes);
 
     // simply call node's dealloc
     mango_node_dealloc((MangoNode *)varnode);
@@ -176,6 +173,6 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
 BOOL mango_varnode_are_equal(const MangoVarNode *mvn1, const MangoVarNode *mvn2)
 {
     return mango_vars_are_equal(mvn1->var, mvn2->var) &&
-            mango_rawlists_are_equal(mvn1->filterNodes, mvn2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
+            OBJ_EQUALS(mvn1->filterNodes, mvn2->filterNodes);
 }
 

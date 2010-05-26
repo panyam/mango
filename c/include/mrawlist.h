@@ -18,12 +18,11 @@ struct MangoRawListNode
 /**
  * A mango error object.
  */
-struct MangoRawList
-{
-    MangoRawListNode * head;
-    MangoRawListNode * tail;
-    size_t          size;
-};
+INHERIT_STRUCT(MangoRawList, MangoObject, 
+    MangoRawListNode *  head;
+    MangoRawListNode *  tail;
+    size_t              size;
+);
 
 /**
  * Creates a linked list node.
@@ -40,10 +39,16 @@ extern MangoRawListNode *mango_rawlist_node_new(void *data);
 extern MangoRawList *mango_rawlist_new();
 
 /**
+ * Initialises a raw list.
+ */
+extern MangoRawList *mango_rawlist_init(MangoRawList *list, MangoPrototype *proto);
+
+/**
  * Frees a mango list.
  * \param   mlist    The mango list to be freed
+ * \param   deletor Method that will delete each entry.
  */
-extern void mango_rawlist_free(MangoRawList *mlist);
+extern void mango_rawlist_free(MangoRawList *mlist, void (*deletor)(void *));
 
 /**
  * Clears the list and optionally deletes entries within the list with a
@@ -90,6 +95,13 @@ extern void *mango_rawlist_front(MangoRawList *mlist);
  * \returns The value of the node at the back of the list.
  */
 extern void *mango_rawlist_back(MangoRawList *mlist);
+
+/**
+ * Set the value at a given index.
+ *
+ * \returns The old value that was replaced.
+ */
+extern void *mango_rawlist_set_at(MangoRawList *mlist, int index, void *data);
 
 /**
  * Adds a new object at the end of the list.

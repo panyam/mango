@@ -94,3 +94,92 @@ int mango_list_last_index_of(MangoList *list, MangoObject *obj, int from)
     return -1;
 }
 
+/**
+ * Adds an item at the back of the list.
+ * \param   list    List to which the object is to be added.
+ * \param   obj     Object to be added.
+ */
+void mango_list_push_back(MangoList *list, MangoObject *obj)
+{
+    mango_list_insert_at(list, obj, -1);
+}
+
+/**
+ * Adds an item at the front of the list.
+ * \param   list    List to which the object is to be added.
+ * \param   obj     Object to be added.
+ */
+void mango_list_push_front(MangoList *list, MangoObject *obj)
+{
+    mango_list_insert_at(list, obj, 0);
+}
+
+/**
+ * Removes an item at the back of the list.
+ * \param   list    List to which the object is to be added.
+ */
+void mango_list_remove_back(MangoList *list)
+{
+    mango_list_remove_at(list, -1);
+}
+
+/**
+ * Remove an item at the front of the list.
+ * \param   list    List to which the object is to be added.
+ */
+void mango_list_remove_front(MangoList *list)
+{
+    mango_list_remove_at(list, 0);
+}
+
+/**
+ * Gets the item at the front of the list without removing it.
+ * \param   list    List to which the object is to be retrieved.
+ * \return Item at the front of the list.
+ */
+MangoObject *mango_list_front(MangoList *list)
+{
+    return OBJ_GETINTATTR(list, 0);
+}
+
+/**
+ * Gets the item at the back of the list without removing it.
+ * \param   list    List to which the object is to be retrieved.
+ * \return Item at the back of the list.
+ */
+MangoObject *mango_list_back(MangoList *list)
+{
+    return OBJ_GETINTATTR(list, -1);
+}
+
+
+/**
+ * Pops an item at the back of the list and returns it.
+ * \param   list    List from which the object is to be popped.
+ */
+MangoObject *mango_list_pop_back(MangoList *list)
+{
+    MangoObject *obj = mango_list_back(list);
+    if (obj != NULL)
+    {
+        OBJ_INCREF(obj);
+        mango_list_remove_back(list);
+    }
+    return obj;
+}
+
+/**
+ * Pops an item at the front of the list and returns it.
+ * \param   list    List from which the object is to be popped.
+ */
+MangoObject *mango_list_pop_front(MangoList *list)
+{
+    MangoObject *obj = mango_list_front(list);
+    if (obj != NULL)
+    {
+        OBJ_INCREF(obj);
+        mango_list_remove_front(list);
+    }
+    return obj;
+}
+

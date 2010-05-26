@@ -30,7 +30,7 @@ TEST_FIXTURE(ListTestFixture, TestListCreate)
     CHECK_EQUAL((unsigned)0, list->size);
     CHECK(mango_rawlist_is_empty(list));
     // mango_rawlist_clear(list, (DeleteFunc)mango_object_decref);
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 /**
@@ -43,7 +43,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushBackOnEmpty)
     CHECK_EQUAL((unsigned)1, list->size);
     CHECK_EQUAL(10, (int)mango_rawlist_front(list));
     CHECK_EQUAL(10, (int)mango_rawlist_back(list));
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 /**
@@ -56,7 +56,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushFrontOnEmpty)
     CHECK_EQUAL((unsigned)1, list->size);
     CHECK_EQUAL(10, (int)mango_rawlist_front(list));
     CHECK_EQUAL(10, (int)mango_rawlist_back(list));
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 /**
@@ -69,7 +69,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushBackOnNonEmpty)
     mango_rawlist_push_back(list, (void *)11);
     CHECK_EQUAL((unsigned)2, list->size);
     CHECK_EQUAL(11, (int)mango_rawlist_back(list));
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 /**
@@ -82,7 +82,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushFrontOnNonEmpty)
     mango_rawlist_push_front(list, (void *)11);
     CHECK_EQUAL((unsigned)2, list->size);
     CHECK_EQUAL(11, (int)mango_rawlist_front(list));
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 
@@ -98,7 +98,7 @@ TEST_FIXTURE(ListTestFixture, TestListClear)
     CHECK(list->size == 0);
     CHECK(NULL == mango_rawlist_front(list));
     CHECK(NULL == mango_rawlist_back(list));
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 
@@ -120,7 +120,7 @@ TEST_FIXTURE(ListTestFixture, TestListClearWithDeletor)
     mango_rawlist_clear(list, my_deletor);
     CHECK(list->size == 0);
     CHECK_EQUAL(0, deletor_int);
-    mango_rawlist_free(list);
+    mango_rawlist_free(list, NULL);
 }
 
 

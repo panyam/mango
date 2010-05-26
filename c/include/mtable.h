@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 
-typedef MangoObject *(*TableGetFunc)(MangoTable *table, MangoString *key);
+typedef MangoObject *(*TableGetFunc)(MangoTable *table, const MangoString *key);
 typedef BOOL (*TableContainsFunc)(MangoTable *table, const MangoString *key);
 typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
 typedef MangoObject *(*TableEraseFunc)(MangoTable *table, const MangoString *key);

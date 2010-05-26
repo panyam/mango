@@ -1,6 +1,9 @@
 
 #include "mrawlist.h"
 
+DECLARE_PROTO_FUNC("MangoRawList", MangoPrototype, mango_rawlist_prototype,
+);
+
 /**
  * Creates a linked list node.
  *
@@ -20,23 +23,33 @@ MangoRawListNode *mango_rawlist_node_new(void *data)
  */
 MangoRawList *mango_rawlist_new()
 {
-    return (MangoRawList *)calloc(1, sizeof(MangoRawList));
+    return mango_rawlist_init(ZNEW(MangoRawList), mango_rawlist_prototype());
+}
+
+/**
+ * Initialises a raw list.
+ */
+MangoRawList *mango_rawlist_init(MangoRawList *list, MangoPrototype *proto)
+{
+    if (proto == NULL)
+        proto = mango_rawlist_prototype();
+    OBJ_INIT(list, proto);
+    list->head  = NULL;
+    list->tail  = NULL;
+    list->size  = 0;
+    return list;
 }
 
 /**
  * Frees a mango list.
  * \param   mlist    The mango list to be freed
+ * \param   deletor Method that will delete each entry.
  */
-void mango_rawlist_free(MangoRawList *mlist)
+void mango_rawlist_free(MangoRawList *mlist, void (*deletor)(void *))
 {
     if (mlist != NULL)
     {
-        for (MangoRawListNode *temp = mlist->head;temp != NULL;)
-        {
-            MangoRawListNode *next = temp->next;
-            free(temp);
-            temp = next;
-        }
+        mango_rawlist_clear(mlist, deletor);
         free(mlist);
     }
 }
@@ -128,6 +141,24 @@ void *mango_rawlist_back(MangoRawList *mlist)
 MangoRawListNode *mango_rawlist_push_back(MangoRawList *mlist, void *data)
 {
     return mango_rawlist_insert(mlist, data, NULL);
+}
+
+/**
+ * Set the value at a given index.
+ *
+ * \returns The old value that was replaced.
+ */
+void *mango_rawlist_set_at(MangoRawList *mlist, int index, void *data)
+{
+    MangoRawListNode *node = mlist->head;
+    for (int i = 0;i < index && node != NULL;i++, node=node->next) ;
+    void *oldvalue = NULL;
+    if (node != NULL)
+    {
+        oldvalue = node->data;
+        node->data = data;
+    }
+    return oldvalue;
 }
 
 /**

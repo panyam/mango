@@ -15,7 +15,7 @@ DECLARE_PROTO_FUNC("MangoNodeList", MangoNodePrototype, mango_nodelist_prototype
 /**
  * Creates a new list node with a bunch of nodes.
  */
-MangoNodeList *mango_nodelist_new(MangoList *nodes)
+MangoNodeList *mango_nodelist_new(MangoLinkedList *nodes)
 {
     MangoNodeList *nodelist = NEW(MangoNodeList);
     return mango_nodelist_init(nodelist, nodes, mango_nodelist_prototype());
@@ -24,7 +24,7 @@ MangoNodeList *mango_nodelist_new(MangoList *nodes)
 /**
  * Creates a new mango node list.
  */
-MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, MangoNodePrototype *prototype)
+MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoLinkedList *nodes, MangoNodePrototype *prototype)
 {
     if (prototype == NULL)
         prototype = mango_nodelist_prototype();
@@ -38,7 +38,7 @@ MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, Ma
  */
 MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
 {
-    MangoList *nodes = (MangoList *)mango_linkedlist_new();
+    MangoLinkedList *nodes = (MangoLinkedList *)mango_linkedlist_new();
 
     va_list ap;
     va_start(ap, numNodes);

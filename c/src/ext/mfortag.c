@@ -107,7 +107,7 @@ BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode 
     {
         if (mango_vars_are_equal(ftd1->sourceVar, ftd2->sourceVar))
         {
-            return mango_rawlists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_vars_are_equal) &&
+            return OBJ_EQUALS(ftd1->items, ftd2->items) &&
                     OBJ_EQUALS(ftd1->childNodes, ftd2->childNodes) &&
                     OBJ_EQUALS(ftd1->emptyNodes, ftd2->emptyNodes);
         }
@@ -243,7 +243,7 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
 {
     if (ftd->items == NULL)
         ftd->items = (MangoList *)mango_linkedlist_new();
-    mango_rawlist_push_back(ftd->items, var);
+    LIST_PUSH_BACK(ftd->items, var);
 }
 
 #if 0

@@ -17,7 +17,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      *                  stack it to be created.
      * \return A MangoList of values for the var.
      */
-    const MangoList *(*getValuesFunc)(MangoTemplateContext *context, MangoString *key, BOOL create);
+    MangoList *(*getValuesFunc)(MangoTemplateContext *context, MangoString *key, BOOL create);
 
     /**
      * Gets the value of a particular key.
@@ -108,7 +108,7 @@ extern void mango_tmplctx_dealloc(MangoTemplateContext *context);
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-extern const MangoList *mango_tmplctx_get_values(MangoTemplateContext *context, MangoString *key, BOOL create);
+extern MangoList *mango_tmplctx_get_values(MangoTemplateContext *context, MangoString *key, BOOL create);
 
 /**
  * Gets the value of a var by a key.

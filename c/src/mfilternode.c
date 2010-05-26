@@ -14,29 +14,38 @@
 #include "mstringfactory.h"
 #include "mtmplctx.h"
 
+DECLARE_PROTO_FUNC("MangoFilterNode", MangoPrototype, mango_filternode_prototype,
+    __proto__.deallocFunc   = (ObjectDeallocFunc)mango_filternode_dealloc;
+    __proto__.equalsFunc    = (ObjectEqualsFunc)mango_filternodes_are_equal;
+);
+
 /**
  * Creates a new filter node given a filter.
  */
 MangoFilterNode *mango_filternode_new(MangoFilter *f)
 {
-    MangoFilterNode *mfn = NEW(MangoFilterNode);
-    mfn->filter = f;
-    mfn->arguments = NULL;
-    return mfn;
+    return mango_filternode_init(f, ZNEW(MangoFilterNode), mango_filternode_prototype());
+}
+
+MangoFilterNode *mango_filternode_init(MangoFilter *filter, MangoFilterNode *node, MangoPrototype *proto)
+{
+    if (proto == NULL)
+        proto = mango_filternode_prototype();
+    OBJ_INIT(node, proto);
+    node->filter = filter;
+    node->arguments = NULL;
+    return node;
 }
 
 /**
  * Frees a filter node.
  */
-void mango_filternode_free(MangoFilterNode *fnode)
+void mango_filternode_dealloc(MangoFilterNode *fnode)
 {
     // do not delete filter as they are shared
     if (fnode->arguments != NULL)
-    {
-        mango_rawlist_clear(fnode->arguments, (DeleteFunc)mango_object_decref);
-        mango_rawlist_free(fnode->arguments);
-    }
-    free(fnode);
+        OBJ_DECREF(fnode->arguments);
+    mango_object_dealloc((MangoObject *)fnode);
 }
 
 /**
@@ -57,8 +66,7 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
         return false;
     }
     // compare the arguments
-    return mango_rawlists_are_equal(fn1->arguments, fn2->arguments,
-                                 (EqualsFunc)mango_vars_are_equal);
+    return OBJ_EQUALS(fn1->arguments, fn2->arguments);
 }
 
 /**
@@ -78,8 +86,8 @@ MangoObject *mango_filternode_apply(MangoFilterNode *fnode, const MangoObject *i
 void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVar *mvar)
 {
     if (fnode->arguments == NULL)
-        fnode->arguments = mango_rawlist_new();
-    mango_rawlist_push_back(fnode->arguments, mvar);
+        fnode->arguments = (MangoList *)mango_linkedlist_new();
+    LIST_PUSH_BACK(fnode->arguments, mvar);
 }
 
 /**
@@ -110,7 +118,7 @@ BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
         MangoFilterNode *filternode = mango_filternode_extract_with_parser(ctx, error);
         if (filternode == NULL)
             return false;
-        mango_rawlist_push_back(filters, filternode);
+        LIST_PUSH_BACK(filters, filternode);
         token = mango_parser_peek_token(parser, error);
         if (token == NULL)
             return false;

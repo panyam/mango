@@ -71,7 +71,7 @@ void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key, BOOL create)
+MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key, BOOL create)
 {
     if (ctx->__prototype__->getValuesFunc != NULL)
     {
@@ -91,12 +91,12 @@ const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString
         {
             if (!create)
                 return NULL;
-            valueStack = mango_rawlist_new();
-            mango_table_put(ctx->values, key, valueStack);
+            valueStack = (MangoList *)mango_linkedlist_new();
+            mango_table_put(ctx->values, key, (MangoObject *)valueStack);
         }
         else
         {
-            valueStack = mango_table_get(ctx->values, key);
+            valueStack = (MangoList *)mango_table_get(ctx->values, key);
         }
         return valueStack;
     }
@@ -135,15 +135,15 @@ MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key)
 int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key, MangoObject *value, BOOL push)
 {
     MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
-    if (push || mango_rawlist_is_empty(valueStack))
+    if (push || COLLECTION_IS_EMPTY(valueStack))
     {
-        mango_rawlist_push_front(valueStack, value);
+        LIST_PUSH_FRONT(valueStack, value);
     }
     else
     {
-        mango_rawlist_set_at(valueStack, 0, value);
+        LIST_SET_AT(valueStack, 0, value);
     }
-    return mango_rawlist_size(valueStack);
+    return COLLECTION_SIZE(valueStack);
 }
 
 /**
@@ -215,10 +215,10 @@ MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
     }
     else if (ctx->values != NULL)
     {
-        MangoList *ctxStack = mango_table_get(ctx->values, key);
-        if (ctxStack != NULL && !mango_rawlist_is_empty(ctxStack))
+        MangoList *ctxStack = (MangoList *)mango_table_get(ctx->values, key);
+        if (ctxStack != NULL && !COLLECTION_IS_EMPTY(ctxStack))
         {
-            return mango_rawlist_pop_front(ctxStack);
+            return (MangoObject *)LIST_POP_FRONT(ctxStack);
         }
     }
     return NULL;

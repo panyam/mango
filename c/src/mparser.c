@@ -6,6 +6,7 @@
 #include "mparser.h"
 #include "mparsercontext.h"
 #include "mrawlist.h"
+#include "mlinkedlist.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
 #include "mfreetext.h"
@@ -185,10 +186,10 @@ void mango_parser_discard_till_token(MangoParser *parser,
  */
 MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
 {
-    MangoRawList *  nodeList    = NULL;
-    MangoNode *     firstNode   = NULL;
-    MangoNode *     nextNode    = mango_parser_parse_node(ctx, error);
-    int             nodeCount   = 0;
+    MangoLinkedList *   nodeList    = NULL;
+    MangoNode *         firstNode   = NULL;
+    MangoNode *         nextNode    = mango_parser_parse_node(ctx, error);
+    int                 nodeCount   = 0;
     while (nextNode != NULL)
     {
         if (firstNode == NULL)
@@ -199,10 +200,10 @@ MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
         {
             if (nodeList == NULL)
             {
-                nodeList = mango_rawlist_new();
-                mango_rawlist_push_back(nodeList, firstNode);
+                nodeList = mango_linkedlist_new();
+                LIST_PUSH_BACK(nodeList, firstNode);
             }
-            mango_rawlist_push_back(nodeList, nextNode);
+            LIST_PUSH_BACK(nodeList, nextNode);
         }
         nodeCount++;
         nextNode    = mango_parser_parse_node(ctx, error);

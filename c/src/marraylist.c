@@ -12,12 +12,14 @@ void mango_arraylist_remove_at(MangoArrayList *array, int index);
 void mango_arraylist_insert_at(MangoArrayList *array, MangoObject *item, int index);
 void mango_arraylist_sinsert(MangoArrayList *array, int index, MangoObject **src, int srclen);
 void mango_arraylist_remove_range(MangoArrayList *array, int from, int to);
+BOOL mango_arraylists_are_equal(const MangoArrayList *list1, const MangoArrayList *list2);
 
 /**
  * The default array prototype.
  */
 DECLARE_PROTO_FUNC("MangoArrayList", MangoListPrototype, mango_arraylist_prototype,
     ((MangoPrototype *)&__proto__)->deallocFunc             = (ObjectDeallocFunc)mango_arraylist_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc              = (ObjectEqualsFunc)mango_arraylists_are_equal;
     ((MangoPrototype *)&__proto__)->getIntAttrFunc          = (ObjectGetIntAttrFunc)mango_arraylist_get_int_attr;
     ((MangoCollectionPrototype *)&__proto__)->clearFunc     = (CollectionClearFunc)mango_arraylist_clear;
     ((MangoCollectionPrototype *)&__proto__)->isEmptyFunc   = (CollectionIsEmptyFunc)mango_arraylist_is_empty;
@@ -40,6 +42,8 @@ MangoArrayList *mango_arraylist_new()
  */
 MangoArrayList *mango_arraylist_init(MangoArrayList *list, MangoListPrototype *proto)
 {
+    if (proto == NULL)
+        proto = mango_arraylist_prototype();
     mango_list_init((MangoList *)list, proto);
     list->items     = NULL;
     list->length    = 0;
@@ -198,5 +202,34 @@ BOOL mango_arraylist_is_empty(MangoArrayList *array)
 int mango_arraylist_size(MangoArrayList *array)
 {
     return array->length;
+}
+
+/**
+ * Compares the contents of two arrays and returns if they are equal.
+ */
+BOOL mango_arraylists_are_equal(const MangoArrayList *array1, const MangoArrayList *array2)
+{
+    if (array1 == array2)
+    {
+        return true;
+    }
+
+    int length1 = array1 == NULL ? 0 : array1->length;
+    int length2 = array2 == NULL ? 0 : array2->length;
+    if (length1 != length2)
+    {
+        return false;
+    }
+    else if (array1 == NULL || array2 == NULL)
+    {
+        return false;
+    }
+
+    for (int i = 0;i < array1->length;i++)
+    {
+        if (!OBJ_EQUALS(array1->items[i], array2->items[i]))
+            return false;
+    }
+    return true;
 }
 

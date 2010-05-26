@@ -1,17 +1,31 @@
 
 #include "mlinkedlist.h"
+#include "mmemutils.h"
+
+void mango_linkedlist_dealloc(MangoLinkedList *mlist);
+BOOL mango_linkedlist_is_empty(MangoLinkedList *mlist);
+size_t mango_linkedlist_size(const MangoLinkedList *mlist);
+extern void mango_linkedlist_clear(MangoLinkedList *mlist);
+MangoObject *mango_linkedlist_item_at(MangoLinkedList *mlist, int index);
+MangoLinkedListNode *mango_linkedlist_insert_at(MangoLinkedList *mlist, MangoObject *obj, int index);
+void mango_linkedlist_remove_at(MangoLinkedList *mlist, int index);
+BOOL mango_linkedlists_are_equal(const MangoLinkedList *list1, const MangoLinkedList *list2);
+void mango_linkedlist_set_at(MangoLinkedList *mlist, int index, MangoObject *obj);
 
 /**
- * Creates a linked list node.
- *
- * \returns A new MangoLinkedListNode instance.
+ * The default array prototype.
  */
-MangoLinkedListNode *mango_linkedlist_node_new(void *data)
-{
-    MangoLinkedListNode *newnode = (MangoLinkedListNode *)calloc(1, sizeof(MangoLinkedListNode));
-    newnode->data = data;
-    return newnode;
-}
+DECLARE_PROTO_FUNC("MangoLinkedList", MangoListPrototype, mango_linkedlist_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc             = (ObjectDeallocFunc)mango_linkedlist_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc              = (ObjectEqualsFunc)mango_linkedlists_are_equal;
+    ((MangoPrototype *)&__proto__)->getIntAttrFunc          = (ObjectGetIntAttrFunc)mango_linkedlist_item_at;
+    ((MangoCollectionPrototype *)&__proto__)->clearFunc     = (CollectionClearFunc)mango_linkedlist_clear;
+    ((MangoCollectionPrototype *)&__proto__)->isEmptyFunc   = (CollectionIsEmptyFunc)mango_linkedlist_is_empty;
+    ((MangoCollectionPrototype *)&__proto__)->sizeFunc      = (CollectionSizeFunc)mango_linkedlist_size;
+    ((MangoListPrototype *)&__proto__)->insertAtFunc        = (ListInsertAtFunc)mango_linkedlist_insert_at;
+    ((MangoListPrototype *)&__proto__)->removeAtFunc        = (ListRemoveAtFunc)mango_linkedlist_remove_at;
+    ((MangoListPrototype *)&__proto__)->setAtFunc           = (ListSetAtFunc)mango_linkedlist_set_at;
+);
 
 /**
  * Creates a linked list.
@@ -20,25 +34,31 @@ MangoLinkedListNode *mango_linkedlist_node_new(void *data)
  */
 MangoLinkedList *mango_linkedlist_new()
 {
-    return (MangoLinkedList *)calloc(1, sizeof(MangoLinkedList));
+    return mango_linkedlist_init(NEW(MangoLinkedList), mango_linkedlist_prototype());
 }
 
 /**
- * Frees a mango list.
- * \param   mlist    The mango list to be freed
+ * Initialises a linked list.
  */
-void mango_linkedlist_free(MangoLinkedList *mlist)
+MangoLinkedList *mango_linkedlist_init(MangoLinkedList *list, MangoListPrototype *proto)
 {
-    if (mlist != NULL)
-    {
-        for (MangoLinkedListNode *temp = mlist->head;temp != NULL;)
-        {
-            MangoLinkedListNode *next = temp->next;
-            free(temp);
-            temp = next;
-        }
-        free(mlist);
-    }
+    if (proto == NULL)
+        proto = mango_linkedlist_prototype();
+    mango_list_init((MangoList *)list, proto);
+    list->head  = NULL;
+    list->tail  = NULL;
+    list->size  = 0;
+    return list;
+}
+
+/**
+ * Deallocs a mango list.
+ * \param   mlist    The mango list to be dealloced
+ */
+void mango_linkedlist_dealloc(MangoLinkedList *mlist)
+{
+    mango_linkedlist_clear(mlist);
+    mango_object_dealloc((MangoObject *)mlist);
 }
 
 /**
@@ -48,13 +68,12 @@ void mango_linkedlist_free(MangoLinkedList *mlist)
  * \param   mlist   List to be freed and cleared.
  * \param   deletor Method that will delete each entry.
  */
-void mango_linkedlist_clear(MangoLinkedList *mlist, void (*deletor)(void *))
+void mango_linkedlist_clear(MangoLinkedList *mlist)
 {
     for (MangoLinkedListNode *temp = mlist->head;temp != NULL;)
     {
         MangoLinkedListNode *next = temp->next;
-        if (deletor != NULL && temp->data != NULL)
-            deletor(temp->data);
+        OBJ_DECREF(temp->data);
         free(temp);
         temp = next;
     }
@@ -73,18 +92,32 @@ size_t mango_linkedlist_size(const MangoLinkedList *mlist)
 }
 
 /**
- * Gets the node at a given index.
- * \param   mlist   List being searched.
- * \param   index   Index at which the node is to be retrieved.
- * \return The node at the given index.
+ * Finds the linked list node at a given index.
  */
-const MangoLinkedListNode *mango_linkedlist_node_at(const MangoLinkedList *mlist, int index)
+MangoLinkedListNode *mango_linkedlist_node_at(MangoLinkedList *mlist, int index)
 {
-    if (index < 0 || index >= mlist->size)
-        return NULL;
-
-    const MangoLinkedListNode *temp = mlist->head;
-    for (int i = 0;i < index && temp != NULL;i++, temp = temp->next);
+    MangoLinkedListNode *temp = mlist->head;
+    if (index == 0)
+    {
+        temp = mlist->head;
+    }
+    else if (index < 0)
+    {
+        temp = mlist->tail;
+    }
+    else if (index < mlist->size)
+    {
+        if (index < mlist->size / 2)
+        {
+            temp = mlist->head;
+            for (int i = 0;i < index && temp != NULL;i++, temp = temp->next);
+        }
+        else
+        {
+            temp = mlist->tail;
+            for (int i = mlist->size - 1;i > index && temp != NULL;i++, temp = temp->prev);
+        }
+    }
     return temp;
 }
 
@@ -94,50 +127,26 @@ const MangoLinkedListNode *mango_linkedlist_node_at(const MangoLinkedList *mlist
  * \param   index   Index at which the item is to be retrieved.
  * \return The data at the given index.
  */
-void *mango_linkedlist_item_at(const MangoLinkedList *mlist, int index)
+MangoObject *mango_linkedlist_item_at(MangoLinkedList *mlist, int index)
 {
-    const MangoLinkedListNode *node = mango_linkedlist_node_at(mlist, index);
+    MangoLinkedListNode *node = mango_linkedlist_node_at(mlist, index);
     return node == NULL ? NULL : node->data;
 }
 
 /**
- * Returns (without removing) the item at the front of the list.
- *
- * \returns The value of the node at the front of the list.
+ * Sets the item at a given index.
+ * \param   mlist   List being searched.
+ * \param   index   Index at which the item is to be retrieved.
+ * \param   obj     Object to be set as.
  */
-void *mango_linkedlist_front(MangoLinkedList *mlist)
+void mango_linkedlist_set_at(MangoLinkedList *mlist, int index, MangoObject *obj)
 {
-    return mlist->head != NULL ? mlist->head->data : NULL;
-}
-
-/**
- * Returns (without removing) the item at the back of the list.
- *
- * \returns The value of the node at the back of the list.
- */
-void *mango_linkedlist_back(MangoLinkedList *mlist)
-{
-    return mlist->tail != NULL ? mlist->tail->data : NULL;
-}
-
-/**
- * Adds a new object at the end of the list.
- *
- * \returns The node at which the object was added.
- */
-MangoLinkedListNode *mango_linkedlist_push_back(MangoLinkedList *mlist, void *data)
-{
-    return mango_linkedlist_insert(mlist, data, NULL);
-}
-
-/**
- * Adds a new object at the front of the list.
- *
- * \returns The node at which the object was added.
- */
-MangoLinkedListNode *mango_linkedlist_push_front(MangoLinkedList *mlist, void *data)
-{
-    return mango_linkedlist_insert(mlist, data, mlist->head);
+    MangoLinkedListNode *node = mango_linkedlist_node_at(mlist, index);
+    if (node != NULL && node->data != obj)
+    {
+        OBJ_DECREF(node->data);
+        node->data = OBJ_INCREF(obj);
+    }
 }
 
 /**
@@ -145,9 +154,11 @@ MangoLinkedListNode *mango_linkedlist_push_front(MangoLinkedList *mlist, void *d
  *
  * \returns The node at which the object was added.
  */
-MangoLinkedListNode *mango_linkedlist_insert(MangoLinkedList *mlist, void *data, MangoLinkedListNode *beforeNode)
+MangoLinkedListNode *mango_linkedlist_insert_at(MangoLinkedList *mlist, MangoObject *data, int index)
 {
-    MangoLinkedListNode *newnode = mango_linkedlist_node_new(data);
+    MangoLinkedListNode *newnode = ZNEW(MangoLinkedListNode);
+    newnode->data = data;
+
     mlist->size++;
     if (mlist->head == NULL)
     {
@@ -155,6 +166,7 @@ MangoLinkedListNode *mango_linkedlist_insert(MangoLinkedList *mlist, void *data,
     }
     else
     {
+        MangoLinkedListNode *beforeNode = mango_linkedlist_node_at(mlist, index);
         if (beforeNode == NULL)
         {
             mlist->tail->next = newnode;
@@ -182,9 +194,9 @@ MangoLinkedListNode *mango_linkedlist_insert(MangoLinkedList *mlist, void *data,
 /**
  * Removes a node from the list.
  */
-void *mango_linkedlist_remove(MangoLinkedList *mlist, MangoLinkedListNode *node)
+void mango_linkedlist_remove_at(MangoLinkedList *mlist, int index)
 {
-    void *data = node->data;
+    MangoLinkedListNode *node = mango_linkedlist_node_at(mlist, index);
     if (mlist->size > 0)
     {
         MangoLinkedListNode *prev = node->prev;
@@ -197,25 +209,9 @@ void *mango_linkedlist_remove(MangoLinkedList *mlist, MangoLinkedListNode *node)
         else mlist->tail = prev;
 
         // erase the node
+        OBJ_DECREF(node->data);
         free(node);
     }
-    return data;
-}
-
-/**
- * Removes a node from the front of the list.
- */
-void *mango_linkedlist_remove_front(MangoLinkedList *mlist)
-{
-    return mango_linkedlist_remove(mlist, mlist->head);
-}
-
-/**
- * Removes a node from the back of the list.
- */
-void *mango_linkedlist_remove_back(MangoLinkedList *mlist)
-{
-    return mango_linkedlist_remove(mlist, mlist->tail);
 }
 
 /**
@@ -229,7 +225,7 @@ BOOL mango_linkedlist_is_empty(MangoLinkedList *mlist)
 /**
  * Tells if two lists are equal using a comparator function.
  */
-BOOL mango_linkedlists_are_equal(const MangoLinkedList *list1, const MangoLinkedList *list2, BOOL (*equalFn)(const void *item1, const void *item2))
+BOOL mango_linkedlists_are_equal(const MangoLinkedList *list1, const MangoLinkedList *list2)
 {
     if (list1 == list2)
     {
@@ -246,14 +242,12 @@ BOOL mango_linkedlists_are_equal(const MangoLinkedList *list1, const MangoLinked
     {
         return false;
     }
-    if (equalFn != NULL)
+
+    for (MangoLinkedListNode *n1 = list1->head, *n2=list2->head;n1 != NULL;n1=n1->next,n2=n2->next)
     {
-        for (MangoLinkedListNode *n1 = list1->head, *n2=list2->head;n1 != NULL;n1=n1->next,n2=n2->next)
+        if (!OBJ_EQUALS(n1->data, n2->data))
         {
-            if (!equalFn(n1->data, n2->data))
-            {
-                return false;
-            }
+            return false;
         }
     }
     return true;

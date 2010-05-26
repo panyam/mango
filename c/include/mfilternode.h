@@ -2,17 +2,16 @@
 #ifndef __MANGO_FILTER_NODE_H__
 #define __MANGO_FILTER_NODE_H__
 
-#include "mfwddefs.h"
+#include "mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-struct MangoFilterNode
-{
+DECLARE_CLASS(MangoFilterNode, MangoPrototype,
     MangoFilter *   filter;
     MangoList *     arguments;
-};
+);
 
 /**
  * Creates a new filter node given a filter.
@@ -20,9 +19,14 @@ struct MangoFilterNode
 extern MangoFilterNode *mango_filternode_new(MangoFilter *f);
 
 /**
+ * Initialise an created filter node given a filter.
+ */
+extern MangoFilterNode *mango_filternode_init(MangoFilter *f, MangoFilterNode *node, MangoPrototype *proto);
+
+/**
  * Frees a filter node.
  */
-extern void mango_filternode_free(MangoFilterNode *fnode);
+extern void mango_filternode_dealloc(MangoFilterNode *fnode);
 
 /**
  * Tells if two filter nodes are equal.
