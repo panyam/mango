@@ -1,5 +1,5 @@
 
-#include "marray.h"
+#include "mrawarray.h"
 #include "mvarresolver.h"
 #include "mtmplctx.h"
 #include "mvar.h"

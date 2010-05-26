@@ -3,7 +3,7 @@
 #include "mmemutils.h"
 #include "mnodelist.h"
 #include "mnode.h"
-#include "mlist.h"
+#include "mrawlist.h"
 
 /**
  * The prototype for mango node lists.
@@ -38,14 +38,14 @@ MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, Ma
  */
 MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
 {
-    MangoList *nodes = mango_list_new();
+    MangoList *nodes = mango_rawlist_new();
 
     va_list ap;
     va_start(ap, numNodes);
     for (int i = 0;i < numNodes;i++)
     {
         MangoNode *node = va_arg(ap, MangoNode *);
-        mango_list_push_back(nodes, node);
+        mango_rawlist_push_back(nodes, node);
     }
     return mango_nodelist_new(nodes);
 }
@@ -56,8 +56,8 @@ MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
 void mango_nodelist_dealloc(MangoNodeList *nodelist)
 {
     // TODO: clear the nodelist
-    mango_list_clear(nodelist->nodes, (DeleteFunc)mango_object_decref);
-    mango_list_free(nodelist->nodes);
+    mango_rawlist_clear(nodelist->nodes, (DeleteFunc)mango_object_decref);
+    mango_rawlist_free(nodelist->nodes);
 
     // simply call node's dealloc
     mango_node_dealloc((MangoNode *)nodelist);
@@ -70,7 +70,7 @@ void mango_nodelist_dealloc(MangoNodeList *nodelist)
  */
 unsigned mango_nodelist_childcount(MangoNodeList *nodelist)
 {
-    return mango_list_size(nodelist->nodes);
+    return mango_rawlist_size(nodelist->nodes);
 }
 
 /**
@@ -81,6 +81,6 @@ unsigned mango_nodelist_childcount(MangoNodeList *nodelist)
  */
 MangoNode *mango_nodelist_childat(MangoNodeList *nodelist, unsigned index)
 {
-    return mango_list_item_at(nodelist->nodes, index);
+    return mango_rawlist_item_at(nodelist->nodes, index);
 }
 

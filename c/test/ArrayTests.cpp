@@ -23,12 +23,12 @@ public:
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
 {
-    MangoArray *array = mango_array_new();
+    MangoArray *array = mango_rawarray_new();
     CHECK(array != NULL);
     CHECK(array->items == NULL);
     CHECK(array->length == 0);
     CHECK(array->capacity == 0);
-    mango_array_free(array, NULL);
+    mango_rawarray_free(array, NULL);
 }
 
 /**
@@ -36,12 +36,12 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
 {
-    MangoArray *array = mango_array_new();
+    MangoArray *array = mango_rawarray_new();
     CHECK(array != NULL);
-    mango_array_insert(array, (void *)10, -1);
+    mango_rawarray_insert(array, (void *)10, -1);
     CHECK(array->length == 1);
-    CHECK((int)mango_array_itemat(array, 0) == 10);
-    mango_array_free(array, NULL);
+    CHECK((int)mango_rawarray_itemat(array, 0) == 10);
+    mango_rawarray_free(array, NULL);
 }
 
 
@@ -50,19 +50,19 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayClear)
 {
-    MangoArray *array = mango_array_new();
+    MangoArray *array = mango_rawarray_new();
     CHECK(array != NULL);
-    mango_array_insert(array, (void *)10, -1);
-    mango_array_insert(array, (void *)11, -1);
-    mango_array_insert(array, (void *)12, -1);
-    mango_array_insert(array, (void *)13, -1);
-    mango_array_insert(array, (void *)14, -1);
+    mango_rawarray_insert(array, (void *)10, -1);
+    mango_rawarray_insert(array, (void *)11, -1);
+    mango_rawarray_insert(array, (void *)12, -1);
+    mango_rawarray_insert(array, (void *)13, -1);
+    mango_rawarray_insert(array, (void *)14, -1);
     int capacity = array->capacity;
     CHECK_EQUAL(array->length, (unsigned)5);
-    mango_array_clear(array, NULL);
+    mango_rawarray_clear(array, NULL);
     CHECK_EQUAL(array->length, (unsigned)0);
     CHECK_EQUAL(array->capacity, (unsigned)capacity);
     CHECK(array->items != NULL);
-    mango_array_free(array, NULL);
+    mango_rawarray_free(array, NULL);
 }
 

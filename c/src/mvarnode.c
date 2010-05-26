@@ -5,7 +5,7 @@
 #include "mparsercontext.h"
 #include "mvar.h"
 #include "mfilternode.h"
-#include "mlist.h"
+#include "mrawlist.h"
 #include "mmemutils.h"
 #include "mclasses.h"
 
@@ -87,7 +87,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     if (token == NULL)
         return NULL;
 
-    MangoList *filter_nodes = mango_list_new();
+    MangoList *filter_nodes = mango_rawlist_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
         if (mango_filternode_extract_filter_list(ctx, filter_nodes, error))
@@ -119,7 +119,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
         OBJ_DECREF(var);
         if (filter_nodes != NULL)
         {
-            mango_list_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
+            mango_rawlist_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
             free(filter_nodes);
         }
     }
@@ -127,7 +127,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     {
         if (filter_nodes->size == 0)
         {
-            mango_list_free(filter_nodes);
+            mango_rawlist_free(filter_nodes);
             filter_nodes = NULL;
         }
         node = (MangoNode *)mango_varnode_new(var, filter_nodes);
@@ -145,9 +145,9 @@ void mango_varnode_add_filter(MangoVarNode *mnode, MangoFilterNode *fnode)
 {
     if (mnode->filterNodes == NULL)
     {
-        mnode->filterNodes = mango_list_new();
+        mnode->filterNodes = mango_rawlist_new();
     }
-    mango_list_push_back(mnode->filterNodes, fnode);
+    mango_rawlist_push_back(mnode->filterNodes, fnode);
 }
 
 /**
@@ -159,8 +159,8 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
         OBJ_DECREF(varnode->var);
     if (varnode->filterNodes != NULL)
     {
-        mango_list_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);
-        mango_list_free(varnode->filterNodes);
+        mango_rawlist_clear(varnode->filterNodes, (DeleteFunc)mango_filternode_free);
+        mango_rawlist_free(varnode->filterNodes);
     }
 
     // simply call node's dealloc
@@ -177,6 +177,6 @@ void mango_varnode_dealloc(MangoVarNode *varnode)
 BOOL mango_varnode_are_equal(const MangoVarNode *mvn1, const MangoVarNode *mvn2)
 {
     return mango_vars_are_equal(mvn1->var, mvn2->var) &&
-            mango_lists_are_equal(mvn1->filterNodes, mvn2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
+            mango_rawlists_are_equal(mvn1->filterNodes, mvn2->filterNodes, (EqualsFunc)mango_filternodes_are_equal);
 }
 

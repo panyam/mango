@@ -90,7 +90,7 @@ const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, const Mango
         {
             if (!create)
                 return NULL;
-            valueStack = mango_list_new();
+            valueStack = mango_rawlist_new();
             mango_table_put(ctx->values, key, valueStack);
         }
         else
@@ -137,15 +137,15 @@ int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
                                       BOOL push)
 {
     MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
-    if (push || mango_list_is_empty(valueStack))
+    if (push || mango_rawlist_is_empty(valueStack))
     {
-        mango_list_push_front(valueStack, value);
+        mango_rawlist_push_front(valueStack, value);
     }
     else
     {
-        mango_list_set_at(valueStack, 0, value);
+        mango_rawlist_set_at(valueStack, 0, value);
     }
-    return mango_list_size(valueStack);
+    return mango_rawlist_size(valueStack);
 }
 
 /**
@@ -218,9 +218,9 @@ MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
     else if (ctx->values != NULL)
     {
         MangoList *ctxStack = mango_table_get(ctx->values, key);
-        if (ctxStack != NULL && !mango_list_is_empty(ctxStack))
+        if (ctxStack != NULL && !mango_rawlist_is_empty(ctxStack))
         {
-            return mango_list_pop_front(ctxStack);
+            return mango_rawlist_pop_front(ctxStack);
         }
     }
     return NULL;

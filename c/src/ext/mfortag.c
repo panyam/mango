@@ -6,8 +6,8 @@
 #include "mvar.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
-#include "mlist.h"
-#include "marray.h"
+#include "mrawlist.h"
+#include "mrawarray.h"
 #include "mtokenlists.h"
 #include "mparser.h"
 #include "mparsercontext.h"
@@ -82,8 +82,8 @@ void mango_fortag_dealloc(MangoForTagNode *ftn)
 
     if (ftn->items != NULL)
     {
-        mango_list_clear(ftn->items, (DeleteFunc)mango_object_decref);
-        mango_list_free(ftn->items);
+        mango_rawlist_clear(ftn->items, (DeleteFunc)mango_object_decref);
+        mango_rawlist_free(ftn->items);
     }
 }
 
@@ -107,7 +107,7 @@ BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForTagNode 
     {
         if (mango_vars_are_equal(ftd1->sourceVar, ftd2->sourceVar))
         {
-            return mango_lists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_vars_are_equal) &&
+            return mango_rawlists_are_equal(ftd1->items, ftd2->items, (EqualsFunc)mango_vars_are_equal) &&
                     OBJ_EQUALS(ftd1->childNodes, ftd2->childNodes) &&
                     OBJ_EQUALS(ftd1->emptyNodes, ftd2->emptyNodes);
         }
@@ -242,8 +242,8 @@ BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
 void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
 {
     if (ftd->items == NULL)
-        ftd->items = mango_list_new();
-    mango_list_push_back(ftd->items, var);
+        ftd->items = mango_rawlist_new();
+    mango_rawlist_push_back(ftd->items, var);
 }
 
 #if 0
@@ -305,7 +305,7 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
     {
         ftc->isFirst = true;
         ftc->currIndex = 0;
-        ftc->itemValues = mango_array_new();
+        ftc->itemValues = mango_rawarray_new();
     }
     else
     {
@@ -315,10 +315,10 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
 
     int count = ftc->itemValues->length;
     for (int i = 0;i < count;i++)
-        mango_array_set_itemat(ftc->itemValues, i, NULL);
+        mango_rawarray_set_itemat(ftc->itemValues, i, NULL);
 
     for (int i = count; i < numvals;i++)
-        mango_array_insert(ftc->itemValues, NULL, -1);
+        mango_rawarray_insert(ftc->itemValues, NULL, -1);
     
     int outCount = mango_valueiterator_unpack(ftc->valIterator, numvals, ftc->itemValues);
 

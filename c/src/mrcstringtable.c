@@ -3,7 +3,7 @@
 #include "mrcstringtable.h"
 #include "mmemutils.h"
 #include "mbintree.h"
-#include "marray.h"
+#include "mrawarray.h"
 
 void rcstringdata_free(MangoRCStringData *rcsdata)
 {
@@ -32,7 +32,7 @@ int stablenode_compare(const void *a, const void *b)
  */
 void mango_rcstring_table_incref(MangoRCStringTable *mstable, int strid)
 {
-    MangoRCStringData *entry = mango_array_itemat(mstable->entriesByIndex, strid);
+    MangoRCStringData *entry = mango_rawarray_itemat(mstable->entriesByIndex, strid);
     entry->refCount++;
 }
 
@@ -43,7 +43,7 @@ void mango_rcstring_table_incref(MangoRCStringTable *mstable, int strid)
  */
 void mango_rcstring_table_decref(MangoRCStringTable *mstable, int strid)
 {
-    MangoRCStringData *entry = mango_array_itemat(mstable->entriesByIndex, strid);
+    MangoRCStringData *entry = mango_rawarray_itemat(mstable->entriesByIndex, strid);
     entry->refCount--;
     if (entry->refCount <= 0)
     {
@@ -58,9 +58,9 @@ void mango_rcstring_table_decref(MangoRCStringTable *mstable, int strid)
 MangoRCStringTable *mango_rcstring_table_new()
 {
     MangoRCStringTable *mstable = NEW(MangoRCStringTable);
-    mstable->entriesByIndex = mango_array_new();
+    mstable->entriesByIndex = mango_rawarray_new();
     mstable->entriesByName = mango_bintree_new();
-    mango_array_insert(mstable->entriesByIndex, NULL, -1);  // reserve index 0 for NULL entries
+    mango_rawarray_insert(mstable->entriesByIndex, NULL, -1);  // reserve index 0 for NULL entries
     return mstable;
 }
 
@@ -86,7 +86,7 @@ void mango_rcstring_table_free(MangoRCStringTable *mstable)
 {
     mango_rcstring_table_clear(mstable);
     if (mstable->entriesByIndex != NULL)
-        mango_array_free(mstable->entriesByIndex, NULL);
+        mango_rawarray_free(mstable->entriesByIndex, NULL);
     if (mstable->entriesByName != NULL)
         mango_bintree_free(mstable->entriesByName, NULL);
     free(mstable);
@@ -100,11 +100,11 @@ void mango_rcstring_table_free(MangoRCStringTable *mstable)
 void mango_rcstring_table_clear(MangoRCStringTable *mstable)
 {
     if (mstable->entriesByIndex != NULL)
-        mango_array_clear(mstable->entriesByIndex, NULL);
+        mango_rawarray_clear(mstable->entriesByIndex, NULL);
     if (mstable->entriesByName != NULL)
         mango_bintree_clear(mstable->entriesByName, (DeleteFunc)rcstringdata_free);
 
-    mango_array_insert(mstable->entriesByIndex, NULL, -1);  // reserve index 0 for NULL entries
+    mango_rawarray_insert(mstable->entriesByIndex, NULL, -1);  // reserve index 0 for NULL entries
 }
 
 /**
@@ -150,7 +150,7 @@ int mango_rcstring_table_find(MangoRCStringTable *  stable,
         memcpy(msdata->strValue, str, length);
         msdata->strValue[length] = 0;
         node = mango_bintree_insert(bintree, msdata, stablenode_compare);
-        mango_array_insert(array, msdata, -1);
+        mango_rawarray_insert(array, msdata, -1);
     }
     else if (node != NULL)
     {
@@ -180,6 +180,6 @@ int mango_rcstring_table_find(MangoRCStringTable *  stable,
  */
 const MangoRCStringData *mango_rcstring_table_get(const MangoRCStringTable *mstable, int strid)
 {
-    return (const MangoRCStringData *)mango_array_itemat(mstable->entriesByIndex, strid);
+    return (const MangoRCStringData *)mango_rawarray_itemat(mstable->entriesByIndex, strid);
 }
 

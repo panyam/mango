@@ -6,7 +6,7 @@
 #include "merror.h"
 #include "msingletons.h"
 #include "mvar.h"
-#include "mlist.h"
+#include "mrawlist.h"
 #include "mtokenlists.h"
 #include "mparser.h"
 #include "mparsercontext.h"
@@ -33,8 +33,8 @@ void mango_filternode_free(MangoFilterNode *fnode)
     // do not delete filter as they are shared
     if (fnode->arguments != NULL)
     {
-        mango_list_clear(fnode->arguments, (DeleteFunc)mango_object_decref);
-        mango_list_free(fnode->arguments);
+        mango_rawlist_clear(fnode->arguments, (DeleteFunc)mango_object_decref);
+        mango_rawlist_free(fnode->arguments);
     }
     free(fnode);
 }
@@ -57,7 +57,7 @@ BOOL mango_filternodes_are_equal(const MangoFilterNode *fn1, const MangoFilterNo
         return false;
     }
     // compare the arguments
-    return mango_lists_are_equal(fn1->arguments, fn2->arguments,
+    return mango_rawlists_are_equal(fn1->arguments, fn2->arguments,
                                  (EqualsFunc)mango_vars_are_equal);
 }
 
@@ -78,8 +78,8 @@ MangoObject *mango_filternode_apply(MangoFilterNode *fnode, const MangoObject *i
 void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVar *mvar)
 {
     if (fnode->arguments == NULL)
-        fnode->arguments = mango_list_new();
-    mango_list_push_back(fnode->arguments, mvar);
+        fnode->arguments = mango_rawlist_new();
+    mango_rawlist_push_back(fnode->arguments, mvar);
 }
 
 /**
@@ -110,7 +110,7 @@ BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
         MangoFilterNode *filternode = mango_filternode_extract_with_parser(ctx, error);
         if (filternode == NULL)
             return false;
-        mango_list_push_back(filters, filternode);
+        mango_rawlist_push_back(filters, filternode);
         token = mango_parser_peek_token(parser, error);
         if (token == NULL)
             return false;

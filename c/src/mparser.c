@@ -5,7 +5,7 @@
 #include "mtemplateloader.h"
 #include "mparser.h"
 #include "mparsercontext.h"
-#include "mlist.h"
+#include "mrawlist.h"
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
 #include "mfreetext.h"
@@ -24,7 +24,7 @@ MangoParser *mango_parser_new(MangoTokenizer *tokenizer)
     MangoParser *parser     = (MangoParser *)calloc(1, sizeof(MangoParser));
     parser->tokenizer       = tokenizer;
     parser->currToken       = (MangoToken *)calloc(1, sizeof(MangoToken));
-    parser->endNodeStack    = mango_list_new();
+    parser->endNodeStack    = mango_rawlist_new();
     return parser;
 }
 
@@ -199,10 +199,10 @@ MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
         {
             if (nodeList == NULL)
             {
-                nodeList = mango_list_new();
-                mango_list_push_back(nodeList, firstNode);
+                nodeList = mango_rawlist_new();
+                mango_rawlist_push_back(nodeList, firstNode);
             }
-            mango_list_push_back(nodeList, nextNode);
+            mango_rawlist_push_back(nodeList, nextNode);
         }
         nodeCount++;
         nextNode    = mango_parser_parse_node(ctx, error);
@@ -247,16 +247,16 @@ MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {
             // see if the tag is part of the end node stack
-            if (parser->endNodeStack != NULL && !mango_list_is_empty(parser->endNodeStack))
+            if (parser->endNodeStack != NULL && !mango_rawlist_is_empty(parser->endNodeStack))
             {
                 token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, true, error);
-                char **nameList = mango_list_front(parser->endNodeStack);
+                char **nameList = mango_rawlist_front(parser->endNodeStack);
                 for (int i = 0;nameList[i] != NULL;i++)
                 {
                     if (mango_stringbuffer_compare(token->tokenValue, nameList[i], strlen(nameList[i])) == 0)
                     {
                         // we are at an end tag so pop the endtag list and return an endtag indicator
-                        mango_list_remove_front(parser->endNodeStack);
+                        mango_rawlist_remove_front(parser->endNodeStack);
                         return NULL;
                     }
                 }
@@ -290,7 +290,7 @@ MangoNode *mango_parser_parse_till(MangoParserContext *ctx,
 {
     MangoParser *parser = ctx->parser;
     int stackSize = parser->endNodeStack->size;
-    mango_list_push_front(parser->endNodeStack, names);
+    mango_rawlist_push_front(parser->endNodeStack, names);
     MangoNode *parsedNodes = mango_parser_parse(ctx, error);
     if (stackSize != parser->endNodeStack->size)	// if the end node was not popped the sizes wont match!
     {

@@ -2,7 +2,6 @@
 #ifndef __MANGO_PUBLIC_H__
 #define __MANGO_PUBLIC_H__
 
-#include "marray.h"
 #include "mbintree.h"
 #include "mclasses.h"
 #include "mcollection.h"
@@ -14,7 +13,6 @@
 #include "mfreetext.h"
 #include "mfwddefs.h"
 #include "minputsource.h"
-#include "mlist.h"
 #include "mmemutils.h"
 #include "mnode.h"
 #include "mnodelist.h"
@@ -23,6 +21,8 @@
 #include "mobject.h"
 #include "mparser.h"
 #include "mparsercontext.h"
+#include "mrawarray.h"
+#include "mrawlist.h"
 #include "mrcstring.h"
 #include "mrcstringfactory.h"
 #include "mrcstringtable.h"
@@ -34,8 +34,8 @@
 #include "mtagnode.h"
 #include "mtagparser.h"
 #include "mtagparserlibrary.h"
-#include "mtmplctx.h"
 #include "mtemplateloader.h"
+#include "mtmplctx.h"
 #include "mtoken.h"
 #include "mtokenizer.h"
 #include "mtokenlists.h"
