@@ -17,7 +17,7 @@ DECLARE_PROTO_FUNC("MangoNodeList", MangoNodePrototype, mango_nodelist_prototype
  */
 MangoNodeList *mango_nodelist_new(MangoList *nodes)
 {
-    MangoNodeList *nodelist = NEW(MangoNodeList *);
+    MangoNodeList *nodelist = NEW(MangoNodeList);
     return mango_nodelist_init(nodelist, nodes, mango_nodelist_prototype());
 }
 

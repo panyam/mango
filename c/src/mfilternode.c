@@ -17,7 +17,7 @@
 /**
  * Creates a new filter node given a filter.
  */
-MangoFilterNode *mango_filternode_new(const MangoFilter *f)
+MangoFilterNode *mango_filternode_new(MangoFilter *f)
 {
     MangoFilterNode *mfn = NEW(MangoFilterNode);
     mfn->filter = f;
@@ -137,12 +137,12 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext *ctx, M
 {
     MangoParser *parser = ctx->parser;
     MangoStringFactory *msf = ctx->strfactory;
-    MangoLibrary *filterlib = ctx->filterlib;
+    MangoTable *filterlib = ctx->filterlib;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER,
                                                         false, error);
 
     MangoString *filtername = mango_stringfactory_from_buffer(msf, token->tokenValue);
-    const MangoFilter *filter = mango_filter_library_get(filtername, filterlib);
+    MangoFilter *filter = mango_filter_library_get(filtername, filterlib);
     OBJ_DECREF(filtername);
     if (filter == NULL)
     {

@@ -3,6 +3,7 @@
 #include "mstring.h"
 #include "mmemutils.h"
 #include "mtreetable.h"
+#include "mrawlist.h"
 
 DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
     __proto__.getValuesFunc     = NULL;
@@ -70,7 +71,7 @@ void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, const MangoString *key, BOOL create)
+const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key, BOOL create)
 {
     if (ctx->__prototype__->getValuesFunc != NULL)
     {
@@ -82,7 +83,7 @@ const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, const Mango
         {
             if (!create)
                 return NULL;
-            ctx->values = mango_treetable_new();
+            ctx->values = (MangoTable*)mango_treetable_new();
         }
 
         MangoList *valueStack = NULL;
@@ -108,7 +109,7 @@ const MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, const Mango
  * \param   key     Var whose value is to be fetched.
  * \return  Value of the var.
  */
-MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, const MangoString *key)
+MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key)
 {
     if (ctx->__prototype__->getFunc != NULL)
     {
@@ -131,10 +132,7 @@ MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, const MangoString *key
  * \param   push    Whether the value is to be pushed or replaced.
  * \param   The new size of the value stack for the var.
  */
-int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
-                                      const MangoString *key,
-                                      MangoObject *value,
-                                      BOOL push)
+int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key, MangoObject *value, BOOL push)
 {
     MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
     if (push || mango_rawlist_is_empty(valueStack))
@@ -156,7 +154,7 @@ int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
  * \return  The new size of the value stack for the var.
  */
 int mango_tmplctx_set(MangoTemplateContext *ctx,
-                              const MangoString *key,
+                              MangoString *key,
                               MangoObject *value)
 {
     if (ctx->__prototype__->setFunc != NULL)
@@ -183,7 +181,7 @@ void mango_tmplctx_set_values(MangoTemplateContext *ctx, ...)
  * \return  The new size of the value stack for the var.
  */
 int mango_tmplctx_push(MangoTemplateContext *ctx,
-                               const MangoString *key,
+                               MangoString *key,
                                MangoObject *value)
 {
     if (ctx->__prototype__->pushFunc != NULL)
@@ -209,7 +207,7 @@ void mango_tmplctx_push_values(MangoTemplateContext *ctx, ...)
  * \return  MangoObject for the var.
  */
 MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
-                                      const MangoString *key)
+                                      MangoString *key)
 {
     if (ctx->__prototype__->popFunc != NULL)
     {
@@ -231,7 +229,7 @@ MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
  */
-void mango_tmplctx_delete(MangoTemplateContext *ctx, const MangoString *key)
+void mango_tmplctx_delete(MangoTemplateContext *ctx, MangoString *key)
 {
     if (ctx->__prototype__->deleteFunc != NULL)
     {
@@ -249,7 +247,7 @@ void mango_tmplctx_delete(MangoTemplateContext *ctx, const MangoString *key)
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return true if the var exits, false otherwise.
  */
-BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, const MangoString *key)
+BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, MangoString *key)
 {
     if (ctx->__prototype__->containsFunc != NULL)
     {

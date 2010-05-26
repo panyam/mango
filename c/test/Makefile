@@ -47,7 +47,7 @@ LINK_STATICALLY = yes
 # Implicit rule to build .o into the build directory from .cpp
 $(OUTPUT_DIR)/%.o : %.cpp
 	@echo Building $@
-	$(GPP) -I$(UNITTEST_PP_DIR)/src -c $(CFLAGS) $< -o $@
+	@$(GPP) -I$(UNITTEST_PP_DIR)/src -c $(CFLAGS) $< -o $@
 
 .PHONY: clean cleanall distclean test
 

@@ -17,7 +17,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      *                  stack it to be created.
      * \return A MangoList of values for the var.
      */
-    const MangoList *(*getValuesFunc)(MangoTemplateContext *context, const MangoString *key, BOOL create);
+    const MangoList *(*getValuesFunc)(MangoTemplateContext *context, MangoString *key, BOOL create);
 
     /**
      * Gets the value of a particular key.
@@ -25,7 +25,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   key     Var key
      * \return  The value for the key if it exists, NULL otherwise.
      */
-    MangoObject *(*getFunc)(MangoTemplateContext *ctx, const MangoString *key);
+    MangoObject *(*getFunc)(MangoTemplateContext *ctx, MangoString *key);
 
     /**
      * Sets the value of a particular key.
@@ -34,7 +34,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   value   Value of the var.
      * \return  The new size of the value stack for the var.
      */
-    int (*setFunc)(MangoTemplateContext *ctx, const MangoString *key, MangoObject *value);
+    int (*setFunc)(MangoTemplateContext *ctx, MangoString *key, MangoObject *value);
 
     /**
      * Pushes the value of a particular key.
@@ -43,7 +43,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   value   Value of the var.
      * \return  The new size of the value stack for the var.
      */
-    int (*pushFunc)(MangoTemplateContext *ctx, const MangoString *key, MangoObject *value);
+    int (*pushFunc)(MangoTemplateContext *ctx, MangoString *key, MangoObject *value);
 
     /**
      * Pops the value of a var and returns it.
@@ -51,14 +51,14 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   key     Key/Value arguments, terminated by NULL.
      * \return  MangoObject for the var.
      */
-    MangoObject *(*popFunc)(MangoTemplateContext *ctx, const MangoString *key);
+    MangoObject *(*popFunc)(MangoTemplateContext *ctx, MangoString *key);
 
     /**
      * Deletes the value of a var completely.
      * \param   ctx     Context in which the value is to be pushed.
      * \param   key     Key/Value arguments, terminated by NULL.
      */
-    void (*deleteFunc)(MangoTemplateContext *ctx, const MangoString *key);
+    void (*deleteFunc)(MangoTemplateContext *ctx, MangoString *key);
 
     /**
      * Tells if a var by a particular key exists.
@@ -66,7 +66,7 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
      * \param   key     Key/Value arguments, terminated by NULL.
      * \return true if the var exits, false otherwise.
      */
-    BOOL (*containsFunc)(MangoTemplateContext *ctx, const MangoString *key);
+    BOOL (*containsFunc)(MangoTemplateContext *ctx, MangoString *key);
 
     /**
      * Merge the values of another dictionary into a context.
@@ -108,10 +108,7 @@ extern void mango_tmplctx_dealloc(MangoTemplateContext *context);
  *                  stack it to be created.
  * \return A MangoList of values for the var.
  */
-extern const MangoList *mango_tmplctx_get_values(
-            MangoTemplateContext *context,
-            const MangoString *key,
-            BOOL create);
+extern const MangoList *mango_tmplctx_get_values(MangoTemplateContext *context, MangoString *key, BOOL create);
 
 /**
  * Gets the value of a var by a key.
@@ -119,7 +116,7 @@ extern const MangoList *mango_tmplctx_get_values(
  * \param   key     Var whose value is to be fetched.
  * \return  Value of the var.
  */
-extern MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, const MangoString *key);
+extern MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
 
 /**
  * Sets the value of a particular key, overwriting an existing one or
@@ -130,10 +127,7 @@ extern MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, const MangoStri
  * \param   push    Whether the value is to be pushed or replaced.
  * \param   The new size of the value stack for the var.
  */
-extern int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
-                                             const MangoString *key,
-                                             MangoObject *value,
-                                             BOOL push);
+extern int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key, MangoObject *value, BOOL push);
 
 /**
  * Sets the value of a particular key.
@@ -143,7 +137,7 @@ extern int mango_tmplctx_set_or_push(MangoTemplateContext *ctx,
  * \return  The new size of the value stack for the var.
  */
 extern int mango_tmplctx_set(MangoTemplateContext *ctx,
-                                     const MangoString *key,
+                                     MangoString *key,
                                      MangoObject *value);
 
 /**
@@ -161,7 +155,7 @@ extern void mango_tmplctx_set_values(MangoTemplateContext *ctx, ...);
  * \return  The new size of the value stack for the var.
  */
 extern int mango_tmplctx_push(MangoTemplateContext *ctx,
-                                      const MangoString *key,
+                                      MangoString *key,
                                       MangoObject *value);
 
 /**
@@ -177,14 +171,14 @@ extern void mango_tmplctx_push_values(MangoTemplateContext *ctx, ...);
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return  MangoObject for the var.
  */
-extern MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx, const MangoString *key);
+extern MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx, MangoString *key);
 
 /**
  * Deletes the value of a var completely.
  * \param   ctx     Context in which the value is to be pushed.
  * \param   key     Key/Value arguments, terminated by NULL.
  */
-extern void mango_tmplctx_delete(MangoTemplateContext *ctx, const MangoString *key);
+extern void mango_tmplctx_delete(MangoTemplateContext *ctx, MangoString *key);
 
 /**
  * Tells if a var by a particular key exists.
@@ -192,7 +186,7 @@ extern void mango_tmplctx_delete(MangoTemplateContext *ctx, const MangoString *k
  * \param   key     Key/Value arguments, terminated by NULL.
  * \return true if the var exits, false otherwise.
  */
-extern BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, const MangoString *key);
+extern BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, MangoString *key);
 
 /**
  * Merge the values of another dictionary into a context.

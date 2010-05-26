@@ -7,7 +7,7 @@ MangoNode *default_get_child_node(void *nodeData, unsigned index);
  * Prototype for the mango node.
  */
 DECLARE_PROTO_FUNC("Node", MangoNodePrototype, mango_node_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = mango_node_dealloc;
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_node_dealloc;
 );
 
 /**

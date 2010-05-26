@@ -202,7 +202,7 @@ MangoObject *mango_object_get_str_attr(const MangoObject *obj, const MangoString
 BOOL mango_object_has_int_attr(const MangoObject *obj, int index)
 {
     if (obj->__prototype__->hasIntAttrFunc != NULL)
-        return obj->__prototype__->hasStrAttrFunc(obj, index);
+        return obj->__prototype__->hasIntAttrFunc(obj, index);
     return false;
 }
 

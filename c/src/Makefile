@@ -44,7 +44,7 @@ LIBS            =
 # Implicit rule to build .o into the build directory from .c
 $(OUTPUT_DIR)/%.o : %.c
 	@echo Building $@
-	$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
+	@$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
 
 all: base static shared
 	@echo LIB_INSTALL_DIR     = $(LIB_INSTALL_DIR)

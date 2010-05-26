@@ -10,14 +10,14 @@ extern "C" {
 
 struct MangoFilterNode
 {
-    const MangoFilter * filter;
-    MangoList *         arguments;
+    MangoFilter *   filter;
+    MangoList *     arguments;
 };
 
 /**
  * Creates a new filter node given a filter.
  */
-extern MangoFilterNode *mango_filternode_new(const MangoFilter *f);
+extern MangoFilterNode *mango_filternode_new(MangoFilter *f);
 
 /**
  * Frees a filter node.

@@ -216,7 +216,7 @@ MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
     }
     else
     {
-        return mango_nodelist_new(nodeList);
+        return (MangoNode *)mango_nodelist_new(nodeList);
     }
 }
 

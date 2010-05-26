@@ -20,7 +20,7 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
      * Gets a value by key.
      */
-    MangoObject *(*getFunc)(MangoTable *table, MangoString *key);
+    MangoObject *(*getFunc)(MangoTable *table, const MangoString *key);
 
     /**
      * Tells if a value exists.
