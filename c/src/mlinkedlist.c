@@ -103,7 +103,7 @@ MangoLinkedListNode *mango_linkedlist_node_at(MangoLinkedList *mlist, int index)
     }
     else if (index < 0)
     {
-        temp = mlist->tail;
+        temp = NULL;
     }
     else if (index < mlist->size)
     {
