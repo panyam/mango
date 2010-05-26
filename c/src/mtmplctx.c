@@ -3,7 +3,7 @@
 #include "mstring.h"
 #include "mmemutils.h"
 #include "mtreetable.h"
-#include "mrawlist.h"
+#include "mlinkedlist.h"
 
 DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
     __proto__.getValuesFunc     = NULL;

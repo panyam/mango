@@ -5,7 +5,7 @@
 #include "mparsercontext.h"
 #include "mvar.h"
 #include "mfilternode.h"
-#include "mrawlist.h"
+#include "mlinkedlist.h"
 #include "mmemutils.h"
 #include "mclasses.h"
 

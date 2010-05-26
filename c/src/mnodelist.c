@@ -3,7 +3,7 @@
 #include "mmemutils.h"
 #include "mnodelist.h"
 #include "mnode.h"
-#include "mrawlist.h"
+#include "mlinkedlist.h"
 
 /**
  * The prototype for mango node lists.

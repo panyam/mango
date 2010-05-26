@@ -99,6 +99,9 @@ dep:
 ../bld/./maddfilter.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./maddfilter.o: ../include/./mvar.h ../include/./mstring.h
 ../bld/./maddfilter.o: ../include/./maddfilter.h
+../bld/./marraylist.o: ../include/./marraylist.h ../include/./mlist.h
+../bld/./marraylist.o: ../include/./mcollection.h ../include/./mobject.h
+../bld/./marraylist.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mbintree.o: ../include/./mbintree.h ../include/./mfwddefs.h
 ../bld/./mbintree.o: ../include/./mmemutils.h
 ../bld/./mclasses.o: ../include/./mclasses.h ../include/./mfwddefs.h
@@ -119,7 +122,7 @@ dep:
 ../bld/./mfilternode.o: ../include/./mobject.h ../include/./mvar.h
 ../bld/./mfilternode.o: ../include/./mstring.h ../include/./mfilterlibrary.h
 ../bld/./mfilternode.o: ../include/./merror.h ../include/./msingletons.h
-../bld/./mfilternode.o: ../include/./mrawlist.h ../include/./mtokenlists.h
+../bld/./mfilternode.o: ../include/./mlinkedlist.h ../include/./mtokenlists.h
 ../bld/./mfilternode.o: ../include/./mtoken.h ../include/./mparser.h
 ../bld/./mfilternode.o: ../include/./mtokenizer.h
 ../bld/./mfilternode.o: ../include/./mparsercontext.h
@@ -131,13 +134,17 @@ dep:
 ../bld/./mfreetext.o: ../include/./mclasses.h
 ../bld/./miterator.o: ../include/./miterator.h ../include/./mobject.h
 ../bld/./miterator.o: ../include/./mfwddefs.h ../include/./mmemutils.h
+../bld/./mlinkedlist.o: ../include/./mlinkedlist.h ../include/./mfwddefs.h
+../bld/./mlist.o: ../include/./mlist.h ../include/./mcollection.h
+../bld/./mlist.o: ../include/./mobject.h ../include/./mfwddefs.h
+../bld/./mlist.o: ../include/./mmemutils.h
 ../bld/./mnode.o: ../include/./mnode.h ../include/./mobject.h
 ../bld/./mnode.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mnode.o: ../include/./mclasses.h
 ../bld/./mnodelist.o: ../include/./mmemutils.h ../include/./mfwddefs.h
 ../bld/./mnodelist.o: ../include/./mnodelist.h ../include/./mnode.h
 ../bld/./mnodelist.o: ../include/./mobject.h ../include/./mclasses.h
-../bld/./mnodelist.o: ../include/./mrawlist.h
+../bld/./mnodelist.o: ../include/./mlinkedlist.h
 ../bld/./mnoderenderer.o: ../include/./mnoderenderer.h ../include/./mobject.h
 ../bld/./mnoderenderer.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mnoderenderer.o: ../include/./mclasses.h
@@ -148,16 +155,13 @@ dep:
 ../bld/./mparser.o: ../include/./merror.h ../include/./mfwddefs.h
 ../bld/./mparser.o: ../include/./mtokenizer.h ../include/./mtoken.h
 ../bld/./mparser.o: ../include/./mtemplateloader.h ../include/./mparser.h
-../bld/./mparser.o: ../include/./mparsercontext.h ../include/./mrawlist.h
+../bld/./mparser.o: ../include/./mparsercontext.h ../include/./mlinkedlist.h
 ../bld/./mparser.o: ../include/./mstringbuffer.h ../include/./mstring.h
 ../bld/./mparser.o: ../include/./mobject.h ../include/./mmemutils.h
 ../bld/./mparser.o: ../include/./mstringfactory.h ../include/./mfreetext.h
 ../bld/./mparser.o: ../include/./mnode.h ../include/./mclasses.h
 ../bld/./mparser.o: ../include/./mvarnode.h ../include/./mtagnode.h
 ../bld/./mparser.o: ../include/./mnodelist.h
-../bld/./mrawarray.o: ../include/./mrawarray.h ../include/./mobject.h
-../bld/./mrawarray.o: ../include/./mfwddefs.h ../include/./mmemutils.h
-../bld/./mrawlist.o: ../include/./mrawlist.h ../include/./mfwddefs.h
 ../bld/./mrcstring.o: ../include/./merror.h ../include/./mfwddefs.h
 ../bld/./mrcstring.o: ../include/./mstringbuffer.h ../include/./mstring.h
 ../bld/./mrcstring.o: ../include/./mobject.h ../include/./mmemutils.h
@@ -173,7 +177,8 @@ dep:
 ../bld/./mrcstringfactory.o: ../include/./mrcstringtable.h
 ../bld/./mrcstringtable.o: ../include/./mrcstringtable.h
 ../bld/./mrcstringtable.o: ../include/./mfwddefs.h ../include/./mmemutils.h
-../bld/./mrcstringtable.o: ../include/./mbintree.h ../include/./mrawarray.h
+../bld/./mrcstringtable.o: ../include/./mbintree.h ../include/./marraylist.h
+../bld/./mrcstringtable.o: ../include/./mlist.h ../include/./mcollection.h
 ../bld/./mrcstringtable.o: ../include/./mobject.h
 ../bld/./msingletons.o: ../include/./msingletons.h ../include/./mfwddefs.h
 ../bld/./msingletons.o: ../include/./mtreetable.h ../include/./mtable.h
@@ -212,6 +217,7 @@ dep:
 ../bld/./mtmplctx.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mtmplctx.o: ../include/./mstring.h ../include/./mtreetable.h
 ../bld/./mtmplctx.o: ../include/./mtable.h ../include/./mcollection.h
+../bld/./mtmplctx.o: ../include/./mlinkedlist.h
 ../bld/./mtoken.o: ../include/./mtoken.h ../include/./mfwddefs.h
 ../bld/./mtoken.o: ../include/./mmemutils.h ../include/./mstringbuffer.h
 ../bld/./mtoken.o: ../include/./mstring.h ../include/./mobject.h
@@ -247,8 +253,9 @@ dep:
 ../bld/./mvarnode.o: ../include/./mtokenizer.h ../include/./mtoken.h
 ../bld/./mvarnode.o: ../include/./mparsercontext.h ../include/./mvar.h
 ../bld/./mvarnode.o: ../include/./mstring.h ../include/./mfilternode.h
-../bld/./mvarnode.o: ../include/./mrawlist.h
-../bld/./mvarresolver.o: ../include/./mrawarray.h ../include/./mobject.h
+../bld/./mvarnode.o: ../include/./mlinkedlist.h
+../bld/./mvarresolver.o: ../include/./marraylist.h ../include/./mlist.h
+../bld/./mvarresolver.o: ../include/./mcollection.h ../include/./mobject.h
 ../bld/./mvarresolver.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mvarresolver.o: ../include/./mvarresolver.h ../include/./mvar.h
 ../bld/./mvarresolver.o: ../include/./mstring.h ../include/./mtmplctx.h
@@ -260,7 +267,9 @@ dep:
 ../bld/ext/mfortag.o: ../include/./mnoderenderer.h ../include/./merror.h
 ../bld/ext/mfortag.o: ../include/./mvar.h ../include/./mstring.h
 ../bld/ext/mfortag.o: ../include/./mstringbuffer.h
-../bld/ext/mfortag.o: ../include/./mstringfactory.h ../include/./mrawlist.h
-../bld/ext/mfortag.o: ../include/./mrawarray.h ../include/./mtokenlists.h
-../bld/ext/mfortag.o: ../include/./mtoken.h ../include/./mparser.h
-../bld/ext/mfortag.o: ../include/./mtokenizer.h ../include/./mparsercontext.h
+../bld/ext/mfortag.o: ../include/./mstringfactory.h
+../bld/ext/mfortag.o: ../include/./mlinkedlist.h ../include/./marraylist.h
+../bld/ext/mfortag.o: ../include/./mlist.h ../include/./mcollection.h
+../bld/ext/mfortag.o: ../include/./mtokenlists.h ../include/./mtoken.h
+../bld/ext/mfortag.o: ../include/./mparser.h ../include/./mtokenizer.h
+../bld/ext/mfortag.o: ../include/./mparsercontext.h

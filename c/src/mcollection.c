@@ -1,15 +1,20 @@
 
 #include "mcollection.h"
 
+DECLARE_PROTO_FUNC("MangoCollection", MangoCollectionPrototype, mango_collection_prototype,
+    __proto__.sizeFunc = NULL;
+    __proto__.clearFunc = NULL;
+    __proto__.isEmptyFunc = NULL;
+);
+
 /**
- * Initiliases with the collection interface.
+ * Initialises a collection.
  */
-MangoCollectionPrototype *mango_collection_prototype_init(MangoCollectionPrototype *proto)
+MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollectionPrototype *proto)
 {
-    proto->sizeFunc = NULL;
-    proto->clearFunc = NULL;
-    proto->isEmptyFunc = NULL;
-    return proto;
+    if (proto == NULL)
+        proto = mango_collection_prototype();
+    return OBJ_INIT(collection, proto);
 }
 
 /**

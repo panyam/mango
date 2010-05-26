@@ -51,9 +51,9 @@ INHERIT_STRUCT(MangoCollectionPrototype, MangoPrototype,
 DECLARE_CLASS(MangoCollection, MangoCollectionPrototype);
 
 /**
- * Initiliases with the collection interface.
+ * Initialises a collection.
  */
-extern MangoCollectionPrototype *mango_collection_prototype_init(MangoCollectionPrototype *proto);
+MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollectionPrototype *proto);
 
 /**
  * Frees the collection.
