@@ -23,7 +23,7 @@ public:
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
 {
-    MangoArray *array = mango_rawarray_new();
+    MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);
     CHECK(array->items == NULL);
     CHECK(array->length == 0);
@@ -36,7 +36,7 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
 {
-    MangoArray *array = mango_rawarray_new();
+    MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);
     mango_rawarray_insert(array, (void *)10, -1);
     CHECK(array->length == 1);
@@ -50,7 +50,7 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
  */
 TEST_FIXTURE(ArrayTestFixture, TestArrayClear)
 {
-    MangoArray *array = mango_rawarray_new();
+    MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);
     mango_rawarray_insert(array, (void *)10, -1);
     mango_rawarray_insert(array, (void *)11, -1);
