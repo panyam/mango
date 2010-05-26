@@ -3,7 +3,7 @@
 #include "mrcstringtable.h"
 #include "mmemutils.h"
 #include "mbintree.h"
-#include "marraylist.h"
+#include "mrawarray.h"
 
 void rcstringdata_free(MangoRCStringData *rcsdata)
 {
@@ -32,7 +32,7 @@ int stablenode_compare(const void *a, const void *b)
  */
 void mango_rcstring_table_incref(MangoRCStringTable *mstable, int strid)
 {
-    MangoRCStringData *entry = mango_rawarray_itemat(mstable->entriesByIndex, strid);
+    MangoRCStringData *entry = (MangoRCStringData *)mango_rawarray_itemat(mstable->entriesByIndex, strid);
     entry->refCount++;
 }
 
@@ -130,7 +130,7 @@ int mango_rcstring_table_find(MangoRCStringTable *  stable,
         length = strlen(str);
 
     MangoBinTree *  bintree = stable->entriesByName;
-    MangoArray *    array   = stable->entriesByIndex;
+    MangoRawArray *    array   = stable->entriesByIndex;
     MangoRCStringData stentry;
     stentry.strValue = (char *)str;
     stentry.strLength = length;

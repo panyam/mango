@@ -45,6 +45,8 @@ INHERIT_STRUCT(MangoListPrototype, MangoCollectionPrototype,
     int (*lastIndexOfFunc)(MangoList *list, MangoObject *obj, int from);
 );
 
+#define LIST_INSERT_AT(list, obj, index)    mango_list_insert_at((MangoList *)list, (MangoObject *)obj, index)
+
 /**
  * Super class of all associative containers.
  */
@@ -69,8 +71,8 @@ extern void mango_list_dealloc(MangoList *list);
 /**
  * Sets (and replaces) the item at a particular index.
  * \param   list    List in which the item is to be set.
- * \param   obj     Object to insert at index.
- * \param   index   Index at which the item is to be inserted.
+ * \param   obj     Object to set at index.
+ * \param   index   Index at which the item is to be set.
  */
 extern void mango_list_set_at(MangoList *list, int index, MangoObject *obj);
 

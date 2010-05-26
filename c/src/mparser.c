@@ -185,10 +185,10 @@ void mango_parser_discard_till_token(MangoParser *parser,
  */
 MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
 {
-    MangoList * nodeList    = NULL;
-    MangoNode * firstNode   = NULL;
-    MangoNode * nextNode    = mango_parser_parse_node(ctx, error);
-    int         nodeCount   = 0;
+    MangoRawList *  nodeList    = NULL;
+    MangoNode *     firstNode   = NULL;
+    MangoNode *     nextNode    = mango_parser_parse_node(ctx, error);
+    int             nodeCount   = 0;
     while (nextNode != NULL)
     {
         if (firstNode == NULL)

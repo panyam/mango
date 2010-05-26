@@ -50,6 +50,10 @@ INHERIT_STRUCT(MangoCollectionPrototype, MangoPrototype,
  */
 DECLARE_CLASS(MangoCollection, MangoCollectionPrototype);
 
+#define COLLECTION_SIZE(coll)       mango_collection_size((MangoCollection *)coll)
+#define COLLECTION_IS_EMPTY(coll)   mango_collection_is_empty((MangoCollection *)coll)
+#define COLLECTION_CLEAR(coll)      mango_collection_clear((MangoCollection *)coll)
+
 /**
  * Initialises a collection.
  */

@@ -38,14 +38,14 @@ MangoNodeList *mango_nodelist_init(MangoNodeList *nodelist, MangoList *nodes, Ma
  */
 MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
 {
-    MangoList *nodes = mango_rawlist_new();
+    MangoList *nodes = (MangoList *)mango_linkedlist_new();
 
     va_list ap;
     va_start(ap, numNodes);
     for (int i = 0;i < numNodes;i++)
     {
         MangoNode *node = va_arg(ap, MangoNode *);
-        mango_rawlist_push_back(nodes, node);
+        LIST_INSERT_AT(nodes, node, -1);
     }
     return mango_nodelist_new(nodes);
 }
@@ -55,9 +55,7 @@ MangoNodeList *mango_nodelist_from_nodes(int numNodes, ...)
  */
 void mango_nodelist_dealloc(MangoNodeList *nodelist)
 {
-    // TODO: clear the nodelist
-    mango_rawlist_clear(nodelist->nodes, (DeleteFunc)mango_object_decref);
-    mango_rawlist_free(nodelist->nodes);
+    OBJ_DECREF(nodelist->nodes);
 
     // simply call node's dealloc
     mango_node_dealloc((MangoNode *)nodelist);
@@ -70,7 +68,7 @@ void mango_nodelist_dealloc(MangoNodeList *nodelist)
  */
 unsigned mango_nodelist_childcount(MangoNodeList *nodelist)
 {
-    return mango_rawlist_size(nodelist->nodes);
+    return COLLECTION_SIZE(nodelist->nodes);
 }
 
 /**
@@ -81,6 +79,6 @@ unsigned mango_nodelist_childcount(MangoNodeList *nodelist)
  */
 MangoNode *mango_nodelist_childat(MangoNodeList *nodelist, unsigned index)
 {
-    return mango_rawlist_item_at(nodelist->nodes, index);
+    return (MangoNode *)OBJ_GETINTATTR(nodelist->nodes, index);
 }
 

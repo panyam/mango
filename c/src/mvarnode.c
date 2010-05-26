@@ -87,7 +87,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     if (token == NULL)
         return NULL;
 
-    MangoList *filter_nodes = mango_rawlist_new();
+    MangoList *filter_nodes = (MangoList *)mango_linkedlist_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
         if (mango_filternode_extract_filter_list(ctx, filter_nodes, error))
@@ -119,15 +119,14 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
         OBJ_DECREF(var);
         if (filter_nodes != NULL)
         {
-            mango_rawlist_clear(filter_nodes, (DeleteFunc)mango_filternode_free);
-            free(filter_nodes);
+            OBJ_DECREF(filter_nodes);
         }
     }
     else
     {
-        if (filter_nodes->size == 0)
+        if (COLLECTION_IS_EMPTY(filter_nodes) == 0)
         {
-            mango_rawlist_free(filter_nodes);
+            OBJ_DECREF(filter_nodes);
             filter_nodes = NULL;
         }
         node = (MangoNode *)mango_varnode_new(var, filter_nodes);

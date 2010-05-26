@@ -2,7 +2,7 @@
 #ifndef __MANGO_LINKEDLIST_H__
 #define __MANGO_LINKEDLIST_H__
 
-#include "mfwddefs.h"
+#include "mlist.h"
 
 #ifdef __cplusplus
 extern "C" {

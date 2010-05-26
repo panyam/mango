@@ -77,9 +77,9 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
         if (prev_var == NULL)
         {
             if (curr_var->isNumber)
-                return mango_number_from_int(curr_var->intValue);
+                return (MangoObject *)mango_number_from_int(curr_var->intValue);
             else if (curr_var->isQuoted)
-                return OBJ_INCREF(curr_var->value);
+                return (MangoObject *)OBJ_INCREF(curr_var->value);
             else if (ctx == NULL)
                 return NULL;
             curr_src = mango_tmplctx_get(ctx, curr_var->value);

@@ -82,8 +82,8 @@ void mango_fortag_dealloc(MangoForTagNode *ftn)
 
     if (ftn->items != NULL)
     {
-        mango_rawlist_clear(ftn->items, (DeleteFunc)mango_object_decref);
-        mango_rawlist_free(ftn->items);
+        COLLECTION_CLEAR(ftn->items);
+        OBJ_DECREF(ftn->items);
     }
 }
 
@@ -242,7 +242,7 @@ BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
 void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
 {
     if (ftd->items == NULL)
-        ftd->items = mango_rawlist_new();
+        ftd->items = (MangoList *)mango_linkedlist_new();
     mango_rawlist_push_back(ftd->items, var);
 }
 

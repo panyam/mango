@@ -4,6 +4,8 @@
 
 void mango_arraylist_dealloc(MangoArrayList *array);
 void mango_arraylist_clear(MangoArrayList *array);
+BOOL mango_arraylist_is_empty(MangoArrayList *array);
+int mango_arraylist_size(MangoArrayList *array);
 MangoObject *mango_arraylist_get_int_attr(MangoArrayList *array, int index);
 void mango_arraylist_set_at(MangoArrayList *array, int index, MangoObject *newitem);
 void mango_arraylist_remove_at(MangoArrayList *array, int index);
@@ -15,12 +17,14 @@ void mango_arraylist_remove_range(MangoArrayList *array, int from, int to);
  * The default array prototype.
  */
 DECLARE_PROTO_FUNC("MangoArrayList", MangoListPrototype, mango_arraylist_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc         = (ObjectDeallocFunc)mango_arraylist_dealloc;
-    ((MangoPrototype *)&__proto__)->getIntAttrFunc      = (ObjectGetIntAttrFunc)mango_arraylist_get_int_attr;
-    ((MangoCollectionPrototype *)&__proto__)->clearFunc = (CollectionClearFunc)mango_arraylist_clear;
-    ((MangoListPrototype *)&__proto__)->insertAtFunc    = (ListInsertAtFunc)mango_arraylist_insert_at;
-    ((MangoListPrototype *)&__proto__)->removeAtFunc    = (ListRemoveAtFunc)mango_arraylist_remove_at;
-    ((MangoListPrototype *)&__proto__)->setAtFunc       = (ListSetAtFunc)mango_arraylist_set_at;
+    ((MangoPrototype *)&__proto__)->deallocFunc             = (ObjectDeallocFunc)mango_arraylist_dealloc;
+    ((MangoPrototype *)&__proto__)->getIntAttrFunc          = (ObjectGetIntAttrFunc)mango_arraylist_get_int_attr;
+    ((MangoCollectionPrototype *)&__proto__)->clearFunc     = (CollectionClearFunc)mango_arraylist_clear;
+    ((MangoCollectionPrototype *)&__proto__)->isEmptyFunc   = (CollectionIsEmptyFunc)mango_arraylist_is_empty;
+    ((MangoCollectionPrototype *)&__proto__)->sizeFunc      = (CollectionSizeFunc)mango_arraylist_size;
+    ((MangoListPrototype *)&__proto__)->insertAtFunc        = (ListInsertAtFunc)mango_arraylist_insert_at;
+    ((MangoListPrototype *)&__proto__)->removeAtFunc        = (ListRemoveAtFunc)mango_arraylist_remove_at;
+    ((MangoListPrototype *)&__proto__)->setAtFunc           = (ListSetAtFunc)mango_arraylist_set_at;
 );
 
 /**
@@ -178,5 +182,21 @@ void mango_arraylist_free(MangoArrayList *array)
         free(array->items);
         free(array);
     }
+}
+
+/**
+ * Returns if the array is empty or not.
+ */
+BOOL mango_arraylist_is_empty(MangoArrayList *array)
+{
+    return array->length == 0;
+}
+
+/**
+ * Returns the array size.
+ */
+int mango_arraylist_size(MangoArrayList *array)
+{
+    return array->length;
 }
 

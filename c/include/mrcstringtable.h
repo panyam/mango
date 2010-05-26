@@ -18,7 +18,7 @@ typedef struct MangoRCStringData
 
 struct MangoRCStringTable
 {
-    MangoArray *    entriesByIndex;
+    MangoRawArray * entriesByIndex;
     MangoBinTree *  entriesByName;
 };
 
