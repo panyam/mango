@@ -91,10 +91,10 @@ void mango_var_set_value(MangoVar *mvar, MangoString *value, BOOL isQuoted)
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-int mango_var_resolve(MangoVar *mvar,
+int mango_var_resolve(MangoVar *            mvar,
                       MangoTemplateContext *context,
-                      MangoNodeRendererContext *topContext,
-                      void **value)
+                      MangoNodeContext *    topContext,
+                      void **               value)
 {
     return 0;
 }

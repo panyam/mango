@@ -43,7 +43,8 @@ inline MangoObject *OBJ(void *obj) { return (MangoObject *)obj; }
 /**
  * Initialises a mango object's refcount and prototype.
  */
-inline MangoObject *OBJ_INIT(void *obj, void *proto) { return mango_object_init(OBJ(obj), (MangoPrototype *)proto); }
+// extern MangoObject *OBJ_INIT(void *obj, void *proto) { return mango_object_init(OBJ(obj), (MangoPrototype *)proto); }
+#define OBJ_INIT(obj, proto)        mango_object_init(OBJ(obj), (MangoPrototype *)proto)
 
 /**
  * Gets an object's reference count

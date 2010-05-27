@@ -70,10 +70,10 @@ extern void mango_var_set_value(MangoVar *mvar,
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-extern int mango_var_resolve(MangoVar *           mvar,
-                                  MangoTemplateContext *    context,
-                                  MangoNodeRendererContext *topContext,
-                                  void **                   value);
+extern int mango_var_resolve(MangoVar *                 mvar,
+                                  MangoTemplateContext *context,
+                                  MangoNodeContext *    topContext,
+                                  void **               value);
 
 /**
  * Returns if two vars are equal.

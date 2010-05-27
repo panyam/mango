@@ -4,7 +4,6 @@
 
 #include "mtagnode.h"
 #include "mtagparser.h"
-#include "mnoderenderer.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,7 +36,7 @@ typedef struct MangoForTagNode MangoForTagNode;
 /**
  * Context data for the for-tag during rendering.
  */
-INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeRendererContext,
+INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeContext,
     BOOL                isFirst;
     BOOL                isLast;
     int                 currIndex;
@@ -118,9 +117,9 @@ extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForT
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
-                                                       MangoTemplateContext *  tmplCtx,
-                                                       MangoNodeRendererContext *topCtx);
+extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *        nodedata,
+                                                       MangoTemplateContext *   tmplCtx,
+                                                       MangoNodeContext *       topCtx);
 
 /**
  * Sets the source var for the for-tag render context.
