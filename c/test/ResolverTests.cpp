@@ -148,25 +148,36 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsTable)
     OBJ_DECREF(table);
 }
 
-#if 0
-
-TEST_FIXTURE(ResolverTestFixture, TestValueAsMap)
-{
-    SetupParserAndParseVar("{{a.b}}");
-    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", 3));
-    CheckResolvedVar(3);
-}
-
 TEST_FIXTURE(ResolverTestFixture, TestValueAsIndex)
 {
-    mango_tmplctx_set(context, "a", Utils.makeHashMap("b", Utils.makeArrayList(3, 4, 5)));
+    MangoString *keya = mango_stringfactory_new_string(string_factory, "a", -1);
+    MangoString *keyb = mango_stringfactory_new_string(string_factory, "b", -1);
+
+
+    MangoArrayList *array = mango_arraylist_new();
+    LIST_PUSH_BACK(array, mango_number_from_int(3));
+    LIST_PUSH_BACK(array, mango_number_from_int(4));
+    LIST_PUSH_BACK(array, mango_number_from_int(5));
+
+    MangoTable *table   = (MangoTable *)mango_treetable_new();
+    mango_table_put(table, keyb, OBJ(array));
+
+    mango_tmplctx_set(context, keya, OBJ(table));
+
     SetupParserAndParseVar("{{a.b.0}}");
-    CheckResolvedVar(3);
+    CheckResolvedVar((MangoObject *)mango_number_from_int(3));
     SetupParserAndParseVar("{{a.b.1}}");
-    CheckResolvedVar(4);
+    CheckResolvedVar((MangoObject *)mango_number_from_int(4));
     SetupParserAndParseVar("{{a.b.2}}");
-    CheckResolvedVar(5);
+    CheckResolvedVar((MangoObject *)mango_number_from_int(5));
+
+    OBJ_DECREF(keya);
+    OBJ_DECREF(keyb);
+    OBJ_DECREF(array);
+    OBJ_DECREF(table);
 }
+
+#if 0
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsClassWithSimpleMethod)
 {

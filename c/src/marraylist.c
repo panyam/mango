@@ -174,7 +174,7 @@ void mango_arraylist_clear(MangoArrayList *array)
 /*
  * Destroys an array
  */
-void mango_arraylist_free(MangoArrayList *array)
+void mango_arraylist_dealloc(MangoArrayList *array)
 {
     if (array && array->items)
     {
@@ -186,6 +186,7 @@ void mango_arraylist_free(MangoArrayList *array)
         free(array->items);
         free(array);
     }
+    mango_object_dealloc((MangoObject *)array);
 }
 
 /**
