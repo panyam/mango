@@ -12,7 +12,6 @@ class ResolverTestFixture
 protected:
     MangoTokenizer *        tokenizer;
     MangoParser *           parser;
-    MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
     MangoTable *            filterLibrary;
@@ -27,7 +26,6 @@ public:
     ResolverTestFixture() :
         tokenizer(NULL),
         parser(NULL),
-        loader(NULL),
         input_source(NULL),
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
@@ -69,12 +67,6 @@ public:
             parser = NULL;
         }
 
-        if (loader != NULL) 
-        {
-            delete loader;
-            loader = NULL;
-        }
-
         if (context != NULL)
         {
             OBJ_DECREF(context);
@@ -97,7 +89,7 @@ public:
         mango_parser_expect_token(parser, TOKEN_OPEN_VARIABLE, false, &error);
         var = mango_var_extract_with_parser(&parser_context, &error);
         mango_parser_expect_token(parser, TOKEN_CLOSE_VARIABLE, false, &error);
-        MangoObject *resolvedValue = mango_varresolver_resolve(resolver, (MangoObject *)context, var);
+        MangoObject *resolvedValue = mango_varresolver_resolve_chain(resolver, (MangoObject *)context, var);
         CHECK(OBJ_EQUALS(expectedValue, resolvedValue));
     }
 };
@@ -110,20 +102,6 @@ TEST_FIXTURE(ResolverTestFixture, TestCreate)
     // CHECK(mstable != NULL);
 }
 
-/**
- * Tests setting and getting a value
- */
-TEST_FIXTURE(ResolverTestFixture, TestSetAndGet)
-{
-    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoNumber *value = mango_number_from_int(3);
-
-    int ss = mango_tmplctx_set(context, key, (MangoObject *)value);
-    CHECK_EQUAL(1, ss);
-    MangoNumber *number = (MangoNumber *)mango_tmplctx_get(context, key);
-    CHECK_EQUAL(value, number);
-}
-
 TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 {
     SetupParserAndParseVar("{{a}}");
@@ -132,35 +110,45 @@ TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 
 TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 {
+    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
     SetupParserAndParseVar("{{a}}");
-    mango_tmplctx_set(context,
-                      mango_stringfactory_new_string(string_factory, "a", -1),
-                      (MangoObject *)mango_number_from_int(3));
+    mango_tmplctx_set(context, key, (MangoObject *)mango_number_from_int(3));
     CheckResolvedVar((MangoObject *)mango_number_from_int(3));
+    OBJ_DECREF(key);
+}
+
+TEST_FIXTURE(ResolverTestFixture, TestStringVar)
+{
+    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
+    MangoString *inval = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoString *outval = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    SetupParserAndParseVar("{{a}}");
+    mango_tmplctx_set(context, key, OBJ(inval));
+    CheckResolvedVar(OBJ(outval));
+    OBJ_DECREF(key);
+    OBJ_DECREF(inval);
+    OBJ_DECREF(outval);
+}
+
+TEST_FIXTURE(ResolverTestFixture, TestValueAsTable)
+{
+    MangoString *keya = mango_stringfactory_new_string(string_factory, "a", -1);
+    MangoString *keyb = mango_stringfactory_new_string(string_factory, "b", -1);
+
+    MangoTable *table   = (MangoTable *)mango_treetable_new();
+    mango_table_put(table, keyb, OBJ(mango_number_from_int(3)));
+
+    mango_tmplctx_set(context, keya, OBJ(table));
+
+    SetupParserAndParseVar("{{a.b}}");
+    CheckResolvedVar(OBJ(mango_number_from_int(3)));
+
+    OBJ_DECREF(keya);
+    OBJ_DECREF(keyb);
+    OBJ_DECREF(table);
 }
 
 #if 0
-TEST_FIXTURE(ResolverTestFixture, TestStringVar)
-{
-    SetupParserAndParseVar("{{a}}");
-    mango_tmplctx_set(context, "a", "Hello World");
-    CheckResolvedVar("Hello World");
-}
-
-TEST_FIXTURE(ResolverTestFixture, TestDeleteContextValue)
-{
-    SetupParserAndParseVar("{{a}}");
-    mango_tmplctx_set(context, "a", "Hello World");
-    context.deleteValue("a");
-    CheckResolvedVar(NULL);
-}
-
-TEST_FIXTURE(ResolverTestFixture, TestValueAsHashTable)
-{
-    SetupParserAndParseVar("{{a.b}}");
-    mango_tmplctx_set(context, "a", Utils.makeHashtable("b", 3));
-    CheckResolvedVar(3);
-}
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsMap)
 {

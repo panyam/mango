@@ -75,6 +75,92 @@ void mango_bintree_clear(MangoBinTree *mtree, void (*deletor)(void *))
 }
 
 /**
+ * Deletes a node in the binary tree.
+ * \param   tree    Tree in which the node is to be deleted.
+ * \param   node    Node (and its value) to be deleted.
+ * \param   parent  Parent node of the node to be deleted.
+ * \param   deletor Deletor function to be applied on the node's data.
+ */
+void mango_bintree_delete(MangoBinTree *tree, MangoBinTreeNode *node, MangoBinTreeNode *parent, void (*deletor)(void *))
+{
+    if (parent == NULL)
+    {
+        assert("Node with NULL parent MUST be the root node." && node == tree->root);
+    }
+    else
+    {
+        assert("node MUST be a child of parent" && (parent->left == node || parent->right == node));
+    }
+
+    MangoBinTreeNode **parentsChild = &(tree->root);
+    if (parent != NULL)
+        parentsChild = parent->left == node ? &(parent->left) : &(parent->right);
+
+    tree->size--;
+
+    // release the node
+    if (node->data != NULL && deletor != NULL) 
+    {
+        deletor(node->data);
+        node->data = NULL;
+    }
+
+    if (node->left != NULL && node->right != NULL)
+    {
+        // hardest case - find either the in order successor or the in
+        // order predecessor, R and replace node's data with R and delete R
+        // in order successor = left most child of right sub tree
+        // in order predecessor = right most child of left subtree
+        // The tree can become unbalanced if we always use one or the
+        // above, so instead do it randomly or keep a counter to do this
+        // alternatively...
+        MangoBinTreeNode *next_parent = node;
+        MangoBinTreeNode *next_node = NULL;
+        BOOL use_left = true;       // TODO: Select this randomly or inconsistently
+        if (use_left)
+        {
+            next_node = node->left;
+            while (next_node->right != NULL)
+            {
+                next_parent = next_node;
+                next_node = next_node->right;
+            }
+            next_parent->right = next_node->left;
+        }
+        else
+        {
+            next_node = node->right;
+            while (next_node->left != NULL)
+            {
+                next_parent = next_node;
+                next_node = next_node->left;
+            }
+            next_parent->left = next_node->right;
+        }
+
+        // replace node's data with next_node's data and delete next_node
+        node->data = next_node->data;
+        free(next_node);
+    }
+    else
+    {
+        if (node->left != NULL)
+        {
+            *parentsChild = node->left;
+        }
+        else if (node->right != NULL)
+        {
+            *parentsChild = node->right;
+        }
+        else
+        {
+            *parentsChild = NULL;
+        }
+        free(node);
+    }
+}
+
+/**
  * Inserts an item into a tree.
  *
  * \param   mtree   Tree in which to insert the item.
@@ -148,6 +234,21 @@ MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
                                      const void *data,
                                      CompareFunc compare)
 {
+    return mango_bintree_find_with_parent(mtree, data, compare, NULL);
+}
+
+/**
+ * Finds a node with a given item along with its parent.
+ * \param   mtree   Tree in which to find the item.
+ * \param   data    Data to look for.
+ * \param   compare Method to the item comparisons.
+ * \param   parent  Stores the parent pointer here.
+ * \return  The tree node matching the item or NULL if the item cannot be
+ * found.
+ */
+MangoBinTreeNode *mango_bintree_find_with_parent(MangoBinTree *mtree, const void *data, CompareFunc compare, MangoBinTreeNode **parent)
+{
+    if (parent != NULL) *parent = NULL;
     MangoBinTreeNode *curr = mtree->root;
     while (curr != NULL)
     {
@@ -156,13 +257,18 @@ MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
         {
             return curr;
         }
-        else if (cmp < 0)
-        {
-            curr = curr->left;
-        }
         else
         {
-            curr = curr->right;
+            // update parent
+            if (parent != NULL) *parent = curr;
+            if (cmp < 0)
+            {
+                curr = curr->left;
+            }
+            else
+            {
+                curr = curr->right;
+            }
         }
     }
     return NULL;

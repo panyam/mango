@@ -11,7 +11,7 @@ extern "C" {
 typedef MangoObject *(*TableGetFunc)(MangoTable *table, const MangoString *key);
 typedef BOOL (*TableContainsFunc)(MangoTable *table, const MangoString *key);
 typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
-typedef MangoObject *(*TableEraseFunc)(MangoTable *table, const MangoString *key);
+typedef void (*TableEraseFunc)(MangoTable *table, const MangoString *key);
 
 /**
  * General associate container for a set of MangoObjects.
@@ -35,7 +35,7 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
      * Erases an element from the table.
      */
-    MangoObject *(*eraseFunc)(MangoTable *table, const MangoString *key);
+    void (*eraseFunc)(MangoTable *table, const MangoString *key);
 );
 
 /**
@@ -86,7 +86,7 @@ extern MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoOb
  * \param   key     Key by which the element is to be erased.
  * \return The erased value if it exists.
  */
-extern MangoObject *mango_table_erase(MangoTable *table, const MangoString *key);
+extern void mango_table_erase(MangoTable *table, const MangoString *key);
 
 #ifdef __cplusplus
 }

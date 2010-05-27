@@ -9,12 +9,10 @@ DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_tmplctx_dealloc;
     ((MangoPrototype *)&__proto__)->getStrAttrFunc  = (ObjectGetStrAttrFunc)mango_tmplctx_get;
     __proto__.getValuesFunc     = NULL;
-    __proto__.getFunc           = NULL;
     __proto__.setFunc           = NULL;
     __proto__.pushFunc          = NULL;
     __proto__.popFunc           = NULL;
     __proto__.deleteFunc        = NULL;
-    __proto__.containsFunc      = NULL;
     __proto__.mergeFunc         = NULL;
 );
 
@@ -60,7 +58,7 @@ void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
     {
         ctx->__prototype__->mergeFunc(ctx, dict);
     }
-    else
+    else if (dict != NULL)
     {
         // back on default
         assert("not implemented" && false);
@@ -97,10 +95,11 @@ MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key,
                 return NULL;
             valueStack = (MangoList *)mango_linkedlist_new();
             mango_table_put(ctx->values, key, (MangoObject *)valueStack);
+            OBJ_DECREF(valueStack);     // delete ref as it is now in the table
         }
         else
         {
-            valueStack = (MangoList *)mango_table_get(ctx->values, key);
+            valueStack = (MangoList *)OBJ_GETSTRATTR(ctx->values, key);
         }
         return valueStack;
     }
@@ -115,11 +114,7 @@ MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key,
  */
 MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key)
 {
-    if (ctx->__prototype__->getFunc != NULL)
-    {
-        return ctx->__prototype__->getFunc(ctx, key);
-    }
-    else if (ctx->values != NULL)
+    if (ctx->values != NULL)
     {
         // fallback on our default implementation
         MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
@@ -294,24 +289,4 @@ BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, MangoString *key)
     // default impl otherwise
     return ctx->values != NULL && mango_table_contains(ctx->values, key);
 }
-
-#if 0
-public void mergeDictionary(HashMap<String, ?> dictionary)
-{
-    if (dictionary != NULL)
-    {
-        if (values == NULL)
-        {
-            values = new HashMap<String, Stack<Object>>();
-            for (Iterator<String> iter = dictionary.keySet().iterator();iter.hasNext();)
-            {
-                String key = iter.next();
-                Object value = dictionary.get(key);
-                setValue(key, value);
-            }
-        }
-    }
-}
-
-#endif
 

@@ -75,9 +75,27 @@ extern size_t mango_bintree_size(MangoBinTree *mtree);
  * \return  The tree node matching the item or NULL if the item cannot be
  * found.
  */
-extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree,
-                                            const void *data,
-                                            CompareFunc compare);
+extern MangoBinTreeNode *mango_bintree_find(MangoBinTree *mtree, const void *data, CompareFunc compare);
+
+/**
+ * Finds a node with a given item along with its parent.
+ * \param   mtree   Tree in which to find the item.
+ * \param   data    Data to look for.
+ * \param   compare Method to the item comparisons.
+ * \param   parent  Stores the parent pointer here.
+ * \return  The tree node matching the item or NULL if the item cannot be
+ * found.
+ */
+extern MangoBinTreeNode *mango_bintree_find_with_parent(MangoBinTree *mtree, const void *data, CompareFunc compare, MangoBinTreeNode **parent);
+
+/**
+ * Deletes a node in the binary tree.
+ * \param   tree    Tree in which the node is to be deleted.
+ * \param   node    Node (and its value) to be deleted.
+ * \param   parent  Parent node of the node to be deleted.
+ * \param   deletor Deletor function to be applied on the node's data.
+ */
+extern void mango_bintree_delete(MangoBinTree *tree, MangoBinTreeNode *node, MangoBinTreeNode *parent, void (*deletor)(void *));
 
 #ifdef __cplusplus
 }

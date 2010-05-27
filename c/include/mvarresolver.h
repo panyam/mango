@@ -42,13 +42,11 @@ extern MangoObject *mango_varresolver_resolve(MangoVarResolver *resolver,
  * Resolves a var chain starting from the first var using the
  * template context.
  * \param   resolver    Main resolver object.
- * \param   ctx         Context with which the var is resolved.
+ * \param   source      Starting source object with which the var is resolved.
  * \param   first       First var to start resolving with.
  * \return  The value corresponding to the var.
  */
-extern MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
-                                                   MangoTemplateContext *ctx,
-                                                   MangoVar *first);
+extern MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver, MangoObject *source, MangoVar *first);
 
 #ifdef __cplusplus
 }

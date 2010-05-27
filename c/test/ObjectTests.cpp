@@ -48,3 +48,21 @@ TEST_FIXTURE(ObjectTestFixture, TestObjectCreate)
     // CHECK(mstable != NULL);
 }
 
+/**
+ * Tests the increfs.
+ */
+TEST_FIXTURE(ObjectTestFixture, TestObjectIncAndDecRef)
+{
+    MangoNumber *number = mango_number_from_int(666);
+    CHECK_EQUAL(1, OBJ(number)->__refCount__);
+    CHECK_EQUAL(2, OBJ(OBJ_INCREF(number))->__refCount__);
+    CHECK_EQUAL(3, OBJ(OBJ_INCREF(number))->__refCount__);
+    OBJ_DECREF(number); CHECK_EQUAL(2, OBJ(number)->__refCount__);
+    OBJ_DECREF(number); CHECK_EQUAL(1, OBJ(number)->__refCount__);
+
+    // a tricky one with EQUALS
+    CHECK(OBJ_EQUALS(number, number));
+    CHECK(OBJ_EQUALS(OBJ_INCREF(number), number));
+    CHECK_EQUAL(2, OBJ(number)->__refCount__);
+}
+

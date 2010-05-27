@@ -17,5 +17,5 @@ MangoFilter *mango_filter_library_get(const MangoString *name, MangoTable *libra
     if (library == NULL)
         library = mango_filter_library_singleton();
 
-    return (MangoFilter *)mango_table_get(library, name);
+    return (MangoFilter *)OBJ_GETSTRATTR(library, name);
 }

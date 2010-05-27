@@ -34,6 +34,7 @@
 #include "mstringbuffer.h"
 #include "mstringfactory.h"
 #include "mtable.h"
+#include "mtreetable.h"
 #include "mtagnode.h"
 #include "mtagparser.h"
 #include "mtagparserlibrary.h"

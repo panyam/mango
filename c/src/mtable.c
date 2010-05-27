@@ -56,13 +56,11 @@ MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *v
  * Erases an element from the table.
  * \param   table   Table to be searched.
  * \param   key     Key by which the element is to be erased.
- * \return The erased value if it exists.
  */
-MangoObject *mango_table_erase(MangoTable *table, const MangoString *key)
+void mango_table_erase(MangoTable *table, const MangoString *key)
 {
     if (table->__prototype__->eraseFunc != NULL)
     {
         table->__prototype__->eraseFunc(table, key);
     }
-    return NULL;
 }

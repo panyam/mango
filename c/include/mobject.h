@@ -151,66 +151,6 @@ DECLARE_CLASS(MangoObject, MangoPrototype);
 typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 
 /**
- * Invokes an (quasi) object allocator.
- */
-#define OBJ_ALLOC(OBJ_CLASS, proto) (OBJ_CLASS *)mango_object_alloc(sizeof(OBJ_CLASS), (MangoPrototype *)proto)
-
-/**
- * Initialises a mango object's refcount and prototype.
- */
-#define OBJ_INIT(obj, proto)        mango_object_init((MangoObject *)(obj), (MangoPrototype *)proto)
-
-/**
- * Invokes an initialiser function on a mango object.
- */
-#define OBJ_INIT_WITH_FUNC(OBJ, INIT_FUNC, ...)   mango_object_init_with_func(OBJ, INIT_FUNC __VA_ARGS__)
-
-/**
- * Increase an object's reference count.
- */
-#define OBJ_INCREF(obj)             (__typeof__(obj))mango_object_incref((MangoObject *)(obj))
-
-/**
- * Decrease an object's reference count.
- */
-#define OBJ_DECREF(obj)             mango_object_decref((MangoObject *)(obj))
-
-/**
- * Compares two MangoObject derived objects.
- */
-#define OBJ_EQUALS(obj1, obj2)      mango_objects_are_equal((MangoObject *)(obj1), (MangoObject *)(obj2))
-
-/**
- * Compares two MangoObject derived objects.
- */
-#define OBJ_COMPARE(obj1, obj2)     mango_object_compare((MangoObject *)(obj1), (MangoObject *)(obj2))
-
-/**
- * Tells if an object is instance of a particular prototype.
- */
-#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)(obj), (const MangoPrototype *)proto)
-
-/**
- * Gets attribute of an object given an integer index.
- */
-#define OBJ_GETINTATTR(obj, index)  mango_object_get_int_attr((MangoObject *)(obj), index)
-
-/**
- * Gets attribute of an object given a key.
- */
-#define OBJ_GETSTRATTR(obj, key)    mango_object_get_str_attr((MangoObject *)(obj), key)
-
-/**
- * Tells whether an attribute of an object given an integer index exists.
- */
-#define OBJ_HASINTATTR(obj, index)  mango_object_has_int_attr((MangoObject *)(obj), index)
-
-/**
- * Tells whether an attribute of an object given a key exists.
- */
-#define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)(obj), key)
-
-/**
  * Create a new prototype object of a given name.
  */
 extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, size_t size);
@@ -308,6 +248,11 @@ BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key);
  * Get an iterator for an object.
  */
 extern MangoIterator *mango_object_iterator(MangoObject *obj);
+
+/**
+ * Utils on the object stuff.
+ */
+#include "mutils.h"
 
 #ifdef __cplusplus
 }

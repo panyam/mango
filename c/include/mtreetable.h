@@ -49,7 +49,7 @@ extern MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key)
  * 
  * \return  The current value of the key (it is not decrefed).
  */
-extern MangoObject *mango_treetable_erase(MangoTreeTable *table, MangoString *key);
+extern void mango_treetable_erase(MangoTreeTable *table, MangoString *key);
 
 /**
  * Puts the value for a particular key is in the table.  If the key already

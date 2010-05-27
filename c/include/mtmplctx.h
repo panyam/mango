@@ -20,14 +20,6 @@ INHERIT_STRUCT(MangoTemplateContextPrototype, MangoPrototype,
     MangoList *(*getValuesFunc)(MangoTemplateContext *context, MangoString *key, BOOL create);
 
     /**
-     * Gets the value of a particular key.
-     * \param   ctx     Context in which the value is to be set.
-     * \param   key     Var key
-     * \return  The value for the key if it exists, NULL otherwise.
-     */
-    MangoObject *(*getFunc)(MangoTemplateContext *ctx, MangoString *key);
-
-    /**
      * Sets the value of a particular key.
      * \param   ctx     Context in which the value is to be set.
      * \param   key     Var key
@@ -109,14 +101,6 @@ extern void mango_tmplctx_dealloc(MangoTemplateContext *context);
  * \return A MangoList of values for the var.
  */
 extern MangoList *mango_tmplctx_get_values(MangoTemplateContext *context, MangoString *key, BOOL create);
-
-/**
- * Gets the value of a var by a key.
- * \param   ctx     The context where values are stored.
- * \param   key     Var whose value is to be fetched.
- * \return  Value of the var.
- */
-extern MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
 
 /**
  * Sets the value of a particular key, overwriting an existing one or

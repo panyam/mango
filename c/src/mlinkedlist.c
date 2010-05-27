@@ -157,7 +157,7 @@ void mango_linkedlist_set_at(MangoLinkedList *mlist, int index, MangoObject *obj
 MangoLinkedListNode *mango_linkedlist_insert_at(MangoLinkedList *mlist, MangoObject *data, int index)
 {
     MangoLinkedListNode *newnode = ZNEW(MangoLinkedListNode);
-    newnode->data = data;
+    newnode->data = OBJ_INCREF(data);
 
     mlist->size++;
     if (mlist->head == NULL)

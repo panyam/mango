@@ -42,6 +42,24 @@ int mango_treetable_size(MangoTreeTable *table)
 }
 
 /**
+ * Gets the table entry (with key and value pair) corresponding to a
+ * particular key in the table.
+ * \param   table   Table to search in.
+ * \param   key     Key to search for.
+ * \return  The TableEntry for the key in the table.
+ */
+MangoTableEntry *mango_treetable_entry(MangoTreeTable *table, MangoString *key)
+{
+    if (table->entries != NULL)
+    {
+        MangoBinTreeNode *node = mango_bintree_find(table->entries, key, (CompareFunc)tableentry_name_cmp);
+        if (node != NULL)
+            return ((MangoTableEntry *)node->data);
+    }
+    return NULL;
+}
+
+/**
  * Tells if a value for a particular key is in the table.
  *
  * \param   table   Table from which the value is to be searched.
@@ -51,11 +69,7 @@ int mango_treetable_size(MangoTreeTable *table)
  */
 BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key)
 {
-    if (table->entries != NULL)
-    {
-        return mango_bintree_find(table->entries, key, (CompareFunc)tableentry_name_cmp) != NULL;
-    }
-    return false;
+    return mango_treetable_entry(table, key) != NULL;
 }
 
 /**
@@ -68,16 +82,8 @@ BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key)
  */
 MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key)
 {
-    MangoObject *value = NULL;
-    if (table->entries != NULL)
-    {
-        MangoBinTreeNode *node = mango_bintree_find(table->entries, key, (CompareFunc)tableentry_name_cmp);
-        if (node != NULL)
-        {
-            value = ((MangoTableEntry *)node->data)->value;
-        }
-    }
-    return value;
+    MangoTableEntry *entry = mango_treetable_entry(table, key);
+    return entry == NULL ? NULL : entry->value;
 }
 
 /**
@@ -88,9 +94,17 @@ MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key)
  * 
  * \return  The current value of the key (it is not decrefed).
  */
-MangoObject *mango_treetable_erase(MangoTreeTable *table, MangoString *key)
+void mango_treetable_erase(MangoTreeTable *table, MangoString *key)
 {
-    return NULL;
+    MangoBinTreeNode *parent = NULL;
+    MangoBinTreeNode *node = mango_bintree_find_with_parent(table->entries, key, (CompareFunc)tableentry_name_cmp, &parent);
+    if (node != NULL)
+    {
+        MangoTableEntry *entry = (MangoTableEntry *)node->data;
+        OBJ_DECREF(entry->name);
+        OBJ_DECREF(entry->value);
+        mango_bintree_delete(table->entries, node, parent, NULL);
+    }
 }
 
 /**

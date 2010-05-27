@@ -60,18 +60,16 @@ MangoObject *mango_varresolver_resolve(MangoVarResolver *resolver,
  * Resolves a var chain starting from the first var using the
  * template context.
  * \param   resolver    Main resolver object.
- * \param   ctx         Context with which the var is resolved.
+ * \param   source      Starting source object with which the var is resolved.
  * \param   first       First var to start resolving with.
  * \return  The value corresponding to the var.
  */
-MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
-                                            MangoTemplateContext *ctx,
-                                            MangoVar *first)
+MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver, MangoObject *source, MangoVar *first)
 {
     // if the first item is a number then everything is ignored
     MangoVar *curr_var = first;
     MangoVar *prev_var = NULL;
-    MangoObject *curr_src = ((MangoObject *)ctx);
+    MangoObject *curr_src = source;
     while (curr_src != NULL && curr_var != NULL)
     {
         if (prev_var == NULL)
@@ -80,15 +78,15 @@ MangoObject *mango_varresolver_resolve_chain(MangoVarResolver *resolver,
                 return (MangoObject *)mango_number_from_int(curr_var->intValue);
             else if (curr_var->isQuoted)
                 return (MangoObject *)OBJ_INCREF(curr_var->value);
-            else if (ctx == NULL)
+            else if (source == NULL)
                 return NULL;
-            curr_src = mango_tmplctx_get(ctx, curr_var->value);
+            curr_src = OBJ_GETSTRATTR(source, curr_var->value);
         }
         else
         {
             // decref the previous value since it would have been increfed
             // in varresolver_resolve
-            // if (curr_src != ctx) OBJ_DECREF(curr_src);
+            // if (curr_src != source) OBJ_DECREF(curr_src);
             curr_src = mango_varresolver_resolve(resolver, curr_src, curr_var);
         }
         prev_var = curr_var;
