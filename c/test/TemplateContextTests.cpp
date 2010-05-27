@@ -40,7 +40,7 @@ TEST_FIXTURE(TemplateContextTestFixture, TestCreate)
 TEST_FIXTURE(TemplateContextTestFixture, TestGetOnEmpty)
 {
     MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoObject *obj = mango_tmplctx_get(context, key);
+    MangoObject *obj = OBJ_GETSTRATTR(context, key);
     CHECK(NULL == obj);
     OBJ_DECREF(key);
 }
@@ -70,7 +70,7 @@ TEST_FIXTURE(TemplateContextTestFixture, TestSetAndGet)
 
     int ss = mango_tmplctx_set(context, key, (MangoObject *)value);
     CHECK_EQUAL(1, ss);
-    MangoNumber *number = (MangoNumber *)mango_tmplctx_get(context, key);
+    MangoNumber *number = (MangoNumber *)OBJ_GETSTRATTR(context, key);
     CHECK_EQUAL(value, number);
 }
 

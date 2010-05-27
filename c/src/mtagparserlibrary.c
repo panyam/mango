@@ -18,6 +18,6 @@ const MangoTagParser *mango_tagparser_library_get(const MangoString *name,
     if (library == NULL)
         library = mango_tagparser_library_singleton(NULL);
 
-    return (const MangoTagParser *)mango_table_get(library, name);
+    return (const MangoTagParser *)OBJ_GETSTRATTR(library, name);
 }
 

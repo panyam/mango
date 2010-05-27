@@ -22,26 +22,6 @@ INHERIT_STRUCT(MangoTreeTable, MangoTable,
 extern int mango_treetable_size(MangoTreeTable *table);
 
 /**
- * Tells if a value for a particular key is in the table.
- *
- * \param   table   Table from which the value is to be searched.
- * \param   key     Key for which the value is to be searched.
- *
- * \return true if the key exists, false otherwise.
- */
-extern BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key);
-
-/**
- * Gets the value for a particular key is in the table.
- *
- * \param   table   Table from which the value is to be fetched.
- * \param   key     Key for which the value is to be fetched.
- *
- * \return The value of the key.  THe value is not increfed.
- */
-extern MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key);
-
-/**
  * Erases the value for a particular key is in the table.
  *
  * \param   table   Table from which the value is to be erased.

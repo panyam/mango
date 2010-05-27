@@ -20,11 +20,14 @@ int tableentry_cmp(const MangoTableEntry *mle1, const MangoTableEntry *mle2)
     return mango_string_compare(mle1->name, mle2->name);
 }
 
+BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key);
+MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key);
+
 DECLARE_PROTO_FUNC("MangoTreeTable", MangoTablePrototype, mango_treetable_prototype,
     ((MangoPrototype *)&__proto__)->deallocFunc         = (ObjectDeallocFunc)mango_treetable_dealloc;
+    ((MangoPrototype *)&__proto__)->getStrAttrFunc      = (ObjectGetStrAttrFunc)mango_treetable_get;
+    ((MangoPrototype *)&__proto__)->hasStrAttrFunc      = (ObjectHasStrAttrFunc)mango_treetable_contains;
     ((MangoCollectionPrototype *)&__proto__)->sizeFunc  = (CollectionSizeFunc)mango_treetable_size;
-    __proto__.getFunc          = (TableGetFunc)mango_treetable_get;
-    __proto__.containsFunc     = (TableContainsFunc)mango_treetable_contains;
     __proto__.putFunc          = (TablePutFunc)mango_treetable_put;
     __proto__.eraseFunc        = (TableEraseFunc)mango_treetable_erase;
 );

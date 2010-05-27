@@ -18,16 +18,6 @@ typedef void (*TableEraseFunc)(MangoTable *table, const MangoString *key);
  */
 INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
-     * Gets a value by key.
-     */
-    MangoObject *(*getFunc)(MangoTable *table, const MangoString *key);
-
-    /**
-     * Tells if a value exists.
-     */
-    BOOL (*containsFunc)(MangoTable *table, const MangoString *key);
-
-    /**
      * Puts a value by key, replacing and returning the old value if any.
      */
     MangoObject *(*putFunc)(MangoTable *table, MangoString *key, MangoObject *value);
@@ -55,21 +45,6 @@ extern void mango_table_dealloc(MangoTable *table);
  * \return size of the table.
  */
 extern int mango_table_size(MangoTable *table);
-
-/**
- * Gets a value by key.
- * \param   table   Table to be searched.
- * \param   key     Key by which the element is to be searched.
- */
-extern MangoObject *mango_table_get(MangoTable *table, const MangoString *key);
-
-/**
- * Tells if a value exists.
- * \param   table   Table to search in.
- * \param   key     key by which the element is to be searched.
- * \return  True if value exists for key, false otherwise.
- */
-extern BOOL mango_table_contains(MangoTable *table, const MangoString *key);
 
 /**
  * Puts a value by key, replacing and returning the old value if any.

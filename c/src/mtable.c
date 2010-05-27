@@ -2,38 +2,12 @@
 #include "mtable.h"
 
 /**
- * Gets a value by key.
- * \param   table   Table to be searched.
- * \param   key     Key by which the element is to be searched.
- */
-MangoObject *mango_table_get(MangoTable *table, const MangoString *key)
-{
-    if (table->__prototype__->getFunc != NULL)
-    {
-        return table->__prototype__->getFunc(table, key);
-    }
-    return NULL;
-}
-
-/**
  * Frees the table.
  * \param   table  Collection to be freed.
  */
 void mango_table_dealloc(MangoTable *table)
 {
     mango_collection_dealloc((MangoCollection *)table);
-}
-
-/**
- * Tells if a value exists.
- * \param   table   Table to search in.
- * \param   key     key by which the element is to be searched.
- * \return  True if value exists for key, false otherwise.
- */
-BOOL mango_table_contains(MangoTable *table, const MangoString *key)
-{
-    return table->__prototype__->containsFunc != NULL &&
-                table->__prototype__->containsFunc(table, key);
 }
 
 /**

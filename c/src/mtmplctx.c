@@ -5,9 +5,12 @@
 #include "mtreetable.h"
 #include "mlinkedlist.h"
 
+MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
+
 DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_tmplctx_dealloc;
     ((MangoPrototype *)&__proto__)->getStrAttrFunc  = (ObjectGetStrAttrFunc)mango_tmplctx_get;
+    ((MangoPrototype *)&__proto__)->hasStrAttrFunc  = (ObjectHasStrAttrFunc)mango_tmplctx_contains;
     __proto__.getValuesFunc     = NULL;
     __proto__.setFunc           = NULL;
     __proto__.pushFunc          = NULL;
@@ -89,7 +92,7 @@ MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key,
         }
 
         MangoList *valueStack = NULL;
-        if (!mango_table_contains(ctx->values, key))
+        if (!OBJ_HASSTRATTR(ctx->values, key))
         {
             if (!create)
                 return NULL;
@@ -248,7 +251,7 @@ MangoObject *mango_tmplctx_pop(MangoTemplateContext *ctx,
     }
     else if (ctx->values != NULL)
     {
-        MangoList *ctxStack = (MangoList *)mango_table_get(ctx->values, key);
+        MangoList *ctxStack = (MangoList *)OBJ_GETSTRATTR(ctx->values, key);
         if (ctxStack != NULL && !COLLECTION_IS_EMPTY(ctxStack))
         {
             return (MangoObject *)LIST_POP_FRONT(ctxStack);
@@ -282,11 +285,7 @@ void mango_tmplctx_delete(MangoTemplateContext *ctx, MangoString *key)
  */
 BOOL mango_tmplctx_contains(MangoTemplateContext *ctx, MangoString *key)
 {
-    if (ctx->__prototype__->containsFunc != NULL)
-    {
-        return ctx->__prototype__->containsFunc(ctx, key);
-    }
     // default impl otherwise
-    return ctx->values != NULL && mango_table_contains(ctx->values, key);
+    return ctx->values != NULL && OBJ_HASSTRATTR(ctx->values, key);
 }
 
