@@ -5,15 +5,15 @@
 #include <sstream>
 #include <string.h>
 
-class ArrayTestFixture
+class RawArrayTestFixture
 {
 
 public:
-    ArrayTestFixture()
+    RawArrayTestFixture()
     {
     }
 
-    virtual ~ArrayTestFixture()
+    virtual ~RawArrayTestFixture()
     {
     }
 };
@@ -21,7 +21,7 @@ public:
 /**
  * Tests the creation of an array.
  */
-TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
+TEST_FIXTURE(RawArrayTestFixture, TestArrayCreate)
 {
     MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);
@@ -34,7 +34,7 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayCreate)
 /**
  * Tests an insertion
  */
-TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
+TEST_FIXTURE(RawArrayTestFixture, TestArrayInsert)
 {
     MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);
@@ -48,7 +48,7 @@ TEST_FIXTURE(ArrayTestFixture, TestArrayInsert)
 /**
  * Tests clearing and see array is empty at the end.
  */
-TEST_FIXTURE(ArrayTestFixture, TestArrayClear)
+TEST_FIXTURE(RawArrayTestFixture, TestArrayClear)
 {
     MangoRawArray *array = mango_rawarray_new();
     CHECK(array != NULL);

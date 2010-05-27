@@ -12,10 +12,10 @@
 /**
  * Tests the list structure.
  */
-class ListTestFixture
+class RawListTestFixture
 {
 public:
-    ListTestFixture()
+    RawListTestFixture()
     {
     }
 };
@@ -23,7 +23,7 @@ public:
 /**
  * Tests the creation of a parser.
  */
-TEST_FIXTURE(ListTestFixture, TestListCreate)
+TEST_FIXTURE(RawListTestFixture, TestListCreate)
 {
     MangoRawList * list = mango_rawlist_new();
     CHECK(list != NULL);
@@ -36,7 +36,7 @@ TEST_FIXTURE(ListTestFixture, TestListCreate)
 /**
  * Tests an insertion at the back of an empty list
  */
-TEST_FIXTURE(ListTestFixture, TestListPushBackOnEmpty)
+TEST_FIXTURE(RawListTestFixture, TestListPushBackOnEmpty)
 {
     MangoRawList * list = mango_rawlist_new();
     mango_rawlist_push_back(list, (void *)10);
@@ -49,7 +49,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushBackOnEmpty)
 /**
  * Tests an insertion at the front of an empty list
  */
-TEST_FIXTURE(ListTestFixture, TestListPushFrontOnEmpty)
+TEST_FIXTURE(RawListTestFixture, TestListPushFrontOnEmpty)
 {
     MangoRawList * list = mango_rawlist_new();
     mango_rawlist_push_front(list, (void *)10);
@@ -62,7 +62,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushFrontOnEmpty)
 /**
  * Tests an insertion at the back of a non empty list
  */
-TEST_FIXTURE(ListTestFixture, TestListPushBackOnNonEmpty)
+TEST_FIXTURE(RawListTestFixture, TestListPushBackOnNonEmpty)
 {
     MangoRawList * list = mango_rawlist_new();
     mango_rawlist_push_back(list, (void *)10);
@@ -75,7 +75,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushBackOnNonEmpty)
 /**
  * Tests an insertion at the front of a non empty list
  */
-TEST_FIXTURE(ListTestFixture, TestListPushFrontOnNonEmpty)
+TEST_FIXTURE(RawListTestFixture, TestListPushFrontOnNonEmpty)
 {
     MangoRawList * list = mango_rawlist_new();
     mango_rawlist_push_front(list, (void *)10);
@@ -89,7 +89,7 @@ TEST_FIXTURE(ListTestFixture, TestListPushFrontOnNonEmpty)
 /**
  * Tests clearing of a non-empty list.
  */
-TEST_FIXTURE(ListTestFixture, TestListClear)
+TEST_FIXTURE(RawListTestFixture, TestListClear)
 {
     MangoRawList * list = mango_rawlist_new();
     mango_rawlist_push_front(list, (void *)10);
@@ -108,7 +108,7 @@ void my_deletor(void *obj) { deletor_int --; }
 /**
  * Tests clearing of a non-empty list with a deletor function
  */
-TEST_FIXTURE(ListTestFixture, TestListClearWithDeletor)
+TEST_FIXTURE(RawListTestFixture, TestListClearWithDeletor)
 {
     MangoRawList * list = mango_rawlist_new();
     for (int i = 0;i < 5;i++)

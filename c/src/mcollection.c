@@ -24,7 +24,7 @@ MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollect
  */
 void mango_collection_dealloc(MangoCollection *collection)
 {
-    mango_object_dealloc((MangoObject *)collection);
+    mango_object_dealloc((MangoObject *)(collection));
 }
 
 /**

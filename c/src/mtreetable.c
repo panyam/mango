@@ -51,6 +51,10 @@ int mango_treetable_size(MangoTreeTable *table)
  */
 BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key)
 {
+    if (table->entries != NULL)
+    {
+        return mango_bintree_find(table->entries, key, (CompareFunc)tableentry_name_cmp) != NULL;
+    }
     return false;
 }
 

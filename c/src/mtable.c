@@ -32,11 +32,8 @@ void mango_table_dealloc(MangoTable *table)
  */
 BOOL mango_table_contains(MangoTable *table, const MangoString *key)
 {
-    if (table->__prototype__->containsFunc != NULL)
-    {
-        table->__prototype__->containsFunc(table, key);
-    }
-    return false;
+    return table->__prototype__->containsFunc != NULL &&
+                table->__prototype__->containsFunc(table, key);
 }
 
 /**

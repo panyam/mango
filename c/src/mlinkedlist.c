@@ -22,9 +22,9 @@ DECLARE_PROTO_FUNC("MangoLinkedList", MangoListPrototype, mango_linkedlist_proto
     ((MangoCollectionPrototype *)&__proto__)->clearFunc     = (CollectionClearFunc)mango_linkedlist_clear;
     ((MangoCollectionPrototype *)&__proto__)->isEmptyFunc   = (CollectionIsEmptyFunc)mango_linkedlist_is_empty;
     ((MangoCollectionPrototype *)&__proto__)->sizeFunc      = (CollectionSizeFunc)mango_linkedlist_size;
-    ((MangoListPrototype *)&__proto__)->insertAtFunc        = (ListInsertAtFunc)mango_linkedlist_insert_at;
-    ((MangoListPrototype *)&__proto__)->removeAtFunc        = (ListRemoveAtFunc)mango_linkedlist_remove_at;
-    ((MangoListPrototype *)&__proto__)->setAtFunc           = (ListSetAtFunc)mango_linkedlist_set_at;
+    __proto__.insertAtFunc                                  = (ListInsertAtFunc)mango_linkedlist_insert_at;
+    __proto__.removeAtFunc                                  = (ListRemoveAtFunc)mango_linkedlist_remove_at;
+    __proto__.setAtFunc                                     = (ListSetAtFunc)mango_linkedlist_set_at;
 );
 
 /**

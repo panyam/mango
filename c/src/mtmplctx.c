@@ -6,6 +6,8 @@
 #include "mlinkedlist.h"
 
 DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_tmplctx_dealloc;
+    ((MangoPrototype *)&__proto__)->getStrAttrFunc  = (ObjectGetStrAttrFunc)mango_tmplctx_get;
     __proto__.getValuesFunc     = NULL;
     __proto__.getFunc           = NULL;
     __proto__.setFunc           = NULL;
@@ -42,7 +44,9 @@ MangoTemplateContext *mango_tmplctx_init(MangoTemplateContext *ctx, MangoTemplat
  */
 void mango_tmplctx_dealloc(MangoTemplateContext *ctx)
 {
-    assert("not implemented" && false);
+    // clear the values
+    OBJ_DECREF(ctx->values);
+    mango_object_dealloc((MangoObject *)(ctx));
 }
 
 /**
@@ -115,12 +119,16 @@ MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key)
     {
         return ctx->__prototype__->getFunc(ctx, key);
     }
-    else
+    else if (ctx->values != NULL)
     {
         // fallback on our default implementation
+        MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
+        if (valueStack != NULL && !COLLECTION_IS_EMPTY(valueStack))
+        {
+            return LIST_FRONT(valueStack);
+        }
     }
-    // if not in the default impl then fallback on the get attr method
-    return OBJ_GETSTRATTR(ctx, key);
+    return NULL;
 }
 
 /**
@@ -134,8 +142,32 @@ MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key)
  */
 int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key, MangoObject *value, BOOL push)
 {
+    if (push)
+    {
+        return mango_tmplctx_set(ctx, key, value);
+    }
+    else
+    {
+        return mango_tmplctx_push(ctx, key, value);
+    }
+}
+
+/**
+ * Sets the value of a particular key.
+ * \param   ctx     Context in which the value is to be set.
+ * \param   key     Var key
+ * \param   value   Value of the var.
+ * \return  The new size of the value stack for the var.
+ */
+int mango_tmplctx_set(MangoTemplateContext *ctx, MangoString *key, MangoObject *value)
+{
+    if (ctx->__prototype__->setFunc != NULL)
+    {
+        return ctx->__prototype__->setFunc(ctx, key, value);
+    }
+    // resort to default 
     MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
-    if (push || COLLECTION_IS_EMPTY(valueStack))
+    if (COLLECTION_IS_EMPTY(valueStack))
     {
         LIST_PUSH_FRONT(valueStack, value);
     }
@@ -147,30 +179,22 @@ int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key, Mango
 }
 
 /**
- * Sets the value of a particular key.
- * \param   ctx     Context in which the value is to be set.
- * \param   key     Var key
- * \param   value   Value of the var.
- * \return  The new size of the value stack for the var.
- */
-int mango_tmplctx_set(MangoTemplateContext *ctx,
-                              MangoString *key,
-                              MangoObject *value)
-{
-    if (ctx->__prototype__->setFunc != NULL)
-    {
-        return ctx->__prototype__->setFunc(ctx, key, value);
-    }
-    return 0;
-}
-
-/**
  * Sets multiple values given by a list of key/value pairs.
  * \param   ctx     Context in which the value is to be set.
  * \param   ...     Key/Value arguments, terminated by NULL.
  */
 void mango_tmplctx_set_values(MangoTemplateContext *ctx, ...)
 {
+    va_list ap;
+    va_start(ap, ctx);
+    MangoString *key = va_arg(ap, MangoString *);
+    while (key != NULL)
+    {
+        MangoObject *value = va_arg(ap, MangoObject *);
+        mango_tmplctx_set(ctx, key, value);
+        key = va_arg(ap, MangoString *);
+    }
+    va_end(ap);
 }
 
 /**
@@ -188,7 +212,11 @@ int mango_tmplctx_push(MangoTemplateContext *ctx,
     {
         return ctx->__prototype__->pushFunc(ctx, key, value);
     }
-    return 0;
+
+    // default behaviour
+    MangoList *valueStack = mango_tmplctx_get_values(ctx, key, true);
+    LIST_PUSH_FRONT(valueStack, value);
+    return COLLECTION_SIZE(valueStack);
 }
 
 /**
@@ -198,6 +226,16 @@ int mango_tmplctx_push(MangoTemplateContext *ctx,
  */
 void mango_tmplctx_push_values(MangoTemplateContext *ctx, ...)
 {
+    va_list ap;
+    va_start(ap, ctx);
+    MangoString *key = va_arg(ap, MangoString *);
+    while (key != NULL)
+    {
+        MangoObject *value = va_arg(ap, MangoObject *);
+        mango_tmplctx_push(ctx, key, value);
+        key = va_arg(ap, MangoString *);
+    }
+    va_end(ap);
 }
 
 /**
@@ -273,65 +311,6 @@ public void mergeDictionary(HashMap<String, ?> dictionary)
             }
         }
     }
-}
-
-/**
- * Gets the object by a key.
- * This can return a nil if the context is a sequential or an iterative container.
- */
-public Object getValue(String key)
-{
-    if (values != NULL)
-    {
-        Stack<Object> ctxStack = values.get(key);
-        if (ctxStack != NULL && !ctxStack.isEmpty())
-            return ctxStack.firstElement();
-    }
-    return NULL;
-}
-
-/**
- * Sets the value of a particular key, overwriting an existing one or
- * pushing onto one if necessary.
- */
-public int setValue(String key, Object value, boolean push)
-{
-}
-
-/**
- * Sets the value of a key overwriting if necessary.
- * Returns the new depth of the stack.
- */
-public int setValue(String key, Object value)
-{
-    return setValue(key, value, false);
-}
-
-/**
- * Sets multiple values into the context.
- */
-public void setValues(Object ... keyValuePairs)
-{
-    for (int i = 0;i < keyValuePairs.length;i += 2)
-        setValue((String)keyValuePairs[i], keyValuePairs[i + 1]);
-}
-
-/**
- * Pushes the value of a key to indicate entering of a new context.
- * Returns the new depth of the stack.
- */
-public int pushValue(String key, Object value)
-{
-    return setValue(key, value, true);
-}
-
-/**
- * Pushes multiple values into the context.
- */
-public void pushValues(Object ... keyValuePairs)
-{
-    for (int i = 0;i < keyValuePairs.length;i += 2)
-        pushValue((String)keyValuePairs[i], keyValuePairs[i + 1]);
 }
 
 #endif

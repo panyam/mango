@@ -114,11 +114,12 @@ dep:
 ../bld/./mfilterlibrary.o: ../include/./mcollection.h ../include/./mobject.h
 ../bld/./mfilterlibrary.o: ../include/./mmemutils.h
 ../bld/./mfilternode.o: ../include/./mmemutils.h ../include/./mfwddefs.h
-../bld/./mfilternode.o: ../include/./mfilternode.h ../include/./mfilter.h
-../bld/./mfilternode.o: ../include/./mobject.h ../include/./mvar.h
+../bld/./mfilternode.o: ../include/./mfilternode.h ../include/./mobject.h
+../bld/./mfilternode.o: ../include/./mfilter.h ../include/./mvar.h
 ../bld/./mfilternode.o: ../include/./mstring.h ../include/./mfilterlibrary.h
 ../bld/./mfilternode.o: ../include/./merror.h ../include/./msingletons.h
-../bld/./mfilternode.o: ../include/./mrawlist.h ../include/./mtokenlists.h
+../bld/./mfilternode.o: ../include/./mlinkedlist.h ../include/./mlist.h
+../bld/./mfilternode.o: ../include/./mcollection.h ../include/./mtokenlists.h
 ../bld/./mfilternode.o: ../include/./mtoken.h ../include/./mparser.h
 ../bld/./mfilternode.o: ../include/./mtokenizer.h
 ../bld/./mfilternode.o: ../include/./mparsercontext.h
@@ -156,11 +157,12 @@ dep:
 ../bld/./mparser.o: ../include/./mtemplateloader.h ../include/./mparser.h
 ../bld/./mparser.o: ../include/./mparsercontext.h ../include/./mrawlist.h
 ../bld/./mparser.o: ../include/./mobject.h ../include/./mmemutils.h
-../bld/./mparser.o: ../include/./mstringbuffer.h ../include/./mstring.h
-../bld/./mparser.o: ../include/./mstringfactory.h ../include/./mfreetext.h
-../bld/./mparser.o: ../include/./mnode.h ../include/./mclasses.h
-../bld/./mparser.o: ../include/./mvarnode.h ../include/./mtagnode.h
-../bld/./mparser.o: ../include/./mnodelist.h
+../bld/./mparser.o: ../include/./mlinkedlist.h ../include/./mlist.h
+../bld/./mparser.o: ../include/./mcollection.h ../include/./mstringbuffer.h
+../bld/./mparser.o: ../include/./mstring.h ../include/./mstringfactory.h
+../bld/./mparser.o: ../include/./mfreetext.h ../include/./mnode.h
+../bld/./mparser.o: ../include/./mclasses.h ../include/./mvarnode.h
+../bld/./mparser.o: ../include/./mtagnode.h ../include/./mnodelist.h
 ../bld/./mrawarray.o: ../include/./mrawarray.h ../include/./mobject.h
 ../bld/./mrawarray.o: ../include/./mfwddefs.h ../include/./mmemutils.h
 ../bld/./mrawlist.o: ../include/./mrawlist.h ../include/./mobject.h

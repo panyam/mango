@@ -158,7 +158,7 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Initialises a mango object's refcount and prototype.
  */
-#define OBJ_INIT(obj, proto)        mango_object_init((MangoObject *)obj, (MangoPrototype *)proto)
+#define OBJ_INIT(obj, proto)        mango_object_init((MangoObject *)(obj), (MangoPrototype *)proto)
 
 /**
  * Invokes an initialiser function on a mango object.
@@ -168,47 +168,47 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 /**
  * Increase an object's reference count.
  */
-#define OBJ_INCREF(obj)             (__typeof__(obj))mango_object_incref((MangoObject *)obj)
+#define OBJ_INCREF(obj)             (__typeof__(obj))mango_object_incref((MangoObject *)(obj))
 
 /**
  * Decrease an object's reference count.
  */
-#define OBJ_DECREF(obj)             mango_object_decref((MangoObject *)obj)
+#define OBJ_DECREF(obj)             mango_object_decref((MangoObject *)(obj))
 
 /**
  * Compares two MangoObject derived objects.
  */
-#define OBJ_EQUALS(obj1, obj2)      mango_objects_are_equal((MangoObject *)obj1, (MangoObject *)obj2)
+#define OBJ_EQUALS(obj1, obj2)      mango_objects_are_equal((MangoObject *)(obj1), (MangoObject *)(obj2))
 
 /**
  * Compares two MangoObject derived objects.
  */
-#define OBJ_COMPARE(obj1, obj2)     mango_object_compare((MangoObject *)obj1, (MangoObject *)obj2)
+#define OBJ_COMPARE(obj1, obj2)     mango_object_compare((MangoObject *)(obj1), (MangoObject *)(obj2))
 
 /**
  * Tells if an object is instance of a particular prototype.
  */
-#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)obj, (const MangoPrototype *)proto)
+#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)(obj), (const MangoPrototype *)proto)
 
 /**
  * Gets attribute of an object given an integer index.
  */
-#define OBJ_GETINTATTR(obj, index)  mango_object_get_int_attr((MangoObject *)obj, index)
+#define OBJ_GETINTATTR(obj, index)  mango_object_get_int_attr((MangoObject *)(obj), index)
 
 /**
  * Gets attribute of an object given a key.
  */
-#define OBJ_GETSTRATTR(obj, key)    mango_object_get_str_attr((MangoObject *)obj, key)
+#define OBJ_GETSTRATTR(obj, key)    mango_object_get_str_attr((MangoObject *)(obj), key)
 
 /**
  * Tells whether an attribute of an object given an integer index exists.
  */
-#define OBJ_HASINTATTR(obj, index)  mango_object_has_int_attr((MangoObject *)obj, index)
+#define OBJ_HASINTATTR(obj, index)  mango_object_has_int_attr((MangoObject *)(obj), index)
 
 /**
  * Tells whether an attribute of an object given a key exists.
  */
-#define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)obj, key)
+#define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)(obj), key)
 
 /**
  * Create a new prototype object of a given name.

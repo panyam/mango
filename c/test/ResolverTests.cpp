@@ -110,6 +110,20 @@ TEST_FIXTURE(ResolverTestFixture, TestCreate)
     // CHECK(mstable != NULL);
 }
 
+/**
+ * Tests setting and getting a value
+ */
+TEST_FIXTURE(ResolverTestFixture, TestSetAndGet)
+{
+    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
+    MangoNumber *value = mango_number_from_int(3);
+
+    int ss = mango_tmplctx_set(context, key, (MangoObject *)value);
+    CHECK_EQUAL(1, ss);
+    MangoNumber *number = (MangoNumber *)mango_tmplctx_get(context, key);
+    CHECK_EQUAL(value, number);
+}
+
 TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 {
     SetupParserAndParseVar("{{a}}");
@@ -120,8 +134,8 @@ TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 {
     SetupParserAndParseVar("{{a}}");
     mango_tmplctx_set(context,
-                              mango_stringfactory_new_string(string_factory, "a", -1),
-                              (MangoObject *)mango_number_from_int(3));
+                      mango_stringfactory_new_string(string_factory, "a", -1),
+                      (MangoObject *)mango_number_from_int(3));
     CheckResolvedVar((MangoObject *)mango_number_from_int(3));
 }
 

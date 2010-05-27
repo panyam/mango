@@ -146,7 +146,7 @@ int mango_rcstring_table_find(MangoRCStringTable *  stable,
         msdata->strId       = strId;
         msdata->strLength   = length;
         msdata->strValue    = NEW_ARRAY(char, length + 1);
-        msdata->refCount    = rcdelta > 0 ? rcdelta : 1;
+        msdata->refCount    = rcdelta >= 0 ? rcdelta : 1;
         memcpy(msdata->strValue, str, length);
         msdata->strValue[length] = 0;
         node = mango_bintree_insert(bintree, msdata, stablenode_compare);

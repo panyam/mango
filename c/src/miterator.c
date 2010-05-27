@@ -7,7 +7,7 @@
  */
 void mango_iterator_dealloc(MangoIterator *miter)
 {
-    mango_object_dealloc((MangoObject *)miter);
+    mango_object_dealloc((MangoObject *)(miter));
 }
 
 /**

@@ -85,30 +85,6 @@ dep:
 	makedepend -Y -p"$(OUTPUT_DIR)/" $(INCLUDE_FLAGS)  -- $(TEST_SOURCES)
 # DO NOT DELETE
 
-../bld/./ArrayTests.o: ../include/mangopub.h ../include/mrawarray.h
-../bld/./ArrayTests.o: ../include/mobject.h ../include/mfwddefs.h
-../bld/./ArrayTests.o: ../include/mmemutils.h ../include/mrawlist.h
-../bld/./ArrayTests.o: ../include/marraylist.h ../include/mlist.h
-../bld/./ArrayTests.o: ../include/mcollection.h ../include/mbintree.h
-../bld/./ArrayTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./ArrayTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./ArrayTests.o: ../include/mstring.h ../include/mfilterlibrary.h
-../bld/./ArrayTests.o: ../include/mfilternode.h ../include/mfreetext.h
-../bld/./ArrayTests.o: ../include/mnode.h ../include/minputsource.h
-../bld/./ArrayTests.o: ../include/mlinkedlist.h ../include/mnodelist.h
-../bld/./ArrayTests.o: ../include/mnoderenderer.h ../include/mnumber.h
-../bld/./ArrayTests.o: ../include/mparser.h ../include/mtokenizer.h
-../bld/./ArrayTests.o: ../include/mtoken.h ../include/mparsercontext.h
-../bld/./ArrayTests.o: ../include/mrcstring.h ../include/mrcstringfactory.h
-../bld/./ArrayTests.o: ../include/mstringfactory.h
-../bld/./ArrayTests.o: ../include/mrcstringtable.h ../include/msingletons.h
-../bld/./ArrayTests.o: ../include/mstringbuffer.h ../include/mtable.h
-../bld/./ArrayTests.o: ../include/mtagnode.h ../include/mtagparser.h
-../bld/./ArrayTests.o: ../include/mtagparserlibrary.h
-../bld/./ArrayTests.o: ../include/mtemplateloader.h ../include/mtmplctx.h
-../bld/./ArrayTests.o: ../include/mtokenlists.h ../include/mutils.h
-../bld/./ArrayTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
-../bld/./ArrayTests.o: ../include/mvarresolver.h
 ../bld/./BinTreeTests.o: ../include/mangopub.h ../include/mrawarray.h
 ../bld/./BinTreeTests.o: ../include/mobject.h ../include/mfwddefs.h
 ../bld/./BinTreeTests.o: ../include/mmemutils.h ../include/mrawlist.h
@@ -133,31 +109,6 @@ dep:
 ../bld/./BinTreeTests.o: ../include/mtokenlists.h ../include/mutils.h
 ../bld/./BinTreeTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
 ../bld/./BinTreeTests.o: ../include/mvarresolver.h
-../bld/./ListTests.o: ../include/mangopub.h ../include/mrawarray.h
-../bld/./ListTests.o: ../include/mobject.h ../include/mfwddefs.h
-../bld/./ListTests.o: ../include/mmemutils.h ../include/mrawlist.h
-../bld/./ListTests.o: ../include/marraylist.h ../include/mlist.h
-../bld/./ListTests.o: ../include/mcollection.h ../include/mbintree.h
-../bld/./ListTests.o: ../include/mclasses.h ../include/merror.h
-../bld/./ListTests.o: ../include/mfilter.h ../include/mvar.h
-../bld/./ListTests.o: ../include/mstring.h ../include/mfilterlibrary.h
-../bld/./ListTests.o: ../include/mfilternode.h ../include/mfreetext.h
-../bld/./ListTests.o: ../include/mnode.h ../include/minputsource.h
-../bld/./ListTests.o: ../include/mlinkedlist.h ../include/mnodelist.h
-../bld/./ListTests.o: ../include/mnoderenderer.h ../include/mnumber.h
-../bld/./ListTests.o: ../include/mparser.h ../include/mtokenizer.h
-../bld/./ListTests.o: ../include/mtoken.h ../include/mparsercontext.h
-../bld/./ListTests.o: ../include/mrcstring.h ../include/mrcstringfactory.h
-../bld/./ListTests.o: ../include/mstringfactory.h ../include/mrcstringtable.h
-../bld/./ListTests.o: ../include/msingletons.h ../include/mstringbuffer.h
-../bld/./ListTests.o: ../include/mtable.h ../include/mtagnode.h
-../bld/./ListTests.o: ../include/mtagparser.h ../include/mtagparserlibrary.h
-../bld/./ListTests.o: ../include/mtemplateloader.h ../include/mtmplctx.h
-../bld/./ListTests.o: ../include/mtokenlists.h ../include/mutils.h
-../bld/./ListTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
-../bld/./ListTests.o: ../include/mvarresolver.h ../include/ext/mangoextpub.h
-../bld/./ListTests.o: ../include/ext/mfortag.h stlinputsource.h
-../bld/./ListTests.o: ../include/ext/maddfilter.h
 ../bld/./ObjectTests.o: ../include/mangopub.h ../include/mrawarray.h
 ../bld/./ObjectTests.o: ../include/mobject.h ../include/mfwddefs.h
 ../bld/./ObjectTests.o: ../include/mmemutils.h ../include/mrawlist.h
@@ -208,6 +159,59 @@ dep:
 ../bld/./ParserTests.o: ../include/mvarresolver.h
 ../bld/./ParserTests.o: ../include/ext/mangoextpub.h ../include/ext/mfortag.h
 ../bld/./ParserTests.o: stlinputsource.h ../include/ext/maddfilter.h
+../bld/./RawArrayTests.o: ../include/mangopub.h ../include/mrawarray.h
+../bld/./RawArrayTests.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./RawArrayTests.o: ../include/mmemutils.h ../include/mrawlist.h
+../bld/./RawArrayTests.o: ../include/marraylist.h ../include/mlist.h
+../bld/./RawArrayTests.o: ../include/mcollection.h ../include/mbintree.h
+../bld/./RawArrayTests.o: ../include/mclasses.h ../include/merror.h
+../bld/./RawArrayTests.o: ../include/mfilter.h ../include/mvar.h
+../bld/./RawArrayTests.o: ../include/mstring.h ../include/mfilterlibrary.h
+../bld/./RawArrayTests.o: ../include/mfilternode.h ../include/mfreetext.h
+../bld/./RawArrayTests.o: ../include/mnode.h ../include/minputsource.h
+../bld/./RawArrayTests.o: ../include/mlinkedlist.h ../include/mnodelist.h
+../bld/./RawArrayTests.o: ../include/mnoderenderer.h ../include/mnumber.h
+../bld/./RawArrayTests.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./RawArrayTests.o: ../include/mtoken.h ../include/mparsercontext.h
+../bld/./RawArrayTests.o: ../include/mrcstring.h
+../bld/./RawArrayTests.o: ../include/mrcstringfactory.h
+../bld/./RawArrayTests.o: ../include/mstringfactory.h
+../bld/./RawArrayTests.o: ../include/mrcstringtable.h
+../bld/./RawArrayTests.o: ../include/msingletons.h ../include/mstringbuffer.h
+../bld/./RawArrayTests.o: ../include/mtable.h ../include/mtagnode.h
+../bld/./RawArrayTests.o: ../include/mtagparser.h
+../bld/./RawArrayTests.o: ../include/mtagparserlibrary.h
+../bld/./RawArrayTests.o: ../include/mtemplateloader.h ../include/mtmplctx.h
+../bld/./RawArrayTests.o: ../include/mtokenlists.h ../include/mutils.h
+../bld/./RawArrayTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./RawArrayTests.o: ../include/mvarresolver.h
+../bld/./RawListTests.o: ../include/mangopub.h ../include/mrawarray.h
+../bld/./RawListTests.o: ../include/mobject.h ../include/mfwddefs.h
+../bld/./RawListTests.o: ../include/mmemutils.h ../include/mrawlist.h
+../bld/./RawListTests.o: ../include/marraylist.h ../include/mlist.h
+../bld/./RawListTests.o: ../include/mcollection.h ../include/mbintree.h
+../bld/./RawListTests.o: ../include/mclasses.h ../include/merror.h
+../bld/./RawListTests.o: ../include/mfilter.h ../include/mvar.h
+../bld/./RawListTests.o: ../include/mstring.h ../include/mfilterlibrary.h
+../bld/./RawListTests.o: ../include/mfilternode.h ../include/mfreetext.h
+../bld/./RawListTests.o: ../include/mnode.h ../include/minputsource.h
+../bld/./RawListTests.o: ../include/mlinkedlist.h ../include/mnodelist.h
+../bld/./RawListTests.o: ../include/mnoderenderer.h ../include/mnumber.h
+../bld/./RawListTests.o: ../include/mparser.h ../include/mtokenizer.h
+../bld/./RawListTests.o: ../include/mtoken.h ../include/mparsercontext.h
+../bld/./RawListTests.o: ../include/mrcstring.h ../include/mrcstringfactory.h
+../bld/./RawListTests.o: ../include/mstringfactory.h
+../bld/./RawListTests.o: ../include/mrcstringtable.h ../include/msingletons.h
+../bld/./RawListTests.o: ../include/mstringbuffer.h ../include/mtable.h
+../bld/./RawListTests.o: ../include/mtagnode.h ../include/mtagparser.h
+../bld/./RawListTests.o: ../include/mtagparserlibrary.h
+../bld/./RawListTests.o: ../include/mtemplateloader.h ../include/mtmplctx.h
+../bld/./RawListTests.o: ../include/mtokenlists.h ../include/mutils.h
+../bld/./RawListTests.o: ../include/mvarlibrary.h ../include/mvarnode.h
+../bld/./RawListTests.o: ../include/mvarresolver.h
+../bld/./RawListTests.o: ../include/ext/mangoextpub.h
+../bld/./RawListTests.o: ../include/ext/mfortag.h stlinputsource.h
+../bld/./RawListTests.o: ../include/ext/maddfilter.h
 ../bld/./ResolverTests.o: ../include/mangopub.h ../include/mrawarray.h
 ../bld/./ResolverTests.o: ../include/mobject.h ../include/mfwddefs.h
 ../bld/./ResolverTests.o: ../include/mmemutils.h ../include/mrawlist.h

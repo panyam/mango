@@ -45,16 +45,16 @@ INHERIT_STRUCT(MangoListPrototype, MangoCollectionPrototype,
     int (*lastIndexOfFunc)(MangoList *list, MangoObject *obj, int from);
 );
 
-#define LIST_INSERT_AT(list, obj, index)    mango_list_insert_at((MangoList *)list, (MangoObject *)obj, index)
-#define LIST_SET_AT(list, index, obj)       mango_list_set_at((MangoList *)list, index, (MangoObject *)obj)
-#define LIST_PUSH_BACK(list, obj)           mango_list_push_back((MangoList *)list, (MangoObject *)obj)
-#define LIST_PUSH_FRONT(list, obj)          mango_list_push_front((MangoList *)list, (MangoObject *)obj)
-#define LIST_POP_BACK(list)                 mango_list_pop_back((MangoList *)list)
-#define LIST_POP_FRONT(list)                mango_list_pop_front((MangoList *)list)
-#define LIST_REMOVE_BACK(list)              mango_list_remove_back((MangoList *)list)
-#define LIST_REMOVE_FRONT(list)             mango_list_remove_front((MangoList *)list)
-#define LIST_BACK(list)                     mango_list_back((MangoList *)list)
-#define LIST_FRONT(list)                    mango_list_front((MangoList *)list)
+#define LIST_INSERT_AT(list, obj, index)    mango_list_insert_at((MangoList *)(list), (MangoObject *)(obj), index)
+#define LIST_SET_AT(list, index, obj)       mango_list_set_at((MangoList *)(list), index, (MangoObject *)(obj))
+#define LIST_PUSH_BACK(list, obj)           mango_list_push_back((MangoList *)(list), (MangoObject *)(obj))
+#define LIST_PUSH_FRONT(list, obj)          mango_list_push_front((MangoList *)(list), (MangoObject *)(obj))
+#define LIST_POP_BACK(list)                 mango_list_pop_back((MangoList *)(list))
+#define LIST_POP_FRONT(list)                mango_list_pop_front((MangoList *)(list))
+#define LIST_REMOVE_BACK(list)              mango_list_remove_back((MangoList *)(list))
+#define LIST_REMOVE_FRONT(list)             mango_list_remove_front((MangoList *)(list))
+#define LIST_BACK(list)                     mango_list_back((MangoList *)(list))
+#define LIST_FRONT(list)                    mango_list_front((MangoList *)(list))
 
 /**
  * Super class of all associative containers.
