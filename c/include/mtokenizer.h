@@ -10,6 +10,15 @@ extern "C" {
 
 #define BUFFER_SIZE         4096
 #define MAX_PUSHED_CHARS    64
+#define BRACE   '{'
+
+enum
+{
+    NODETYPE_NONE,
+    NODETYPE_COMMENT,
+    NODETYPE_VARIABLE,
+    NODETYPE_TAG
+};
 
 /**
  * Tokenizers for a mango template.  Mango templates are very simple.

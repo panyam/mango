@@ -5,15 +5,6 @@
 #include "mtokenizer.h"
 #include "mmemutils.h"
 
-#define BRACE   '{'
-enum
-{
-    NODETYPE_NONE,
-    NODETYPE_COMMENT,
-    NODETYPE_VARIABLE,
-    NODETYPE_TAG
-};
-
 /**
  * Gets the next character.
  */
