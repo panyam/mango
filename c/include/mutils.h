@@ -37,13 +37,13 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
 /**
  * Casts a void* to an object.
  */
-extern inline MangoObject *OBJ(void *obj);
+inline MangoObject *OBJ(void *obj) { return (MangoObject *)obj; }
 // #define OBJ(x)      ((MangoObject *)(x))
 
 /**
  * Initialises a mango object's refcount and prototype.
  */
-extern inline MangoObject *OBJ_INIT(void *obj, void *proto);
+inline MangoObject *OBJ_INIT(void *obj, void *proto) { return mango_object_init(OBJ(obj), (MangoPrototype *)proto); }
 
 /**
  * Gets an object's reference count

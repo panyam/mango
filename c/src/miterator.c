@@ -15,11 +15,11 @@ void mango_iterator_dealloc(MangoIterator *miter)
  * \param   miter   Iterator to peek from.
  * \return  true if more items are to follow, false otherwise.
  */
-BOOL mango_iterator_hase_next(MangoIterator *miter)
+BOOL mango_iterator_has_next(MangoIterator *miter)
 {
-    if (miter != NULL && miter->__prototype__->hasNextFunc != NULL)
-        miter->__prototype__->hasNextFunc(miter);
-    return false;
+    return miter != NULL && 
+           miter->__prototype__->hasNextFunc != NULL &&
+           miter->__prototype__->hasNextFunc(miter);
 }
 
 /**
@@ -29,7 +29,7 @@ BOOL mango_iterator_hase_next(MangoIterator *miter)
 MangoObject *mango_iterator_next(MangoIterator *miter)
 {
     if (miter != NULL && miter->__prototype__->nextFunc != NULL)
-        miter->__prototype__->nextFunc(miter);
+        return miter->__prototype__->nextFunc(miter);
     return NULL;
 }
 

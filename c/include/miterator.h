@@ -12,8 +12,8 @@ extern "C" {
  * Prototypes of iterators.
  */
 INHERIT_STRUCT(MangoIteratorPrototype, MangoPrototype,
-    BOOL        (*hasNextFunc)(MangoIterator *iterator);
-    MangoObject (*nextFunc)(MangoIterator *iterator);
+    BOOL            (*hasNextFunc)(MangoIterator *iterator);
+    MangoObject *   (*nextFunc)(MangoIterator *iterator);
 );
 
 DECLARE_CLASS(MangoIterator, MangoIteratorPrototype);
@@ -34,7 +34,7 @@ extern void mango_iterator_dealloc(MangoIterator *miter);
  * \param   miter   Iterator to peek from.
  * \return  true if more items are to follow, false otherwise.
  */
-extern BOOL mango_iterator_hase_next(MangoIterator *miter);
+extern BOOL mango_iterator_has_next(MangoIterator *miter);
 
 /**
  * Gets the next item pointed by the iterator.
