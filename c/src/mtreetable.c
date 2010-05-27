@@ -24,11 +24,9 @@ DECLARE_PROTO_FUNC("MangoTreeTable", MangoTablePrototype, mango_treetable_protot
     ((MangoPrototype *)&__proto__)->deallocFunc         = (ObjectDeallocFunc)mango_treetable_dealloc;
     ((MangoCollectionPrototype *)&__proto__)->sizeFunc  = (CollectionSizeFunc)mango_treetable_size;
     __proto__.getFunc          = (TableGetFunc)mango_treetable_get;
-    /*
     __proto__.containsFunc     = (TableContainsFunc)mango_treetable_contains;
     __proto__.putFunc          = (TablePutFunc)mango_treetable_put;
     __proto__.eraseFunc        = (TableEraseFunc)mango_treetable_erase;
-    */
 );
 
 /**

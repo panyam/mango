@@ -107,7 +107,7 @@ public:
     virtual void CheckParsedNodeWith(int numNodes, ...)
     {
         MangoError *error   = NULL;
-		MangoNode *node     = mango_parser_parse(&parser_context, &error);
+        MangoNode *node     = mango_parser_parse(&parser_context, &error);
 
         if (numNodes == 1)
         {
@@ -153,7 +153,7 @@ public:
     virtual void CheckParsedNodeForException(int code, std::string message)
     {
         MangoError *error   = NULL;
-		MangoNode *node     = mango_parser_parse(&parser_context, &error);
+        MangoNode *node     = mango_parser_parse(&parser_context, &error);
         if (node != NULL)
             OBJ_DECREF(node);
         CHECK(error != NULL);
@@ -358,7 +358,7 @@ TEST_FIXTURE(ParserTestFixture, TestMultipleFiltersWithArguments)
     CheckParsedNodeWith(1, expectedNode);
 }
 
-///////////////	Testing tags now!!!
+///////////////    Testing tags now!!!
 
 TEST_FIXTURE(ParserTestFixture, TestDiscardingTokens)
 {

@@ -92,9 +92,9 @@ void mango_var_set_value(MangoVar *mvar, MangoString *value, BOOL isQuoted)
  * template and node contexts.
  */
 int mango_var_resolve(MangoVar *mvar,
-                           MangoTemplateContext *context,
-                           MangoNodeRendererContext *topContext,
-                           void **value)
+                      MangoTemplateContext *context,
+                      MangoNodeRendererContext *topContext,
+                      void **value)
 {
     return 0;
 }

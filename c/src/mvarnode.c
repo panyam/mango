@@ -124,7 +124,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     }
     else
     {
-        if (COLLECTION_IS_EMPTY(filter_nodes) == 0)
+        if (COLLECTION_IS_EMPTY(filter_nodes))
         {
             OBJ_DECREF(filter_nodes);
             filter_nodes = NULL;
