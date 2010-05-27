@@ -2,6 +2,25 @@
 #include "mtable.h"
 
 /**
+ * Puts multiple values into a table.  Values are entered as key and value
+ * pairs and terminated by the first NULL key argument.
+ */
+MangoTable *mango_table_put_values(MangoTable *table, ...)
+{
+    va_list ap;
+    va_start(ap, table);
+    MangoString *key = va_arg(ap, MangoString *);
+    while (key != NULL)
+    {
+        MangoObject *value = va_arg(ap, MangoObject *);
+        mango_table_put(table, key, value);
+        key = va_arg(ap, MangoString *);
+    }
+    va_end(ap);
+    return table;
+}
+
+/**
  * Frees the table.
  * \param   table  Collection to be freed.
  */

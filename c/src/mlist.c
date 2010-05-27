@@ -29,6 +29,38 @@ MangoList *mango_list_init(MangoList *list, MangoListPrototype *proto)
 }
 
 /**
+ * Adds a numValues values to the end of the list.
+ */
+MangoList *mango_list_add_values(MangoList *list, int numValues, ...)
+{
+    va_list ap;
+    va_start(ap, numValues);
+    for (int i = 0;i < numValues;i++)
+    {
+        MangoObject *obj= va_arg(ap, MangoObject *);
+        LIST_PUSH_BACK(list, obj);
+    }
+    va_end(ap);
+    return list;
+}
+
+/**
+ * Pushes numValues values to the start of the list.
+ */
+MangoList *mango_list_push_values(MangoList *list, int numValues, ...)
+{
+    va_list ap;
+    va_start(ap, numValues);
+    for (int i = 0;i < numValues;i++)
+    {
+        MangoObject *obj= va_arg(ap, MangoObject *);
+        LIST_PUSH_FRONT(list, obj);
+    }
+    va_end(ap);
+    return list;
+}
+
+/**
  * Sets the item at a particular index.
  * \param   list    List in which item is to be set.
  * \param   index   Index at which the item is to be set.

@@ -13,6 +13,11 @@ INHERIT_STRUCT(MangoTreeTable, MangoTable,
 );
 
 /**
+ * Creates a new table that is implemented as a binary tree.
+ */
+extern MangoTreeTable *mango_treetable_new();
+
+/**
  * Get the size of the table.
  *
  * \param   table   Table whose size is to be returned.
@@ -43,11 +48,6 @@ extern void mango_treetable_erase(MangoTreeTable *table, MangoString *key);
  * value.  Also the value is increfed.
  */
 extern MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value);
-
-/**
- * Creates a new table that is implemented as a binary tree.
- */
-extern MangoTreeTable *mango_treetable_new();
 
 /**
  * Frees the tree based table

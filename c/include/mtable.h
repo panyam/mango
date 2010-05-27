@@ -33,6 +33,14 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
  */
 DECLARE_CLASS(MangoTable, MangoTablePrototype);
 
+#define TABLE_PUT_VALUES(table, ...)    mango_table_put_values((MangoTable *)(table), __VA_ARGS__)
+
+/**
+ * Adds multiple values to a table.  Values are entered as key and value
+ * pairs and terminated by the first NULL key argument.
+ */
+extern MangoTable *mango_table_put_values(MangoTable *table, ...);
+
 /**
  * Frees the table.
  * \param   table   Table to be freed.
