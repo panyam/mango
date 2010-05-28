@@ -19,10 +19,13 @@ include Makefile.common
 # Main Makefile
 #
 .PHONY: all libs test install
-all: libs test
+all: libs ext test
 
 libs:
 	@cd src ; make static shared
+
+ext:
+	@cd ext ; make static shared
 
 test: libs
 	@cd test ; make

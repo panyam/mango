@@ -1,7 +1,6 @@
 
-#include "mfilter.h"
+#include "mangopub.h"
 #include "maddfilter.h"
-#include "mmemutils.h"
 
 MangoObject *mango_addfilter_apply(MangoFilter *filter, const MangoObject *input,
                                    MangoTemplateContext *context,

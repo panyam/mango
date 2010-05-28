@@ -36,13 +36,13 @@ STATIC_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(STATIC_LIB_NAME)"
 SOURCE_FOLDERS  =   . utils core parser nodes renderer resolver
 INCLUDE_FOLDERS :=  $(foreach dir,$(SOURCE_FOLDERS),$(dir))
 MANGO_SOURCES   := $(foreach dir,$(SOURCE_FOLDERS),$(wildcard $(dir)/*.c))
-MANGO_OBJS      = $(foreach obj, $(patsubst %.c,%.o,$(MANGO_SOURCES)), $(OUTPUT_DIR)/$(obj))
+MANGO_OBJS      = $(foreach obj, $(patsubst %.c,%.o,$(MANGO_SOURCES)), $(OUTPUT_DIR)/src/$(obj))
 LIBS            = 
 
 ###################     Begin Targets       ######################
 
 # Implicit rule to build .o into the build directory from .c
-$(OUTPUT_DIR)/%.o : %.c
+$(OUTPUT_DIR)/src/%.o : %.c
 	@echo Building $@
 	@$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
 
@@ -75,8 +75,8 @@ install: shared static
 
 base:
 	@echo Building output directories...
-	@mkdir -p "$(OUTPUT_DIR)"
-	@cd $(OUTPUT_DIR) ; mkdir -p $(SOURCE_FOLDERS)
+	@mkdir -p "$(OUTPUT_DIR)/src"
+	@cd $(OUTPUT_DIR)/src ; mkdir -p $(SOURCE_FOLDERS)
 
 .PHONY: clean cleanall distclean
 clean:

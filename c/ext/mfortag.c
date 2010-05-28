@@ -1,16 +1,6 @@
 
+#include "mangopub.h"
 #include "mfortag.h"
-#include "mmemutils.h"
-#include "mnode.h"
-#include "merror.h"
-#include "mvar.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
-#include "mlinkedlist.h"
-#include "marraylist.h"
-#include "mtokenlists.h"
-#include "mparser.h"
-#include "mparsercontext.h"
 
 static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
