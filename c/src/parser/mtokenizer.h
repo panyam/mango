@@ -91,6 +91,12 @@ struct MangoTokenizer
     int                 currColumn;
 
     /**
+     * If true then identifiers are further checked if they are reserved
+     * words and their associated token number is returned.
+     */
+    BOOL                checkReservedWords;
+
+    /**
      * Tokenizer state vars.
      */
     int                 _insideNode;

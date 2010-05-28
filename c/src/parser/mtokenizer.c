@@ -78,6 +78,7 @@ void mango_tokenizer_reset(MangoTokenizer *tokenizer, MangoInputSource *input)
     tokenizer->pushedCharsLen       = 0;
     tokenizer->currLine             = 0;
     tokenizer->currColumn           = 0;
+    tokenizer->checkReservedWords   = false;
 }
 
 /**
@@ -281,9 +282,32 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                 else
                 {
                     // finished identifier
+                    mango_token_append_char(token, 0);
                     token->tokenType = TOKEN_IDENTIFIER;
                     tokenizer->_insideIdentifier = false;
                     mango_tokenizer_unget_char(tokenizer, char1);
+
+                    // check for specific identifiers:
+                    if (tokenizer->checkReservedWords)
+                    {
+                        const char *tokValBuffer = token->tokenValue->buffer;
+                        if (strcmp(tokValBuffer, "not") == 0)
+                        {
+                            token->tokenType = TOKEN_NOT;
+                        }
+                        else if (strcmp(tokValBuffer, "and") == 0)
+                        {
+                            token->tokenType = TOKEN_AND;
+                        }
+                        else if (strcmp(tokValBuffer, "or") == 0)
+                        {
+                            token->tokenType = TOKEN_OR;
+                        }
+                        else if (strcmp(tokValBuffer, "in") == 0)
+                        {
+                            token->tokenType = TOKEN_IN;
+                        }
+                    }
                     return true;
                 }
             }
@@ -354,10 +378,34 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                     mango_tokenizer_unget_char(tokenizer, char2);
                 }
             }
+            else if (char1 == '<' || char1 == '>')
+            {
+                int char2 = mango_tokenizer_next_char(tokenizer);
+                if (char2 == '=')
+                {
+                    token->tokenType = char1 == '<' ? TOKEN_LE : TOKEN_GE;
+                }
+                else
+                {
+                    mango_tokenizer_unget_char(tokenizer, char2);
+                    token->tokenType = char1 == '<' ? TOKEN_LT : TOKEN_GT;
+                }
+                return true;
+            }
+            else if (char1 == '!' || char1 == '=')
+            {
+                int char2 = mango_tokenizer_next_char(tokenizer);
+                if (char2 == '=')
+                {
+                    token->tokenType = char1 == '!' ? TOKEN_NE : TOKEN_EQ;
+                    return true;
+                }
+                return false;
+            }
             else
             {
                 fprintf(stderr, "Invalid Character: %c/%d", char1, char1);
-                assert(false);
+                assert("Invalid Character" && false);
             }
         }
         char1 = mango_tokenizer_next_char(tokenizer);
