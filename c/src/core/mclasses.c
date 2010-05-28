@@ -1,7 +1,5 @@
 
-#include "mclasses.h"
-#include "mbintree.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 typedef struct MangoClass
 {

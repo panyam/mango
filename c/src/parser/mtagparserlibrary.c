@@ -1,8 +1,5 @@
 
-#include "mtagparserlibrary.h"
-#include "msingletons.h"
-#include "mtagparser.h"
-#include "mtable.h"
+#include "mangopub.h"
 
 /**
  * Gets a tagparser by a given name.

@@ -1,7 +1,4 @@
-#include <stdarg.h>
-#include "mobject.h"
-#include "mmemutils.h"
-#include "mclasses.h"
+#include "mangopub.h"
 
 /**
  * Initialises a prototype object with a name and default methods.

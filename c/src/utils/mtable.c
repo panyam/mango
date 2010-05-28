@@ -1,5 +1,4 @@
-
-#include "mtable.h"
+#include "mangopub.h"
 
 /**
  * Puts multiple values into a table.  Values are entered as key and value

@@ -1,10 +1,5 @@
 
-#include "merror.h"
-#include "mstringbuffer.h"
-#include "mrcstring.h"
-#include "mrcstringfactory.h"
-#include "mrcstringtable.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 DECLARE_PROTO_FUNC("RCStringFactory", MangoStringFactoryPrototype, mango_rcstringfactory_prototype,
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstringfactory_dealloc;

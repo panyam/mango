@@ -1,10 +1,5 @@
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-#include "merror.h"
-#include "mstringbuffer.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 /**
  * Create a new string with a given capacity.

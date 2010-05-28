@@ -1,10 +1,5 @@
 
-#include "marraylist.h"
-#include "mvarresolver.h"
-#include "mtmplctx.h"
-#include "mvar.h"
-#include "mnumber.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 /**
  * The default variable resolver function.

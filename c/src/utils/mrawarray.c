@@ -1,6 +1,4 @@
-
-#include "mrawarray.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 /**
  * Creates a new array with a given capacity.

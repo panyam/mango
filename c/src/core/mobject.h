@@ -3,7 +3,6 @@
 #define __MANGO_OBJECT_H__
 
 #include "mfwddefs.h"
-#include "mmemutils.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -252,7 +251,7 @@ extern MangoIterator *mango_object_iterator(MangoObject *obj);
 /**
  * Utils on the object stuff.
  */
-#include "mutils.h"
+#include "utils/mutils.h"
 
 #ifdef __cplusplus
 }

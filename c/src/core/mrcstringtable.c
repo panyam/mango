@@ -1,9 +1,5 @@
 
-#include <string.h>
-#include "mrcstringtable.h"
-#include "mmemutils.h"
-#include "mbintree.h"
-#include "mrawarray.h"
+#include "mangopub.h"
 
 void rcstringdata_free(MangoRCStringData *rcsdata)
 {

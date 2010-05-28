@@ -1,13 +1,5 @@
 
-#include "mvarnode.h"
-#include "merror.h"
-#include "mparser.h"
-#include "mparsercontext.h"
-#include "mvar.h"
-#include "mfilternode.h"
-#include "mlinkedlist.h"
-#include "mmemutils.h"
-#include "mclasses.h"
+#include "mangopub.h"
 
 /**
  * The prototype for mango var nodes.

@@ -1,18 +1,5 @@
 
-#include "mmemutils.h"
-#include "mfilternode.h"
-#include "mfilter.h"
-#include "mfilterlibrary.h"
-#include "merror.h"
-#include "msingletons.h"
-#include "mvar.h"
-#include "mlinkedlist.h"
-#include "mtokenlists.h"
-#include "mparser.h"
-#include "mparsercontext.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
-#include "mtmplctx.h"
+#include "mangopub.h"
 
 DECLARE_PROTO_FUNC("MangoFilterNode", MangoPrototype, mango_filternode_prototype,
     __proto__.deallocFunc   = (ObjectDeallocFunc)mango_filternode_dealloc;

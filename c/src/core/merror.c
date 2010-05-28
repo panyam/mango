@@ -1,6 +1,5 @@
 
-#include <stdarg.h>
-#include "merror.h"
+#include "mangopub.h"
 
 /**
  * Creates a new error message.

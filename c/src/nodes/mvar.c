@@ -1,16 +1,5 @@
 
-#include "mvar.h"
-#include "mvarlibrary.h"
-#include "mparser.h"
-#include "mparsercontext.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
-#include "mtmplctx.h"
-#include "mnode.h"
-#include "mmemutils.h"
-#include "mtokenlists.h"
-#include "mutils.h"
-#include "msingletons.h"
+#include "mangopub.h"
 
 /**
  * The prototype for the MangoVar.

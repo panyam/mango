@@ -1,5 +1,5 @@
 
-#include "mstringfactory.h"
+#include "mangopub.h"
 
 /**
  * Creates a new string.

@@ -1,6 +1,4 @@
-
-#include "mlinkedlist.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 void mango_linkedlist_dealloc(MangoLinkedList *mlist);
 BOOL mango_linkedlist_is_empty(MangoLinkedList *mlist);

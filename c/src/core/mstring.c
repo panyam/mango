@@ -1,7 +1,5 @@
 
-#include "merror.h"
-#include "mstring.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 /**
  * Copies another mango string.

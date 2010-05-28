@@ -2,7 +2,7 @@
 #ifndef __MANGO_ARRAYLIST_H__
 #define __MANGO_ARRAYLIST_H__
 
-#include "mlist.h"
+#include "utils/mlist.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,9 +1,5 @@
 
-#include <stdarg.h>
-#include "mmemutils.h"
-#include "mnodelist.h"
-#include "mnode.h"
-#include "mlinkedlist.h"
+#include "mangopub.h"
 
 /**
  * The prototype for mango node lists.

@@ -1,7 +1,5 @@
 
-#include "mstring.h"
-#include "mfreetext.h"
-#include "mclasses.h"
+#include "mangopub.h"
 
 /**
  * The prototype for mango node lists.

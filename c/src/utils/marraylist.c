@@ -1,6 +1,4 @@
-
-#include "marraylist.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 void mango_arraylist_dealloc(MangoArrayList *array);
 void mango_arraylist_clear(MangoArrayList *array);

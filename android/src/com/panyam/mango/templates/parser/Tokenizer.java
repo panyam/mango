@@ -24,10 +24,10 @@ public class Tokenizer
     // Tells which node the tokenizer is inside.
     protected NodeType    insideNode;
     protected int        nodeEndChar;        // character that will end the node
-    protected	TokenType        nodeCloseToken;        // token that should be read for a node close
-    protected 	boolean     insideQuotes;        // are we inside a quoted string?
-    protected 	boolean     insideIdentifier;    // whether we are reading an identifier
-    protected 	int        quoteType;          // single or double
+    protected    TokenType        nodeCloseToken;        // token that should be read for a node close
+    protected     boolean     insideQuotes;        // are we inside a quoted string?
+    protected     boolean     insideIdentifier;    // whether we are reading an identifier
+    protected     int        quoteType;          // single or double
 
     // Current input buffer read from the input stream
     protected static final    int MAX_PUSHED_CHARS = 64;
@@ -35,7 +35,7 @@ public class Tokenizer
     protected int         pushedCharsLen;
     protected int         currLine;
     protected int         currColumn;
-    protected boolean	checkIdentifierOperators;
+    protected boolean    checkReservedWords;
     
     /**
      * Creates a tokenizer with an input stream.
@@ -89,9 +89,9 @@ public class Tokenizer
      * Returns whether operators like "in", "and", "or" and "not" should be 
      * returned as their own type or as identifiers.
      */
-    public boolean checkIdentifierOperators()
+    public boolean checkReservedWords()
     {
-    	return checkIdentifierOperators;
+        return checkReservedWords;
     }
 
     /**
@@ -99,9 +99,9 @@ public class Tokenizer
      * returned as their own type or as identifiers.
      * @param check
      */
-    public void setCheckIdentifierOperators(boolean check)
+    public void setCheckReservedWords(boolean check)
     {
-    	checkIdentifierOperators = check;
+        checkReservedWords = check;
     }
 
     /**
@@ -269,29 +269,25 @@ public class Tokenizer
                         ungetChar(char1);
                         
                         // check for specific identifiers:
-                        if (checkIdentifierOperators)
+                        if (checkReservedWords)
                         {
-                        	String ident = token.tokenValue.toString();
-                        	if (ident.equals("not"))
-                        	{
-                        		token.tokenType = TokenType.TOKEN_NOT;
-                        		return true;
-                        	}
-                        	else if (ident.equals("and"))
-                        	{
-                        		token.tokenType = TokenType.TOKEN_AND;
-                        		return true;
-                        	}
-                        	else if (ident.equals("or"))
-                        	{
-                        		token.tokenType = TokenType.TOKEN_OR;
-                        		return true;
-                        	}
-                        	else if (ident.equals("in"))
-                        	{
-                        		token.tokenType = TokenType.TOKEN_IN;
-                        		return true;
-                        	}
+                            String ident = token.tokenValue.toString();
+                            if (ident.equals("not"))
+                            {
+                                token.tokenType = TokenType.TOKEN_NOT;
+                            }
+                            else if (ident.equals("and"))
+                            {
+                                token.tokenType = TokenType.TOKEN_AND;
+                            }
+                            else if (ident.equals("or"))
+                            {
+                                token.tokenType = TokenType.TOKEN_OR;
+                            }
+                            else if (ident.equals("in"))
+                            {
+                                token.tokenType = TokenType.TOKEN_IN;
+                            }
                         }
                         return true;
                     }
@@ -365,27 +361,27 @@ public class Tokenizer
                 }
                 else if (char1 == '<' || char1 == '>')
                 {
-                	int char2 = nextChar();
-                	if (char2 == '=')
-                	{
-                		token.tokenType = char1 == '<' ? TokenType.TOKEN_LE : TokenType.TOKEN_GE;
-                	}
-                	else
-                	{
-                		ungetChar(char2);
-                		token.tokenType = char1 == '<' ? TokenType.TOKEN_LT : TokenType.TOKEN_GT;
-                	}
-            		return true;
+                    int char2 = nextChar();
+                    if (char2 == '=')
+                    {
+                        token.tokenType = char1 == '<' ? TokenType.TOKEN_LE : TokenType.TOKEN_GE;
+                    }
+                    else
+                    {
+                        ungetChar(char2);
+                        token.tokenType = char1 == '<' ? TokenType.TOKEN_LT : TokenType.TOKEN_GT;
+                    }
+                    return true;
                 }
                 else if (char1 == '!' || char1 == '=')
                 {
-                	int char2 = nextChar();
-                	if (char2 == '=')
-                	{
-                		token.tokenType = char1 == '!' ? TokenType.TOKEN_NE : TokenType.TOKEN_EQ;
-                		return true;
-                	}
-                	return false;
+                    int char2 = nextChar();
+                    if (char2 == '=')
+                    {
+                        token.tokenType = char1 == '!' ? TokenType.TOKEN_NE : TokenType.TOKEN_EQ;
+                        return true;
+                    }
+                    return false;
                 }
                 else
                 {
@@ -397,9 +393,9 @@ public class Tokenizer
 
         if (insideIdentifier)
         {
-        	// we were reading an identifier so return it first
-        	insideIdentifier = false;
-        	return true;
+            // we were reading an identifier so return it first
+            insideIdentifier = false;
+            return true;
         }
 
         token.tokenType = TokenType.TOKEN_EOF;
@@ -428,9 +424,9 @@ public class Tokenizer
      */
     protected int peekChar()
     {
-    	int out = nextChar();
-    	ungetChar(out);
-    	return out;
+        int out = nextChar();
+        ungetChar(out);
+        return out;
     }
     
     /**

@@ -1,18 +1,5 @@
 
-#include <string.h>
-#include "merror.h"
-#include "mtokenizer.h"
-#include "mtemplateloader.h"
-#include "mparser.h"
-#include "mparsercontext.h"
-#include "mrawlist.h"
-#include "mlinkedlist.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
-#include "mfreetext.h"
-#include "mvarnode.h"
-#include "mtagnode.h"
-#include "mnodelist.h"
+#include "mangopub.h"
 
 /**
  * Create a new parser given a tokenizer.

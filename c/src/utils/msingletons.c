@@ -1,6 +1,4 @@
-#include "msingletons.h"
-#include "mtreetable.h"
-#include "mstring.h"
+#include "mangopub.h"
 
 /**
  * Get the shared filter library instance.

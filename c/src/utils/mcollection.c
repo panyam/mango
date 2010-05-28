@@ -1,5 +1,5 @@
 
-#include "mcollection.h"
+#include "mangopub.h"
 
 DECLARE_PROTO_FUNC("MangoCollection", MangoCollectionPrototype, mango_collection_prototype,
     __proto__.sizeFunc = NULL;

@@ -1,9 +1,5 @@
 
-#include "merror.h"
-#include "minputsource.h"
-#include "mstringbuffer.h"
-#include "mtokenizer.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 /**
  * Gets the next character.

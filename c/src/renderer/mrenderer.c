@@ -1,7 +1,5 @@
 
-#include "mnode.h"
-#include "mrenderer.h"
-#include "mlinkedlist.h"
+#include "mangopub.h"
 
 /**
  * Renders a node and all its children completely.

@@ -1,9 +1,5 @@
 
-#include "mtmplctx.h"
-#include "mstring.h"
-#include "mmemutils.h"
-#include "mtreetable.h"
-#include "mlinkedlist.h"
+#include "mangopub.h"
 
 MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
 

@@ -1,5 +1,4 @@
-
-#include "mnumber.h"
+#include "mangopub.h"
 
 
 DECLARE_PROTO_FUNC("MangoNumber", MangoPrototype, mango_number_prototype,

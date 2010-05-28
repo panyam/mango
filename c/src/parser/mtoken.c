@@ -1,8 +1,5 @@
 
-#include "mtoken.h"
-#include "mmemutils.h"
-#include "mstringbuffer.h"
-#include <string.h>
+#include "mangopub.h"
 
 const char *MangoTokenStrings[TOKEN_COUNT] = {
     "TOKEN_UNKNOWN",

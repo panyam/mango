@@ -1,5 +1,5 @@
 
-#include "mlist.h"
+#include "mangopub.h"
 
 DECLARE_PROTO_FUNC("MangoList", MangoListPrototype, mango_list_prototype,
     __proto__.setAtFunc         = NULL;

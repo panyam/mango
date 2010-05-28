@@ -1,8 +1,5 @@
 
-#include "mfilterlibrary.h"
-#include "msingletons.h"
-#include "mbintree.h"
-#include "mtable.h"
+#include "mangopub.h"
 
 /**
  * Gets a filter by a given name.

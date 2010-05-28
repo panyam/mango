@@ -1,8 +1,5 @@
 
-#include "mstring.h"
-#include "mtreetable.h"
-#include "mbintree.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 typedef struct MangoTableEntry
 {

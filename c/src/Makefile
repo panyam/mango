@@ -33,8 +33,8 @@ endif
 SHARED_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(SHARED_LIB_NAME)"
 STATIC_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(STATIC_LIB_NAME)"
 
-SOURCE_FOLDERS  =   . ext
-INCLUDE_FOLDERS := $(foreach dir,$(SOURCE_FOLDERS),../include/$(dir))
+SOURCE_FOLDERS  =   . utils core parser nodes renderer resolver
+INCLUDE_FOLDERS :=  $(foreach dir,$(SOURCE_FOLDERS),$(dir))
 MANGO_SOURCES   := $(foreach dir,$(SOURCE_FOLDERS),$(wildcard $(dir)/*.c))
 MANGO_OBJS      = $(foreach obj, $(patsubst %.c,%.o,$(MANGO_SOURCES)), $(OUTPUT_DIR)/$(obj))
 LIBS            = 

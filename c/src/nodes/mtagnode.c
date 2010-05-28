@@ -1,14 +1,5 @@
 
-#include "mnode.h"
-#include "merror.h"
-#include "mparser.h"
-#include "mparsercontext.h"
-#include "mtemplateloader.h"
-#include "mtagnode.h"
-#include "mtagparser.h"
-#include "mtagparserlibrary.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
+#include "mangopub.h"
 
 /**
  * Initialises a tag node.

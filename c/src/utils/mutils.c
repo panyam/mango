@@ -1,6 +1,5 @@
 
-#include <string.h>
-#include "mobject.h"
+#include "mangopub.h"
 
 /**
  * Tells if a string is an integer optionally converting it to an integer.

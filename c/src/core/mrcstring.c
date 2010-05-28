@@ -1,10 +1,5 @@
 
-#include "merror.h"
-#include "mstringbuffer.h"
-#include "mstringfactory.h"
-#include "mrcstring.h"
-#include "mrcstringtable.h"
-#include "mmemutils.h"
+#include "mangopub.h"
 
 DECLARE_PROTO_FUNC("RCString", MangoStringPrototype, mango_rcstring_prototype,
     __proto__.bufferFunc  = (StringBufferFunc)mango_rcstring_buffer;
