@@ -2,7 +2,7 @@
 #ifndef __MANGO_VARIABLE_LIBRARY_H__
 #define __MANGO_VARIABLE_LIBRARY_H__
 
-#include "mtable.h"
+#include "mfwddefs.h"
 
 #ifdef __cplusplus
 extern "C" {

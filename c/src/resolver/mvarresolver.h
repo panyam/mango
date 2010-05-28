@@ -2,7 +2,7 @@
 #ifndef __MANGO_VARIABLE_RESOLVER_H__
 #define __MANGO_VARIABLE_RESOLVER_H__
 
-#include "mvar.h"
+#include "nodes/mvar.h"
 
 #ifdef __cplusplus
 extern "C" {

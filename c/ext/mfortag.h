@@ -2,8 +2,8 @@
 #ifndef __MANGO_FOR_TAG_NODE_H__
 #define __MANGO_FOR_TAG_NODE_H__
 
-#include "mtagnode.h"
-#include "mtagparser.h"
+#include "nodes/mtagnode.h"
+#include "parser/mtagparser.h"
 
 #ifdef __cplusplus
 extern "C" {

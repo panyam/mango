@@ -2,7 +2,7 @@
 #ifndef __MANGO_VARIABLE_H__
 #define __MANGO_VARIABLE_H__
 
-#include "mstring.h"
+#include "core/mobject.h"
 
 #ifdef __cplusplus
 extern "C" {

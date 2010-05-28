@@ -4,7 +4,6 @@
 
 #include "mfwddefs.h"
 #include "core/mclasses.h"
-#include "core/mcollection.h"
 #include "core/merror.h"
 #include "core/minputsource.h"
 #include "core/miterator.h"
@@ -40,6 +39,7 @@
 #include "resolver/mvarresolver.h"
 #include "utils/marraylist.h"
 #include "utils/mbintree.h"
+#include "utils/mcollection.h"
 #include "utils/mlinkedlist.h"
 #include "utils/mlist.h"
 #include "utils/mmemutils.h"

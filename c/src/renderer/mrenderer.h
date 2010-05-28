@@ -2,7 +2,7 @@
 #ifndef __MANGO_RENDERER_H__
 #define __MANGO_RENDERER_H__
 
-#include "mobject.h"
+#include "core/mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
