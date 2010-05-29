@@ -151,6 +151,14 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
 
 /**
  * Create a new prototype object of a given name.
+ *
+ * @test(TestPrototypeInit)
+ * MangoPrototype proto;
+ * mango_prototype_init(&proto, "Hello", sizeof(proto));
+ * CHECK_EQUAL(sizeof(hello), proto.size);
+ * CHECK(strcmp(proto.name, "Hello") == 0);
+ * free(proto.name);
+ * @endtest
  */
 extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, size_t size);
 
@@ -186,6 +194,16 @@ extern void mango_object_dealloc(MangoObject *obj);
  * Increases the reference count to an object.
  * \param   obj Object whose reference count is to be increased.
  * \return  Pointer to the same object to simplify copy semantics.
+ *
+ * @test(TestObjectIncDecRef, suite = "ObjectTests", fixture = "ObjectTestFixture")
+ * MangoObject *obj = OBJ_ALLOC(MangoObject, mango_prototype_default());
+ * CHECK_EQUAL(1, OBJ_REFCOUNT(obj));
+ * CHECK_EQUAL(2, OBJ_REFCOUNT(OBJ_INCREF(obj)));
+ * CHECK_EQUAL(3, OBJ_REFCOUNT(OBJ_INCREF(obj)));
+ * CHECK_EQUAL(true, OBJ_DECREF(obj)); CHECK(2, OBJ_REFCOUNT(obj));
+ * CHECK_EQUAL(true, OBJ_DECREF(obj)); CHECK(1, OBJ_REFCOUNT(obj));
+ * CHECK_EQUAL(false, OBJ_DECREF(obj));
+ * @endtest
  */
 extern MangoObject *mango_object_incref(MangoObject *obj);
 
