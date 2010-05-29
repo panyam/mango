@@ -17,8 +17,8 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoTable *          filterLibrary;
-    MangoTable *          tagLibrary;
+    MangoTable *            filterLibrary;
+    MangoTable *            tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
 
@@ -85,6 +85,10 @@ public:
             // string_factory(mango_rcstringfactory_new())
             string_factory = NULL;
         }
+
+        // clear the filter and tag libraries
+        COLLECTION_CLEAR(mango_filter_library_singleton());
+        COLLECTION_CLEAR(mango_tagparser_library_singleton());
     }
 
     MangoVar *create_var(const char *value,
@@ -194,6 +198,7 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
     }
 }
 
+#if 0
 /**
  * Tests the creation of a parser.
  */
@@ -410,3 +415,4 @@ TEST_FIXTURE(ParserTestFixture, TestForTagWithChildAndEmpty)
     CheckParsedNodeWith(1, ftn);
 }
 
+#endif

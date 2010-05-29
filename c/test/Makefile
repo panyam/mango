@@ -33,7 +33,7 @@ UNITTEST_PP_DIR     = ../../UnitTest++
 TEST_SOURCE_FOLDERS = .
 INCLUDE_FOLDERS     = ../src ../ext
 TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.cpp))
-TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/$(obj))
+TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
 TEST_OUTPUT         = $(OUTPUT_DIR)/$(MAIN_EXE_NAME)
 ARCHIVES            = $(UNITTEST_PP_DIR)/libUnitTest++.a
 
@@ -45,8 +45,8 @@ LIBS                =
 LINK_STATICALLY = yes
 
 # Implicit rule to build .o into the build directory from .cpp
-$(OUTPUT_DIR)/%.o : %.cpp
-	@echo Building $@
+$(OUTPUT_DIR)/test/%.o : %.cpp
+	@echo Building ext/$<  \-\>  $@ 
 	@$(GPP) -I$(UNITTEST_PP_DIR)/src -c $(CFLAGS) $< -o $@
 
 .PHONY: clean cleanall distclean test
@@ -70,7 +70,7 @@ install:
 	@echo "Nothing for install.  Run the test executable from here itself."
 
 base:
-	@mkdir -p "$(OUTPUT_DIR)"
+	@mkdir -p "$(OUTPUT_DIR)/test"
 
 clean:
 	@rm -f $(TEST_OBJS)

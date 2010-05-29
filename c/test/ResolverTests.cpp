@@ -19,8 +19,8 @@ protected:
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
     MangoTemplateContext *  context;
-    MangoVarResolver * resolver;
-    MangoVar *         var;
+    MangoVarResolver *      resolver;
+    MangoVar *              var;
 
 public:
     ResolverTestFixture() :
@@ -41,11 +41,6 @@ public:
     }
 
     virtual ~ResolverTestFixture()
-    {
-        DeleteFixture();
-    }
-
-    void DeleteFixture()
     {
         if (input_source != NULL)
         {

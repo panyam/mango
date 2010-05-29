@@ -31,8 +31,8 @@ MangoVarNode *mango_varnode_new(MangoVar *mvar, MangoList *filters)
 MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVar *mvar, MangoList *filters)
 {
     mango_node_init((MangoNode *)varnode, mango_varnode_prototype());
-    varnode->var       = mvar;
-    varnode->filterNodes    = filters;
+    varnode->var            = OBJ_INCREF(mvar);
+    varnode->filterNodes    = OBJ_INCREF(filters);
     return varnode;
 }
 

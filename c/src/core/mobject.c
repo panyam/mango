@@ -1,6 +1,11 @@
 #include "mangopub.h"
 
 /**
+ * Returns the default prototype object.
+ */
+DECLARE_PROTO_FUNC("MangoPrototype", MangoPrototype, mango_default_prototype);
+
+/**
  * Initialises a prototype object with a name and default methods.
  * \param   proto   Prototype type object to initialise.
  * \param   name    Name of the prototype.
