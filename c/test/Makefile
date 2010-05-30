@@ -33,7 +33,7 @@ TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.
 
 ALL_SOURCES_IN_INCLUDE_FOLDERS  := $(shell find $(INCLUDE_FOLDERS))
 SOURCES_WITH_TEST_TAGS          = $(shell grep -l "@test" $(ALL_SOURCES_IN_INCLUDE_FOLDERS) )
-GEN_TEST_OBJS                   = $(foreach obj, $(patsubst ../%,%,$(SOURCES_WITH_TEST_TAGS)), ./gen/$(obj).test.cpp)
+GEN_TEST_SOURCES                = $(foreach obj, $(patsubst ../%,%,$(SOURCES_WITH_TEST_TAGS)), ./gen/$(obj).test.cpp)
 
 TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
 GEN_TEST_OBJS       = $(foreach obj, $(patsubst %.cpp,%.o,$(GEN_TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
@@ -47,17 +47,17 @@ LIBS                =
 
 # Implicit rule to build .cpp.test.cpp from .cpp file, .c.test.cpp .h.test.cpp from
 # .h file
-$(OUTPUT_DIR)/test/gen/%.cpp.test.cpp : ../%.cpp
+gen/%.cpp.test.cpp : ../%.cpp
 	@echo Building test/$<  \-\>  $@ 
-	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py -p preamble $< $@
 
-$(OUTPUT_DIR)/test/gen/%.c.test.cpp : ../%.c
+gen/%.c.test.cpp : ../%.c
 	@echo Building test/$<  \-\>  $@ 
-	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py -p preamble $< $@
 
-$(OUTPUT_DIR)/test/gen/%.h.test.cpp : ../%.h
+gen/%.h.test.cpp : ../%.h
 	@echo Building test/$<  \-\>  $@ 
-	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py -p preamble $< $@
 
 # Implicit rule to build .o into the build directory from .cpp
 $(OUTPUT_DIR)/test/%.o : %.cpp
