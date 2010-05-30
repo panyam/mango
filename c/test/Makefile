@@ -34,6 +34,7 @@ TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.
 ALL_SOURCES_IN_INCLUDE_FOLDERS  := $(shell find $(INCLUDE_FOLDERS))
 SOURCES_WITH_TEST_TAGS          = $(shell grep -l "@test" $(ALL_SOURCES_IN_INCLUDE_FOLDERS) )
 GEN_TEST_SOURCES                = $(foreach obj, $(patsubst ../%,%,$(SOURCES_WITH_TEST_TAGS)), ./gen/$(obj).test.cpp)
+GEN_TEST_FOLDERS                = $(foreach obj, $(GEN_TEST_SOURCES),$(shell dirname $(obj)))
 
 TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
 GEN_TEST_OBJS       = $(foreach obj, $(patsubst %.cpp,%.o,$(GEN_TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
@@ -62,7 +63,7 @@ gen/%.h.test.cpp : ../%.h
 # Implicit rule to build .o into the build directory from .cpp
 $(OUTPUT_DIR)/test/%.o : %.cpp
 	@echo Building test/$<  \-\>  $@ 
-	@$(GPP) -I$(UNITTEST_PP_DIR)/src -c $(CFLAGS) $< -o $@
+	@$(GPP) -I$(UNITTEST_PP_DIR)/src -I. -c $(CFLAGS) $< -o $@
 
 .PHONY: clean cleanall distclean test
 
@@ -73,8 +74,10 @@ test: base $(TEST_OBJS) $(GEN_TEST_SOURCES) $(GEN_TEST_OBJS)
 
 base:
 	@echo Gen Test Sources: $(GEN_TEST_SOURCES)
+	@echo Gen Test Folders: $(GEN_TEST_FOLDERS)
 	@echo Gen Test Objects: $(GEN_TEST_OBJS)
-	@mkdir -p "$(OUTPUT_DIR)/test"
+	@mkdir -p "$(OUTPUT_DIR)/test/gen"
+	@mkdir -p $(foreach dir,$(GEN_TEST_FOLDERS),"$(OUTPUT_DIR)/test/$(dir)")
 
 clean:
 	@rm -f $(TEST_OBJS)

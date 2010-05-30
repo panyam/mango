@@ -63,7 +63,7 @@ extern MangoObject *mango_filternode_apply(MangoFilterNode *fnode, const MangoOb
  * CHECK_EQUAL(2, OBJ_REFCOUNT(filter));
  * CHECK(NULL == filternode->arguments);
  * MangoString *varname = mango_rcstring_new("a", -1, NULL);
- * MangoVar *var = mango_var_new(varname, false, * NULL);
+ * MangoVar *var = mango_var_new(varname, false, NULL);
  * mango_filternode_add_arg(filternode, var);
  * CHECK_EQUAL(2, OBJ_REFCOUNT(var));
  * CHECK_EQUAL(2, OBJ_REFCOUNT(varname));

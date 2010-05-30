@@ -8,8 +8,8 @@
  *
  * @test(TestStringBufferCreateWithCapacity)
  * MangoStringBuffer *mstr = mango_stringbuffer_with_capacity(32);
- * CHECK_EQUAL(32, mstr->capacity);
- * CHECK_EQUAL(0, mstr->length);
+ * CHECK(32 == mstr->capacity);
+ * CHECK(0 == mstr->length);
  * mango_stringbuffer_free(mstr);
  * @endtest
  */
@@ -84,8 +84,8 @@ void mango_stringbuffer_free(MangoStringBuffer *mstr)
  * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
  * CHECK_EQUAL(strlen("Hello World"), mstr->length);
  * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
- * mango_stringbuffer_clear(mstr)
- * CHECK_EQUAL(0, mstr->length);
+ * mango_stringbuffer_clear(mstr);
+ * CHECK_EQUAL(unsigned(0), mstr->length);
  * mango_stringbuffer_free(mstr);
  * @endtest
  */
@@ -106,7 +106,7 @@ void mango_stringbuffer_clear(MangoStringBuffer *mstr)
  * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
  * CHECK_EQUAL(strlen("Hello World"), mstr->length);
  * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
- * mango_stringbuffer_set(mstr, "Hello Magnificient World", -1)
+ * mango_stringbuffer_set(mstr, "Hello Magnificient World", -1);
  * CHECK_EQUAL(strlen("Hello Magnificient World"), mstr->length);
  * CHECK_EQUAL(1 + strlen("Hello Magnificient World"), mstr->capacity);
  * CHECK(strcmp("Hello Magnificient World", mstr->buffer) == 0);
@@ -237,13 +237,13 @@ int mango_stringbuffer_append_format(MangoStringBuffer *mstr, const char *fmt, .
  * \param   mstr    String to be updated.
  * \param   newcap  New capacity to be made available in the string.
  *
- * @test(TestStringBufferAppend)
+ * @test(TestStringEnsureCapacity)
  * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
  * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
  * CHECK_EQUAL(strlen("Hello World"), mstr->length);
  * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
  * mango_stringbuffer_ensure_capacity(mstr, 128);
- * CHECK_EQUAL((128 * 3) / 2, mstr->capacity);
+ * CHECK_EQUAL(unsigned((128 * 3) / 2), mstr->capacity);
  * mango_stringbuffer_free(mstr);
  * @endtest
  */

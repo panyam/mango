@@ -26,6 +26,10 @@ MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, s
     return proto;
 }
 
+/**
+ * Returns the default mango prototype.
+ */
+DECLARE_PROTO_FUNC("Prototype", MangoPrototype, mango_prototype_default);
 
 /**
  * Allocates an object of a given size.
@@ -35,6 +39,9 @@ MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, s
  */
 MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto)
 {
+    if (proto == NULL)
+        proto = mango_prototype_default();
+
     MangoObject *obj    = (MangoObject *)malloc(objSize);
     mango_object_init(obj, proto);
     return obj;

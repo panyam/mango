@@ -10,19 +10,21 @@
 #include "maddfilter.h"
 
 
+#line 9 "../src/core/mstringbuffer.c"
 TEST(TestStringBufferCreateWithCapacity)
 {
-    #line 8 "../src/core/mstringbuffer.c"
+    #line 10 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_with_capacity(32);
-    CHECK_EQUAL(32, mstr->capacity);
-    CHECK_EQUAL(0, mstr->length);
+    CHECK(32 == mstr->capacity);
+    CHECK(0 == mstr->length);
     mango_stringbuffer_free(mstr);
     
 }
 
+#line 33 "../src/core/mstringbuffer.c"
 TEST(TestStringBufferCreateFromBuffer)
 {
-    #line 32 "../src/core/mstringbuffer.c"
+    #line 34 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
     CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
     CHECK_EQUAL(strlen("Hello World"), mstr->length);
@@ -31,27 +33,29 @@ TEST(TestStringBufferCreateFromBuffer)
     
 }
 
+#line 83 "../src/core/mstringbuffer.c"
 TEST(TestStringBufferClear)
 {
-    #line 82 "../src/core/mstringbuffer.c"
+    #line 84 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
     CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
     CHECK_EQUAL(strlen("Hello World"), mstr->length);
     CHECK(strcmp(mstr->buffer, "Hello World") == 0);
-    mango_stringbuffer_clear(mstr)
-    CHECK_EQUAL(0, mstr->length);
+    mango_stringbuffer_clear(mstr);
+    CHECK_EQUAL(unsigned(0), mstr->length);
     mango_stringbuffer_free(mstr);
     
 }
 
+#line 105 "../src/core/mstringbuffer.c"
 TEST(TestStringBufferSet)
 {
-    #line 104 "../src/core/mstringbuffer.c"
+    #line 106 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
     CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
     CHECK_EQUAL(strlen("Hello World"), mstr->length);
     CHECK(strcmp(mstr->buffer, "Hello World") == 0);
-    mango_stringbuffer_set(mstr, "Hello Magnificient World", -1)
+    mango_stringbuffer_set(mstr, "Hello Magnificient World", -1);
     CHECK_EQUAL(strlen("Hello Magnificient World"), mstr->length);
     CHECK_EQUAL(1 + strlen("Hello Magnificient World"), mstr->capacity);
     CHECK(strcmp("Hello Magnificient World", mstr->buffer) == 0);
@@ -59,9 +63,10 @@ TEST(TestStringBufferSet)
     
 }
 
+#line 131 "../src/core/mstringbuffer.c"
 TEST(TestStringBufferAppend)
 {
-    #line 130 "../src/core/mstringbuffer.c"
+    #line 131 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
     CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
     CHECK_EQUAL(strlen("Hello World"), mstr->length);
@@ -73,15 +78,16 @@ TEST(TestStringBufferAppend)
     
 }
 
-TEST(TestStringBufferAppend)
+#line 244 "../src/core/mstringbuffer.c"
+TEST(TestStringEnsureCapacity)
 {
-    #line 243 "../src/core/mstringbuffer.c"
+    #line 245 "../src/core/mstringbuffer.c"
     MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
     CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
     CHECK_EQUAL(strlen("Hello World"), mstr->length);
     CHECK(strcmp(mstr->buffer, "Hello World") == 0);
     mango_stringbuffer_ensure_capacity(mstr, 128);
-    CHECK_EQUAL((128 * 3) / 2, mstr->capacity);
+    CHECK_EQUAL(unsigned((128 * 3) / 2), mstr->capacity);
     mango_stringbuffer_free(mstr);
     
 }
