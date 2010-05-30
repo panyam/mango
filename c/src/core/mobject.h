@@ -181,16 +181,6 @@ extern MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto);
 extern void mango_object_dealloc(MangoObject *obj);
 
 /**
- * Clones an object.
- * \param   obj     Object that needs to be cloned.
- * \return  Returns a new object that is a clone of the original object.
- * The semantics of the cloning are that the returned object has its
- * reference count set to 1 and the original object's reference count is
- * not changed.
- */
-// extern MangoObject *mango_object_clone(MangoObject *obj);
-
-/**
  * Increases the reference count to an object.
  * \param   obj Object whose reference count is to be increased.
  * \return  Pointer to the same object to simplify copy semantics.
@@ -234,11 +224,6 @@ extern BOOL mango_objects_are_equal(const MangoObject *obj1, const MangoObject *
  * \return  -ve if obj1 < obj2, 0 if they are equal, +ve otherwise
  */
 extern int mango_object_compare(const MangoObject *obj1, const MangoObject *obj2);
-
-/**
- * Tells if an object can be casted to a particular prototype.
- */
-extern BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto);
 
 /**
  * Gets an attribute of this object given an integer index.

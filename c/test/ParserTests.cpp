@@ -198,7 +198,6 @@ TEST_FIXTURE(ParserTestFixture, TestParserCreate)
     }
 }
 
-#if 0
 /**
  * Tests the creation of a parser.
  */
@@ -415,4 +414,5 @@ TEST_FIXTURE(ParserTestFixture, TestForTagWithChildAndEmpty)
     CheckParsedNodeWith(1, ftn);
 }
 
+#if 0
 #endif

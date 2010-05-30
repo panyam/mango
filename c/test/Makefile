@@ -23,17 +23,20 @@ ifeq ($(MAIN_EXE_NAME),)
     MAIN_EXE_NAME     =   mangoctest
 endif
 
-####    Installation Directories    ####
-BIN_INSTALL_DIR         = /usr/local/bin
-
 ###############  DO NOT MODIFY BELOW THIS   ##############
 
 UNITTEST_PP_DIR     = ../../UnitTest++
-
+DOCTEST_PP_DIR      = ~/projects/DocTestPlusPlus
 TEST_SOURCE_FOLDERS = .
 INCLUDE_FOLDERS     = ../src ../ext
 TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.cpp))
+
+ALL_SOURCES_IN_INCLUDE_FOLDERS  := $(shell find $(INCLUDE_FOLDERS))
+SOURCES_WITH_TEST_TAGS          = $(shell grep -l "@test" $(ALL_SOURCES_IN_INCLUDE_FOLDERS) )
+GEN_TEST_OBJS                   = $(foreach obj, $(patsubst ../%,%,$(SOURCES_WITH_TEST_TAGS)), ./gen/$(obj).test.cpp)
+
 TEST_OBJS           = $(foreach obj, $(patsubst %.cpp,%.o,$(TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
+GEN_TEST_OBJS       = $(foreach obj, $(patsubst %.cpp,%.o,$(GEN_TEST_SOURCES)), $(OUTPUT_DIR)/test/$(obj))
 TEST_OUTPUT         = $(OUTPUT_DIR)/$(MAIN_EXE_NAME)
 ARCHIVES            = $(UNITTEST_PP_DIR)/libUnitTest++.a
 
@@ -42,34 +45,35 @@ LIBS                =
 
 ###################     Begin Targets       ######################
 
-LINK_STATICALLY = yes
+# Implicit rule to build .cpp.test.cpp from .cpp file, .c.test.cpp .h.test.cpp from
+# .h file
+$(OUTPUT_DIR)/test/gen/%.cpp.test.cpp : ../%.cpp
+	@echo Building test/$<  \-\>  $@ 
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
+
+$(OUTPUT_DIR)/test/gen/%.c.test.cpp : ../%.c
+	@echo Building test/$<  \-\>  $@ 
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
+
+$(OUTPUT_DIR)/test/gen/%.h.test.cpp : ../%.h
+	@echo Building test/$<  \-\>  $@ 
+	@python $(DOCTEST_PP_DIR)/doctestplusplus.py $< $@
 
 # Implicit rule to build .o into the build directory from .cpp
 $(OUTPUT_DIR)/test/%.o : %.cpp
-	@echo Building ext/$<  \-\>  $@ 
+	@echo Building test/$<  \-\>  $@ 
 	@$(GPP) -I$(UNITTEST_PP_DIR)/src -c $(CFLAGS) $< -o $@
 
 .PHONY: clean cleanall distclean test
 
-ifeq ($(LINK_STATICALLY),yes)
-
-test: base $(TEST_OBJS)
+test: base $(TEST_OBJS) $(GEN_TEST_SOURCES) $(GEN_TEST_OBJS)
 	@echo Building Test with Static Libraries...
 	$(GPP) $(CFLAGS) $(TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(OUTPUT_DIR)/libmangoext.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
 	$(TEST_OUTPUT)
 
-else
-
-test: base $(TEST_OBJS)
-	@echo Building Test with Shared Libraries...
-	$(GPP) $(CFLAGS) $(TEST_OBJS) -o $(TEST_OUTPUT) $(LIBS)
-
-endif
-
-install: 
-	@echo "Nothing for install.  Run the test executable from here itself."
-
 base:
+	@echo Gen Test Sources: $(GEN_TEST_SOURCES)
+	@echo Gen Test Objects: $(GEN_TEST_OBJS)
 	@mkdir -p "$(OUTPUT_DIR)/test"
 
 clean:

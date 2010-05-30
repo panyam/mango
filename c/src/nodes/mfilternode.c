@@ -19,7 +19,7 @@ MangoFilterNode *mango_filternode_init(MangoFilter *filter, MangoFilterNode *nod
     if (proto == NULL)
         proto = mango_filternode_prototype();
     OBJ_INIT(node, proto);
-    node->filter = filter;
+    node->filter = OBJ_INCREF(filter);
     node->arguments = NULL;
     return node;
 }
@@ -29,9 +29,9 @@ MangoFilterNode *mango_filternode_init(MangoFilter *filter, MangoFilterNode *nod
  */
 void mango_filternode_dealloc(MangoFilterNode *fnode)
 {
-    // do not delete filter as they are shared
     if (fnode->arguments != NULL)
         OBJ_DECREF(fnode->arguments);
+    OBJ_DECREF(fnode->filter);
     mango_object_dealloc((MangoObject *)fnode);
 }
 
