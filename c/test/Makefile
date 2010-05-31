@@ -69,13 +69,13 @@ $(OUTPUT_DIR)/test/%.o : %.cpp
 
 test: base $(TEST_OBJS) $(GEN_TEST_SOURCES) $(GEN_TEST_OBJS)
 	@echo Building Test with Static Libraries...
-	$(GPP) $(CFLAGS) $(TEST_OBJS) $(GEN_TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(OUTPUT_DIR)/libmangoext.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
+	@$(GPP) $(CFLAGS) $(TEST_OBJS) $(GEN_TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(OUTPUT_DIR)/libmangoext.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
+	@echo 
+	@echo Running Tests...
+	@echo 
 	$(TEST_OUTPUT)
 
 base:
-	@echo Gen Test Sources: $(GEN_TEST_SOURCES)
-	@echo Gen Test Folders: $(GEN_TEST_FOLDERS)
-	@echo Gen Test Objects: $(GEN_TEST_OBJS)
 	@mkdir -p "$(OUTPUT_DIR)/test/gen"
 	@mkdir -p $(foreach dir,$(GEN_TEST_FOLDERS),"$(OUTPUT_DIR)/test/$(dir)")
 
