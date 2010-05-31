@@ -108,6 +108,9 @@ public:
         return var;
     }
 
+    /**
+     * Check that the given string matches against the rendered output.
+     */
 	void CheckRenderedOutput(MangoString *output)
 	{
         /*
