@@ -108,7 +108,6 @@ void mango_stringbuffer_clear(MangoStringBuffer *mstr)
  * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
  * mango_stringbuffer_set(mstr, "Hello Magnificient World", -1);
  * CHECK_EQUAL(strlen("Hello Magnificient World"), mstr->length);
- * CHECK_EQUAL(1 + strlen("Hello Magnificient World"), mstr->capacity);
  * CHECK(strcmp("Hello Magnificient World", mstr->buffer) == 0);
  * mango_stringbuffer_free(mstr);
  * @endtest
@@ -133,8 +132,8 @@ void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, int leng
  * CHECK_EQUAL(strlen("Hello World"), mstr->length);
  * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
  * mango_stringbuffer_append(mstr, ", I Love You", -1);
- * CHECK_EQUAL(strlen("Hello Magnificient World, I Love You"), mstr->length);
- * CHECK(strcmp("Hello Magnificient World, I Love You", mstr->buffer) == 0);
+ * CHECK_EQUAL(strlen("Hello World, I Love You"), mstr->length);
+ * CHECK(strcmp("Hello World, I Love You", mstr->buffer) == 0);
  * mango_stringbuffer_free(mstr);
  * @endtest
  */
