@@ -17,6 +17,13 @@ DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_
 
 /**
  * Creates a new mango template context.
+ *
+ * @test(TestTmplCtxInit)
+ * MangoTemplateContext *context = mango_tmplctx_new();
+ * CHECK_EQUAL(1, OBJ_REFCOUNT(context));
+ * CHECK_EQUAL(mango_tmplctx_prototype(), context->__prototype__);
+ * OBJ_DECREF(context);
+ * @endtest
  */
 MangoTemplateContext *mango_tmplctx_new()
 {

@@ -39,7 +39,7 @@ MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *v
 {
     if (table->__prototype__->putFunc != NULL)
     {
-        table->__prototype__->putFunc(table, key, value);
+        return table->__prototype__->putFunc(table, key, value);
     }
     return NULL;
 }

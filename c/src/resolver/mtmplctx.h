@@ -77,6 +77,11 @@ DECLARE_CLASS(MangoTemplateContext, MangoTemplateContextPrototype,
 );
 
 /**
+ * Default prototype for template context.
+ */
+extern MangoTemplateContextPrototype *mango_tmplctx_prototype();
+
+/**
  * Creates a new mango template context.
  */
 extern MangoTemplateContext *mango_tmplctx_new();
@@ -120,9 +125,7 @@ extern int mango_tmplctx_set_or_push(MangoTemplateContext *ctx, MangoString *key
  * \param   value   Value of the var.
  * \return  The new size of the value stack for the var.
  */
-extern int mango_tmplctx_set(MangoTemplateContext *ctx,
-                                     MangoString *key,
-                                     MangoObject *value);
+extern int mango_tmplctx_set(MangoTemplateContext *ctx, MangoString *key, MangoObject *value);
 
 /**
  * Sets multiple values given by a list of key/value pairs.
@@ -138,9 +141,7 @@ extern void mango_tmplctx_set_values(MangoTemplateContext *ctx, ...);
  * \param   value   Value of the var.
  * \return  The new size of the value stack for the var.
  */
-extern int mango_tmplctx_push(MangoTemplateContext *ctx,
-                                      MangoString *key,
-                                      MangoObject *value);
+extern int mango_tmplctx_push(MangoTemplateContext *ctx, MangoString *key, MangoObject *value);
 
 /**
  * Pushes multiple values given by a list of key/value pairs.
