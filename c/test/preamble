@@ -1,11 +1,9 @@
 
 #include <UnitTest++.h>
-#include "mangopub.h"
-#include "mangoextpub.h"
-#include "stlinputsource.h"
 #include <vector>
 #include <sstream>
-#include <string.h>
-#include <stdarg.h>
-#include "maddfilter.h"
+#include "stlinputsource.h"
+#include "objptr.h"
+#include "mangopub.h"
+#include "mangoextpub.h"
 

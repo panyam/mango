@@ -78,6 +78,14 @@ void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
  * \param   create  If the key was not found, this specifies whether a new
  *                  stack it to be created.
  * \return A MangoList of values for the var.
+ *
+ * @test(TestTmplCtx_GetValuesOnEmpty)
+ * MangoTemplateContext *context = mango_tmplctx_new();
+ * MangoString *key = (MangoString *)mango_rcstring_new("key", -1, NULL);
+ * CHECK(NULL == context->values);
+ * CHECK(NULL == mango_tmplctx_get_values(context, key, false));
+ * OBJ_DECREF(context);
+ * @endtest
  */
 MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key, BOOL create)
 {

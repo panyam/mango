@@ -278,7 +278,7 @@ BOOL mango_tokenizer_next_token(MangoTokenizer *tokenizer,
                 else
                 {
                     // finished identifier
-                    mango_token_append_char(token, 0);
+                    // mango_token_append_char(token, 0);
                     token->tokenType = TOKEN_IDENTIFIER;
                     tokenizer->_insideIdentifier = false;
                     mango_tokenizer_unget_char(tokenizer, char1);
