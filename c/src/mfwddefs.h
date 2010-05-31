@@ -46,6 +46,7 @@ typedef struct MangoNumber MangoNumber;
 typedef struct MangoObject MangoObject;
 typedef struct MangoOutStream MangoOutStream;
 typedef struct MangoOutStreamPrototype MangoOutStreamPrototype;
+typedef struct MangoStrOutStream MangoStrOutStream;
 typedef struct MangoParser MangoParser;
 typedef struct MangoParserContext MangoParserContext;
 typedef struct MangoPrototype MangoPrototype;

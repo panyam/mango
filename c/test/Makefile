@@ -102,8 +102,10 @@ dep:
 ../bld/./BinTreeTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./BinTreeTests.o: ../src/core/mstringbuffer.h
 ../bld/./BinTreeTests.o: ../src/core/mstringfactory.h
-../bld/./BinTreeTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./BinTreeTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./BinTreeTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./BinTreeTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./BinTreeTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./BinTreeTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./BinTreeTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./BinTreeTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./BinTreeTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -138,8 +140,9 @@ dep:
 ../bld/./ExprTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./ExprTests.o: ../src/core/mstringbuffer.h
 ../bld/./ExprTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
-../bld/./ExprTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./ExprTests.o: ../src/nodes/mfilterlibrary.h
+../bld/./ExprTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./ExprTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./ExprTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
 ../bld/./ExprTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ExprTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ExprTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -173,8 +176,10 @@ dep:
 ../bld/./ForLoopTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./ForLoopTests.o: ../src/core/mstringbuffer.h
 ../bld/./ForLoopTests.o: ../src/core/mstringfactory.h
-../bld/./ForLoopTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./ForLoopTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./ForLoopTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./ForLoopTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./ForLoopTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./ForLoopTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./ForLoopTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ForLoopTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ForLoopTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -211,8 +216,9 @@ dep:
 ../bld/./ObjectTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./ObjectTests.o: ../src/core/mstringbuffer.h
 ../bld/./ObjectTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
-../bld/./ObjectTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./ObjectTests.o: ../src/nodes/mfilterlibrary.h
+../bld/./ObjectTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./ObjectTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./ObjectTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
 ../bld/./ObjectTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ObjectTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ObjectTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -246,8 +252,9 @@ dep:
 ../bld/./ParserTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./ParserTests.o: ../src/core/mstringbuffer.h
 ../bld/./ParserTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
-../bld/./ParserTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./ParserTests.o: ../src/nodes/mfilterlibrary.h
+../bld/./ParserTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./ParserTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./ParserTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
 ../bld/./ParserTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ParserTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ParserTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -283,8 +290,10 @@ dep:
 ../bld/./RawArrayTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./RawArrayTests.o: ../src/core/mstringbuffer.h
 ../bld/./RawArrayTests.o: ../src/core/mstringfactory.h
-../bld/./RawArrayTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./RawArrayTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./RawArrayTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./RawArrayTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./RawArrayTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./RawArrayTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RawArrayTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RawArrayTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RawArrayTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -319,8 +328,10 @@ dep:
 ../bld/./RawListTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./RawListTests.o: ../src/core/mstringbuffer.h
 ../bld/./RawListTests.o: ../src/core/mstringfactory.h
-../bld/./RawListTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./RawListTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./RawListTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./RawListTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./RawListTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./RawListTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RawListTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RawListTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RawListTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -358,8 +369,10 @@ dep:
 ../bld/./RendererTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./RendererTests.o: ../src/core/mstringbuffer.h
 ../bld/./RendererTests.o: ../src/core/mstringfactory.h
-../bld/./RendererTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./RendererTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./RendererTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./RendererTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./RendererTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./RendererTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RendererTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RendererTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RendererTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -397,8 +410,10 @@ dep:
 ../bld/./ResolverTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./ResolverTests.o: ../src/core/mstringbuffer.h
 ../bld/./ResolverTests.o: ../src/core/mstringfactory.h
-../bld/./ResolverTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./ResolverTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./ResolverTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./ResolverTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./ResolverTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./ResolverTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./ResolverTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ResolverTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ResolverTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -434,8 +449,10 @@ dep:
 ../bld/./stlinputsource.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./stlinputsource.o: ../src/core/mstringbuffer.h
 ../bld/./stlinputsource.o: ../src/core/mstringfactory.h
-../bld/./stlinputsource.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./stlinputsource.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./stlinputsource.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./stlinputsource.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./stlinputsource.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./stlinputsource.o: ../src/nodes/mfilterlibrary.h
 ../bld/./stlinputsource.o: ../src/nodes/mfilternode.h
 ../bld/./stlinputsource.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
 ../bld/./stlinputsource.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
@@ -473,8 +490,9 @@ dep:
 ../bld/./StringTableTests.o: ../src/core/mstring.h
 ../bld/./StringTableTests.o: ../src/core/mstringbuffer.h
 ../bld/./StringTableTests.o: ../src/core/mstringfactory.h
-../bld/./StringTableTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./StringTableTests.o: ../src/nodes/mvar.h
+../bld/./StringTableTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./StringTableTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./StringTableTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
 ../bld/./StringTableTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./StringTableTests.o: ../src/nodes/mfilternode.h
 ../bld/./StringTableTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
@@ -519,6 +537,9 @@ dep:
 ../bld/./TemplateContextTests.o: ../src/core/mstringbuffer.h
 ../bld/./TemplateContextTests.o: ../src/core/mstringfactory.h
 ../bld/./TemplateContextTests.o: ../src/io/minputsource.h
+../bld/./TemplateContextTests.o: ../src/io/moutstream.h
+../bld/./TemplateContextTests.o: ../src/io/mstroutstream.h
+../bld/./TemplateContextTests.o: ../src/io/moutstream.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfilternode.h
@@ -567,8 +588,9 @@ dep:
 ../bld/./testutils.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./testutils.o: ../src/core/mstringbuffer.h
 ../bld/./testutils.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
-../bld/./testutils.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./testutils.o: ../src/nodes/mfilterlibrary.h
+../bld/./testutils.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./testutils.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./testutils.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
 ../bld/./testutils.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./testutils.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./testutils.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
@@ -603,8 +625,10 @@ dep:
 ../bld/./TokenizerTests.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./TokenizerTests.o: ../src/core/mstringbuffer.h
 ../bld/./TokenizerTests.o: ../src/core/mstringfactory.h
-../bld/./TokenizerTests.o: ../src/io/minputsource.h ../src/nodes/mfilter.h
-../bld/./TokenizerTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
+../bld/./TokenizerTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
+../bld/./TokenizerTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
+../bld/./TokenizerTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
+../bld/./TokenizerTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./TokenizerTests.o: ../src/nodes/mfilternode.h
 ../bld/./TokenizerTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
 ../bld/./TokenizerTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h

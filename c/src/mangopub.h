@@ -15,6 +15,8 @@
 #include "core/mstringbuffer.h"
 #include "core/mstringfactory.h"
 #include "io/minputsource.h"
+#include "io/moutstream.h"
+#include "io/mstroutstream.h"
 #include "nodes/mfilter.h"
 #include "nodes/mfilterlibrary.h"
 #include "nodes/mfilternode.h"

@@ -33,7 +33,7 @@ endif
 SHARED_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(SHARED_LIB_NAME)"
 STATIC_LIB_OUTPUT       =   "$(OUTPUT_DIR)/$(STATIC_LIB_NAME)"
 
-SOURCE_FOLDERS  =   . utils core parser nodes renderer resolver
+SOURCE_FOLDERS  =   . utils core io parser nodes renderer resolver
 INCLUDE_FOLDERS :=  $(foreach dir,$(SOURCE_FOLDERS),$(dir))
 MANGO_SOURCES   := $(foreach dir,$(SOURCE_FOLDERS),$(wildcard $(dir)/*.c))
 MANGO_OBJS      = $(foreach obj, $(patsubst %.c,%.o,$(MANGO_SOURCES)), $(OUTPUT_DIR)/src/$(obj))
@@ -102,20 +102,21 @@ dep:
 ../bld/utils/marraylist.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/utils/marraylist.o: core/mrcstringtable.h core/mstring.h
 ../bld/utils/marraylist.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/utils/marraylist.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
-../bld/utils/marraylist.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/marraylist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/marraylist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/marraylist.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/marraylist.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/marraylist.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/marraylist.o: parser/mparsercontext.h parser/mtagparser.h
-../bld/utils/marraylist.o: parser/mtagparserlibrary.h parser/mtoken.h
-../bld/utils/marraylist.o: parser/mtokenizer.h parser/mtokenlists.h
-../bld/utils/marraylist.o: renderer/mrenderer.h resolver/mtemplateloader.h
-../bld/utils/marraylist.o: resolver/mtmplctx.h resolver/mvarresolver.h
-../bld/utils/marraylist.o: utils/marraylist.h utils/mlist.h
-../bld/utils/marraylist.o: utils/mcollection.h utils/mbintree.h
+../bld/utils/marraylist.o: io/minputsource.h io/moutstream.h
+../bld/utils/marraylist.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
+../bld/utils/marraylist.o: nodes/mvar.h nodes/mfilterlibrary.h
+../bld/utils/marraylist.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/marraylist.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/utils/marraylist.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/utils/marraylist.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/utils/marraylist.o: parser/mparser.h parser/mtokenizer.h
+../bld/utils/marraylist.o: parser/mtoken.h parser/mparsercontext.h
+../bld/utils/marraylist.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/utils/marraylist.o: parser/mtoken.h parser/mtokenizer.h
+../bld/utils/marraylist.o: parser/mtokenlists.h renderer/mrenderer.h
+../bld/utils/marraylist.o: resolver/mtemplateloader.h resolver/mtmplctx.h
+../bld/utils/marraylist.o: resolver/mvarresolver.h utils/marraylist.h
+../bld/utils/marraylist.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/marraylist.o: utils/mcollection.h utils/mlinkedlist.h
 ../bld/utils/marraylist.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
 ../bld/utils/marraylist.o: utils/mrawlist.h utils/msingletons.h
@@ -127,6 +128,7 @@ dep:
 ../bld/utils/mbintree.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mbintree.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mbintree.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mbintree.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mbintree.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mbintree.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mbintree.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -151,7 +153,9 @@ dep:
 ../bld/utils/mcollection.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/utils/mcollection.o: core/mrcstringtable.h core/mstring.h
 ../bld/utils/mcollection.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/utils/mcollection.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/utils/mcollection.o: io/minputsource.h io/moutstream.h
+../bld/utils/mcollection.o: io/mstroutstream.h io/moutstream.h
+../bld/utils/mcollection.o: nodes/mfilter.h nodes/mvar.h
 ../bld/utils/mcollection.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/utils/mcollection.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/mcollection.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -176,6 +180,7 @@ dep:
 ../bld/utils/miterator.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/miterator.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/miterator.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/miterator.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/miterator.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/miterator.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/miterator.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -200,7 +205,9 @@ dep:
 ../bld/utils/mlinkedlist.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/utils/mlinkedlist.o: core/mrcstringtable.h core/mstring.h
 ../bld/utils/mlinkedlist.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/utils/mlinkedlist.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/utils/mlinkedlist.o: io/minputsource.h io/moutstream.h
+../bld/utils/mlinkedlist.o: io/mstroutstream.h io/moutstream.h
+../bld/utils/mlinkedlist.o: nodes/mfilter.h nodes/mvar.h
 ../bld/utils/mlinkedlist.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/utils/mlinkedlist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/mlinkedlist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -224,7 +231,8 @@ dep:
 ../bld/utils/mlist.o: core/mstring.h core/mrcstringfactory.h
 ../bld/utils/mlist.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mlist.o: core/mstring.h core/mstringbuffer.h
-../bld/utils/mlist.o: core/mstringfactory.h io/minputsource.h nodes/mfilter.h
+../bld/utils/mlist.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
+../bld/utils/mlist.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
 ../bld/utils/mlist.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/utils/mlist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/mlist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -248,6 +256,7 @@ dep:
 ../bld/utils/mnumber.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mnumber.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mnumber.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mnumber.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mnumber.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mnumber.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mnumber.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -271,6 +280,7 @@ dep:
 ../bld/utils/mrawarray.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mrawarray.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mrawarray.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mrawarray.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mrawarray.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mrawarray.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mrawarray.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -295,6 +305,7 @@ dep:
 ../bld/utils/mrawlist.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mrawlist.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mrawlist.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mrawlist.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mrawlist.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mrawlist.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mrawlist.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -319,7 +330,9 @@ dep:
 ../bld/utils/msingletons.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/utils/msingletons.o: core/mrcstringtable.h core/mstring.h
 ../bld/utils/msingletons.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/utils/msingletons.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/utils/msingletons.o: io/minputsource.h io/moutstream.h
+../bld/utils/msingletons.o: io/mstroutstream.h io/moutstream.h
+../bld/utils/msingletons.o: nodes/mfilter.h nodes/mvar.h
 ../bld/utils/msingletons.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/utils/msingletons.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/msingletons.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -344,6 +357,7 @@ dep:
 ../bld/utils/mtable.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mtable.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mtable.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mtable.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mtable.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mtable.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mtable.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -367,20 +381,21 @@ dep:
 ../bld/utils/mtreetable.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/utils/mtreetable.o: core/mrcstringtable.h core/mstring.h
 ../bld/utils/mtreetable.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/utils/mtreetable.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
-../bld/utils/mtreetable.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/mtreetable.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/mtreetable.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mtreetable.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mtreetable.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mtreetable.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mtreetable.o: parser/mparsercontext.h parser/mtagparser.h
-../bld/utils/mtreetable.o: parser/mtagparserlibrary.h parser/mtoken.h
-../bld/utils/mtreetable.o: parser/mtokenizer.h parser/mtokenlists.h
-../bld/utils/mtreetable.o: renderer/mrenderer.h resolver/mtemplateloader.h
-../bld/utils/mtreetable.o: resolver/mtmplctx.h resolver/mvarresolver.h
-../bld/utils/mtreetable.o: utils/marraylist.h utils/mlist.h
-../bld/utils/mtreetable.o: utils/mcollection.h utils/mbintree.h
+../bld/utils/mtreetable.o: io/minputsource.h io/moutstream.h
+../bld/utils/mtreetable.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
+../bld/utils/mtreetable.o: nodes/mvar.h nodes/mfilterlibrary.h
+../bld/utils/mtreetable.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/mtreetable.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/utils/mtreetable.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/utils/mtreetable.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/utils/mtreetable.o: parser/mparser.h parser/mtokenizer.h
+../bld/utils/mtreetable.o: parser/mtoken.h parser/mparsercontext.h
+../bld/utils/mtreetable.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/utils/mtreetable.o: parser/mtoken.h parser/mtokenizer.h
+../bld/utils/mtreetable.o: parser/mtokenlists.h renderer/mrenderer.h
+../bld/utils/mtreetable.o: resolver/mtemplateloader.h resolver/mtmplctx.h
+../bld/utils/mtreetable.o: resolver/mvarresolver.h utils/marraylist.h
+../bld/utils/mtreetable.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mtreetable.o: utils/mcollection.h utils/mlinkedlist.h
 ../bld/utils/mtreetable.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
 ../bld/utils/mtreetable.o: utils/mrawlist.h utils/msingletons.h
@@ -392,6 +407,7 @@ dep:
 ../bld/utils/mutils.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/utils/mutils.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mutils.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mutils.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/utils/mutils.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/utils/mutils.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/utils/mutils.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -415,6 +431,7 @@ dep:
 ../bld/core/mclasses.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/core/mclasses.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mclasses.o: core/mstringfactory.h io/minputsource.h
+../bld/core/mclasses.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/core/mclasses.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/core/mclasses.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/core/mclasses.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -437,7 +454,8 @@ dep:
 ../bld/core/merror.o: core/mstring.h core/mrcstringfactory.h
 ../bld/core/merror.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/core/merror.o: core/mstring.h core/mstringbuffer.h
-../bld/core/merror.o: core/mstringfactory.h io/minputsource.h nodes/mfilter.h
+../bld/core/merror.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
+../bld/core/merror.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
 ../bld/core/merror.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/core/merror.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/core/merror.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -461,6 +479,7 @@ dep:
 ../bld/core/mobject.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/core/mobject.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mobject.o: core/mstringfactory.h io/minputsource.h
+../bld/core/mobject.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/core/mobject.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/core/mobject.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/core/mobject.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -484,6 +503,7 @@ dep:
 ../bld/core/mrcstring.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/core/mrcstring.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mrcstring.o: core/mstringfactory.h io/minputsource.h
+../bld/core/mrcstring.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/core/mrcstring.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/core/mrcstring.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/core/mrcstring.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -508,15 +528,17 @@ dep:
 ../bld/core/mrcstringfactory.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/core/mrcstringfactory.o: core/mrcstringtable.h core/mstring.h
 ../bld/core/mrcstringfactory.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/core/mrcstringfactory.o: io/minputsource.h nodes/mfilter.h
-../bld/core/mrcstringfactory.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/core/mrcstringfactory.o: nodes/mfilternode.h nodes/mfreetext.h
-../bld/core/mrcstringfactory.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
-../bld/core/mrcstringfactory.o: nodes/mtagnode.h nodes/mvar.h
-../bld/core/mrcstringfactory.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mrcstringfactory.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/mrcstringfactory.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/mrcstringfactory.o: parser/mparsercontext.h parser/mtagparser.h
+../bld/core/mrcstringfactory.o: io/minputsource.h io/moutstream.h
+../bld/core/mrcstringfactory.o: io/mstroutstream.h io/moutstream.h
+../bld/core/mrcstringfactory.o: nodes/mfilter.h nodes/mvar.h
+../bld/core/mrcstringfactory.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/core/mrcstringfactory.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/core/mrcstringfactory.o: nodes/mnodelist.h nodes/mtagnode.h
+../bld/core/mrcstringfactory.o: nodes/mvar.h nodes/mvariterator.h
+../bld/core/mrcstringfactory.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/core/mrcstringfactory.o: parser/mparser.h parser/mtokenizer.h
+../bld/core/mrcstringfactory.o: parser/mtoken.h parser/mparsercontext.h
+../bld/core/mrcstringfactory.o: parser/mtagparser.h
 ../bld/core/mrcstringfactory.o: parser/mtagparserlibrary.h parser/mtoken.h
 ../bld/core/mrcstringfactory.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/mrcstringfactory.o: renderer/mrenderer.h
@@ -536,7 +558,9 @@ dep:
 ../bld/core/mrcstringtable.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/core/mrcstringtable.o: core/mrcstringtable.h core/mstring.h
 ../bld/core/mrcstringtable.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/core/mrcstringtable.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/core/mrcstringtable.o: io/minputsource.h io/moutstream.h
+../bld/core/mrcstringtable.o: io/mstroutstream.h io/moutstream.h
+../bld/core/mrcstringtable.o: nodes/mfilter.h nodes/mvar.h
 ../bld/core/mrcstringtable.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/core/mrcstringtable.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/core/mrcstringtable.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -562,7 +586,9 @@ dep:
 ../bld/core/mstringbuffer.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/core/mstringbuffer.o: core/mrcstringtable.h core/mstring.h
 ../bld/core/mstringbuffer.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/core/mstringbuffer.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/core/mstringbuffer.o: io/minputsource.h io/moutstream.h
+../bld/core/mstringbuffer.o: io/mstroutstream.h io/moutstream.h
+../bld/core/mstringbuffer.o: nodes/mfilter.h nodes/mvar.h
 ../bld/core/mstringbuffer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/core/mstringbuffer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/core/mstringbuffer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -588,6 +614,7 @@ dep:
 ../bld/core/mstring.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/core/mstring.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mstring.o: core/mstringfactory.h io/minputsource.h
+../bld/core/mstring.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/core/mstring.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/core/mstring.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/core/mstring.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -611,7 +638,9 @@ dep:
 ../bld/core/mstringfactory.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/core/mstringfactory.o: core/mrcstringtable.h core/mstring.h
 ../bld/core/mstringfactory.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/core/mstringfactory.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/core/mstringfactory.o: io/minputsource.h io/moutstream.h
+../bld/core/mstringfactory.o: io/mstroutstream.h io/moutstream.h
+../bld/core/mstringfactory.o: nodes/mfilter.h nodes/mvar.h
 ../bld/core/mstringfactory.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/core/mstringfactory.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/core/mstringfactory.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -637,6 +666,7 @@ dep:
 ../bld/parser/mparser.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/parser/mparser.o: core/mstring.h core/mstringbuffer.h
 ../bld/parser/mparser.o: core/mstringfactory.h io/minputsource.h
+../bld/parser/mparser.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/parser/mparser.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/parser/mparser.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/parser/mparser.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -663,15 +693,17 @@ dep:
 ../bld/parser/mtagparserlibrary.o: core/mstringfactory.h
 ../bld/parser/mtagparserlibrary.o: core/mrcstringtable.h core/mstring.h
 ../bld/parser/mtagparserlibrary.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/parser/mtagparserlibrary.o: io/minputsource.h nodes/mfilter.h
-../bld/parser/mtagparserlibrary.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/parser/mtagparserlibrary.o: nodes/mfilternode.h nodes/mfreetext.h
-../bld/parser/mtagparserlibrary.o: nodes/mnode.h nodes/mnode.h
-../bld/parser/mtagparserlibrary.o: nodes/mnodelist.h nodes/mtagnode.h
-../bld/parser/mtagparserlibrary.o: nodes/mvar.h nodes/mvariterator.h
-../bld/parser/mtagparserlibrary.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/parser/mtagparserlibrary.o: parser/mparser.h parser/mtokenizer.h
-../bld/parser/mtagparserlibrary.o: parser/mtoken.h parser/mparsercontext.h
+../bld/parser/mtagparserlibrary.o: io/minputsource.h io/moutstream.h
+../bld/parser/mtagparserlibrary.o: io/mstroutstream.h io/moutstream.h
+../bld/parser/mtagparserlibrary.o: nodes/mfilter.h nodes/mvar.h
+../bld/parser/mtagparserlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/parser/mtagparserlibrary.o: nodes/mfreetext.h nodes/mnode.h
+../bld/parser/mtagparserlibrary.o: nodes/mnode.h nodes/mnodelist.h
+../bld/parser/mtagparserlibrary.o: nodes/mtagnode.h nodes/mvar.h
+../bld/parser/mtagparserlibrary.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/parser/mtagparserlibrary.o: nodes/mvarnode.h parser/mparser.h
+../bld/parser/mtagparserlibrary.o: parser/mtokenizer.h parser/mtoken.h
+../bld/parser/mtagparserlibrary.o: parser/mparsercontext.h
 ../bld/parser/mtagparserlibrary.o: parser/mtagparser.h
 ../bld/parser/mtagparserlibrary.o: parser/mtagparserlibrary.h parser/mtoken.h
 ../bld/parser/mtagparserlibrary.o: parser/mtokenizer.h parser/mtokenlists.h
@@ -693,6 +725,7 @@ dep:
 ../bld/parser/mtoken.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/parser/mtoken.o: core/mstring.h core/mstringbuffer.h
 ../bld/parser/mtoken.o: core/mstringfactory.h io/minputsource.h
+../bld/parser/mtoken.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/parser/mtoken.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/parser/mtoken.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/parser/mtoken.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -716,7 +749,9 @@ dep:
 ../bld/parser/mtokenizer.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/parser/mtokenizer.o: core/mrcstringtable.h core/mstring.h
 ../bld/parser/mtokenizer.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/parser/mtokenizer.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/parser/mtokenizer.o: io/minputsource.h io/moutstream.h
+../bld/parser/mtokenizer.o: io/mstroutstream.h io/moutstream.h
+../bld/parser/mtokenizer.o: nodes/mfilter.h nodes/mvar.h
 ../bld/parser/mtokenizer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/parser/mtokenizer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/parser/mtokenizer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -742,6 +777,7 @@ dep:
 ../bld/nodes/mfilter.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mfilter.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mfilter.o: core/mstringfactory.h io/minputsource.h
+../bld/nodes/mfilter.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/nodes/mfilter.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/nodes/mfilter.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/nodes/mfilter.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -765,7 +801,9 @@ dep:
 ../bld/nodes/mfilterlibrary.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/nodes/mfilterlibrary.o: core/mrcstringtable.h core/mstring.h
 ../bld/nodes/mfilterlibrary.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/nodes/mfilterlibrary.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/nodes/mfilterlibrary.o: io/minputsource.h io/moutstream.h
+../bld/nodes/mfilterlibrary.o: io/mstroutstream.h io/moutstream.h
+../bld/nodes/mfilterlibrary.o: nodes/mfilter.h nodes/mvar.h
 ../bld/nodes/mfilterlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/nodes/mfilterlibrary.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mfilterlibrary.o: nodes/mnodelist.h nodes/mtagnode.h
@@ -792,7 +830,9 @@ dep:
 ../bld/nodes/mfilternode.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/nodes/mfilternode.o: core/mrcstringtable.h core/mstring.h
 ../bld/nodes/mfilternode.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/nodes/mfilternode.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/nodes/mfilternode.o: io/minputsource.h io/moutstream.h
+../bld/nodes/mfilternode.o: io/mstroutstream.h io/moutstream.h
+../bld/nodes/mfilternode.o: nodes/mfilter.h nodes/mvar.h
 ../bld/nodes/mfilternode.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/nodes/mfilternode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mfilternode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -817,6 +857,7 @@ dep:
 ../bld/nodes/mfreetext.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mfreetext.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mfreetext.o: core/mstringfactory.h io/minputsource.h
+../bld/nodes/mfreetext.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/nodes/mfreetext.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/nodes/mfreetext.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/nodes/mfreetext.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -840,7 +881,8 @@ dep:
 ../bld/nodes/mnode.o: core/mstring.h core/mrcstringfactory.h
 ../bld/nodes/mnode.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mnode.o: core/mstring.h core/mstringbuffer.h
-../bld/nodes/mnode.o: core/mstringfactory.h io/minputsource.h nodes/mfilter.h
+../bld/nodes/mnode.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
+../bld/nodes/mnode.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
 ../bld/nodes/mnode.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/nodes/mnode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mnode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -864,6 +906,7 @@ dep:
 ../bld/nodes/mnodelist.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mnodelist.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mnodelist.o: core/mstringfactory.h io/minputsource.h
+../bld/nodes/mnodelist.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/nodes/mnodelist.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/nodes/mnodelist.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/nodes/mnodelist.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -888,6 +931,7 @@ dep:
 ../bld/nodes/mtagnode.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mtagnode.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mtagnode.o: core/mstringfactory.h io/minputsource.h
+../bld/nodes/mtagnode.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/nodes/mtagnode.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/nodes/mtagnode.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/nodes/mtagnode.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -911,7 +955,8 @@ dep:
 ../bld/nodes/mvar.o: core/mstring.h core/mrcstringfactory.h
 ../bld/nodes/mvar.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mvar.o: core/mstring.h core/mstringbuffer.h
-../bld/nodes/mvar.o: core/mstringfactory.h io/minputsource.h nodes/mfilter.h
+../bld/nodes/mvar.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
+../bld/nodes/mvar.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
 ../bld/nodes/mvar.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/nodes/mvar.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mvar.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -934,7 +979,9 @@ dep:
 ../bld/nodes/mvarlibrary.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/nodes/mvarlibrary.o: core/mrcstringtable.h core/mstring.h
 ../bld/nodes/mvarlibrary.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/nodes/mvarlibrary.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/nodes/mvarlibrary.o: io/minputsource.h io/moutstream.h
+../bld/nodes/mvarlibrary.o: io/mstroutstream.h io/moutstream.h
+../bld/nodes/mvarlibrary.o: nodes/mfilter.h nodes/mvar.h
 ../bld/nodes/mvarlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/nodes/mvarlibrary.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mvarlibrary.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -959,6 +1006,7 @@ dep:
 ../bld/nodes/mvarnode.o: core/mstringfactory.h core/mrcstringtable.h
 ../bld/nodes/mvarnode.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mvarnode.o: core/mstringfactory.h io/minputsource.h
+../bld/nodes/mvarnode.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
 ../bld/nodes/mvarnode.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
 ../bld/nodes/mvarnode.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
 ../bld/nodes/mvarnode.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
@@ -983,7 +1031,9 @@ dep:
 ../bld/renderer/mrenderer.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/renderer/mrenderer.o: core/mrcstringtable.h core/mstring.h
 ../bld/renderer/mrenderer.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/renderer/mrenderer.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/renderer/mrenderer.o: io/minputsource.h io/moutstream.h
+../bld/renderer/mrenderer.o: io/mstroutstream.h io/moutstream.h
+../bld/renderer/mrenderer.o: nodes/mfilter.h nodes/mvar.h
 ../bld/renderer/mrenderer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/renderer/mrenderer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/renderer/mrenderer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -1009,7 +1059,9 @@ dep:
 ../bld/resolver/mtmplctx.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/resolver/mtmplctx.o: core/mrcstringtable.h core/mstring.h
 ../bld/resolver/mtmplctx.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/resolver/mtmplctx.o: io/minputsource.h nodes/mfilter.h nodes/mvar.h
+../bld/resolver/mtmplctx.o: io/minputsource.h io/moutstream.h
+../bld/resolver/mtmplctx.o: io/mstroutstream.h io/moutstream.h
+../bld/resolver/mtmplctx.o: nodes/mfilter.h nodes/mvar.h
 ../bld/resolver/mtmplctx.o: nodes/mfilterlibrary.h nodes/mfilternode.h
 ../bld/resolver/mtmplctx.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/resolver/mtmplctx.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
@@ -1034,15 +1086,17 @@ dep:
 ../bld/resolver/mvarresolver.o: core/mrcstringfactory.h core/mstringfactory.h
 ../bld/resolver/mvarresolver.o: core/mrcstringtable.h core/mstring.h
 ../bld/resolver/mvarresolver.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/resolver/mvarresolver.o: io/minputsource.h nodes/mfilter.h
-../bld/resolver/mvarresolver.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/resolver/mvarresolver.o: nodes/mfilternode.h nodes/mfreetext.h
-../bld/resolver/mvarresolver.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
-../bld/resolver/mvarresolver.o: nodes/mtagnode.h nodes/mvar.h
-../bld/resolver/mvarresolver.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/resolver/mvarresolver.o: nodes/mvarnode.h parser/mparser.h
-../bld/resolver/mvarresolver.o: parser/mtokenizer.h parser/mtoken.h
-../bld/resolver/mvarresolver.o: parser/mparsercontext.h parser/mtagparser.h
+../bld/resolver/mvarresolver.o: io/minputsource.h io/moutstream.h
+../bld/resolver/mvarresolver.o: io/mstroutstream.h io/moutstream.h
+../bld/resolver/mvarresolver.o: nodes/mfilter.h nodes/mvar.h
+../bld/resolver/mvarresolver.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/resolver/mvarresolver.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/resolver/mvarresolver.o: nodes/mnodelist.h nodes/mtagnode.h
+../bld/resolver/mvarresolver.o: nodes/mvar.h nodes/mvariterator.h
+../bld/resolver/mvarresolver.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/resolver/mvarresolver.o: parser/mparser.h parser/mtokenizer.h
+../bld/resolver/mvarresolver.o: parser/mtoken.h parser/mparsercontext.h
+../bld/resolver/mvarresolver.o: parser/mtagparser.h
 ../bld/resolver/mvarresolver.o: parser/mtagparserlibrary.h parser/mtoken.h
 ../bld/resolver/mvarresolver.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/resolver/mvarresolver.o: renderer/mrenderer.h

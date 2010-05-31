@@ -1,17 +1,20 @@
 
-#include "moutputstream.h"
+#include "moutstream.h"
 
 DECLARE_PROTO_FUNC("OutStream", MangoOutStreamPrototype, mango_outstream_prototype,
     __proto__.writeFunc = NULL;
     __proto__.writeFormatFunc = NULL;
 );
 
-DECLARE_CLASS(MangoOutStream, MangoOutStreamPrototype);
-
 /**
  * Initialises the output stream prototype.
  */
-MangoOutStreamPrototype *mango_outstream_prototype_init(const char *name);
+MangoOutStreamPrototype *mango_outstream_prototype_init(MangoOutStreamPrototype *proto)
+{
+    proto->writeFunc = NULL;
+    proto->writeFormatFunc = NULL;
+    return proto;
+}
 
 
 /**
@@ -19,9 +22,9 @@ MangoOutStreamPrototype *mango_outstream_prototype_init(const char *name);
  */
 int mango_outstream_write(MangoOutStream *outstream, void *data, size_t length)
 {
-    if (outstream->__prototype__.writeFunc != NULL)
+    if (outstream->__prototype__->writeFunc != NULL)
     {
-        return outstream->__prototype__.writeFunc(outstream, data, length);
+        return outstream->__prototype__->writeFunc(outstream, data, length);
     }
     return -1;
 }
@@ -31,13 +34,9 @@ int mango_outstream_write(MangoOutStream *outstream, void *data, size_t length)
  */
 int mango_outstream_writef(MangoOutStream *outstream, const char *format, ...)
 {
-    const size_t MAX_MESSAGE_SIZE = 512;
-    if (error != NULL)
+    if (outstream != NULL)
     {
-        if (*error == NULL)
-        {
-            *error = (MangoError *)calloc(1, sizeof(MangoError));
-        }
+        const size_t MAX_MESSAGE_SIZE = 512;
         va_list ap;
         va_start(ap, format);
         char buffer[MAX_MESSAGE_SIZE];

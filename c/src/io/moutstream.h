@@ -2,11 +2,13 @@
 #ifndef __MANGO_OUTPUT_STREAM_H__
 #define __MANGO_OUTPUT_STREAM_H__
 
-#include "mobject.h"
+#include "core/mobject.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+typedef int (*StreamWriteFunc)(MangoOutStream *outstream, void *buffer, size_t length);
 
 INHERIT_STRUCT(MangoOutStreamPrototype, MangoPrototype,
     /**
@@ -25,7 +27,7 @@ DECLARE_CLASS(MangoOutStream, MangoOutStreamPrototype);
 /**
  * Initialises the output stream prototype.
  */
-MangoOutStreamPrototype *mango_outstream_prototype_init(const char *name);
+MangoOutStreamPrototype *mango_outstream_prototype_init(MangoOutStreamPrototype *proto);
 
 /**
  * Write data to an output stream.

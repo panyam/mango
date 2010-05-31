@@ -83,10 +83,10 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
     else
     {
         puts("==============================================");
-        MangoStringOutputStream *outstream = mango_stroutstream_new();
+        objptr<MangoStrOutStream> outstream(mango_stroutstream_new());
 
         // render
-        mango_render_node(parsedNode, context, outstream, &error);
+        mango_render_node(parsedNode, context, outstream.get<MangoOutStream>(), &error);
 
         if (error != NULL)
         {
@@ -97,11 +97,9 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
         else
         {
             // check
-            CHECK_EQUAL(output, sbuffer->buffer);
-            CHECK(mango_stringbuffer_compare(sbuffer, output, -1) == 0);
+            CHECK_EQUAL(output, outstream->strbuff->buffer);
+            CHECK(mango_stringbuffer_compare(outstream->strbuff, output, -1) == 0);
         }
-
-        OBJ_DECREF(outstream);
     }
 
     OBJ_DECREF(parsedNode);
