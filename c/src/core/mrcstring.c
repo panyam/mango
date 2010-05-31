@@ -20,7 +20,7 @@ DECLARE_PROTO_FUNC("RCString", MangoStringPrototype, mango_rcstring_prototype,
  *
  * \return  A new instance of the immutable string.
  */
-MangoString *mango_rcstring_new(const char *value,
+MangoRCString *mango_rcstring_new(const char *value,
                                 int length,
                                 MangoRCStringTable *mstable)
 {
@@ -32,25 +32,7 @@ MangoString *mango_rcstring_new(const char *value,
     mstr->mstable       = mstable;
     mstr->internId      = mango_rcstring_table_find(mstable, value, length, true, 1);
     mstr->strPtr        = mango_rcstring_buffer(mstr);
-    return (MangoString *)mstr;
-}
-
-/**
- * Makes a copy of another string.
- *
- * \param   buffer  Buffer of the values to copy.
- * \param   length  Length of the buffer.  If length < 0, then buffer is
- *                  null terminated.
- * \return A new string instance.
- */
-void mango_rcstring_copy(const MangoRCString *source, MangoString *another)
-{
-    MangoRCString *mstr     = ZNEW(MangoRCString);
-    mango_rcstring_table_incref(source->mstable, source->internId);
-    mstr->internId          = source->internId;
-    mstr->mstable           = source->mstable;
-    mstr->strPtr            = mango_rcstring_buffer(mstr);
-    another->__prototype__  = mango_rcstring_prototype();
+    return mstr;
 }
 
 /**

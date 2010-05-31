@@ -26,7 +26,7 @@ endif
 ###############  DO NOT MODIFY BELOW THIS   ##############
 
 UNITTEST_PP_DIR     = ../../UnitTest++
-DOCTEST_PP_DIR      = ~/projects/DocTestPlusPlus
+DOCTEST_PP_DIR      = ../../../DocTestPlusPlus
 TEST_SOURCE_FOLDERS = .
 INCLUDE_FOLDERS     = ../src ../ext
 TEST_SOURCES        := $(foreach dir,$(TEST_SOURCE_FOLDERS),$(wildcard $(dir)/*.cpp))

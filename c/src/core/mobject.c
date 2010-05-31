@@ -85,7 +85,8 @@ MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFu
  */
 MangoObject *mango_object_incref(MangoObject *obj)
 {
-    obj->__refCount__++;
+    if (obj != NULL)
+        obj->__refCount__++;
     return obj;
 }
 

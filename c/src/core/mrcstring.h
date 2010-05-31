@@ -39,17 +39,9 @@ INHERIT_STRUCT(MangoRCString, MangoString,
  *
  * \return  A new instance of the immutable string.
  */
-extern MangoString *mango_rcstring_new(const char *value,
-                                       int length,
-                                       MangoRCStringTable *mstable);
+extern MangoRCString *mango_rcstring_new(const char *value, int length,
+                                         MangoRCStringTable *mstable);
                                
-
-/**
- * Copies another mango string.
- * \param   source  String to be copied.
- * \param   another Destination string to be copied to.
- */
-extern void mango_rcstring_copy(const MangoRCString *source, MangoString *another);
 
 /**
  * Destroys a string.
