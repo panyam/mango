@@ -30,6 +30,12 @@ INHERIT_STRUCT(MangoRCString, MangoString,
 );
 
 /**
+ * Creates a mango RC string from a null terminated string in the default
+ * string table.
+ */
+#define MRCSTR(x)   (MangoString *)mango_rcstring_new((x), -1, NULL)
+
+/**
  * Creates a new immutale string.
  * \param   value   Value of the string.
  * \param   lenght  Length of the string.  If -ve then string is null

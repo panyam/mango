@@ -161,8 +161,8 @@ dep:
 ../bld/./ExprTests.o: ../src/utils/mrawarray.h ../src/utils/mrawlist.h
 ../bld/./ExprTests.o: ../src/utils/msingletons.h ../src/utils/mtable.h
 ../bld/./ExprTests.o: ../src/utils/mtreetable.h ../src/utils/mtable.h
-../bld/./ExprTests.o: ../ext/mangoextpub.h ../ext/mfortag.h stlinputsource.h
-../bld/./ExprTests.o: ../ext/maddfilter.h
+../bld/./ExprTests.o: ../ext/mangoextpub.h ../ext/mfortag.h
+../bld/./ExprTests.o: ../ext/maddfilter.h stlinputsource.h
 ../bld/./ForLoopTests.o: RendererTests.h ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./ForLoopTests.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./ForLoopTests.o: ../src/core/minputsource.h ../src/core/miterator.h
@@ -199,8 +199,8 @@ dep:
 ../bld/./ForLoopTests.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
 ../bld/./ForLoopTests.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
 ../bld/./ForLoopTests.o: ../src/utils/mtable.h ../ext/mangoextpub.h
-../bld/./ForLoopTests.o: ../ext/mfortag.h stlinputsource.h
-../bld/./ForLoopTests.o: ../ext/maddfilter.h
+../bld/./ForLoopTests.o: ../ext/mfortag.h ../ext/maddfilter.h
+../bld/./ForLoopTests.o: stlinputsource.h
 ../bld/./ObjectTests.o: ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./ObjectTests.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./ObjectTests.o: ../src/core/minputsource.h ../src/core/miterator.h
@@ -271,7 +271,7 @@ dep:
 ../bld/./ParserTests.o: ../src/utils/msingletons.h ../src/utils/mtable.h
 ../bld/./ParserTests.o: ../src/utils/mtreetable.h ../src/utils/mtable.h
 ../bld/./ParserTests.o: ../ext/mangoextpub.h ../ext/mfortag.h
-../bld/./ParserTests.o: stlinputsource.h ../ext/maddfilter.h
+../bld/./ParserTests.o: ../ext/maddfilter.h stlinputsource.h
 ../bld/./RawArrayTests.o: ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./RawArrayTests.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./RawArrayTests.o: ../src/core/minputsource.h ../src/core/miterator.h
@@ -344,8 +344,8 @@ dep:
 ../bld/./RawListTests.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
 ../bld/./RawListTests.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
 ../bld/./RawListTests.o: ../src/utils/mtable.h ../ext/mangoextpub.h
-../bld/./RawListTests.o: ../ext/mfortag.h stlinputsource.h
-../bld/./RawListTests.o: ../ext/maddfilter.h
+../bld/./RawListTests.o: ../ext/mfortag.h ../ext/maddfilter.h
+../bld/./RawListTests.o: stlinputsource.h
 ../bld/./ResolverTests.o: ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./ResolverTests.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./ResolverTests.o: ../src/core/minputsource.h ../src/core/miterator.h
@@ -516,6 +516,7 @@ dep:
 ../bld/./TemplateContextTests.o: ../src/utils/mtable.h
 ../bld/./TemplateContextTests.o: ../src/utils/mtreetable.h
 ../bld/./TemplateContextTests.o: ../src/utils/mtable.h stlinputsource.h
+../bld/./TemplateContextTests.o: objptr.h
 ../bld/./TokenizerTests.o: ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./TokenizerTests.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./TokenizerTests.o: ../src/core/minputsource.h ../src/core/miterator.h
