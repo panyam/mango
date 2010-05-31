@@ -109,26 +109,26 @@ TEST_FIXTURE(TemplateContextTestFixture, TestDelete)
     // context.deleteValue("a");
     // CheckResolvedVar(NULL);
 
-    objptr key(mango_stringfactory_new_string(string_factory, "a", -1));
-    objptr v1(mango_number_from_int(1));
-    objptr v2(mango_number_from_int(2));
-    objptr v3(mango_number_from_int(3));
+    objptr<MangoString> key(mango_stringfactory_new_string(string_factory, "a", -1));
+    objptr<MangoNumber> v1(mango_number_from_int(1));
+    objptr<MangoNumber> v2(mango_number_from_int(2));
+    objptr<MangoNumber> v3(mango_number_from_int(3));
 
-    mango_tmplctx_push(context, key.get<MangoString>(), OBJ(v1.get()));
-    mango_tmplctx_push(context, key.get<MangoString>(), OBJ(v2.get()));
-    mango_tmplctx_push(context, key.get<MangoString>(), OBJ(v3.get()));
+    mango_tmplctx_push(context, key(), OBJ(v1()));
+    mango_tmplctx_push(context, key(), OBJ(v2()));
+    mango_tmplctx_push(context, key(), OBJ(v3()));
 
-    MangoList *values = mango_tmplctx_get_values(context, key.get<MangoString>(), false);
+    MangoList *values = mango_tmplctx_get_values(context, key.get(), false);
     CHECK_EQUAL(3, COLLECTION_SIZE(values));
 
     // erase it now
-    mango_tmplctx_delete(context, key.get<MangoString>());
+    mango_tmplctx_delete(context, key());
     // ensure refcount is 2 - one for creation and one for using as a key
     // in the context (even though there have been 3 pushes)
-    CHECK_EQUAL(1, OBJ_REFCOUNT(key.get()));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v1.get()));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v2.get()));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v3.get()));
+    CHECK_EQUAL(1, OBJ_REFCOUNT(key()));
+    CHECK_EQUAL(1, OBJ_REFCOUNT(v1()));
+    CHECK_EQUAL(1, OBJ_REFCOUNT(v2()));
+    CHECK_EQUAL(1, OBJ_REFCOUNT(v3()));
 
     // delete the object now
 }
