@@ -58,7 +58,7 @@ MangoRCString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactor
 MangoRCString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
                                                const MangoStringBuffer *buffer)
 {
-    return (MangoString *)mango_rcstring_new(buffer->buffer, buffer->length, mrcsfactory->mrcstable);
+    return mango_rcstring_new(buffer->buffer, buffer->length, mrcsfactory->mrcstable);
 }
 
 /**

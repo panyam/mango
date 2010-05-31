@@ -57,7 +57,7 @@ extern "C" {
  */
 extern int mango_render_node(MangoNode *node,
                              MangoTemplateContext *context, 
-                             MangoOutputStream *outstream,
+                             MangoOutStream *outstream,
                              MangoError **error);
 
 #ifdef __cplusplus

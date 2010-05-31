@@ -70,7 +70,7 @@ MangoNodeContext *mango_node_create_context(MangoNode *node,
  * continued with otherwise a child node to be rendered.
  */
 MangoNode *mango_node_render_bit_more(MangoNode *node,
-                                      MangoOutputStream *outstream,
+                                      MangoOutStream *outstream,
                                       MangoTemplateContext *templateContext,
                                       MangoNodeContext *topContext,
                                       MangoError **error)

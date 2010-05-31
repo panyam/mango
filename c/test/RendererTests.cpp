@@ -55,6 +55,18 @@ RendererTestFixture::~RendererTestFixture()
 }
 
 /**
+ * Setup the fixture with an input string.
+ */
+void RendererTestFixture::SetUpWithInputString(const std::string &input)
+{
+    input_string = input;
+    input_source = new_stl_input_source(new std::istringstream(input));
+    tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
+    parser = mango_parser_new(tokenizer);
+    parser_context.parser = parser;
+}
+
+/**
  * Check that the given string matches against the rendered output.
  */
 void RendererTestFixture::CheckRenderedOutput(const char *output)
@@ -64,47 +76,34 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
     MangoNode *parsedNode = mango_parser_parse(&parser_context, &error);
     if (error != NULL)
     {
-        printf("Error (%d): %s\n", error->errorCode, error->errorMessage);
+        printf("Parse Error (%d): %s\n", error->errorCode, error->errorMessage);
         CHECK(false);
         mango_error_free(error);
     }
     else
     {
         puts("==============================================");
-        MangoStringBuffer *sbuffer = mango_stringbuffer_with_capacity(256);
+        MangoStringOutputStream *outstream = mango_stroutstream_new();
 
         // render
+        mango_render_node(parsedNode, context, outstream, &error);
 
-        // check
-        CHECK_EQUAL(output, sbuffer->buffer);
-        CHECK(mango_stringbuffer_compare(sbuffer, output, -1) == 0);
+        if (error != NULL)
+        {
+            printf("Renderer Error (%d): %s\n", error->errorCode, error->errorMessage);
+            CHECK(false);
+            mango_error_free(error);
+        }
+        else
+        {
+            // check
+            CHECK_EQUAL(output, sbuffer->buffer);
+            CHECK(mango_stringbuffer_compare(sbuffer, output, -1) == 0);
+        }
 
-        mango_stringbuffer_free(sbuffer);
+        OBJ_DECREF(outstream);
     }
 
     OBJ_DECREF(parsedNode);
-
-    /*
-    StringWriter writer = new StringWriter();
-    if (parsedNodes != null)
-    {
-        try {
-            renderer.renderNode(parsedNodes, writer, context);
-        } catch (IOException e) {
-            fail("Unexpected IO Exception: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    assertEquals("Expected and Rendered outputs do not match", output, writer.getBuffer().toString());
-    */
-}
-
-void RendererTestFixture::SetUpWithInputString(const std::string &input)
-{
-    input_string = input;
-    input_source = new_stl_input_source(new std::istringstream(input));
-    tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
-    parser = mango_parser_new(tokenizer);
-    parser_context.parser = parser;
 }
 
