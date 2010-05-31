@@ -113,8 +113,9 @@ void mango_stringbuffer_clear(MangoStringBuffer *mstr)
  * mango_stringbuffer_free(mstr);
  * @endtest
  */
-void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t length)
+void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (length < 0) length = strlen(value);
     mstr->length = 0;
     mango_stringbuffer_append(mstr, value, length);
 }
@@ -124,7 +125,7 @@ void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t l
  *
  * \param   mstr    String to be updated.
  * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
+ * \param   length  Length of the input string (if < 0, value is null terminated).
  *
  * @test(TestStringBufferAppend)
  * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
@@ -137,8 +138,9 @@ void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t l
  * mango_stringbuffer_free(mstr);
  * @endtest
  */
-void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, size_t length)
+void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (length < 0) length = strlen(value);
     mango_stringbuffer_ensure_capacity(mstr, length + mstr->length + 1);
     memcpy(mstr->buffer + mstr->length, value, length);
     mstr->length += length;
@@ -266,8 +268,9 @@ void mango_stringbuffer_ensure_capacity(MangoStringBuffer *mstr, size_t newcap)
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, size_t length)
+int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (length < 0) length = strlen(value);
     int minlen = mstr->length < length ? mstr->length : length;
     for (int i = 0;i < minlen;i++)
     {

@@ -14,6 +14,21 @@ MangoFilterNode *mango_filternode_new(MangoFilter *f)
     return mango_filternode_init(f, ZNEW(MangoFilterNode), mango_filternode_prototype());
 }
 
+
+/**
+ * Initialise an created filter node given a filter.
+ *
+ * @test(TestFilterNodeInit)
+ * MangoFilter *filter = ZNEW(MangoFilter);
+ * OBJ_INIT(filter, mango_filter_prototype());
+ * MangoFilterNode *filternode = mango_filternode_new(filter);
+ * CHECK_EQUAL(1, OBJ_REFCOUNT(filternode));
+ * CHECK_EQUAL(2, OBJ_REFCOUNT(filter));
+ * CHECK(NULL == filternode->arguments);
+ * CHECK_EQUAL(false, OBJ_DECREF(filternode));
+ * CHECK_EQUAL(false, OBJ_DECREF(filter));
+ * @endtest
+ */
 MangoFilterNode *mango_filternode_init(MangoFilter *filter, MangoFilterNode *node, MangoPrototype *proto)
 {
     if (proto == NULL)
