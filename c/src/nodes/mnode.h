@@ -8,23 +8,6 @@
 extern "C" {
 #endif
 
-/**
- * When nodes are rendered their rendering state is stored in a context.
- * This struct stores that node specific context.
- */
-DECLARE_CLASS(MangoNodeContext, MangoPrototype,
-    MangoNode *         node;
-    MangoNodeContext *  parent;
-);
-
-/**
- * Create a default node context instance.
- * \param   node    Node whose context is being created.
- * \param   parent  Context of the node's parent node.
- * \return  A NodeContext object.
- */
-extern MangoNodeContext *mango_nodecontext_new(MangoNode *node, MangoNodeContext *parent);
-
 typedef MangoNodeContext *(*NodeContextCreateFunc)(MangoNode *node,
                                                    MangoTemplateContext *templateContext,
                                                    MangoNodeContext *topContext);
@@ -80,6 +63,37 @@ INHERIT_STRUCT(MangoNodePrototype, MangoPrototype,
                                   MangoNodeContext *topContext,
                                   MangoError **error);
 );
+
+/**
+ * When nodes are rendered their rendering state is stored in a context.
+ * This struct stores that node specific context.
+ */
+DECLARE_CLASS(MangoNodeContext, MangoPrototype,
+    MangoNode *         node;
+    MangoNodeContext *  parent;
+);
+
+/**
+ * Create a default node context instance.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
+ * \return  A NodeContext object.
+ */
+extern MangoNodeContext *mango_nodecontext_new(MangoPrototype *proto, MangoNode *node, MangoNodeContext *parent);
+
+/**
+ * Initialises a node context that was just allocated.
+ * \param   context     Node Context being initialised.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
+ * \return  A NodeContext object.
+ */
+extern MangoNodeContext *mango_nodecontext_init(MangoNodeContext *  context,
+                                                MangoPrototype *    proto,
+                                                MangoNode *         node,
+                                                MangoNodeContext *  parent);
 
 /**
  * A mango node object.

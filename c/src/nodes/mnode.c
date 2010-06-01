@@ -2,17 +2,35 @@
 
 /**
  * Create a default node context instance.
- * \param   node    Node whose context is being created.
- * \param   parent  Context of the node's parent node.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
  * \return  A NodeContext object.
  */
-MangoNodeContext *mango_nodecontext_new(MangoNode *node, MangoNodeContext *parent)
+MangoNodeContext *mango_nodecontext_new(MangoPrototype *proto, MangoNode *node, MangoNodeContext *parent)
 {
-    MangoNodeContext *nc = ZNEW(MangoNodeContext);
-    OBJ_INIT(nc, NULL);
-    nc->node = node;
-    nc->parent = parent;
-    return nc;
+    return mango_nodecontext_init(ZNEW(MangoNodeContext),
+                                  (MangoPrototype *)proto,
+                                  node, parent);
+}
+
+/**
+ * Initialises a node context that was just allocated.
+ * \param   context     Node Context being initialised.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
+ * \return  A NodeContext object.
+ */
+MangoNodeContext *mango_nodecontext_init(MangoNodeContext *context,
+                                         MangoPrototype *proto,
+                                         MangoNode *node,
+                                         MangoNodeContext *parent)
+{
+    OBJ_INIT(node, proto);
+    context->node = node;
+    context->parent = parent;
+    return context;
 }
 
 /**

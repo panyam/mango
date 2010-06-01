@@ -8,9 +8,22 @@
 extern "C" {
 #endif
 
+// Simplified typedefs
+typedef MangoVar *(*VarSetNextVarFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
+typedef MangoObject *(*VarResolveFunc)(MangoVar *               mvar,
+                                       MangoTemplateContext *   context,
+                                       MangoNodeContext *       topContext);
+
 INHERIT_STRUCT(MangoVarPrototype, MangoPrototype,
     //! Child specific setter of the next var
     MangoVar *(*setNextVarFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
+
+    /**
+     * Resolve a variable against a template context and an optional node context.
+     */
+    MangoObject *(*resolveFunc)(MangoVar *               mvar,
+                                MangoTemplateContext *   context,
+                                MangoNodeContext *       topContext);
 );
 
 DECLARE_CLASS(MangoVar, MangoVarPrototype,
@@ -70,10 +83,9 @@ extern void mango_var_set_value(MangoVar *mvar,
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-extern int mango_var_resolve(MangoVar *                 mvar,
-                                  MangoTemplateContext *context,
-                                  MangoNodeContext *    topContext,
-                                  void **               value);
+extern MangoObject *mango_var_resolve(MangoVar *            mvar,
+                                      MangoTemplateContext *context,
+                                      MangoNodeContext *    topContext);
 
 /**
  * Returns if two vars are equal.

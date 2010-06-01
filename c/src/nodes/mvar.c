@@ -5,7 +5,8 @@
  * The prototype for the MangoVar.
  */
 DECLARE_PROTO_FUNC("Var", MangoVarPrototype, mango_var_prototype,
-    __proto__.setNextVarFunc = mango_var_set_next;
+    __proto__.setNextVarFunc    = NULL;
+    __proto__.resolveFunc       = NULL;
     // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_var_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_vars_are_equal;
@@ -80,12 +81,16 @@ void mango_var_set_value(MangoVar *mvar, MangoString *value, BOOL isQuoted)
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-int mango_var_resolve(MangoVar *            mvar,
-                      MangoTemplateContext *context,
-                      MangoNodeContext *    topContext,
-                      void **               value)
+MangoObject *mango_var_resolve(MangoVar *            mvar,
+                               MangoTemplateContext *context,
+                               MangoNodeContext *    topContext)
 {
-    return 0;
+    if (mvar->__prototype__->resolveFunc != NULL)
+    {
+        return mvar->__prototype__->resolveFunc(mvar, context, topContext);
+    }
+    // use the default resolver otherwise
+    return mango_varresolver_resolve(mango_varresolver_default(), OBJ(context), mvar);
 }
 
 /**
@@ -122,9 +127,15 @@ BOOL mango_vars_are_equal(const MangoVar *var1, const MangoVar *var2)
  * \return  A new var if it is set.
  */
 MangoVar *mango_var_set_next(MangoVar *mvar,
-                                       MangoString *value,
-                                       BOOL isquoted)
+                             MangoString *value,
+                             BOOL isquoted)
 {
+    if (mvar->__prototype__->setNextVarFunc != NULL)
+    {
+        return mvar->__prototype__->setNextVarFunc(mvar, value, isquoted);
+    }
+
+    // fall back to default
     MangoVar *nextVar = mango_var_new(value, isquoted, NULL);
     mvar->next = nextVar;
     return nextVar;
@@ -168,7 +179,7 @@ MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **er
         else
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            MangoVar *nextVar = lastVar->__prototype__->setNextVarFunc(lastVar, varValue, isQuoted);
+            MangoVar *nextVar = mango_var_set_next(lastVar, varValue, isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

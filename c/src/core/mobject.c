@@ -231,7 +231,7 @@ BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key)
  */
 MangoIterator *mango_object_iterator(MangoObject *obj)
 {
-    if (obj->__prototype__->iterFunc != NULL)
+    if (obj != NULL && obj->__prototype__->iterFunc != NULL)
         return obj->__prototype__->iterFunc(obj);
     return NULL;
 }

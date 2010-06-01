@@ -69,7 +69,7 @@ $(OUTPUT_DIR)/test/%.o : %.cpp
 
 test: base $(TEST_OBJS) $(GEN_TEST_SOURCES) $(GEN_TEST_OBJS)
 	@echo Building Test with Static Libraries...
-	@$(GPP) $(CFLAGS) $(TEST_OBJS) $(GEN_TEST_OBJS) $(OUTPUT_DIR)/libmango.a $(OUTPUT_DIR)/libmangoext.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
+	@$(GPP) $(CFLAGS) $(TEST_OBJS) $(GEN_TEST_OBJS)  $(OUTPUT_DIR)/libmangoext.a $(OUTPUT_DIR)/libmango.a $(ARCHIVES) -o $(TEST_OUTPUT) $(LIBS)
 	@echo 
 	@echo Running Tests...
 	@echo 

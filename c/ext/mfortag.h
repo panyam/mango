@@ -117,9 +117,7 @@ extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForT
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagNodeContext *mango_fortagctx_new(MangoForTagNode *        nodedata,
-                                                   MangoTemplateContext *   tmplCtx,
-                                                   MangoNodeContext *       topCtx);
+extern MangoForTagNodeContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent);
 
 /**
  * Sets the source var for the for-tag render context.

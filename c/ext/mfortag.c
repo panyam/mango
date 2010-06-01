@@ -5,13 +5,17 @@
 static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
 
+MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+                                                    MangoTemplateContext *  tmplCtx,
+                                                    MangoNodeContext *      topCtx);
+
 /**
  * Get the prototype for the fortag.
  */
 DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_fortag_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc      = (ObjectEqualsFunc)mango_fortags_are_equal;
-    __proto__.createContextFunc                     = (NodeContextCreateFunc)mango_fortagctx_new;
+    __proto__.createContextFunc                     = (NodeContextCreateFunc)mango_fortag_create_context;
     // __proto__.renderBitMoreFunc                     = (ObjectEqualsFunc)mango_fortags_are_equal;
     // __proto__.childExitedFunc                       = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
@@ -57,7 +61,7 @@ MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
         proto = mango_fortag_prototype();
     mango_tagnode_init((MangoTagNode *)mftnode, proto);
     mftnode->items          = NULL;
-    mftnode->sourceVar = source;
+    mftnode->sourceVar      = source;
     mftnode->childNodes     = childNode;
     mftnode->emptyNodes     = emptyNode;
     return mftnode;
@@ -239,6 +243,31 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
     LIST_PUSH_BACK(ftd->items, var);
 }
 
+/**
+ * Create the for tag node rendering context when required.
+ */
+MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+                                                    MangoTemplateContext *  tmplCtx,
+                                                    MangoNodeContext *      topCtx)
+{
+    MangoForTagNodeContext *ftnContext = NULL;
+    if (ftNode->sourceVar != NULL && ftNode->items != NULL)
+    {
+        ftnContext = mango_fortagctx_new((MangoNode *)ftNode, topCtx);
+        mango_fortagctx_set_source(ftnContext, mango_var_resolve(ftNode->sourceVar, tmplCtx, topCtx));
+        
+        // push NULL values on the context stack for the vars referred by the items
+        MangoIterator *iter = OBJ_ITERATOR(ftNode->items);
+        while (mango_iterator_has_next(iter))
+        {
+            MangoVar *nextvar = (MangoVar *)mango_iterator_next(iter);
+            mango_tmplctx_push(tmplCtx, nextvar->value, NULL);
+        }
+        OBJ_DECREF(iter);
+    }
+    return ftnContext;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //              ForTag Render Context related methods
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,16 +289,15 @@ DECLARE_PROTO_FUNC("ForTagCtx", MangoPrototype, mango_fortagctx_prototype,
  * Creates a new node context object.
  * \param   node    Node data for the for tag node.
  * \param   parent  The parent node context.
- * \param   ctxdata Context data
  *
  * \return  A new instance of the node context data.
  */
-MangoForTagNodeContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
-                                            MangoTemplateContext *  tmplCtx,
-                                            MangoNodeContext *      topCtx)
+MangoForTagNodeContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent)
 {
     MangoForTagNodeContext *ftc = ZNEW(MangoForTagNodeContext);
-    OBJ_INIT(ftc, mango_fortagctx_prototype());
+    mango_nodecontext_init((MangoNodeContext *)ftc,
+                           (MangoPrototype *)mango_fortagctx_prototype(),
+                           node, parent);
     ftc->isFirst        = false;
     ftc->isLast         = false;
     ftc->currIndex      = 0;
@@ -357,24 +385,6 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
         // so the next time a forloop gets called it will do its magic
         // on the parent items.
         VarLibrary.getSharedInstance().registerObjectClass("forloop", ForLoopVar.class);
-    }
-
-    public NodeContext createNodeContext(TemplateContext context, NodeContext parentContext)
-    {
-    	ForTagContext ftnContext = NULL;
-    	if (sourceVar != NULL && items != NULL)
-    	{
-        	ftnContext = new ForTagContext(this, parentContext);
-    		ftnContext.setSource(sourceVar.resolve(context, parentContext));
-    		
-    		// push NULL values on the context stack for the vars referred by the items
-			for (Iterator<Var> iter = items.iterator(); iter.hasNext();)
-			{
-				Var var = iter.next();
-				context.pushValue(var.value(), NULL);
-			}
-    	}
-    	return ftnContext;
     }
 
     /**
