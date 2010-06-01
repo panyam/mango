@@ -9,8 +9,11 @@ static const char *ENDFOR[2] = { "endfor", NULL };
  * Get the prototype for the fortag.
  */
 DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_fortag_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc = (ObjectEqualsFunc)mango_fortags_are_equal;
+    ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_fortag_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc      = (ObjectEqualsFunc)mango_fortags_are_equal;
+    __proto__.createContextFunc                     = (NodeContextCreateFunc)mango_fortagctx_new;
+    // __proto__.renderBitMoreFunc                     = (ObjectEqualsFunc)mango_fortags_are_equal;
+    // __proto__.childExitedFunc                       = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
 
 DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_prototype,
@@ -236,11 +239,23 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
     LIST_PUSH_BACK(ftd->items, var);
 }
 
-#if 0
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //              ForTag Render Context related methods
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Deallocs the for tag node context when ref count reaches 0.
+ */
+void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx)
+{
+    OBJ_DECREF(fortagctx->valIterator);   // delete the old iterator
+    mango_object_dealloc(OBJ(fortagctx));
+}
+
+DECLARE_PROTO_FUNC("ForTagCtx", MangoPrototype, mango_fortagctx_prototype,
+    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
+);
+
 /**
  * Creates a new node context object.
  * \param   node    Node data for the for tag node.
@@ -249,12 +264,20 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
  *
  * \return  A new instance of the node context data.
  */
-MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
-                                        MangoTemplateContext *  tmplCtx,
-                                        MangoNodeContext *      topCtx)
+MangoForTagNodeContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
+                                            MangoTemplateContext *  tmplCtx,
+                                            MangoNodeContext *      topCtx)
 {
-    MangoForTagContext *ftc = ZNEW(MangoForTagContext);
-    mango_fortagctx_set_source(ftc, NULL_VALUE);
+    MangoForTagNodeContext *ftc = ZNEW(MangoForTagNodeContext);
+    OBJ_INIT(ftc, mango_fortagctx_prototype());
+    ftc->isFirst        = false;
+    ftc->isLast         = false;
+    ftc->currIndex      = 0;
+    ftc->isEmpty        = true;
+    ftc->itemValues     = NULL;
+    ftc->valIterator    = NULL;
+    ftc->itemValues     = NULL;
+    mango_fortagctx_set_source(ftc, NULL);
     return ftc;
 }
 
@@ -263,19 +286,20 @@ MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source)
+void mango_fortagctx_set_source(MangoForTagNodeContext *ftc, MangoObject *source)
 {
-    ftc->isEmpty = true;
-    if (mango_value_is_valid(&source))
-    {
-        ftc->isFirst        = true;
-        ftc->isLast         = false;
-        ftc->currIndex      = 0;
-        ftc->valIterator    = mango_valueiterator_new(source);
-        ftc->isEmpty        = !mango_valueiterator_has_next(ftc->valIterator);
-    }
+    ftc->isEmpty        = true;
+    ftc->isFirst        = true;
+    ftc->isLast         = false;
+    ftc->currIndex      = 0;
+
+    OBJ_DECREF(ftc->valIterator);   // delete the old iterator
+    ftc->valIterator    = OBJ_ITERATOR(source);
+    ftc->isEmpty        = !mango_iterator_has_next(ftc->valIterator);
 }
     
+#if 0
+
 /**
  * Unpacks numvals values from the next value in the iterator and
  * returns the number of values unpacked.

@@ -96,6 +96,11 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
  */
 #define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)(obj), key)
 
+/**
+ * Get an object's iterator.
+ */
+#define OBJ_ITERATOR(obj)           mango_object_iterator(OBJ(obj))
+
 #ifdef __cplusplus
 }
 #endif

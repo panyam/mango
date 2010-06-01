@@ -25,6 +25,10 @@ DECLARE_CLASS(MangoNodeContext, MangoPrototype,
  */
 extern MangoNodeContext *mango_nodecontext_new(MangoNode *node, MangoNodeContext *parent);
 
+typedef MangoNodeContext *(*NodeContextCreateFunc)(MangoNode *node,
+                                                   MangoTemplateContext *templateContext,
+                                                   MangoNodeContext *topContext);
+
 /**
  * Declare empty node prototype.
  */

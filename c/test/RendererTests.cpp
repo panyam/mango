@@ -97,7 +97,10 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
         else
         {
             // check
-            CHECK_EQUAL(output, outstream->strbuff->buffer);
+            if (outstream->strbuff != NULL)
+            {
+                CHECK_EQUAL(output, outstream->strbuff->buffer);
+            }
             CHECK(mango_stringbuffer_compare(outstream->strbuff, output, -1) == 0);
         }
     }

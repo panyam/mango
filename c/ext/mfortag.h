@@ -36,15 +36,15 @@ typedef struct MangoForTagNode MangoForTagNode;
 /**
  * Context data for the for-tag during rendering.
  */
-INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeContext,
-    BOOL                isFirst;
-    BOOL                isLast;
-    int                 currIndex;
-    BOOL                isEmpty;
-    // MangoValueIterator *valIterator;
-    MangoArray *        itemValues;
+INHERIT_STRUCT(MangoForTagNodeContext, MangoNodeContext,
+    BOOL            isFirst;
+    BOOL            isLast;
+    int             currIndex;
+    BOOL            isEmpty;
+    MangoIterator * valIterator;
+    MangoList *     itemValues;
 );
-typedef struct MangoForTagRendererContext MangoForTagRendererContext;
+typedef struct MangoForTagNodeContext MangoForTagNodeContext;
 
 ///////////////////////////////////////////////////////////////////////////
 //      Tag data specific methods
@@ -117,16 +117,16 @@ extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForT
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *        nodedata,
-                                                       MangoTemplateContext *   tmplCtx,
-                                                       MangoNodeContext *       topCtx);
+extern MangoForTagNodeContext *mango_fortagctx_new(MangoForTagNode *        nodedata,
+                                                   MangoTemplateContext *   tmplCtx,
+                                                   MangoNodeContext *       topCtx);
 
 /**
  * Sets the source var for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoObject *source);
+extern void mango_fortagctx_set_source(MangoForTagNodeContext *ftc, MangoObject *source);
 
 ///////////////////////////////////////////////////////////////////////////
 //      Parser specific methods

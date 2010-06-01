@@ -134,7 +134,7 @@ struct MangoPrototype
     BOOL (*hasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
 
     /**
-     * Gets the iterator for the object.
+     * Gets the iterator for the object if any.
      */
     MangoIterator *(*iterFunc)(MangoObject *obj);
 };

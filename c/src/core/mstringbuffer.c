@@ -269,6 +269,8 @@ void mango_stringbuffer_ensure_capacity(MangoStringBuffer *mstr, size_t newcap)
  */
 int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (mstr == NULL)
+        return -1;
     if (length < 0) length = strlen(value);
     int minlen = mstr->length < length ? mstr->length : length;
     for (int i = 0;i < minlen;i++)
