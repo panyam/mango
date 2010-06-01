@@ -132,8 +132,11 @@ void mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *v
     else
     {
         oldvalue = ((MangoTableEntry *)node->data)->value;
-        OBJ_DECREF(oldvalue);   // erase old value
-        ((MangoTableEntry *)node->data)->value = OBJ_INCREF(value);
+        if (oldvalue != value)
+        {
+            OBJ_DECREF(oldvalue);   // erase old value
+            ((MangoTableEntry *)node->data)->value = OBJ_INCREF(value);
+        }
     }
 }
 
