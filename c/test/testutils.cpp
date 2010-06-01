@@ -4,12 +4,10 @@
 /**
  * Registers an object in a library.
  */
-void register_in_library(MangoTable *        library,
-                         const char *        key,
-                         MangoObject *       value)
+void register_in_library(MangoLibrary *library, const char *key, MangoObject *value, void (*onRegistered)(MangoObject *obj))
 {
     MangoString *mkey = mango_stringfactory_new_string((MangoStringFactory *)(mango_rcstringfactory_default()), key, -1);
-    mango_table_put(library, mkey, value);
+    mango_library_register(library, mkey, value, onRegistered);
     OBJ_DECREF(mkey);
 }
 

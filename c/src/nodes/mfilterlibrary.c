@@ -9,7 +9,7 @@
  *
  * \return  The filter by a given name or NULL if it does not exist.
  */
-MangoFilter *mango_filter_library_get(const MangoString *name, MangoTable *library)
+MangoFilter *mango_filter_library_get(const MangoString *name, MangoLibrary *library)
 {
     if (library == NULL)
         library = mango_filter_library_singleton();

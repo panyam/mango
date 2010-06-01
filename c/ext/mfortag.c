@@ -8,6 +8,7 @@ static const char *ENDFOR[2] = { "endfor", NULL };
 MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
                                                     MangoTemplateContext *  tmplCtx,
                                                     MangoNodeContext *      topCtx);
+void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx);
 
 /**
  * Get the prototype for the fortag.
@@ -22,6 +23,10 @@ DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
 
 DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_prototype,
     __proto__.parserFunc = (TagParserFunc)mango_fortag_extract_with_parser;
+);
+
+DECLARE_PROTO_FUNC("ForTagContext", MangoPrototype, mango_fortagctx_prototype,
+    __proto__.deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
 );
 
 /**
@@ -280,10 +285,6 @@ void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx)
     OBJ_DECREF(fortagctx->valIterator);   // delete the old iterator
     mango_object_dealloc(OBJ(fortagctx));
 }
-
-DECLARE_PROTO_FUNC("ForTagCtx", MangoPrototype, mango_fortagctx_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
-);
 
 /**
  * Creates a new node context object.

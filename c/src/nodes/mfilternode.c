@@ -147,7 +147,7 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext *ctx, M
 {
     MangoParser *parser = ctx->parser;
     MangoStringFactory *msf = ctx->strfactory;
-    MangoTable *filterlib = ctx->filterlib;
+    MangoLibrary *filterlib = ctx->filterlib;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER,
                                                         false, error);
 

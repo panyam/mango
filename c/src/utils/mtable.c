@@ -35,13 +35,12 @@ void mango_table_dealloc(MangoTable *table)
  * \param   value   New value.
  * \return old value if it exists, otherwise NULL.
  */
-MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *value)
+void mango_table_put(MangoTable *table, MangoString *key, MangoObject *value)
 {
     if (table->__prototype__->putFunc != NULL)
     {
-        return table->__prototype__->putFunc(table, key, value);
+        table->__prototype__->putFunc(table, key, value);
     }
-    return NULL;
 }
 
 /**

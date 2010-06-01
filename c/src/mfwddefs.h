@@ -34,6 +34,7 @@ typedef struct MangoFreeTextNode MangoFreeTextNode;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoIterator MangoIterator;
 typedef struct MangoIteratorPrototype MangoIteratorPrototype;
+typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoLinkedList MangoLinkedList;
 typedef struct MangoLinkedListNode MangoLinkedListNode;
 typedef struct MangoList MangoList;

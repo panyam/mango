@@ -43,6 +43,7 @@
 #include "utils/mbintree.h"
 #include "utils/mcollection.h"
 #include "utils/mlinkedlist.h"
+#include "utils/mlibrary.h"
 #include "utils/mlist.h"
 #include "utils/mmemutils.h"
 #include "utils/mrawarray.h"

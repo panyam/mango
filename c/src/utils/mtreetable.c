@@ -114,12 +114,8 @@ void mango_treetable_erase(MangoTreeTable *table, MangoString *key)
  * \param   table   Table into which the value is to be set.
  * \param   key     Key for which the value is to be set.
  * \param   value   Value to be set to.
- * 
- * \return  NULL if the key does not already exist, otherwise the old
- * value.  Also the new value is increfed but the old value is NOT
- * decrefed.
  */
-MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value)
+void mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value)
 {
     if (table->entries == NULL)
         table->entries = mango_bintree_new();
@@ -136,9 +132,9 @@ MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoO
     else
     {
         oldvalue = ((MangoTableEntry *)node->data)->value;
+        OBJ_DECREF(oldvalue);   // erase old value
         ((MangoTableEntry *)node->data)->value = OBJ_INCREF(value);
     }
-    return oldvalue;
 }
 
 /**

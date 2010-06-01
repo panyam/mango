@@ -3,11 +3,11 @@
 #include "mangopub.h"
 #include "mangoextpub.h"
 #include "stlinputsource.h"
+#include "testutils.h"
 #include <vector>
 #include <sstream>
 #include <string.h>
 #include <stdarg.h>
-#include "maddfilter.h"
 
 class ParserTestFixture
 {
@@ -17,8 +17,8 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoTable *            filterLibrary;
-    MangoTable *            tagLibrary;
+    MangoLibrary *          filterLibrary;
+    MangoLibrary *          tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
 
@@ -31,7 +31,7 @@ public:
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tagparser_library_singleton()),
-        string_factory((MangoStringFactory *)mango_rcstringfactory_new())
+        string_factory((MangoStringFactory *)mango_rcstringfactory_default())
     {
         parser_context.filterlib    = filterLibrary;
         parser_context.taglib       = tagLibrary;
@@ -39,17 +39,10 @@ public:
         parser_context.loader       = NULL;
 
         // register filters
-        register_in_library(filterLibrary, string_factory, "add", (MangoObject *)mango_addfilter_default());
+        register_in_library(filterLibrary, "add", (MangoObject *)mango_addfilter_default());
 
         // and register the "for" tag
-        register_in_library(tagLibrary, string_factory, "for", (MangoObject *)mango_fortagparser_default());
-    }
-
-    static void register_in_library(MangoTable *library, MangoStringFactory *string_factory, const char *key, MangoObject *value)
-    {
-        MangoString *mkey = mango_stringfactory_new_string(string_factory, key, -1);
-        mango_table_put(library, mkey, value);
-        OBJ_DECREF(mkey);
+        register_in_library(tagLibrary, "for", (MangoObject *)mango_fortagparser_default());
     }
 
     virtual ~ParserTestFixture()

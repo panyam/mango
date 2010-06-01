@@ -14,9 +14,9 @@ extern "C" {
 struct MangoParserContext
 {
     MangoParser *           parser;
-    MangoTable *            filterlib;
-    MangoTable *            taglib;
-    MangoTable *            varlib;
+    MangoLibrary *          filterlib;
+    MangoLibrary *          taglib;
+    MangoLibrary *          varlib;
     MangoStringFactory *    strfactory;
     MangoTemplateLoader *   loader;
 };

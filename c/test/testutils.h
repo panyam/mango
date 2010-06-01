@@ -8,9 +8,7 @@
 /**
  * Registers an object in a library.
  */
-extern void register_in_library(MangoTable *        library,
-                                const char *        key,
-                                MangoObject *       value);
+extern void register_in_library(MangoLibrary *library, const char *key, MangoObject *value, void (*onRegistered)(MangoObject *obj) = NULL);
 
 /**
  * Shortcut for creating a variable.

@@ -11,8 +11,10 @@
  *
  * \return  The var for a given name or NULL if it does not exist.
  */
-MangoVar *mango_var_library_new_instance(const MangoString *name, MangoTable *library)
+MangoVar *mango_var_library_new_instance(const MangoString *name, MangoLibrary *library)
 {
-    return NULL;
+    if (library == NULL)
+        library = mango_var_library_singleton();
+    return (MangoVar *)OBJ_GETSTRATTR(library, name);
 }
 

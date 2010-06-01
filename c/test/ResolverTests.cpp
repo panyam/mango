@@ -14,8 +14,8 @@ protected:
     MangoParser *           parser;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoTable *            filterLibrary;
-    MangoTable *            tagLibrary;
+    MangoLibrary *          filterLibrary;
+    MangoLibrary *          tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
     MangoTemplateContext *  context;
@@ -30,7 +30,7 @@ public:
         input_string(""),
         filterLibrary(mango_filter_library_singleton()),
         tagLibrary(mango_tagparser_library_singleton()),
-        string_factory((MangoStringFactory *)mango_rcstringfactory_new())
+        string_factory((MangoStringFactory *)mango_rcstringfactory_default())
     {
         parser_context.filterlib    = filterLibrary;
         parser_context.taglib       = tagLibrary;

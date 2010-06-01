@@ -27,7 +27,7 @@ MangoNodeContext *mango_nodecontext_init(MangoNodeContext *context,
                                          MangoNode *node,
                                          MangoNodeContext *parent)
 {
-    OBJ_INIT(node, proto);
+    OBJ_INIT(context, proto);
     context->node = node;
     context->parent = parent;
     return context;

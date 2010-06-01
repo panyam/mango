@@ -18,7 +18,7 @@ extern "C" {
  *
  * \return  The var for a given name or NULL if it does not exist.
  */
-extern MangoVar *mango_var_library_new_instance(const MangoString *name, MangoTable *library);
+extern MangoVar *mango_var_library_new_instance(const MangoString *name, MangoLibrary *library);
 
 #ifdef __cplusplus
 }

@@ -20,8 +20,8 @@ public:
     MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoTable *            filterLibrary;
-    MangoTable *            tagLibrary;
+    MangoLibrary *          filterLibrary;
+    MangoLibrary *          tagLibrary;
     MangoStringFactory *    string_factory;
     MangoParserContext      parser_context;
     MangoTemplateContext *  context;

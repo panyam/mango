@@ -16,7 +16,7 @@ extern "C" {
  *
  * \return  The tagparser by a given name or NULL if it does not exist.
  */
-const MangoTagParser *mango_tagparser_library_get(const MangoString *name, MangoTable *library);
+const MangoTagParser *mango_tagparser_library_get(const MangoString *name, MangoLibrary *library);
 
 #ifdef __cplusplus
 }

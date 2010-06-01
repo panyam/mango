@@ -10,7 +10,7 @@
  * \return  The tagparser by a given name or NULL if it does not exist.
  */
 const MangoTagParser *mango_tagparser_library_get(const MangoString *name, 
-                                                  MangoTable *library)
+                                                  MangoLibrary *library)
 {
     if (library == NULL)
         library = mango_tagparser_library_singleton(NULL);
