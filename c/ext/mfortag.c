@@ -21,12 +21,27 @@ DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
     // __proto__.childExitedFunc                       = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
 
+/**
+ * Prototype for the for tag parser.
+ */
 DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_prototype,
     __proto__.parserFunc = (TagParserFunc)mango_fortag_extract_with_parser;
 );
 
+/**
+ * Prototype for tag for the for tag context.
+ */
 DECLARE_PROTO_FUNC("ForTagContext", MangoPrototype, mango_fortagctx_prototype,
     __proto__.deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
+);
+
+/**
+ * Prototype for the forloop variable.
+ */
+DECLARE_PROTO_FUNC("ForLoopVar", MangoVarPrototype, mango_forloopvar_prototype,
+    mango_var_prototype_init(&__proto__);
+    __proto__.setNextVarFunc    = mango_forloopvar_set_next_var;
+    __proto__.resolveFunc       = mango_forloopvar_resolve;
 );
 
 /**

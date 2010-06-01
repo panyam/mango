@@ -5,12 +5,20 @@
  * The prototype for the MangoVar.
  */
 DECLARE_PROTO_FUNC("Var", MangoVarPrototype, mango_var_prototype,
-    __proto__.setNextVarFunc    = NULL;
-    __proto__.resolveFunc       = NULL;
-    // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
-    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_var_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_vars_are_equal;
+    mango_var_prototype_init(&__proto__);
 );
+
+/**
+ * Initialises a variable prototype.
+ */
+MangoVarPrototype *mango_var_prototype_init(MangoVarPrototype *proto)
+{
+    ((MangoPrototype *)proto)->deallocFunc = (ObjectDeallocFunc)mango_var_dealloc;
+    ((MangoPrototype *)proto)->equalsFunc  = (ObjectEqualsFunc)mango_vars_are_equal;
+    proto->setNextVarFunc    = NULL;
+    proto->resolveFunc       = NULL;
+    return proto;
+}
 
 /**
  * Creates a new mango var.
