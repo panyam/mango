@@ -17,7 +17,6 @@ protected:
     std::string             input_string;
     MangoTemplateContext *  tmplctx;
     MangoVarResolver *      resolver;
-    MangoVar *              var;
 
 public:
     ResolverTestFixture() :
@@ -74,10 +73,11 @@ public:
     {
         MangoError *error = NULL;
         mango_parser_expect_token(parser, TOKEN_OPEN_VARIABLE, false, &error);
-        var = mango_var_extract_with_parser(parser, context, &error);
+        MangoVar *var = mango_var_extract_with_parser(parser, context, &error);
         mango_parser_expect_token(parser, TOKEN_CLOSE_VARIABLE, false, &error);
         MangoObject *resolvedValue = mango_varresolver_resolve_chain(resolver, (MangoObject *)tmplctx, var);
         CHECK(OBJ_EQUALS(expectedValue, resolvedValue));
+        OBJ_DECREF(var);
     }
 };
 

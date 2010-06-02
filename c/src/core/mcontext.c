@@ -17,16 +17,16 @@ MangoContext *mango_context_new(MangoStringFactory *    string_factory,
     MangoContext *ctx = ZNEW(MangoContext);
 
     if (string_factory == NULL)
-        ctx->string_factory = (MangoStringFactory *)mango_rcstringfactory_default();
+        string_factory = (MangoStringFactory *)mango_rcstringfactory_default();
 
     if (filter_library == NULL)
-        ctx->filter_library = mango_filter_library_singleton();
+        filter_library = mango_filter_library_singleton();
 
     if (var_library == NULL)
-        ctx->var_library = mango_var_library_singleton();
+        var_library = mango_var_library_singleton();
 
     if (tag_library == NULL)
-        ctx->tag_library = mango_tagparser_library_singleton();
+        tag_library = mango_tagparser_library_singleton();
 
     ctx->string_factory = OBJ_INCREF(string_factory);
     ctx->filter_library = OBJ_INCREF(filter_library);
