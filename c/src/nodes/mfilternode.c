@@ -146,7 +146,6 @@ BOOL mango_filternode_extract_filter_list(MangoParser *parser,
 MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
     MangoStringFactory *msf = ctx->string_factory;
-    MangoLibrary *filterlib = ctx->filter_library;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
 
     MangoString *filtername = mango_stringfactory_from_buffer(msf, token->tokenValue);
