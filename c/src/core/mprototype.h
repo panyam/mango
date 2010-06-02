@@ -10,65 +10,6 @@ extern "C" {
 #endif
 
 /**
- * "Inherits" a struct by including an instance of it as the first member of
- * the new struct.
- */
-#define INHERIT_STRUCT(STRUCT_NAME, BASE_STRUCT, ...)   \
-    struct STRUCT_NAME                                  \
-    {                                                   \
-        /**                                             \
-         * Base class                                   \
-         */                                             \
-        BASE_STRUCT __base__;                           \
-                                                        \
-        /**                                             \
-         * The object specific data.                    \
-         */                                             \
-        __VA_ARGS__                                     \
-    }
-
-/**
- * Declares a class of name CLASS_NAME, which has a specific prototype and
- * a reference count.
- */
-#define DECLARE_CLASS(CLASS_NAME, PROTOTYPE_NAME, ...)  \
-    struct CLASS_NAME                                   \
-    {                                                   \
-        /**                                             \
-         * Base prototype.                              \
-         */                                             \
-        PROTOTYPE_NAME *__prototype__;                  \
-                                                        \
-        /**                                             \
-         * object reference count.                      \
-         */                                             \
-        int __refCount__;                               \
-                                                        \
-        /**                                             \
-         * The object specific data.                    \
-         */                                             \
-        __VA_ARGS__                                     \
-    }
-
-/**
- * Macro for generating a function that returns a specific prototype
- * object.
- */
-#define DECLARE_PROTO_FUNC(VAR_CLASS_ID, VAR_TYPE, VAR_FUNC, ...)                   \
-    VAR_TYPE *VAR_FUNC() {                                                          \
-        static VAR_TYPE __proto__;                                                  \
-        static BOOL initialised = false;                                            \
-        if (!initialised)                                                           \
-        {                                                                           \
-            bzero(&__proto__, sizeof(__proto__));                                   \
-            mango_prototype_init((MangoPrototype *)(&__proto__), VAR_CLASS_ID);     \
-            __VA_ARGS__                                                             \
-            initialised = true;                                                     \
-        }                                                                           \
-        return &__proto__;                                                          \
-    }                                                                               \
-
-/**
  * Set of Prototype related methods.
  */
 typedef void (*ObjectDeallocFunc)(MangoObject *object);
@@ -86,10 +27,9 @@ typedef MangoIterator *(*ObjectIteratorFunc)(const MangoObject *obj);
 struct MangoPrototype
 {
     /**
-     * ID of the prototype.  These are unique across all prototypes in the
-     * system.  No two prototypes can have the same ID.
+     * Prototype meta data.
      */
-    int protoID;
+    MangoPrototypeInfo *protoinfo;
 
     /**
      * Called when reference reaches 0 and the destructor/deallocator needs
@@ -135,20 +75,69 @@ struct MangoPrototype
 };
 
 /**
- * Gets the ID for a particular name creating it if requested to.
- * \param   name    Name of the prototype to search for.
- * \param   create  If not found whether to create it.
- * \return  id of the prototype if it exists or was created, -1 otherwise.
+ * "Inherits" a struct by including an instance of it as the first member of
+ * the new struct.
  */
-extern int mango_prototype_id_for_name(const char *name, BOOL create);
+#define INHERIT_STRUCT(STRUCT_NAME, BASE_STRUCT, ...)   \
+    struct STRUCT_NAME                                  \
+    {                                                   \
+        /**                                             \
+         * Base class                                   \
+         */                                             \
+        BASE_STRUCT __base__;                           \
+                                                        \
+        /**                                             \
+         * The object specific data.                    \
+         */                                             \
+        __VA_ARGS__                                     \
+    }
 
 /**
- * Gets the ID for a particular name creating it if requested to.
- * \param   id      ID of the prototype whose name we want.
- * \return  The name of a prototype that matches the ID, NULL if none
- * exist.
+ * Declares a class of name CLASS_NAME, which has a specific prototype and
+ * a reference count.
  */
-extern const char *mango_prototype_name_for_id(int id);
+#define DECLARE_CLASS(CLASS_NAME, PROTOTYPE_NAME, ...)  \
+    struct CLASS_NAME                                   \
+    {                                                   \
+        /**                                             \
+         * Base prototype.                              \
+         */                                             \
+        PROTOTYPE_NAME *__prototype__;                  \
+                                                        \
+        /**                                             \
+         * object reference count.                      \
+         */                                             \
+        int __refCount__;                               \
+                                                        \
+        /**                                             \
+         * The object specific data.                    \
+         */                                             \
+        __VA_ARGS__                                     \
+    }
+
+/**
+ * Macro for generating a function that returns a specific prototype
+ * object.
+ */
+#define DECLARE_PROTO_FUNC(VAR_FUNC, VAR_TYPE, PARENT_TYPE, ...)        \
+    VAR_TYPE *VAR_FUNC() {                                              \
+        static VAR_TYPE __proto__;                                      \
+        static BOOL initialised = false;                                \
+        if (!initialised)                                               \
+        {                                                               \
+            bzero(&__proto__, sizeof(__proto__));                       \
+            mango_prototype_init((MangoPrototype *)(&__proto__),        \
+                                 #VAR_TYPE, #PARENT_TYPE);              \
+            __VA_ARGS__                                                 \
+            initialised = true;                                         \
+        }                                                               \
+        return &__proto__;                                              \
+    }                                                                   \
+
+/**
+ * Returns the default mango prototype.
+ */
+extern MangoPrototype *mango_default_prototype();
 
 /**
  * Create a new prototype object of a given name.
@@ -159,7 +148,20 @@ extern const char *mango_prototype_name_for_id(int id);
  * CHECK_EQUAL(proto.protoID, mango_prototype_id_for_name("Hello", -1));
  * @endtest
  */
-extern BOOL mango_prototype_init(MangoPrototype *, const char *name);
+extern BOOL mango_prototype_init(MangoPrototype *proto, const char *name);
+
+/**
+ * Gets the ID for a particular name creating it if requested to.
+ * \param   name    Name of the prototype to search for.
+ * \param   create  If not found whether to create it.
+ * \return  id of the prototype if it exists or was created, -1 otherwise.
+ */
+extern int mango_prototype_id_for_name(const char *name, BOOL create);
+
+/**
+ * Tells if a prototype is either a base or a child of a given prototype.
+ */
+extern BOOL mango_prototype_is_of_type(MangoPrototype *proto, const char *name);
 
 #ifdef __cplusplus
 }

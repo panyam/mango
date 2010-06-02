@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("RCString", MangoStringPrototype, mango_rcstring_prototype,
+DECLARE_PROTO_FUNC(mango_rcstring_prototype, MangoStringPrototype, MangoPrototype,
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstring_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_rcstrings_are_equal;
     ((MangoPrototype *)&__proto__)->compareFunc = (ObjectCompareFunc)mango_rcstring_compare;

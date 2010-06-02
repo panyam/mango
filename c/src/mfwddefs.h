@@ -51,6 +51,7 @@ typedef struct MangoOutStreamPrototype MangoOutStreamPrototype;
 typedef struct MangoStrOutStream MangoStrOutStream;
 typedef struct MangoParser MangoParser;
 typedef struct MangoPrototype MangoPrototype;
+typedef struct MangoPrototypeInfo MangoPrototypeInfo;
 typedef struct MangoRCString MangoRCString;
 typedef struct MangoRCStringFactory MangoRCStringFactory;
 typedef struct MangoRCStringTable MangoRCStringTable;

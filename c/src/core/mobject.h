@@ -14,11 +14,6 @@ extern "C" {
 DECLARE_CLASS(MangoObject, MangoPrototype);
 
 /**
- * Returns the default mango prototype.
- */
-extern MangoPrototype *mango_object_prototype();
-
-/**
  * Allocate an object of a given size with a prototype.
  */
 extern MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto);

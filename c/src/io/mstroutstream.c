@@ -4,7 +4,7 @@
 void mango_stroutstream_dealloc(MangoStrOutStream *outstream);
 int mango_stroutstream_write(MangoStrOutStream *outstream, void *buffer, size_t length);
 
-DECLARE_PROTO_FUNC("StrOutStream", MangoOutStreamPrototype, mango_stroutstream_prototype,
+DECLARE_PROTO_FUNC(mango_stroutstream_prototype, MangoOutStreamPrototype, MangoPrototype,
     mango_outstream_prototype_init((MangoOutStreamPrototype *)&__proto__);
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_stroutstream_dealloc;
     __proto__.writeFunc = (StreamWriteFunc)mango_stroutstream_write;

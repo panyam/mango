@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("MangoCollection", MangoCollectionPrototype, mango_collection_prototype,
+DECLARE_PROTO_FUNC(MangoCollectionPrototype, mango_collection_prototype,
     __proto__.sizeFunc = NULL;
     __proto__.clearFunc = NULL;
     __proto__.isEmptyFunc = NULL;
