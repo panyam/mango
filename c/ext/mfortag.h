@@ -36,7 +36,7 @@ typedef struct MangoForTagNode MangoForTagNode;
 /**
  * Context data for the for-tag during rendering.
  */
-INHERIT_STRUCT(MangoForTagNodeContext, MangoNodeContext,
+INHERIT_STRUCT(MangoForTagContext, MangoNodeContext,
     BOOL            isFirst;
     BOOL            isLast;
     int             currIndex;
@@ -44,7 +44,7 @@ INHERIT_STRUCT(MangoForTagNodeContext, MangoNodeContext,
     MangoIterator * valIterator;
     MangoList *     itemValues;
 );
-typedef struct MangoForTagNodeContext MangoForTagNodeContext;
+typedef struct MangoForTagContext MangoForTagContext;
 
 ///////////////////////////////////////////////////////////////////////////
 //      Tag data specific methods
@@ -117,14 +117,14 @@ extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForT
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagNodeContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent);
+extern MangoForTagContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent);
 
 /**
  * Sets the source var for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-extern void mango_fortagctx_set_source(MangoForTagNodeContext *ftc, MangoObject *source);
+extern void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoObject *source);
 
 ///////////////////////////////////////////////////////////////////////////
 //      Parser specific methods

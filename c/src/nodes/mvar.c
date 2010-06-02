@@ -30,20 +30,24 @@ MangoVarPrototype *mango_var_prototype_init(MangoVarPrototype *proto)
 MangoVar *mango_var_new(MangoString *mstr, BOOL isQuoted, MangoVar *next)
 {
     MangoVar *mvar = NEW(MangoVar);
-    return mango_var_init(mvar, mstr, isQuoted, next);
+    return mango_var_init(mvar, NULL, mstr, isQuoted, next);
 }
 
 /**
  * Initialises a mango var.
  * \param   mvar        Var to be initialised.
+ * \param   proto       Prototype to be initialised with.
  * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
  * \param   next        Next var in the chain.
  * \return  The same var.
  */
-MangoVar *mango_var_init(MangoVar *mvar, MangoString *mstr, BOOL isQuoted, MangoVar *next)
+MangoVar *mango_var_init(MangoVar *mvar, MangoVarPrototype *proto,
+                         MangoString *mstr, BOOL isQuoted, MangoVar *next)
 {
-    OBJ_INIT(mvar, mango_var_prototype());
+    if (proto == NULL)
+        proto = mango_var_prototype();
+    OBJ_INIT(mvar, proto);
     mvar->next      = next;
     mvar->isQuoted  = isQuoted;
     mvar->isNumber  = false;
@@ -134,9 +138,7 @@ BOOL mango_vars_are_equal(const MangoVar *var1, const MangoVar *var2)
  *
  * \return  A new var if it is set.
  */
-MangoVar *mango_var_set_next(MangoVar *mvar,
-                             MangoString *value,
-                             BOOL isquoted)
+MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isquoted)
 {
     if (mvar->__prototype__->setNextVarFunc != NULL)
     {

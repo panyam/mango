@@ -84,6 +84,17 @@ extern const char *mango_rcstring_buffer(const MangoRCString *mstr);
  */
 extern size_t mango_rcstring_length(const MangoRCString *mstr);
 
+/**
+ * Compares a string with the contents of a buffer.
+ *
+ * \param   str     String being compared.
+ * \param   buff    Value being compared to.
+ * \param   length  Length of the buffer.  If -ve, then buff is null terminated.
+ *
+ * \return  -ve if str < buff, 0 if they are equal, +ve otherwise
+ */
+extern int mango_rcstring_compare_to_buffer(const MangoRCString *str, const char *buffer, int length);
+
 #ifdef __cplusplus
 }
 #endif

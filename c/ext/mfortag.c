@@ -5,10 +5,10 @@
 static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
 static const char *ENDFOR[2] = { "endfor", NULL };
 
-MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+MangoForTagContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
                                                     MangoTemplateContext *  tmplCtx,
                                                     MangoNodeContext *      topCtx);
-void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx);
+void mango_fortagctx_dealloc(MangoForTagContext *fortagctx);
 
 /**
  * Get the prototype for the fortag.
@@ -20,6 +20,20 @@ DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
     // __proto__.renderBitMoreFunc                     = (ObjectEqualsFunc)mango_fortags_are_equal;
     // __proto__.childExitedFunc                       = (ObjectEqualsFunc)mango_fortags_are_equal;
 );
+
+/**
+ * Special forloop specific variables.
+ */
+INHERIT_STRUCT(MangoForLoopVar, MangoVar,
+	/**
+	 * Tells how many grandparents are we looking up.
+	 * 0 Implies immediate parent.
+	 */
+    int parentCount;
+);
+typedef struct MangoForLoopVar MangoForLoopVar;
+MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BOOL isquoted);
+MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext);
 
 /**
  * Prototype for the for tag parser.
@@ -40,8 +54,8 @@ DECLARE_PROTO_FUNC("ForTagContext", MangoPrototype, mango_fortagctx_prototype,
  */
 DECLARE_PROTO_FUNC("ForLoopVar", MangoVarPrototype, mango_forloopvar_prototype,
     mango_var_prototype_init(&__proto__);
-    __proto__.setNextVarFunc    = mango_forloopvar_set_next_var;
-    __proto__.resolveFunc       = mango_forloopvar_resolve;
+    __proto__.setNextVarFunc    = (VarSetNextFunc)mango_forloopvar_set_next;
+    __proto__.resolveFunc       = (VarResolveFunc)mango_forloopvar_resolve;
 );
 
 /**
@@ -266,11 +280,11 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
 /**
  * Create the for tag node rendering context when required.
  */
-MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+MangoForTagContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
                                                     MangoTemplateContext *  tmplCtx,
                                                     MangoNodeContext *      topCtx)
 {
-    MangoForTagNodeContext *ftnContext = NULL;
+    MangoForTagContext *ftnContext = NULL;
     if (ftNode->sourceVar != NULL && ftNode->items != NULL)
     {
         ftnContext = mango_fortagctx_new((MangoNode *)ftNode, topCtx);
@@ -295,7 +309,7 @@ MangoForTagNodeContext *mango_fortag_create_context(MangoForTagNode *       ftNo
 /**
  * Deallocs the for tag node context when ref count reaches 0.
  */
-void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx)
+void mango_fortagctx_dealloc(MangoForTagContext *fortagctx)
 {
     OBJ_DECREF(fortagctx->valIterator);   // delete the old iterator
     mango_object_dealloc(OBJ(fortagctx));
@@ -308,9 +322,9 @@ void mango_fortagctx_dealloc(MangoForTagNodeContext *fortagctx)
  *
  * \return  A new instance of the node context data.
  */
-MangoForTagNodeContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent)
+MangoForTagContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent)
 {
-    MangoForTagNodeContext *ftc = ZNEW(MangoForTagNodeContext);
+    MangoForTagContext *ftc = ZNEW(MangoForTagContext);
     mango_nodecontext_init((MangoNodeContext *)ftc,
                            (MangoPrototype *)mango_fortagctx_prototype(),
                            node, parent);
@@ -330,7 +344,7 @@ MangoForTagNodeContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *p
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-void mango_fortagctx_set_source(MangoForTagNodeContext *ftc, MangoObject *source)
+void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoObject *source)
 {
     ftc->isEmpty        = true;
     ftc->isFirst        = true;
@@ -342,6 +356,86 @@ void mango_fortagctx_set_source(MangoForTagNodeContext *ftc, MangoObject *source
     ftc->isEmpty        = !mango_iterator_has_next(ftc->valIterator);
 }
     
+///////////////////////////////////////////////////////////////////////////////////
+//                      ForLoop Variable specific methods
+///////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Creates a new forloop variable.
+ */
+MangoForLoopVar *mango_forloopvar_new()
+{
+    MangoForLoopVar *flv = ZNEW(MangoForLoopVar);
+    mango_var_init((MangoVar *)flv, mango_forloopvar_prototype(), NULL, false, NULL);
+    flv->parentCount = 0;
+    return flv;
+}
+
+/**
+ * Sets the value of the next variable.  If the value is "parentloop" then
+ * simply stores the parent count so that we can look up the nth context
+ * from now.
+ */
+MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BOOL isquoted)
+{
+    if (mango_string_compare_to_buffer(value, "parentloop", -1) == 0)
+    {
+        var->parentCount++;
+        return NULL;
+    }
+
+    // call super class method
+    return mango_var_set_next((MangoVar *)var, value, isquoted);
+}
+
+/**
+ * Resolves the value of the forloop variable by traversing parent
+ * contexts.
+ */
+MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext)
+{
+#if 0
+    // find the first ForLoop anywhere along the node context stack!!
+    int parentsLeft = var->parentCount;
+    MangoNodeContext *tempContext = currContext;
+    while (parentsLeft >= 0)
+    {
+        while (tempContext != NULL && !(tempContext instanceof ForTagContext))
+            tempContext = tempContext->parent;
+
+        if (tempContext != NULL)
+        {
+            parentsLeft--;
+            if (parentsLeft >= 0)
+                tempContext = tempContext->parent;
+        }
+    }
+
+    if (tempContext != NULL && nextVar != NULL)
+    {
+        MangoForTagContext *ftnContext = (MangoForTagContext)tempContext;
+        if (mango_string_compare_to_buffer(nextVar->value, "counter", -1) == 0)
+        {
+            return ftnContext.getOneBasedCounter();
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "counter0", -1) == 0)
+        {
+            return ftnContext.getCounter();
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "first", -1) == 0)
+        {
+            return ftnContext.isFirst();
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "last", -1) == 0)
+        {
+            return ftnContext.isLast();
+        }
+        return mango_number_from_int(0);
+    }
+#endif
+    return NULL;
+}
+
 #if 0
 
 /**
@@ -478,7 +572,6 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
     }
 }
 
-
 /**
  * Special vars to extract info about the for loops.
  * 
@@ -486,71 +579,6 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
  */
 class ForLoopVar extends Var
 {
-	/**
-	 * Tells how many grandparents are we looking up.
-	 * 0 Implies immediate parent.
-	 */
-	int parentCount;
-	
-	public ForLoopVar()
-	{
-		parentCount = 0;
-	}
-	
-	/**
-	 * Does a bit of optimisation on the value of the "next" var 
-	 * by folding all parentloops into a counter.
-	 */
-    public MangoVar *setNextVar(String value, boolean isquoted)
-    {
-    	if (value.equals("parentloop"))
-    	{
-    		parentCount++;
-    		return NULL;
-    	}
-    	return super.setNextVar(value, isquoted);
-    }
-	
-    public Object resolve(TemplateContext context, NodeContext currContext)
-    {
-    	// find the first ForLoop anywhere along the node context stack!!
-    	int parentsLeft = parentCount;
-    	MangoNodeContext *tempContext = currContext;
-    	while (parentsLeft >= 0)
-    	{
-	    	while (tempContext != NULL && !(tempContext instanceof ForTagContext))
-	    		tempContext = tempContext.parent;
-	    	if (tempContext != NULL)
-	    	{
-	    		parentsLeft--;
-	    		if (parentsLeft >= 0)
-	    			tempContext = tempContext.parent;
-	    	}
-    	}
-
-    	if (tempContext != NULL && nextVar != NULL)
-        {
-            ForTagContext ftnContext = (ForTagContext)tempContext;
-            if (nextVar.value().equals("counter"))
-            {
-                return ftnContext.getOneBasedCounter();
-            }
-            else if (nextVar.value().equals("counter0"))
-            {
-                return ftnContext.getCounter();
-            }
-            else if (nextVar.value().equals("first"))
-            {
-                return ftnContext.isFirst();
-            }
-            else if (nextVar.value().equals("last"))
-            {
-                return ftnContext.isLast();
-            }
-            return 0;
-        }
-        return NULL;
-    }
 }
 
 #endif

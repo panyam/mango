@@ -9,12 +9,12 @@ typedef struct MangoTableEntry
 
 int tableentry_name_cmp(const MangoString *name1, const MangoTableEntry *mle2)
 {
-    return mango_string_compare(name1, mle2->name);
+    return OBJ_COMPARE(name1, mle2->name);
 }
 
 int tableentry_cmp(const MangoTableEntry *mle1, const MangoTableEntry *mle2)
 {
-    return mango_string_compare(mle1->name, mle2->name);
+    return OBJ_COMPARE(mle1->name, mle2->name);
 }
 
 BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key);

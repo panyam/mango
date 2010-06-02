@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 // Simplified typedefs
-typedef MangoVar *(*VarSetNextVarFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
+typedef MangoVar *(*VarSetNextFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
 typedef MangoObject *(*VarResolveFunc)(MangoVar *               mvar,
                                        MangoTemplateContext *   context,
                                        MangoNodeContext *       topContext);
@@ -60,12 +60,14 @@ extern MangoVarPrototype *mango_var_prototype_init(MangoVarPrototype *proto);
 /**
  * Initialises a mango var.
  * \param   mvar        Var to be initialised.
+ * \param   proto       Prototype to be initialised with.
  * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
  * \param   next        Next var in the chain.
- * \return  A new MangoVar instance.
+ * \return  The same var.
  */
-extern MangoVar *mango_var_init(MangoVar *mvar, MangoString *mstr, BOOL isQuoted, MangoVar *next);
+extern MangoVar *mango_var_init(MangoVar *mvar, MangoVarPrototype *proto,
+                                MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
  * Deallocs a mango var when refcount reaches 0.
