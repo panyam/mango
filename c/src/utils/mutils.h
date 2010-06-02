@@ -41,6 +41,11 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
 #define OBJ(x)      ((MangoObject *)(x))
 
 /**
+ * Get the prototype of an object.
+ */
+#define PROTO(obj)          (OBJ((obj))->__prototype__)
+
+/**
  * Initialises a mango object's refcount and prototype.
  */
 // extern inline MangoObject *OBJ_INIT(void *obj, void *proto) { return mango_object_init(OBJ(obj), (MangoPrototype *)proto); }

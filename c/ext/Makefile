@@ -127,11 +127,11 @@ dep:
 ../bld/./maddfilter.o: ../src/utils/marraylist.h ../src/utils/mlist.h
 ../bld/./maddfilter.o: ../src/utils/mcollection.h ../src/utils/mbintree.h
 ../bld/./maddfilter.o: ../src/utils/mcollection.h ../src/utils/mlinkedlist.h
-../bld/./maddfilter.o: ../src/utils/mlist.h ../src/utils/mmemutils.h
-../bld/./maddfilter.o: ../src/utils/mrawarray.h ../src/utils/mrawlist.h
-../bld/./maddfilter.o: ../src/utils/msingletons.h ../src/utils/mtable.h
-../bld/./maddfilter.o: ../src/utils/mtreetable.h ../src/utils/mtable.h
-../bld/./maddfilter.o: maddfilter.h
+../bld/./maddfilter.o: ../src/utils/mlist.h ../src/utils/mlibrary.h
+../bld/./maddfilter.o: ../src/utils/mmemutils.h ../src/utils/mrawarray.h
+../bld/./maddfilter.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
+../bld/./maddfilter.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
+../bld/./maddfilter.o: ../src/utils/mtable.h maddfilter.h
 ../bld/./mfortag.o: ../src/mangopub.h ../src/mfwddefs.h
 ../bld/./mfortag.o: ../src/core/mclasses.h ../src/core/merror.h
 ../bld/./mfortag.o: ../src/core/miterator.h ../src/core/mobject.h
@@ -160,7 +160,8 @@ dep:
 ../bld/./mfortag.o: ../src/utils/marraylist.h ../src/utils/mlist.h
 ../bld/./mfortag.o: ../src/utils/mcollection.h ../src/utils/mbintree.h
 ../bld/./mfortag.o: ../src/utils/mcollection.h ../src/utils/mlinkedlist.h
-../bld/./mfortag.o: ../src/utils/mlist.h ../src/utils/mmemutils.h
-../bld/./mfortag.o: ../src/utils/mrawarray.h ../src/utils/mrawlist.h
-../bld/./mfortag.o: ../src/utils/msingletons.h ../src/utils/mtable.h
-../bld/./mfortag.o: ../src/utils/mtreetable.h ../src/utils/mtable.h mfortag.h
+../bld/./mfortag.o: ../src/utils/mlist.h ../src/utils/mlibrary.h
+../bld/./mfortag.o: ../src/utils/mmemutils.h ../src/utils/mrawarray.h
+../bld/./mfortag.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
+../bld/./mfortag.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
+../bld/./mfortag.o: ../src/utils/mtable.h mfortag.h

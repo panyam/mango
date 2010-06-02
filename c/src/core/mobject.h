@@ -94,7 +94,7 @@ struct MangoPrototype
     /**
      * Size of the proto struct.
      */
-    size_t  size;
+    // size_t  size;
 
     /**
      * Called when reference reaches 0 and the destructor/deallocator needs
@@ -155,7 +155,6 @@ typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
  * @test(TestPrototypeInit)
  * MangoPrototype proto;
  * mango_prototype_init(&proto, "Hello", sizeof(proto));
- * CHECK_EQUAL(sizeof(proto), proto.size);
  * CHECK(strcmp(proto.name, "Hello") == 0);
  * free(proto.name);
  * @endtest

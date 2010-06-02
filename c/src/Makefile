@@ -118,9 +118,10 @@ dep:
 ../bld/utils/marraylist.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/marraylist.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/marraylist.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/marraylist.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/marraylist.o: utils/mrawlist.h utils/msingletons.h
-../bld/utils/marraylist.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/utils/marraylist.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/marraylist.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/marraylist.o: utils/msingletons.h utils/mtable.h
+../bld/utils/marraylist.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mbintree.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mbintree.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mbintree.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -142,8 +143,8 @@ dep:
 ../bld/utils/mbintree.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/utils/mbintree.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/utils/mbintree.o: utils/mbintree.h utils/mcollection.h
-../bld/utils/mbintree.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/utils/mbintree.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mbintree.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mbintree.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/utils/mbintree.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mbintree.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mcollection.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -170,9 +171,35 @@ dep:
 ../bld/utils/mcollection.o: utils/marraylist.h utils/mlist.h
 ../bld/utils/mcollection.o: utils/mcollection.h utils/mbintree.h
 ../bld/utils/mcollection.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mcollection.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/mcollection.o: utils/mrawlist.h utils/msingletons.h
-../bld/utils/mcollection.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/utils/mcollection.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/mcollection.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mcollection.o: utils/msingletons.h utils/mtable.h
+../bld/utils/mcollection.o: utils/mtreetable.h utils/mtable.h
+../bld/utils/mlibrary.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
+../bld/utils/mlibrary.o: core/miterator.h core/mobject.h utils/mutils.h
+../bld/utils/mlibrary.o: core/mnumber.h core/mobject.h core/mrcstring.h
+../bld/utils/mlibrary.o: core/mstring.h core/mrcstringfactory.h
+../bld/utils/mlibrary.o: core/mstringfactory.h core/mrcstringtable.h
+../bld/utils/mlibrary.o: core/mstring.h core/mstringbuffer.h
+../bld/utils/mlibrary.o: core/mstringfactory.h io/minputsource.h
+../bld/utils/mlibrary.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
+../bld/utils/mlibrary.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
+../bld/utils/mlibrary.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/utils/mlibrary.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/utils/mlibrary.o: nodes/mvar.h nodes/mvariterator.h
+../bld/utils/mlibrary.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/utils/mlibrary.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mlibrary.o: parser/mparsercontext.h parser/mtagparser.h
+../bld/utils/mlibrary.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mlibrary.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/utils/mlibrary.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/utils/mlibrary.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/utils/mlibrary.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/utils/mlibrary.o: utils/mbintree.h utils/mcollection.h
+../bld/utils/mlibrary.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mlibrary.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mlibrary.o: utils/msingletons.h utils/mtable.h
+../bld/utils/mlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mlinkedlist.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/utils/mlinkedlist.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/utils/mlinkedlist.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -197,9 +224,10 @@ dep:
 ../bld/utils/mlinkedlist.o: utils/marraylist.h utils/mlist.h
 ../bld/utils/mlinkedlist.o: utils/mcollection.h utils/mbintree.h
 ../bld/utils/mlinkedlist.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mlinkedlist.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/mlinkedlist.o: utils/mrawlist.h utils/msingletons.h
-../bld/utils/mlinkedlist.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/utils/mlinkedlist.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/mlinkedlist.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mlinkedlist.o: utils/msingletons.h utils/mtable.h
+../bld/utils/mlinkedlist.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mlist.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mlist.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mlist.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -221,9 +249,9 @@ dep:
 ../bld/utils/mlist.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mlist.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mlist.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/utils/mlist.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/utils/mlist.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/utils/mlist.o: utils/mtable.h
+../bld/utils/mlist.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/utils/mlist.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/utils/mlist.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mnumber.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mnumber.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mnumber.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -245,9 +273,9 @@ dep:
 ../bld/utils/mnumber.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mnumber.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mnumber.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/utils/mnumber.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/utils/mnumber.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/utils/mnumber.o: utils/mtable.h
+../bld/utils/mnumber.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/utils/mnumber.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/utils/mnumber.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mrawarray.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mrawarray.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mrawarray.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -270,8 +298,9 @@ dep:
 ../bld/utils/mrawarray.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mrawarray.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mrawarray.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mrawarray.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/mrawarray.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/utils/mrawarray.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/mrawarray.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mrawarray.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mrawarray.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mrawlist.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mrawlist.o: core/miterator.h core/mobject.h utils/mutils.h
@@ -294,8 +323,8 @@ dep:
 ../bld/utils/mrawlist.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/utils/mrawlist.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/utils/mrawlist.o: utils/mbintree.h utils/mcollection.h
-../bld/utils/mrawlist.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/utils/mrawlist.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mrawlist.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mrawlist.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/utils/mrawlist.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mrawlist.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/msingletons.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -322,9 +351,10 @@ dep:
 ../bld/utils/msingletons.o: utils/marraylist.h utils/mlist.h
 ../bld/utils/msingletons.o: utils/mcollection.h utils/mbintree.h
 ../bld/utils/msingletons.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/msingletons.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/msingletons.o: utils/mrawlist.h utils/msingletons.h
-../bld/utils/msingletons.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/utils/msingletons.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/msingletons.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/msingletons.o: utils/msingletons.h utils/mtable.h
+../bld/utils/msingletons.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mtable.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mtable.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mtable.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -346,9 +376,9 @@ dep:
 ../bld/utils/mtable.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mtable.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mtable.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/utils/mtable.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/utils/mtable.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/utils/mtable.o: utils/mtable.h
+../bld/utils/mtable.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/utils/mtable.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/utils/mtable.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mtreetable.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/utils/mtreetable.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/utils/mtreetable.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -372,9 +402,10 @@ dep:
 ../bld/utils/mtreetable.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mtreetable.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mtreetable.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mtreetable.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/utils/mtreetable.o: utils/mrawlist.h utils/msingletons.h
-../bld/utils/mtreetable.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/utils/mtreetable.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/utils/mtreetable.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mtreetable.o: utils/msingletons.h utils/mtable.h
+../bld/utils/mtreetable.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mutils.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/utils/mutils.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/utils/mutils.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -396,9 +427,9 @@ dep:
 ../bld/utils/mutils.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/utils/mutils.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/utils/mutils.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/utils/mutils.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/utils/mutils.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/utils/mutils.o: utils/mtable.h
+../bld/utils/mutils.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/utils/mutils.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/utils/mutils.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mclasses.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/core/mclasses.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/core/mclasses.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -420,9 +451,9 @@ dep:
 ../bld/core/mclasses.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/core/mclasses.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/core/mclasses.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/core/mclasses.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/core/mclasses.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/core/mclasses.o: utils/mtable.h
+../bld/core/mclasses.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/core/mclasses.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/core/mclasses.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/merror.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/core/merror.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/core/merror.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -444,9 +475,9 @@ dep:
 ../bld/core/merror.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/core/merror.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/core/merror.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/core/merror.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/core/merror.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/core/merror.o: utils/mtable.h
+../bld/core/merror.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/core/merror.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/core/merror.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/miterator.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/core/miterator.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/core/miterator.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -468,8 +499,8 @@ dep:
 ../bld/core/miterator.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/core/miterator.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/core/miterator.o: utils/mbintree.h utils/mcollection.h
-../bld/core/miterator.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/core/miterator.o: utils/mrawarray.h utils/mrawlist.h
+../bld/core/miterator.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/core/miterator.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/core/miterator.o: utils/msingletons.h utils/mtable.h
 ../bld/core/miterator.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mobject.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
@@ -493,9 +524,9 @@ dep:
 ../bld/core/mobject.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/core/mobject.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/core/mobject.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/core/mobject.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/core/mobject.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/core/mobject.o: utils/mtable.h
+../bld/core/mobject.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/core/mobject.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/core/mobject.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mrcstring.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/core/mrcstring.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/core/mrcstring.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -517,8 +548,8 @@ dep:
 ../bld/core/mrcstring.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/core/mrcstring.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/core/mrcstring.o: utils/mbintree.h utils/mcollection.h
-../bld/core/mrcstring.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/core/mrcstring.o: utils/mrawarray.h utils/mrawlist.h
+../bld/core/mrcstring.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/core/mrcstring.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/core/mrcstring.o: utils/msingletons.h utils/mtable.h
 ../bld/core/mrcstring.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mrcstringfactory.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -547,10 +578,11 @@ dep:
 ../bld/core/mrcstringfactory.o: utils/marraylist.h utils/mlist.h
 ../bld/core/mrcstringfactory.o: utils/mcollection.h utils/mbintree.h
 ../bld/core/mrcstringfactory.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/mrcstringfactory.o: utils/mlist.h utils/mmemutils.h
-../bld/core/mrcstringfactory.o: utils/mrawarray.h utils/mrawlist.h
-../bld/core/mrcstringfactory.o: utils/msingletons.h utils/mtable.h
-../bld/core/mrcstringfactory.o: utils/mtreetable.h utils/mtable.h
+../bld/core/mrcstringfactory.o: utils/mlist.h utils/mlibrary.h
+../bld/core/mrcstringfactory.o: utils/mmemutils.h utils/mrawarray.h
+../bld/core/mrcstringfactory.o: utils/mrawlist.h utils/msingletons.h
+../bld/core/mrcstringfactory.o: utils/mtable.h utils/mtreetable.h
+../bld/core/mrcstringfactory.o: utils/mtable.h
 ../bld/core/mrcstringtable.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/core/mrcstringtable.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/core/mrcstringtable.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -575,10 +607,11 @@ dep:
 ../bld/core/mrcstringtable.o: utils/marraylist.h utils/mlist.h
 ../bld/core/mrcstringtable.o: utils/mcollection.h utils/mbintree.h
 ../bld/core/mrcstringtable.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/mrcstringtable.o: utils/mlist.h utils/mmemutils.h
-../bld/core/mrcstringtable.o: utils/mrawarray.h utils/mrawlist.h
-../bld/core/mrcstringtable.o: utils/msingletons.h utils/mtable.h
-../bld/core/mrcstringtable.o: utils/mtreetable.h utils/mtable.h
+../bld/core/mrcstringtable.o: utils/mlist.h utils/mlibrary.h
+../bld/core/mrcstringtable.o: utils/mmemutils.h utils/mrawarray.h
+../bld/core/mrcstringtable.o: utils/mrawlist.h utils/msingletons.h
+../bld/core/mrcstringtable.o: utils/mtable.h utils/mtreetable.h
+../bld/core/mrcstringtable.o: utils/mtable.h
 ../bld/core/mstringbuffer.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/core/mstringbuffer.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/core/mstringbuffer.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -603,7 +636,7 @@ dep:
 ../bld/core/mstringbuffer.o: utils/marraylist.h utils/mlist.h
 ../bld/core/mstringbuffer.o: utils/mcollection.h utils/mbintree.h
 ../bld/core/mstringbuffer.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/mstringbuffer.o: utils/mlist.h utils/mmemutils.h
+../bld/core/mstringbuffer.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
 ../bld/core/mstringbuffer.o: utils/mrawarray.h utils/mrawlist.h
 ../bld/core/mstringbuffer.o: utils/msingletons.h utils/mtable.h
 ../bld/core/mstringbuffer.o: utils/mtreetable.h utils/mtable.h
@@ -628,9 +661,9 @@ dep:
 ../bld/core/mstring.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/core/mstring.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/core/mstring.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/core/mstring.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/core/mstring.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/core/mstring.o: utils/mtable.h
+../bld/core/mstring.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/core/mstring.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/core/mstring.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mstringfactory.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/core/mstringfactory.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/core/mstringfactory.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -655,10 +688,11 @@ dep:
 ../bld/core/mstringfactory.o: utils/marraylist.h utils/mlist.h
 ../bld/core/mstringfactory.o: utils/mcollection.h utils/mbintree.h
 ../bld/core/mstringfactory.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/mstringfactory.o: utils/mlist.h utils/mmemutils.h
-../bld/core/mstringfactory.o: utils/mrawarray.h utils/mrawlist.h
-../bld/core/mstringfactory.o: utils/msingletons.h utils/mtable.h
-../bld/core/mstringfactory.o: utils/mtreetable.h utils/mtable.h
+../bld/core/mstringfactory.o: utils/mlist.h utils/mlibrary.h
+../bld/core/mstringfactory.o: utils/mmemutils.h utils/mrawarray.h
+../bld/core/mstringfactory.o: utils/mrawlist.h utils/msingletons.h
+../bld/core/mstringfactory.o: utils/mtable.h utils/mtreetable.h
+../bld/core/mstringfactory.o: utils/mtable.h
 ../bld/io/moutstream.o: io/moutstream.h
 ../bld/io/mstroutstream.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/io/mstroutstream.o: core/merror.h core/miterator.h core/mobject.h
@@ -683,9 +717,10 @@ dep:
 ../bld/io/mstroutstream.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/io/mstroutstream.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/io/mstroutstream.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/io/mstroutstream.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/io/mstroutstream.o: utils/mrawlist.h utils/msingletons.h
-../bld/io/mstroutstream.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/io/mstroutstream.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/io/mstroutstream.o: utils/mrawarray.h utils/mrawlist.h
+../bld/io/mstroutstream.o: utils/msingletons.h utils/mtable.h
+../bld/io/mstroutstream.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mparser.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/parser/mparser.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/parser/mparser.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -707,8 +742,8 @@ dep:
 ../bld/parser/mparser.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/parser/mparser.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/parser/mparser.o: utils/mbintree.h utils/mcollection.h
-../bld/parser/mparser.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/parser/mparser.o: utils/mrawarray.h utils/mrawlist.h
+../bld/parser/mparser.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/parser/mparser.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/parser/mparser.o: utils/msingletons.h utils/mtable.h
 ../bld/parser/mparser.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mtagparserlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -741,10 +776,10 @@ dep:
 ../bld/parser/mtagparserlibrary.o: utils/mlist.h utils/mcollection.h
 ../bld/parser/mtagparserlibrary.o: utils/mbintree.h utils/mcollection.h
 ../bld/parser/mtagparserlibrary.o: utils/mlinkedlist.h utils/mlist.h
-../bld/parser/mtagparserlibrary.o: utils/mmemutils.h utils/mrawarray.h
-../bld/parser/mtagparserlibrary.o: utils/mrawlist.h utils/msingletons.h
-../bld/parser/mtagparserlibrary.o: utils/mtable.h utils/mtreetable.h
-../bld/parser/mtagparserlibrary.o: utils/mtable.h
+../bld/parser/mtagparserlibrary.o: utils/mlibrary.h utils/mmemutils.h
+../bld/parser/mtagparserlibrary.o: utils/mrawarray.h utils/mrawlist.h
+../bld/parser/mtagparserlibrary.o: utils/msingletons.h utils/mtable.h
+../bld/parser/mtagparserlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mtoken.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/parser/mtoken.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/parser/mtoken.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -766,9 +801,9 @@ dep:
 ../bld/parser/mtoken.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/parser/mtoken.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/parser/mtoken.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/parser/mtoken.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/parser/mtoken.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/parser/mtoken.o: utils/mtable.h
+../bld/parser/mtoken.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/parser/mtoken.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/parser/mtoken.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mtokenizer.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/parser/mtokenizer.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/parser/mtokenizer.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -793,9 +828,10 @@ dep:
 ../bld/parser/mtokenizer.o: utils/marraylist.h utils/mlist.h
 ../bld/parser/mtokenizer.o: utils/mcollection.h utils/mbintree.h
 ../bld/parser/mtokenizer.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/parser/mtokenizer.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/parser/mtokenizer.o: utils/mrawlist.h utils/msingletons.h
-../bld/parser/mtokenizer.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/parser/mtokenizer.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/parser/mtokenizer.o: utils/mrawarray.h utils/mrawlist.h
+../bld/parser/mtokenizer.o: utils/msingletons.h utils/mtable.h
+../bld/parser/mtokenizer.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mtokenlists.o: parser/mtokenlists.h mfwddefs.h parser/mtoken.h
 ../bld/nodes/mfilter.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mfilter.o: core/miterator.h core/mobject.h utils/mutils.h
@@ -818,9 +854,9 @@ dep:
 ../bld/nodes/mfilter.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/nodes/mfilter.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mfilter.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/nodes/mfilter.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/nodes/mfilter.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/nodes/mfilter.o: utils/mtable.h
+../bld/nodes/mfilter.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/nodes/mfilter.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/nodes/mfilter.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mfilterlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/nodes/mfilterlibrary.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/nodes/mfilterlibrary.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -846,10 +882,10 @@ dep:
 ../bld/nodes/mfilterlibrary.o: utils/mlist.h utils/mcollection.h
 ../bld/nodes/mfilterlibrary.o: utils/mbintree.h utils/mcollection.h
 ../bld/nodes/mfilterlibrary.o: utils/mlinkedlist.h utils/mlist.h
-../bld/nodes/mfilterlibrary.o: utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mfilterlibrary.o: utils/mrawlist.h utils/msingletons.h
-../bld/nodes/mfilterlibrary.o: utils/mtable.h utils/mtreetable.h
-../bld/nodes/mfilterlibrary.o: utils/mtable.h
+../bld/nodes/mfilterlibrary.o: utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mfilterlibrary.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mfilterlibrary.o: utils/msingletons.h utils/mtable.h
+../bld/nodes/mfilterlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mfilternode.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/nodes/mfilternode.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/nodes/mfilternode.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -874,9 +910,10 @@ dep:
 ../bld/nodes/mfilternode.o: utils/marraylist.h utils/mlist.h
 ../bld/nodes/mfilternode.o: utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mfilternode.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mfilternode.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mfilternode.o: utils/mrawlist.h utils/msingletons.h
-../bld/nodes/mfilternode.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/nodes/mfilternode.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mfilternode.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mfilternode.o: utils/msingletons.h utils/mtable.h
+../bld/nodes/mfilternode.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mfreetext.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mfreetext.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/nodes/mfreetext.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -899,8 +936,9 @@ dep:
 ../bld/nodes/mfreetext.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/nodes/mfreetext.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mfreetext.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mfreetext.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mfreetext.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/nodes/mfreetext.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mfreetext.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mfreetext.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mfreetext.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mnode.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mnode.o: core/miterator.h core/mobject.h utils/mutils.h
@@ -923,9 +961,9 @@ dep:
 ../bld/nodes/mnode.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/nodes/mnode.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mnode.o: utils/mcollection.h utils/mlinkedlist.h utils/mlist.h
-../bld/nodes/mnode.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
-../bld/nodes/mnode.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
-../bld/nodes/mnode.o: utils/mtable.h
+../bld/nodes/mnode.o: utils/mlibrary.h utils/mmemutils.h utils/mrawarray.h
+../bld/nodes/mnode.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/nodes/mnode.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mnodelist.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mnodelist.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/nodes/mnodelist.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -948,8 +986,9 @@ dep:
 ../bld/nodes/mnodelist.o: resolver/mvarresolver.h utils/marraylist.h
 ../bld/nodes/mnodelist.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mnodelist.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mnodelist.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mnodelist.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
+../bld/nodes/mnodelist.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mnodelist.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mnodelist.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mnodelist.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mtagnode.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mtagnode.o: core/miterator.h core/mobject.h utils/mutils.h
@@ -972,8 +1011,8 @@ dep:
 ../bld/nodes/mtagnode.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/nodes/mtagnode.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/nodes/mtagnode.o: utils/mbintree.h utils/mcollection.h
-../bld/nodes/mtagnode.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/nodes/mtagnode.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mtagnode.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/nodes/mtagnode.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/nodes/mtagnode.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mtagnode.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mvar.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
@@ -996,9 +1035,9 @@ dep:
 ../bld/nodes/mvar.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/nodes/mvar.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/nodes/mvar.o: utils/mbintree.h utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mvar.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mvar.o: utils/mrawlist.h utils/msingletons.h utils/mtable.h
-../bld/nodes/mvar.o: utils/mtreetable.h utils/mtable.h
+../bld/nodes/mvar.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mvar.o: utils/mrawarray.h utils/mrawlist.h utils/msingletons.h
+../bld/nodes/mvar.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mvarlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/nodes/mvarlibrary.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/nodes/mvarlibrary.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -1023,9 +1062,10 @@ dep:
 ../bld/nodes/mvarlibrary.o: utils/marraylist.h utils/mlist.h
 ../bld/nodes/mvarlibrary.o: utils/mcollection.h utils/mbintree.h
 ../bld/nodes/mvarlibrary.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mvarlibrary.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/nodes/mvarlibrary.o: utils/mrawlist.h utils/msingletons.h
-../bld/nodes/mvarlibrary.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/nodes/mvarlibrary.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/nodes/mvarlibrary.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mvarlibrary.o: utils/msingletons.h utils/mtable.h
+../bld/nodes/mvarlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mvarnode.o: mangopub.h mfwddefs.h core/mclasses.h core/merror.h
 ../bld/nodes/mvarnode.o: core/miterator.h core/mobject.h utils/mutils.h
 ../bld/nodes/mvarnode.o: core/mnumber.h core/mobject.h core/mrcstring.h
@@ -1047,8 +1087,8 @@ dep:
 ../bld/nodes/mvarnode.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/nodes/mvarnode.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
 ../bld/nodes/mvarnode.o: utils/mbintree.h utils/mcollection.h
-../bld/nodes/mvarnode.o: utils/mlinkedlist.h utils/mlist.h utils/mmemutils.h
-../bld/nodes/mvarnode.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mvarnode.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/nodes/mvarnode.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/nodes/mvarnode.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mvarnode.o: utils/mtreetable.h utils/mtable.h
 ../bld/renderer/mrenderer.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -1075,7 +1115,7 @@ dep:
 ../bld/renderer/mrenderer.o: utils/marraylist.h utils/mlist.h
 ../bld/renderer/mrenderer.o: utils/mcollection.h utils/mbintree.h
 ../bld/renderer/mrenderer.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/renderer/mrenderer.o: utils/mlist.h utils/mmemutils.h
+../bld/renderer/mrenderer.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
 ../bld/renderer/mrenderer.o: utils/mrawarray.h utils/mrawlist.h
 ../bld/renderer/mrenderer.o: utils/msingletons.h utils/mtable.h
 ../bld/renderer/mrenderer.o: utils/mtreetable.h utils/mtable.h
@@ -1103,9 +1143,10 @@ dep:
 ../bld/resolver/mtmplctx.o: utils/marraylist.h utils/mlist.h
 ../bld/resolver/mtmplctx.o: utils/mcollection.h utils/mbintree.h
 ../bld/resolver/mtmplctx.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/resolver/mtmplctx.o: utils/mlist.h utils/mmemutils.h utils/mrawarray.h
-../bld/resolver/mtmplctx.o: utils/mrawlist.h utils/msingletons.h
-../bld/resolver/mtmplctx.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
+../bld/resolver/mtmplctx.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
+../bld/resolver/mtmplctx.o: utils/mrawarray.h utils/mrawlist.h
+../bld/resolver/mtmplctx.o: utils/msingletons.h utils/mtable.h
+../bld/resolver/mtmplctx.o: utils/mtreetable.h utils/mtable.h
 ../bld/resolver/mvarresolver.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/resolver/mvarresolver.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/resolver/mvarresolver.o: utils/mutils.h core/mnumber.h core/mobject.h
@@ -1132,7 +1173,8 @@ dep:
 ../bld/resolver/mvarresolver.o: utils/marraylist.h utils/mlist.h
 ../bld/resolver/mvarresolver.o: utils/mcollection.h utils/mbintree.h
 ../bld/resolver/mvarresolver.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/resolver/mvarresolver.o: utils/mlist.h utils/mmemutils.h
-../bld/resolver/mvarresolver.o: utils/mrawarray.h utils/mrawlist.h
-../bld/resolver/mvarresolver.o: utils/msingletons.h utils/mtable.h
-../bld/resolver/mvarresolver.o: utils/mtreetable.h utils/mtable.h
+../bld/resolver/mvarresolver.o: utils/mlist.h utils/mlibrary.h
+../bld/resolver/mvarresolver.o: utils/mmemutils.h utils/mrawarray.h
+../bld/resolver/mvarresolver.o: utils/mrawlist.h utils/msingletons.h
+../bld/resolver/mvarresolver.o: utils/mtable.h utils/mtreetable.h
+../bld/resolver/mvarresolver.o: utils/mtable.h

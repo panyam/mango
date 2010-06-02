@@ -14,7 +14,6 @@ DECLARE_PROTO_FUNC("MangoPrototype", MangoPrototype, mango_default_prototype);
 MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, size_t size)
 {
     proto->name             = strdup(name == NULL ? "" : name);
-    proto->size             = size;
     proto->deallocFunc      = NULL;
     proto->equalsFunc       = NULL;
     proto->compareFunc      = NULL;
@@ -176,12 +175,8 @@ void mango_object_dealloc(MangoObject *obj)
 /**
  * Tells if an object can be casted to a particular prototype.
  */
-BOOL mango_object_instanceof(const MangoObject *obj, const MangoPrototype *proto)
+BOOL mango_object_instanceof(const MangoObject *obj, const char *proto)
 {
-    if (obj->__prototype__->size >= proto->size)
-    {
-        return memcmp(obj->__prototype__, proto, proto->size) == 0;
-    }
     return false;
 }
 

@@ -394,13 +394,13 @@ MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BO
  */
 MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext)
 {
-#if 0
     // find the first ForLoop anywhere along the node context stack!!
     int parentsLeft = var->parentCount;
     MangoNodeContext *tempContext = currContext;
+#if 0
     while (parentsLeft >= 0)
     {
-        while (tempContext != NULL && !(tempContext instanceof ForTagContext))
+        while (tempContext != NULL && !strcmp(tempContext->__prototype__->name, "ForTagContext") == 0)
             tempContext = tempContext->parent;
 
         if (tempContext != NULL)
@@ -410,29 +410,30 @@ MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext
                 tempContext = tempContext->parent;
         }
     }
+#endif
 
+    MangoVar *nextVar = ((MangoVar *)var)->next;
     if (tempContext != NULL && nextVar != NULL)
     {
-        MangoForTagContext *ftnContext = (MangoForTagContext)tempContext;
+        MangoForTagContext *ftnContext = (MangoForTagContext *)tempContext;
         if (mango_string_compare_to_buffer(nextVar->value, "counter", -1) == 0)
         {
-            return ftnContext.getOneBasedCounter();
+            return OBJ(mango_number_from_int(ftnContext->currIndex + 1));
         }
         else if (mango_string_compare_to_buffer(nextVar->value, "counter0", -1) == 0)
         {
-            return ftnContext.getCounter();
+            return OBJ(mango_number_from_int(ftnContext->currIndex));
         }
         else if (mango_string_compare_to_buffer(nextVar->value, "first", -1) == 0)
         {
-            return ftnContext.isFirst();
+            return OBJ(mango_number_from_int(ftnContext->isFirst));
         }
         else if (mango_string_compare_to_buffer(nextVar->value, "last", -1) == 0)
         {
-            return ftnContext.isLast();
+            return OBJ(mango_number_from_int(ftnContext->isLast));
         }
-        return mango_number_from_int(0);
+        return OBJ(mango_number_from_int(0));
     }
-#endif
     return NULL;
 }
 
