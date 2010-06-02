@@ -2,142 +2,11 @@
 #ifndef __MANGO_OBJECT_H__
 #define __MANGO_OBJECT_H__
 
-#include "mfwddefs.h"
+#include "mprototype.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/**
- * "Inherits" a struct by including an instance of it as the first member of
- * the new struct.
- */
-#define INHERIT_STRUCT(STRUCT_NAME, BASE_STRUCT, ...)   \
-    struct STRUCT_NAME                                  \
-    {                                                   \
-        /**                                             \
-         * Base class                                   \
-         */                                             \
-        BASE_STRUCT __base__;                           \
-                                                        \
-        /**                                             \
-         * The object specific data.                    \
-         */                                             \
-        __VA_ARGS__                                     \
-    }
-
-/**
- * Declares a class of name CLASS_NAME, which has a specific prototype and
- * a reference count.
- */
-#define DECLARE_CLASS(CLASS_NAME, PROTOTYPE_NAME, ...)  \
-    struct CLASS_NAME                                   \
-    {                                                   \
-        /**                                             \
-         * Base prototype.                              \
-         */                                             \
-        PROTOTYPE_NAME *__prototype__;                  \
-                                                        \
-        /**                                             \
-         * object reference count.                      \
-         */                                             \
-        int __refCount__;                               \
-                                                        \
-        /**                                             \
-         * The object specific data.                    \
-         */                                             \
-        __VA_ARGS__                                     \
-    }
-
-
-/**
- * Macro for generating a function that returns a specific prototype
- * object.
- */
-#define DECLARE_PROTO_FUNC(VAR_CLASS_ID, VAR_TYPE, VAR_FUNC, ...)               \
-    VAR_TYPE *VAR_FUNC() {                                                      \
-        static VAR_TYPE __proto__;                                              \
-        static BOOL initialised = false;                                        \
-        if (!initialised)                                                       \
-        {                                                                       \
-            bzero(&__proto__, sizeof(__proto__));                               \
-            mango_prototype_init((MangoPrototype *)(&__proto__),                \
-                                 VAR_CLASS_ID, sizeof(__proto__));              \
-            __VA_ARGS__                                                         \
-            initialised = true;                                                 \
-        }                                                                       \
-        return &__proto__;                                                      \
-    }                                                                           \
-
-/**
- * Set of Prototype related methods.
- */
-typedef void (*ObjectDeallocFunc)(MangoObject *object);
-typedef BOOL (*ObjectEqualsFunc)(const MangoObject *obj1, const MangoObject *obj2);
-typedef int (*ObjectCompareFunc)(const MangoObject *obj1, const MangoObject *obj2);
-typedef MangoObject *(*ObjectGetIntAttrFunc)(const MangoObject *obj, int index);
-typedef MangoObject *(*ObjectGetStrAttrFunc)(const MangoObject *obj, const MangoString *key);
-typedef BOOL (*ObjectHasIntAttrFunc)(const MangoObject *obj, int index);
-typedef BOOL (*ObjectHasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
-typedef MangoIterator *(*ObjectIteratorFunc)(const MangoObject *obj);
-
-/**
- * Prototypes are the blueprints for objects.  Almost like classes.
- */
-struct MangoPrototype
-{
-    /**
-     * Name of the prototype.
-     */
-    char *name;
-
-    /**
-     * Size of the proto struct.
-     */
-    // size_t  size;
-
-    /**
-     * Called when reference reaches 0 and the destructor/deallocator needs
-     * to be called.
-     */
-    void (*deallocFunc)(MangoObject *object);
-
-    /**
-     * Tells if two objects are equal.
-     */
-    BOOL (*equalsFunc)(const MangoObject *obj1, const MangoObject *obj2);
-
-    /**
-     * Compares the data of two objects.
-     */
-    int (*compareFunc)(const MangoObject *obj1, const MangoObject *obj2);
-
-    /**
-     * Gets an attribute of this object given an integer index.
-     */
-    MangoObject *(*getIntAttrFunc)(const MangoObject *obj, int index);
-
-    /**
-     * Gets an attribute of this object given a key.
-     */
-    MangoObject *(*getStrAttrFunc)(const MangoObject *obj, const MangoString *key);
-
-    /**
-     * Tells if the object can return a an attribute value for an integer
-     * index.
-     */
-    BOOL (*hasIntAttrFunc)(const MangoObject *obj, int index);
-
-    /**
-     * Tells if the object can return a an attribute value for a key.
-     */
-    BOOL (*hasStrAttrFunc)(const MangoObject *obj, const MangoString *key);
-
-    /**
-     * Gets the iterator for the object if any.
-     */
-    MangoIterator *(*iterFunc)(MangoObject *obj);
-};
 
 /**
  * Default class of all objects.
@@ -145,26 +14,38 @@ struct MangoPrototype
 DECLARE_CLASS(MangoObject, MangoPrototype);
 
 /**
- * A function for initialising an object.
+ * Gets the ID for a particular name creating it if requested to.
+ * \param   name    Name of the prototype to search for.
+ * \param   create  If not found whether to create it.
+ * \return  id of the prototype if it exists or was created, -1 otherwise.
  */
-typedef void (*ObjectInitFunc)(MangoObject *obj, ...);
+extern int mango_prototype_id_for_name(const char *name, BOOL create);
+
+/**
+ * Gets the ID for a particular name creating it if requested to.
+ * \param   id      ID of the prototype whose name we want.
+ * \return  The name of a prototype that matches the ID, NULL if none
+ * exist.
+ */
+extern const char *mango_prototype_name_for_id(int id);
 
 /**
  * Create a new prototype object of a given name.
  *
  * @test(TestPrototypeInit)
  * MangoPrototype proto;
- * mango_prototype_init(&proto, "Hello", sizeof(proto));
- * CHECK(strcmp(proto.name, "Hello") == 0);
+ * mango_prototype_init(&proto, "Hello", 0);
+ * CHECK_EQUAL(proto.protoID, mango_prototype_id_for_name("Hello"));
+ * CHECK_EQUAL(proto.parentProtoID, 0);
  * free(proto.name);
  * @endtest
  */
-extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, size_t size);
+extern MangoPrototype *mango_prototype_init(MangoPrototype *, const char *name, int parentID);
 
 /**
  * Returns the default mango prototype.
  */
-extern MangoPrototype *mango_prototype_default();
+extern MangoPrototype *mango_object_prototype();
 
 /**
  * Allocate an object of a given size with a prototype.
@@ -190,7 +71,7 @@ extern void mango_object_dealloc(MangoObject *obj);
  * \return  Pointer to the same object to simplify copy semantics.
  *
  * @test(TestObjectIncDecRef, suite = "ObjectTests")
- * MangoObject *obj = OBJ_ALLOC(MangoObject, mango_prototype_default());
+ * MangoObject *obj = OBJ_ALLOC(MangoObject, mango_object_prototype());
  * CHECK_EQUAL(1, OBJ_REFCOUNT(obj));
  * CHECK_EQUAL(2, OBJ_REFCOUNT(OBJ_INCREF(obj)));
  * CHECK_EQUAL(3, OBJ_REFCOUNT(OBJ_INCREF(obj)));

@@ -1,36 +1,6 @@
 #include "mangopub.h"
 
 /**
- * Returns the default prototype object.
- */
-DECLARE_PROTO_FUNC("MangoPrototype", MangoPrototype, mango_default_prototype);
-
-/**
- * Initialises a prototype object with a name and default methods.
- * \param   proto   Prototype type object to initialise.
- * \param   name    Name of the prototype.
- * \return  The initialised prototype instance.
- */
-MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, size_t size)
-{
-    proto->name             = strdup(name == NULL ? "" : name);
-    proto->deallocFunc      = NULL;
-    proto->equalsFunc       = NULL;
-    proto->compareFunc      = NULL;
-    proto->getIntAttrFunc   = NULL;
-    proto->getStrAttrFunc   = NULL;
-    proto->hasIntAttrFunc   = NULL;
-    proto->hasStrAttrFunc   = NULL;
-    proto->iterFunc         = NULL;
-    return proto;
-}
-
-/**
- * Returns the default mango prototype.
- */
-DECLARE_PROTO_FUNC("Prototype", MangoPrototype, mango_prototype_default);
-
-/**
  * Allocates an object of a given size.
  * \param   obj     Size of the object to be created.
  * \param   proto   Object's prototype to be set as.
@@ -39,7 +9,7 @@ DECLARE_PROTO_FUNC("Prototype", MangoPrototype, mango_prototype_default);
 MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto)
 {
     if (proto == NULL)
-        proto = mango_prototype_default();
+        proto = mango_object_prototype();
 
     MangoObject *obj    = (MangoObject *)malloc(objSize);
     mango_object_init(obj, proto);
@@ -56,26 +26,6 @@ MangoObject *mango_object_init(MangoObject *obj, MangoPrototype *proto)
 {
     obj->__prototype__  = proto;
     obj->__refCount__   = 1;
-    return obj;
-}
-
-/**
- * An object initializer.  The object must be allocated first (perhaps with
- * mango_object_alloc) or initialised with mango_object_init.
- * \param   obj         Object to be initialised.
- * \param   initFunc    INitialiser function to be called on the object.
- * \param   ...         Var arguments passed to the initialiser function.
- * \return The original object.
- */
-MangoObject *mango_object_init_with_func(MangoObject *obj, ObjectInitFunc initFunc, ...)
-{
-    if (initFunc != NULL)
-    {
-        va_list ap;
-        va_start(ap, initFunc);
-        initFunc(obj, ap);
-        va_end(ap);
-    }
     return obj;
 }
 

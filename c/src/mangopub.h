@@ -8,6 +8,7 @@
 #include "core/miterator.h"
 #include "core/mnumber.h"
 #include "core/mobject.h"
+#include "core/mprototype.h"
 #include "core/mrcstring.h"
 #include "core/mrcstringfactory.h"
 #include "core/mrcstringtable.h"
