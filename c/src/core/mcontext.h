@@ -38,7 +38,7 @@ struct MangoContext
     /**
      * Loads the templates.
      */
-    MangoTemplateLoader *   loader;
+    MangoTemplateLoader *   tmpl_loader;
 };
 
 /**
@@ -52,7 +52,7 @@ extern MangoContext *mango_context_new(MangoStringFactory *    string_factory,
                                        MangoLibrary *          filter_library,
                                        MangoLibrary *          var_library,
                                        MangoLibrary *          tag_library,
-                                       MangoTemplateLoader *   loader);
+                                       MangoTemplateLoader *   tmpl_loader);
 
 /**
  * Destroys a mango context.

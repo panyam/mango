@@ -25,7 +25,7 @@ MangoTagNode *mango_tagnode_extract_with_parser(MangoParser *parser, MangoContex
         return NULL;
 
     MangoString *tagname = mango_stringfactory_from_buffer(ctx->string_factory, token->tokenValue);
-    MangoTagParser *tagparser = (MangoTagParser *)mango_tagparser_library_get(tagname, ctx->tag_library);
+    MangoTagParser *tagparser = (MangoTagParser *)OBJ_GETSTRATTR(ctx->tag_library, tagname);
     if (tagparser == NULL)
     {
         mango_error_set(error, -1, "Invalid tag type: %s", token->tokenValue);

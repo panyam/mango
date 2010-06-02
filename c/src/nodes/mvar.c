@@ -177,8 +177,15 @@ MangoVar *mango_var_extract_with_parser(MangoParser *parser, MangoContext *ctx, 
         if (firstVar == NULL)
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            // see if the var library returns a "special" var
-            MangoVar *nextVar = isQuoted ? NULL : mango_var_library_new_instance(varValue, ctx->var_library);
+            MangoVar *nextVar = NULL;
+            if (!isQuoted)
+            {
+                // see if the var library returns a "special" var
+                MangoVarBuilder *varbuilder = (MangoVarBuilder *)OBJ_GETSTRATTR(ctx->var_library, varValue);
+                if (varbuilder != NULL)
+                    mango_varbuilder_new_var(varbuilder, ctx, varValue);
+            }
+
             if (nextVar == NULL)
             {
                 nextVar = mango_var_new(varValue, isQuoted, NULL);

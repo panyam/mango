@@ -30,10 +30,10 @@ public:
         input_string("")
     {
         // register filters
-        register_in_library(context->filter_library, "add", (MangoObject *)mango_addfilter_default());
+        register_in_library(context, context->filter_library, "add", (MangoObject *)mango_addfilter_default());
 
         // and register the "for" tag
-        register_in_library(context->tag_library, "for", (MangoObject *)mango_fortagparser_default());
+        register_in_library(context, context->tag_library, "for", (MangoObject *)mango_fortagparser_default());
     }
 
     virtual ~ExprTestFixture()
@@ -65,7 +65,7 @@ public:
                                    bool isQuoted, bool isNum,
                                    MangoVar *next)
     {
-        MangoString *varValue = mango_stringfactory_new_string(string_factory, value, -1);
+        MangoString *varValue = mango_stringfactory_new_string(context->string_factory, value, -1);
         MangoVar *var = mango_var_new(varValue, isQuoted, next);
         var->isNumber = isNum;
         if (isNum)
@@ -81,7 +81,7 @@ public:
     virtual void CheckParsedNodeWith(int numNodes, ...)
     {
         MangoError *error   = NULL;
-        MangoNode *node     = mango_parser_parse(&parser_context, &error);
+        MangoNode *node     = mango_parser_parse(parser, context, &error);
 
         if (numNodes == 1)
         {
@@ -127,7 +127,7 @@ public:
     virtual void CheckParsedNodeForException(int code, std::string message)
     {
         MangoError *error   = NULL;
-        MangoNode *node     = mango_parser_parse(&parser_context, &error);
+        MangoNode *node     = mango_parser_parse(parser, context, &error);
         if (node != NULL)
             OBJ_DECREF(node);
         CHECK(error != NULL);
@@ -147,7 +147,6 @@ protected:
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
         tokenizer->_insideNode = NODETYPE_TAG;
         parser = mango_parser_new(tokenizer);
-        parser_context.parser = parser;
     }
 };
 

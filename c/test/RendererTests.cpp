@@ -3,26 +3,19 @@
 #include "testutils.h"
 
 RendererTestFixture::RendererTestFixture() :
+    context(mango_context_new(NULL, NULL, NULL, NULL, NULL)),
     tokenizer(NULL),
     parser(NULL),
-    loader(NULL),       // create a mock loader sometime
     input_source(NULL),
     input_string(""),
-    filterLibrary(mango_filter_library_singleton()),
-    tagLibrary(mango_tagparser_library_singleton()),
-    context(mango_tmplctx_new()),
+    tmplctx(mango_tmplctx_new()),
     resolver(mango_varresolver_default())
 {
-    parser_context.filterlib    = filterLibrary;
-    parser_context.taglib       = tagLibrary;
-    parser_context.strfactory   = (MangoStringFactory *)mango_rcstringfactory_default();
-    parser_context.loader       = NULL;
-
     // register filters
-    register_in_library(filterLibrary, "add", (MangoObject *)mango_addfilter_default());
+    register_in_library(context, context->filter_library, "add", (MangoObject *)mango_addfilter_default());
 
     // and register the "for" tag
-    register_in_library(tagLibrary, "for", (MangoObject *)mango_fortagparser_default());
+    register_in_library(context, context->tag_library, "for", (MangoObject *)mango_fortagparser_default());
 }
 
 RendererTestFixture::~RendererTestFixture()
@@ -46,12 +39,7 @@ RendererTestFixture::~RendererTestFixture()
         mango_parser_free(parser);
         parser = NULL;
     }
-
-    if (loader != NULL) 
-    {
-        delete loader;
-        loader = NULL;
-    }
+    mango_context_free(context);
 }
 
 /**
@@ -63,7 +51,6 @@ void RendererTestFixture::SetUpWithInputString(const std::string &input)
     input_source = new_stl_input_source(new std::istringstream(input));
     tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
     parser = mango_parser_new(tokenizer);
-    parser_context.parser = parser;
 }
 
 /**
@@ -73,7 +60,7 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
 {
     // parse the input string
     MangoError *error = NULL;
-    MangoNode *parsedNode = mango_parser_parse(&parser_context, &error);
+    MangoNode *parsedNode = mango_parser_parse(parser, context, &error);
     if (error != NULL)
     {
         printf("Parse Error (%d): %s\n", error->errorCode, error->errorMessage);
@@ -86,7 +73,7 @@ void RendererTestFixture::CheckRenderedOutput(const char *output)
         objptr<MangoStrOutStream> outstream(mango_stroutstream_new());
 
         // render
-        mango_render_node(parsedNode, context, outstream.get<MangoOutStream>(), &error);
+        mango_render_node(parsedNode, tmplctx, outstream.get<MangoOutStream>(), &error);
 
         if (error != NULL)
         {

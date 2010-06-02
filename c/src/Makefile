@@ -105,14 +105,12 @@ dep:
 ../bld/utils/marraylist.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/marraylist.o: io/minputsource.h io/moutstream.h
 ../bld/utils/marraylist.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/utils/marraylist.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/marraylist.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/marraylist.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
 ../bld/utils/marraylist.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
 ../bld/utils/marraylist.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
-../bld/utils/marraylist.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/utils/marraylist.o: parser/mparser.h parser/mtokenizer.h
-../bld/utils/marraylist.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/marraylist.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/marraylist.o: nodes/mvarnode.h parser/mparser.h
+../bld/utils/marraylist.o: parser/mtokenizer.h parser/mtoken.h
+../bld/utils/marraylist.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/marraylist.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/marraylist.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/marraylist.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -133,21 +131,18 @@ dep:
 ../bld/utils/mbintree.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mbintree.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/utils/mbintree.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/utils/mbintree.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/mbintree.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/mbintree.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mbintree.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mbintree.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mbintree.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mbintree.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/utils/mbintree.o: parser/mtoken.h parser/mtokenizer.h
-../bld/utils/mbintree.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/utils/mbintree.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/utils/mbintree.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/utils/mbintree.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/utils/mbintree.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mbintree.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/utils/mbintree.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mbintree.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/utils/mbintree.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/utils/mbintree.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mbintree.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mbintree.o: parser/mtagparser.h parser/mtoken.h
+../bld/utils/mbintree.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/utils/mbintree.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/utils/mbintree.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/utils/mbintree.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/utils/mbintree.o: utils/mbintree.h utils/mcollection.h
+../bld/utils/mbintree.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mbintree.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/utils/mbintree.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mbintree.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mcollection.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -160,14 +155,12 @@ dep:
 ../bld/utils/mcollection.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mcollection.o: io/minputsource.h io/moutstream.h
 ../bld/utils/mcollection.o: io/mstroutstream.h io/moutstream.h
-../bld/utils/mcollection.o: nodes/mfilter.h nodes/mvar.h
-../bld/utils/mcollection.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/utils/mcollection.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/utils/mcollection.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/mcollection.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mcollection.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mcollection.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mcollection.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mcollection.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/utils/mcollection.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mcollection.o: parser/mparser.h parser/mtokenizer.h
+../bld/utils/mcollection.o: parser/mtoken.h parser/mtagparser.h
 ../bld/utils/mcollection.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/utils/mcollection.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/utils/mcollection.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -189,21 +182,18 @@ dep:
 ../bld/utils/mlibrary.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mlibrary.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/utils/mlibrary.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/utils/mlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/mlibrary.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/mlibrary.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mlibrary.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mlibrary.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mlibrary.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mlibrary.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/utils/mlibrary.o: parser/mtoken.h parser/mtokenizer.h
-../bld/utils/mlibrary.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/utils/mlibrary.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/utils/mlibrary.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/utils/mlibrary.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/utils/mlibrary.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mlibrary.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/utils/mlibrary.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mlibrary.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/utils/mlibrary.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/utils/mlibrary.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mlibrary.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mlibrary.o: parser/mtagparser.h parser/mtoken.h
+../bld/utils/mlibrary.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/utils/mlibrary.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/utils/mlibrary.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/utils/mlibrary.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/utils/mlibrary.o: utils/mbintree.h utils/mcollection.h
+../bld/utils/mlibrary.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mlibrary.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/utils/mlibrary.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/mlinkedlist.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -216,14 +206,12 @@ dep:
 ../bld/utils/mlinkedlist.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mlinkedlist.o: io/minputsource.h io/moutstream.h
 ../bld/utils/mlinkedlist.o: io/mstroutstream.h io/moutstream.h
-../bld/utils/mlinkedlist.o: nodes/mfilter.h nodes/mvar.h
-../bld/utils/mlinkedlist.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/utils/mlinkedlist.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/utils/mlinkedlist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/mlinkedlist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mlinkedlist.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mlinkedlist.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mlinkedlist.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mlinkedlist.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/utils/mlinkedlist.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mlinkedlist.o: parser/mparser.h parser/mtokenizer.h
+../bld/utils/mlinkedlist.o: parser/mtoken.h parser/mtagparser.h
 ../bld/utils/mlinkedlist.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/utils/mlinkedlist.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/utils/mlinkedlist.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -244,13 +232,11 @@ dep:
 ../bld/utils/mlist.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mlist.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
 ../bld/utils/mlist.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/utils/mlist.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/mlist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/mlist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mlist.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/utils/mlist.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/mlist.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/utils/mlist.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
 ../bld/utils/mlist.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/utils/mlist.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mlist.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mlist.o: parser/mtoken.h parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mlist.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mlist.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mlist.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -269,13 +255,12 @@ dep:
 ../bld/utils/mnumber.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mnumber.o: core/mstringfactory.h io/minputsource.h
 ../bld/utils/mnumber.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/utils/mnumber.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/mnumber.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/utils/mnumber.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/utils/mnumber.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mnumber.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/utils/mnumber.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mnumber.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mnumber.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/utils/mnumber.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/utils/mnumber.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/utils/mnumber.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mnumber.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mnumber.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mnumber.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mnumber.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mnumber.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -295,14 +280,12 @@ dep:
 ../bld/utils/mrawarray.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mrawarray.o: io/minputsource.h io/moutstream.h
 ../bld/utils/mrawarray.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/utils/mrawarray.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/mrawarray.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/utils/mrawarray.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/utils/mrawarray.o: nodes/mvar.h nodes/mvariterator.h
-../bld/utils/mrawarray.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/utils/mrawarray.o: parser/mparser.h parser/mtokenizer.h
-../bld/utils/mrawarray.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mrawarray.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mrawarray.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/mrawarray.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/utils/mrawarray.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/utils/mrawarray.o: nodes/mvarnode.h parser/mparser.h
+../bld/utils/mrawarray.o: parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mrawarray.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mrawarray.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mrawarray.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mrawarray.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -323,21 +306,18 @@ dep:
 ../bld/utils/mrawlist.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mrawlist.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/utils/mrawlist.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/utils/mrawlist.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/utils/mrawlist.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/utils/mrawlist.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/mrawlist.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mrawlist.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/mrawlist.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/mrawlist.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/utils/mrawlist.o: parser/mtoken.h parser/mtokenizer.h
-../bld/utils/mrawlist.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/utils/mrawlist.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/utils/mrawlist.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/utils/mrawlist.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/utils/mrawlist.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/utils/mrawlist.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/utils/mrawlist.o: utils/mrawarray.h utils/mrawlist.h
+../bld/utils/mrawlist.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/utils/mrawlist.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/utils/mrawlist.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/mrawlist.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mrawlist.o: parser/mtagparser.h parser/mtoken.h
+../bld/utils/mrawlist.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/utils/mrawlist.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/utils/mrawlist.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/utils/mrawlist.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/utils/mrawlist.o: utils/mbintree.h utils/mcollection.h
+../bld/utils/mrawlist.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/utils/mrawlist.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/utils/mrawlist.o: utils/msingletons.h utils/mtable.h
 ../bld/utils/mrawlist.o: utils/mtreetable.h utils/mtable.h
 ../bld/utils/msingletons.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -350,14 +330,12 @@ dep:
 ../bld/utils/msingletons.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/msingletons.o: io/minputsource.h io/moutstream.h
 ../bld/utils/msingletons.o: io/mstroutstream.h io/moutstream.h
-../bld/utils/msingletons.o: nodes/mfilter.h nodes/mvar.h
-../bld/utils/msingletons.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/utils/msingletons.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/utils/msingletons.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/utils/msingletons.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/utils/msingletons.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/msingletons.o: nodes/mvarnode.h parser/mparser.h
-../bld/utils/msingletons.o: parser/mtokenizer.h parser/mtoken.h
-../bld/utils/msingletons.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/utils/msingletons.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/utils/msingletons.o: parser/mparser.h parser/mtokenizer.h
+../bld/utils/msingletons.o: parser/mtoken.h parser/mtagparser.h
 ../bld/utils/msingletons.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/utils/msingletons.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/utils/msingletons.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -378,13 +356,12 @@ dep:
 ../bld/utils/mtable.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mtable.o: core/mstringfactory.h io/minputsource.h
 ../bld/utils/mtable.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/utils/mtable.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/mtable.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/utils/mtable.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/utils/mtable.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mtable.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/utils/mtable.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mtable.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mtable.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/utils/mtable.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/utils/mtable.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/utils/mtable.o: nodes/mvariterator.h nodes/mvarnode.h parser/mparser.h
+../bld/utils/mtable.o: parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mtable.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mtable.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mtable.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mtable.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -404,14 +381,12 @@ dep:
 ../bld/utils/mtreetable.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/utils/mtreetable.o: io/minputsource.h io/moutstream.h
 ../bld/utils/mtreetable.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/utils/mtreetable.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/mtreetable.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/utils/mtreetable.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
 ../bld/utils/mtreetable.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
 ../bld/utils/mtreetable.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
-../bld/utils/mtreetable.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/utils/mtreetable.o: parser/mparser.h parser/mtokenizer.h
-../bld/utils/mtreetable.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mtreetable.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mtreetable.o: nodes/mvarnode.h parser/mparser.h
+../bld/utils/mtreetable.o: parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mtreetable.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mtreetable.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mtreetable.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mtreetable.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -431,13 +406,12 @@ dep:
 ../bld/utils/mutils.o: core/mstring.h core/mstringbuffer.h
 ../bld/utils/mutils.o: core/mstringfactory.h io/minputsource.h
 ../bld/utils/mutils.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/utils/mutils.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/utils/mutils.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/utils/mutils.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/utils/mutils.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/utils/mutils.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/utils/mutils.o: parser/mtoken.h parser/mtagparser.h
-../bld/utils/mutils.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/utils/mutils.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/utils/mutils.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/utils/mutils.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/utils/mutils.o: nodes/mvariterator.h nodes/mvarnode.h parser/mparser.h
+../bld/utils/mutils.o: parser/mtokenizer.h parser/mtoken.h
+../bld/utils/mutils.o: parser/mtagparser.h parser/mtoken.h
 ../bld/utils/mutils.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/utils/mutils.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/utils/mutils.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -456,13 +430,12 @@ dep:
 ../bld/core/mclasses.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mclasses.o: core/mstringfactory.h io/minputsource.h
 ../bld/core/mclasses.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/core/mclasses.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/core/mclasses.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/core/mclasses.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/core/mclasses.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mclasses.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/core/mclasses.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/mclasses.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/core/mclasses.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/core/mclasses.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/core/mclasses.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/core/mclasses.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mclasses.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/core/mclasses.o: parser/mtagparser.h parser/mtoken.h
 ../bld/core/mclasses.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/mclasses.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/core/mclasses.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -472,6 +445,30 @@ dep:
 ../bld/core/mclasses.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/core/mclasses.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
 ../bld/core/mclasses.o: utils/mtable.h
+../bld/core/mcontext.o: mangopub.h mfwddefs.h core/mclasses.h core/mcontext.h
+../bld/core/mcontext.o: core/merror.h core/miterator.h core/mobject.h
+../bld/core/mcontext.o: core/mprototype.h utils/mutils.h core/mnumber.h
+../bld/core/mcontext.o: core/mobject.h core/mprototype.h core/mrcstring.h
+../bld/core/mcontext.o: core/mstring.h core/mrcstringfactory.h
+../bld/core/mcontext.o: core/mstringfactory.h core/mrcstringtable.h
+../bld/core/mcontext.o: core/mstring.h core/mstringbuffer.h
+../bld/core/mcontext.o: core/mstringfactory.h io/minputsource.h
+../bld/core/mcontext.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
+../bld/core/mcontext.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/core/mcontext.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/core/mcontext.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/core/mcontext.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mcontext.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/core/mcontext.o: parser/mtagparser.h parser/mtoken.h
+../bld/core/mcontext.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/core/mcontext.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/core/mcontext.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/core/mcontext.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/core/mcontext.o: utils/mbintree.h utils/mcollection.h
+../bld/core/mcontext.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/core/mcontext.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
+../bld/core/mcontext.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
+../bld/core/mcontext.o: utils/mtable.h
 ../bld/core/merror.o: mangopub.h mfwddefs.h core/mclasses.h core/mcontext.h
 ../bld/core/merror.o: core/merror.h core/miterator.h core/mobject.h
 ../bld/core/merror.o: core/mprototype.h utils/mutils.h core/mnumber.h
@@ -481,13 +478,11 @@ dep:
 ../bld/core/merror.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/merror.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
 ../bld/core/merror.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/core/merror.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/merror.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/merror.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/merror.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/core/merror.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/core/merror.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/core/merror.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
 ../bld/core/merror.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/core/merror.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/merror.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/core/merror.o: parser/mtoken.h parser/mtagparser.h parser/mtoken.h
 ../bld/core/merror.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/merror.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/core/merror.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -507,21 +502,18 @@ dep:
 ../bld/core/miterator.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/core/miterator.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/core/miterator.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/core/miterator.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/miterator.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/miterator.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/miterator.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/miterator.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/miterator.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/miterator.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/core/miterator.o: parser/mtoken.h parser/mtokenizer.h
-../bld/core/miterator.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/core/miterator.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/core/miterator.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/core/miterator.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/core/miterator.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/miterator.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/core/miterator.o: utils/mrawarray.h utils/mrawlist.h
+../bld/core/miterator.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/core/miterator.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/core/miterator.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/miterator.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/core/miterator.o: parser/mtagparser.h parser/mtoken.h
+../bld/core/miterator.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/core/miterator.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/core/miterator.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/core/miterator.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/core/miterator.o: utils/mbintree.h utils/mcollection.h
+../bld/core/miterator.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/core/miterator.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/core/miterator.o: utils/msingletons.h utils/mtable.h
 ../bld/core/miterator.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mobject.o: mangopub.h mfwddefs.h core/mclasses.h core/mcontext.h
@@ -533,13 +525,12 @@ dep:
 ../bld/core/mobject.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mobject.o: core/mstringfactory.h io/minputsource.h
 ../bld/core/mobject.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/core/mobject.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/core/mobject.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/core/mobject.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/core/mobject.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mobject.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/core/mobject.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/mobject.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/core/mobject.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/core/mobject.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/core/mobject.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/core/mobject.o: nodes/mvariterator.h nodes/mvarnode.h parser/mparser.h
+../bld/core/mobject.o: parser/mtokenizer.h parser/mtoken.h
+../bld/core/mobject.o: parser/mtagparser.h parser/mtoken.h
 ../bld/core/mobject.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/mobject.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/core/mobject.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -559,14 +550,12 @@ dep:
 ../bld/core/mprototype.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/core/mprototype.o: io/minputsource.h io/moutstream.h
 ../bld/core/mprototype.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/core/mprototype.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/core/mprototype.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/core/mprototype.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/core/mprototype.o: nodes/mvar.h nodes/mvariterator.h
-../bld/core/mprototype.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/core/mprototype.o: parser/mparser.h parser/mtokenizer.h
-../bld/core/mprototype.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/mprototype.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/core/mprototype.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/core/mprototype.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/core/mprototype.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/core/mprototype.o: nodes/mvarnode.h parser/mparser.h
+../bld/core/mprototype.o: parser/mtokenizer.h parser/mtoken.h
+../bld/core/mprototype.o: parser/mtagparser.h parser/mtoken.h
 ../bld/core/mprototype.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/mprototype.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/core/mprototype.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -587,21 +576,18 @@ dep:
 ../bld/core/mrcstring.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/core/mrcstring.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/core/mrcstring.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/core/mrcstring.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/mrcstring.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/mrcstring.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/mrcstring.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mrcstring.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/mrcstring.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/mrcstring.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/core/mrcstring.o: parser/mtoken.h parser/mtokenizer.h
-../bld/core/mrcstring.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/core/mrcstring.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/core/mrcstring.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/core/mrcstring.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/core/mrcstring.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/core/mrcstring.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/core/mrcstring.o: utils/mrawarray.h utils/mrawlist.h
+../bld/core/mrcstring.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/core/mrcstring.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/core/mrcstring.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mrcstring.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/core/mrcstring.o: parser/mtagparser.h parser/mtoken.h
+../bld/core/mrcstring.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/core/mrcstring.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/core/mrcstring.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/core/mrcstring.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/core/mrcstring.o: utils/mbintree.h utils/mcollection.h
+../bld/core/mrcstring.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/core/mrcstring.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/core/mrcstring.o: utils/msingletons.h utils/mtable.h
 ../bld/core/mrcstring.o: utils/mtreetable.h utils/mtable.h
 ../bld/core/mrcstringfactory.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -616,16 +602,14 @@ dep:
 ../bld/core/mrcstringfactory.o: core/mstringfactory.h io/minputsource.h
 ../bld/core/mrcstringfactory.o: io/moutstream.h io/mstroutstream.h
 ../bld/core/mrcstringfactory.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/core/mrcstringfactory.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/mrcstringfactory.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/mrcstringfactory.o: nodes/mnodelist.h nodes/mtagnode.h
-../bld/core/mrcstringfactory.o: nodes/mvar.h nodes/mvariterator.h
-../bld/core/mrcstringfactory.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/core/mrcstringfactory.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/core/mrcstringfactory.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/core/mrcstringfactory.o: nodes/mtagnode.h nodes/mvar.h
+../bld/core/mrcstringfactory.o: nodes/mvariterator.h nodes/mvarnode.h
 ../bld/core/mrcstringfactory.o: parser/mparser.h parser/mtokenizer.h
 ../bld/core/mrcstringfactory.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/mrcstringfactory.o: parser/mtagparserlibrary.h parser/mtoken.h
-../bld/core/mrcstringfactory.o: parser/mtokenizer.h parser/mtokenlists.h
-../bld/core/mrcstringfactory.o: renderer/mrenderer.h
+../bld/core/mrcstringfactory.o: parser/mtoken.h parser/mtokenizer.h
+../bld/core/mrcstringfactory.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/core/mrcstringfactory.o: resolver/mtemplateloader.h
 ../bld/core/mrcstringfactory.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/core/mrcstringfactory.o: utils/marraylist.h utils/mlist.h
@@ -647,13 +631,12 @@ dep:
 ../bld/core/mrcstringtable.o: io/minputsource.h io/moutstream.h
 ../bld/core/mrcstringtable.o: io/mstroutstream.h io/moutstream.h
 ../bld/core/mrcstringtable.o: nodes/mfilter.h nodes/mvar.h
-../bld/core/mrcstringtable.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/mrcstringtable.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/mrcstringtable.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/mrcstringtable.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mrcstringtable.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/mrcstringtable.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/mrcstringtable.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/core/mrcstringtable.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/core/mrcstringtable.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/core/mrcstringtable.o: nodes/mtagnode.h nodes/mvar.h
+../bld/core/mrcstringtable.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mrcstringtable.o: parser/mparser.h parser/mtokenizer.h
+../bld/core/mrcstringtable.o: parser/mtoken.h parser/mtagparser.h
 ../bld/core/mrcstringtable.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/core/mrcstringtable.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/core/mrcstringtable.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -675,14 +658,12 @@ dep:
 ../bld/core/mstringbuffer.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/core/mstringbuffer.o: io/minputsource.h io/moutstream.h
 ../bld/core/mstringbuffer.o: io/mstroutstream.h io/moutstream.h
-../bld/core/mstringbuffer.o: nodes/mfilter.h nodes/mvar.h
-../bld/core/mstringbuffer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/core/mstringbuffer.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/core/mstringbuffer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/core/mstringbuffer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/mstringbuffer.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mstringbuffer.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/mstringbuffer.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/mstringbuffer.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/core/mstringbuffer.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mstringbuffer.o: parser/mparser.h parser/mtokenizer.h
+../bld/core/mstringbuffer.o: parser/mtoken.h parser/mtagparser.h
 ../bld/core/mstringbuffer.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/core/mstringbuffer.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/core/mstringbuffer.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -703,13 +684,12 @@ dep:
 ../bld/core/mstring.o: core/mstring.h core/mstringbuffer.h
 ../bld/core/mstring.o: core/mstringfactory.h io/minputsource.h
 ../bld/core/mstring.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/core/mstring.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/core/mstring.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/core/mstring.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/core/mstring.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mstring.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/core/mstring.o: parser/mtoken.h parser/mtagparser.h
-../bld/core/mstring.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/core/mstring.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/core/mstring.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/core/mstring.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/core/mstring.o: nodes/mvariterator.h nodes/mvarnode.h parser/mparser.h
+../bld/core/mstring.o: parser/mtokenizer.h parser/mtoken.h
+../bld/core/mstring.o: parser/mtagparser.h parser/mtoken.h
 ../bld/core/mstring.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/core/mstring.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/core/mstring.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -730,13 +710,12 @@ dep:
 ../bld/core/mstringfactory.o: io/minputsource.h io/moutstream.h
 ../bld/core/mstringfactory.o: io/mstroutstream.h io/moutstream.h
 ../bld/core/mstringfactory.o: nodes/mfilter.h nodes/mvar.h
-../bld/core/mstringfactory.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/core/mstringfactory.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/core/mstringfactory.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/core/mstringfactory.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/core/mstringfactory.o: nodes/mvarnode.h parser/mparser.h
-../bld/core/mstringfactory.o: parser/mtokenizer.h parser/mtoken.h
-../bld/core/mstringfactory.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/core/mstringfactory.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/core/mstringfactory.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/core/mstringfactory.o: nodes/mtagnode.h nodes/mvar.h
+../bld/core/mstringfactory.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/core/mstringfactory.o: parser/mparser.h parser/mtokenizer.h
+../bld/core/mstringfactory.o: parser/mtoken.h parser/mtagparser.h
 ../bld/core/mstringfactory.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/core/mstringfactory.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/core/mstringfactory.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -759,14 +738,12 @@ dep:
 ../bld/io/mstroutstream.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/io/mstroutstream.o: io/minputsource.h io/moutstream.h
 ../bld/io/mstroutstream.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/io/mstroutstream.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/io/mstroutstream.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/io/mstroutstream.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
 ../bld/io/mstroutstream.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
 ../bld/io/mstroutstream.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
-../bld/io/mstroutstream.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/io/mstroutstream.o: parser/mparser.h parser/mtokenizer.h
-../bld/io/mstroutstream.o: parser/mtoken.h parser/mtagparser.h
-../bld/io/mstroutstream.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/io/mstroutstream.o: nodes/mvarnode.h parser/mparser.h
+../bld/io/mstroutstream.o: parser/mtokenizer.h parser/mtoken.h
+../bld/io/mstroutstream.o: parser/mtagparser.h parser/mtoken.h
 ../bld/io/mstroutstream.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/io/mstroutstream.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/io/mstroutstream.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -787,21 +764,18 @@ dep:
 ../bld/parser/mparser.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/parser/mparser.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/parser/mparser.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/parser/mparser.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/parser/mparser.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/parser/mparser.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/parser/mparser.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/parser/mparser.o: nodes/mvarnode.h parser/mparser.h
-../bld/parser/mparser.o: parser/mtokenizer.h parser/mtoken.h
-../bld/parser/mparser.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/parser/mparser.o: parser/mtoken.h parser/mtokenizer.h
-../bld/parser/mparser.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/parser/mparser.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/parser/mparser.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/parser/mparser.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/parser/mparser.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/parser/mparser.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/parser/mparser.o: utils/mrawarray.h utils/mrawlist.h
+../bld/parser/mparser.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/parser/mparser.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/parser/mparser.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/parser/mparser.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/parser/mparser.o: parser/mtagparser.h parser/mtoken.h
+../bld/parser/mparser.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/parser/mparser.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/parser/mparser.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/parser/mparser.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/parser/mparser.o: utils/mbintree.h utils/mcollection.h
+../bld/parser/mparser.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/parser/mparser.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/parser/mparser.o: utils/msingletons.h utils/mtable.h
 ../bld/parser/mparser.o: utils/mtreetable.h utils/mtable.h
 ../bld/parser/mtagparserlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -817,15 +791,13 @@ dep:
 ../bld/parser/mtagparserlibrary.o: io/minputsource.h io/moutstream.h
 ../bld/parser/mtagparserlibrary.o: io/mstroutstream.h io/moutstream.h
 ../bld/parser/mtagparserlibrary.o: nodes/mfilter.h nodes/mvar.h
-../bld/parser/mtagparserlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/parser/mtagparserlibrary.o: nodes/mfreetext.h nodes/mnode.h
-../bld/parser/mtagparserlibrary.o: nodes/mnode.h nodes/mnodelist.h
-../bld/parser/mtagparserlibrary.o: nodes/mtagnode.h nodes/mvar.h
-../bld/parser/mtagparserlibrary.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/parser/mtagparserlibrary.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/parser/mtagparserlibrary.o: nodes/mnode.h nodes/mnode.h
+../bld/parser/mtagparserlibrary.o: nodes/mnodelist.h nodes/mtagnode.h
+../bld/parser/mtagparserlibrary.o: nodes/mvar.h nodes/mvariterator.h
 ../bld/parser/mtagparserlibrary.o: nodes/mvarnode.h parser/mparser.h
 ../bld/parser/mtagparserlibrary.o: parser/mtokenizer.h parser/mtoken.h
-../bld/parser/mtagparserlibrary.o: parser/mtagparser.h
-../bld/parser/mtagparserlibrary.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/parser/mtagparserlibrary.o: parser/mtagparser.h parser/mtoken.h
 ../bld/parser/mtagparserlibrary.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/parser/mtagparserlibrary.o: renderer/mrenderer.h
 ../bld/parser/mtagparserlibrary.o: resolver/mtemplateloader.h
@@ -847,13 +819,12 @@ dep:
 ../bld/parser/mtoken.o: core/mstring.h core/mstringbuffer.h
 ../bld/parser/mtoken.o: core/mstringfactory.h io/minputsource.h
 ../bld/parser/mtoken.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/parser/mtoken.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/parser/mtoken.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/parser/mtoken.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/parser/mtoken.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/parser/mtoken.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/parser/mtoken.o: parser/mtoken.h parser/mtagparser.h
-../bld/parser/mtoken.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/parser/mtoken.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/parser/mtoken.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/parser/mtoken.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/parser/mtoken.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/parser/mtoken.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/parser/mtoken.o: parser/mtagparser.h parser/mtoken.h
 ../bld/parser/mtoken.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/parser/mtoken.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/parser/mtoken.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -873,14 +844,12 @@ dep:
 ../bld/parser/mtokenizer.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/parser/mtokenizer.o: io/minputsource.h io/moutstream.h
 ../bld/parser/mtokenizer.o: io/mstroutstream.h io/moutstream.h
-../bld/parser/mtokenizer.o: nodes/mfilter.h nodes/mvar.h
-../bld/parser/mtokenizer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/parser/mtokenizer.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/parser/mtokenizer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/parser/mtokenizer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/parser/mtokenizer.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/parser/mtokenizer.o: nodes/mvarnode.h parser/mparser.h
-../bld/parser/mtokenizer.o: parser/mtokenizer.h parser/mtoken.h
-../bld/parser/mtokenizer.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/parser/mtokenizer.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/parser/mtokenizer.o: parser/mparser.h parser/mtokenizer.h
+../bld/parser/mtokenizer.o: parser/mtoken.h parser/mtagparser.h
 ../bld/parser/mtokenizer.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/parser/mtokenizer.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/parser/mtokenizer.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -902,13 +871,12 @@ dep:
 ../bld/nodes/mfilter.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mfilter.o: core/mstringfactory.h io/minputsource.h
 ../bld/nodes/mfilter.o: io/moutstream.h io/mstroutstream.h io/moutstream.h
-../bld/nodes/mfilter.o: nodes/mfilter.h nodes/mvar.h nodes/mfilterlibrary.h
-../bld/nodes/mfilter.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/nodes/mfilter.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/nodes/mfilter.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/nodes/mfilter.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mfilter.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mfilter.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/nodes/mfilter.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
+../bld/nodes/mfilter.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
+../bld/nodes/mfilter.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
+../bld/nodes/mfilter.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/nodes/mfilter.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/nodes/mfilter.o: parser/mtagparser.h parser/mtoken.h
 ../bld/nodes/mfilter.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/nodes/mfilter.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/nodes/mfilter.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -918,36 +886,6 @@ dep:
 ../bld/nodes/mfilter.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/nodes/mfilter.o: utils/msingletons.h utils/mtable.h utils/mtreetable.h
 ../bld/nodes/mfilter.o: utils/mtable.h
-../bld/nodes/mfilterlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
-../bld/nodes/mfilterlibrary.o: core/mcontext.h core/merror.h core/miterator.h
-../bld/nodes/mfilterlibrary.o: core/mobject.h core/mprototype.h
-../bld/nodes/mfilterlibrary.o: utils/mutils.h core/mnumber.h core/mobject.h
-../bld/nodes/mfilterlibrary.o: core/mprototype.h core/mrcstring.h
-../bld/nodes/mfilterlibrary.o: core/mstring.h core/mrcstringfactory.h
-../bld/nodes/mfilterlibrary.o: core/mstringfactory.h core/mrcstringtable.h
-../bld/nodes/mfilterlibrary.o: core/mstring.h core/mstringbuffer.h
-../bld/nodes/mfilterlibrary.o: core/mstringfactory.h io/minputsource.h
-../bld/nodes/mfilterlibrary.o: io/moutstream.h io/mstroutstream.h
-../bld/nodes/mfilterlibrary.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/nodes/mfilterlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mfilterlibrary.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mfilterlibrary.o: nodes/mnodelist.h nodes/mtagnode.h
-../bld/nodes/mfilterlibrary.o: nodes/mvar.h nodes/mvariterator.h
-../bld/nodes/mfilterlibrary.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/nodes/mfilterlibrary.o: parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mfilterlibrary.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mfilterlibrary.o: parser/mtagparserlibrary.h parser/mtoken.h
-../bld/nodes/mfilterlibrary.o: parser/mtokenizer.h parser/mtokenlists.h
-../bld/nodes/mfilterlibrary.o: renderer/mrenderer.h
-../bld/nodes/mfilterlibrary.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/nodes/mfilterlibrary.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/nodes/mfilterlibrary.o: utils/mlist.h utils/mcollection.h
-../bld/nodes/mfilterlibrary.o: utils/mbintree.h utils/mcollection.h
-../bld/nodes/mfilterlibrary.o: utils/mlinkedlist.h utils/mlist.h
-../bld/nodes/mfilterlibrary.o: utils/mlibrary.h utils/mmemutils.h
-../bld/nodes/mfilterlibrary.o: utils/mrawarray.h utils/mrawlist.h
-../bld/nodes/mfilterlibrary.o: utils/msingletons.h utils/mtable.h
-../bld/nodes/mfilterlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mfilternode.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/nodes/mfilternode.o: core/mcontext.h core/merror.h core/miterator.h
 ../bld/nodes/mfilternode.o: core/mobject.h core/mprototype.h utils/mutils.h
@@ -958,14 +896,12 @@ dep:
 ../bld/nodes/mfilternode.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/nodes/mfilternode.o: io/minputsource.h io/moutstream.h
 ../bld/nodes/mfilternode.o: io/mstroutstream.h io/moutstream.h
-../bld/nodes/mfilternode.o: nodes/mfilter.h nodes/mvar.h
-../bld/nodes/mfilternode.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/nodes/mfilternode.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/nodes/mfilternode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/nodes/mfilternode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mfilternode.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/nodes/mfilternode.o: nodes/mvarnode.h parser/mparser.h
-../bld/nodes/mfilternode.o: parser/mtokenizer.h parser/mtoken.h
-../bld/nodes/mfilternode.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/nodes/mfilternode.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/nodes/mfilternode.o: parser/mparser.h parser/mtokenizer.h
+../bld/nodes/mfilternode.o: parser/mtoken.h parser/mtagparser.h
 ../bld/nodes/mfilternode.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/nodes/mfilternode.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/nodes/mfilternode.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -987,14 +923,12 @@ dep:
 ../bld/nodes/mfreetext.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/nodes/mfreetext.o: io/minputsource.h io/moutstream.h
 ../bld/nodes/mfreetext.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/nodes/mfreetext.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/nodes/mfreetext.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/nodes/mfreetext.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/nodes/mfreetext.o: nodes/mvar.h nodes/mvariterator.h
-../bld/nodes/mfreetext.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/nodes/mfreetext.o: parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mfreetext.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mfreetext.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/nodes/mfreetext.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/nodes/mfreetext.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/nodes/mfreetext.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/nodes/mfreetext.o: nodes/mvarnode.h parser/mparser.h
+../bld/nodes/mfreetext.o: parser/mtokenizer.h parser/mtoken.h
+../bld/nodes/mfreetext.o: parser/mtagparser.h parser/mtoken.h
 ../bld/nodes/mfreetext.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/nodes/mfreetext.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/nodes/mfreetext.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -1014,13 +948,11 @@ dep:
 ../bld/nodes/mnode.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mnode.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
 ../bld/nodes/mnode.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/nodes/mnode.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mnode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mnode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mnode.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/nodes/mnode.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/nodes/mnode.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/nodes/mnode.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
 ../bld/nodes/mnode.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mnode.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mnode.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/nodes/mnode.o: parser/mtoken.h parser/mtagparser.h parser/mtoken.h
 ../bld/nodes/mnode.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/nodes/mnode.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/nodes/mnode.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -1040,14 +972,12 @@ dep:
 ../bld/nodes/mnodelist.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/nodes/mnodelist.o: io/minputsource.h io/moutstream.h
 ../bld/nodes/mnodelist.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/nodes/mnodelist.o: nodes/mvar.h nodes/mfilterlibrary.h
-../bld/nodes/mnodelist.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
-../bld/nodes/mnodelist.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
-../bld/nodes/mnodelist.o: nodes/mvar.h nodes/mvariterator.h
-../bld/nodes/mnodelist.o: nodes/mvarlibrary.h nodes/mvarnode.h
-../bld/nodes/mnodelist.o: parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mnodelist.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mnodelist.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/nodes/mnodelist.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/nodes/mnodelist.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/nodes/mnodelist.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
+../bld/nodes/mnodelist.o: nodes/mvarnode.h parser/mparser.h
+../bld/nodes/mnodelist.o: parser/mtokenizer.h parser/mtoken.h
+../bld/nodes/mnodelist.o: parser/mtagparser.h parser/mtoken.h
 ../bld/nodes/mnodelist.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/nodes/mnodelist.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/nodes/mnodelist.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -1068,21 +998,18 @@ dep:
 ../bld/nodes/mtagnode.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/nodes/mtagnode.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/nodes/mtagnode.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/nodes/mtagnode.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mtagnode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mtagnode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mtagnode.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/nodes/mtagnode.o: nodes/mvarnode.h parser/mparser.h
-../bld/nodes/mtagnode.o: parser/mtokenizer.h parser/mtoken.h
-../bld/nodes/mtagnode.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/nodes/mtagnode.o: parser/mtoken.h parser/mtokenizer.h
-../bld/nodes/mtagnode.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/nodes/mtagnode.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/nodes/mtagnode.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/nodes/mtagnode.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/nodes/mtagnode.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mtagnode.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/nodes/mtagnode.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mtagnode.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/nodes/mtagnode.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/nodes/mtagnode.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/nodes/mtagnode.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/nodes/mtagnode.o: parser/mtagparser.h parser/mtoken.h
+../bld/nodes/mtagnode.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/nodes/mtagnode.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/nodes/mtagnode.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/nodes/mtagnode.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/nodes/mtagnode.o: utils/mbintree.h utils/mcollection.h
+../bld/nodes/mtagnode.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/nodes/mtagnode.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/nodes/mtagnode.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mtagnode.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mvar.o: mangopub.h mfwddefs.h core/mclasses.h core/mcontext.h
@@ -1094,13 +1021,11 @@ dep:
 ../bld/nodes/mvar.o: core/mstring.h core/mstringbuffer.h
 ../bld/nodes/mvar.o: core/mstringfactory.h io/minputsource.h io/moutstream.h
 ../bld/nodes/mvar.o: io/mstroutstream.h io/moutstream.h nodes/mfilter.h
-../bld/nodes/mvar.o: nodes/mvar.h nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mvar.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mvar.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mvar.o: nodes/mvariterator.h nodes/mvarlibrary.h
+../bld/nodes/mvar.o: nodes/mvar.h nodes/mfilternode.h nodes/mfreetext.h
+../bld/nodes/mvar.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/nodes/mvar.o: nodes/mtagnode.h nodes/mvar.h nodes/mvariterator.h
 ../bld/nodes/mvar.o: nodes/mvarnode.h parser/mparser.h parser/mtokenizer.h
-../bld/nodes/mvar.o: parser/mtoken.h parser/mtagparser.h
-../bld/nodes/mvar.o: parser/mtagparserlibrary.h parser/mtoken.h
+../bld/nodes/mvar.o: parser/mtoken.h parser/mtagparser.h parser/mtoken.h
 ../bld/nodes/mvar.o: parser/mtokenizer.h parser/mtokenlists.h
 ../bld/nodes/mvar.o: renderer/mrenderer.h resolver/mtemplateloader.h
 ../bld/nodes/mvar.o: resolver/mtmplctx.h resolver/mvarresolver.h
@@ -1109,35 +1034,6 @@ dep:
 ../bld/nodes/mvar.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
 ../bld/nodes/mvar.o: utils/mrawarray.h utils/mrawlist.h utils/msingletons.h
 ../bld/nodes/mvar.o: utils/mtable.h utils/mtreetable.h utils/mtable.h
-../bld/nodes/mvarlibrary.o: mangopub.h mfwddefs.h core/mclasses.h
-../bld/nodes/mvarlibrary.o: core/mcontext.h core/merror.h core/miterator.h
-../bld/nodes/mvarlibrary.o: core/mobject.h core/mprototype.h utils/mutils.h
-../bld/nodes/mvarlibrary.o: core/mnumber.h core/mobject.h core/mprototype.h
-../bld/nodes/mvarlibrary.o: core/mrcstring.h core/mstring.h
-../bld/nodes/mvarlibrary.o: core/mrcstringfactory.h core/mstringfactory.h
-../bld/nodes/mvarlibrary.o: core/mrcstringtable.h core/mstring.h
-../bld/nodes/mvarlibrary.o: core/mstringbuffer.h core/mstringfactory.h
-../bld/nodes/mvarlibrary.o: io/minputsource.h io/moutstream.h
-../bld/nodes/mvarlibrary.o: io/mstroutstream.h io/moutstream.h
-../bld/nodes/mvarlibrary.o: nodes/mfilter.h nodes/mvar.h
-../bld/nodes/mvarlibrary.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mvarlibrary.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mvarlibrary.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mvarlibrary.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/nodes/mvarlibrary.o: nodes/mvarnode.h parser/mparser.h
-../bld/nodes/mvarlibrary.o: parser/mtokenizer.h parser/mtoken.h
-../bld/nodes/mvarlibrary.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/nodes/mvarlibrary.o: parser/mtoken.h parser/mtokenizer.h
-../bld/nodes/mvarlibrary.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/nodes/mvarlibrary.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/nodes/mvarlibrary.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/nodes/mvarlibrary.o: utils/mlist.h utils/mcollection.h
-../bld/nodes/mvarlibrary.o: utils/mbintree.h utils/mcollection.h
-../bld/nodes/mvarlibrary.o: utils/mlinkedlist.h utils/mlist.h
-../bld/nodes/mvarlibrary.o: utils/mlibrary.h utils/mmemutils.h
-../bld/nodes/mvarlibrary.o: utils/mrawarray.h utils/mrawlist.h
-../bld/nodes/mvarlibrary.o: utils/msingletons.h utils/mtable.h
-../bld/nodes/mvarlibrary.o: utils/mtreetable.h utils/mtable.h
 ../bld/nodes/mvarnode.o: mangopub.h mfwddefs.h core/mclasses.h
 ../bld/nodes/mvarnode.o: core/mcontext.h core/merror.h core/miterator.h
 ../bld/nodes/mvarnode.o: core/mobject.h core/mprototype.h utils/mutils.h
@@ -1148,21 +1044,18 @@ dep:
 ../bld/nodes/mvarnode.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/nodes/mvarnode.o: io/minputsource.h io/moutstream.h io/mstroutstream.h
 ../bld/nodes/mvarnode.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/nodes/mvarnode.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/nodes/mvarnode.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/nodes/mvarnode.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/nodes/mvarnode.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/nodes/mvarnode.o: nodes/mvarnode.h parser/mparser.h
-../bld/nodes/mvarnode.o: parser/mtokenizer.h parser/mtoken.h
-../bld/nodes/mvarnode.o: parser/mtagparser.h parser/mtagparserlibrary.h
-../bld/nodes/mvarnode.o: parser/mtoken.h parser/mtokenizer.h
-../bld/nodes/mvarnode.o: parser/mtokenlists.h renderer/mrenderer.h
-../bld/nodes/mvarnode.o: resolver/mtemplateloader.h resolver/mtmplctx.h
-../bld/nodes/mvarnode.o: resolver/mvarresolver.h utils/marraylist.h
-../bld/nodes/mvarnode.o: utils/mlist.h utils/mcollection.h utils/mbintree.h
-../bld/nodes/mvarnode.o: utils/mcollection.h utils/mlinkedlist.h
-../bld/nodes/mvarnode.o: utils/mlist.h utils/mlibrary.h utils/mmemutils.h
-../bld/nodes/mvarnode.o: utils/mrawarray.h utils/mrawlist.h
+../bld/nodes/mvarnode.o: nodes/mfilternode.h nodes/mfreetext.h nodes/mnode.h
+../bld/nodes/mvarnode.o: nodes/mnode.h nodes/mnodelist.h nodes/mtagnode.h
+../bld/nodes/mvarnode.o: nodes/mvar.h nodes/mvariterator.h nodes/mvarnode.h
+../bld/nodes/mvarnode.o: parser/mparser.h parser/mtokenizer.h parser/mtoken.h
+../bld/nodes/mvarnode.o: parser/mtagparser.h parser/mtoken.h
+../bld/nodes/mvarnode.o: parser/mtokenizer.h parser/mtokenlists.h
+../bld/nodes/mvarnode.o: renderer/mrenderer.h resolver/mtemplateloader.h
+../bld/nodes/mvarnode.o: resolver/mtmplctx.h resolver/mvarresolver.h
+../bld/nodes/mvarnode.o: utils/marraylist.h utils/mlist.h utils/mcollection.h
+../bld/nodes/mvarnode.o: utils/mbintree.h utils/mcollection.h
+../bld/nodes/mvarnode.o: utils/mlinkedlist.h utils/mlist.h utils/mlibrary.h
+../bld/nodes/mvarnode.o: utils/mmemutils.h utils/mrawarray.h utils/mrawlist.h
 ../bld/nodes/mvarnode.o: utils/msingletons.h utils/mtable.h
 ../bld/nodes/mvarnode.o: utils/mtreetable.h utils/mtable.h
 ../bld/renderer/mrenderer.o: mangopub.h mfwddefs.h core/mclasses.h
@@ -1175,14 +1068,12 @@ dep:
 ../bld/renderer/mrenderer.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/renderer/mrenderer.o: io/minputsource.h io/moutstream.h
 ../bld/renderer/mrenderer.o: io/mstroutstream.h io/moutstream.h
-../bld/renderer/mrenderer.o: nodes/mfilter.h nodes/mvar.h
-../bld/renderer/mrenderer.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/renderer/mrenderer.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/renderer/mrenderer.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/renderer/mrenderer.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/renderer/mrenderer.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/renderer/mrenderer.o: nodes/mvarnode.h parser/mparser.h
-../bld/renderer/mrenderer.o: parser/mtokenizer.h parser/mtoken.h
-../bld/renderer/mrenderer.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/renderer/mrenderer.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/renderer/mrenderer.o: parser/mparser.h parser/mtokenizer.h
+../bld/renderer/mrenderer.o: parser/mtoken.h parser/mtagparser.h
 ../bld/renderer/mrenderer.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/renderer/mrenderer.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/renderer/mrenderer.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -1204,14 +1095,12 @@ dep:
 ../bld/resolver/mtmplctx.o: core/mstringbuffer.h core/mstringfactory.h
 ../bld/resolver/mtmplctx.o: io/minputsource.h io/moutstream.h
 ../bld/resolver/mtmplctx.o: io/mstroutstream.h io/moutstream.h
-../bld/resolver/mtmplctx.o: nodes/mfilter.h nodes/mvar.h
-../bld/resolver/mtmplctx.o: nodes/mfilterlibrary.h nodes/mfilternode.h
+../bld/resolver/mtmplctx.o: nodes/mfilter.h nodes/mvar.h nodes/mfilternode.h
 ../bld/resolver/mtmplctx.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
 ../bld/resolver/mtmplctx.o: nodes/mnodelist.h nodes/mtagnode.h nodes/mvar.h
-../bld/resolver/mtmplctx.o: nodes/mvariterator.h nodes/mvarlibrary.h
-../bld/resolver/mtmplctx.o: nodes/mvarnode.h parser/mparser.h
-../bld/resolver/mtmplctx.o: parser/mtokenizer.h parser/mtoken.h
-../bld/resolver/mtmplctx.o: parser/mtagparser.h parser/mtagparserlibrary.h
+../bld/resolver/mtmplctx.o: nodes/mvariterator.h nodes/mvarnode.h
+../bld/resolver/mtmplctx.o: parser/mparser.h parser/mtokenizer.h
+../bld/resolver/mtmplctx.o: parser/mtoken.h parser/mtagparser.h
 ../bld/resolver/mtmplctx.o: parser/mtoken.h parser/mtokenizer.h
 ../bld/resolver/mtmplctx.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/resolver/mtmplctx.o: resolver/mtemplateloader.h resolver/mtmplctx.h
@@ -1235,16 +1124,14 @@ dep:
 ../bld/resolver/mvarresolver.o: core/mstringfactory.h io/minputsource.h
 ../bld/resolver/mvarresolver.o: io/moutstream.h io/mstroutstream.h
 ../bld/resolver/mvarresolver.o: io/moutstream.h nodes/mfilter.h nodes/mvar.h
-../bld/resolver/mvarresolver.o: nodes/mfilterlibrary.h nodes/mfilternode.h
-../bld/resolver/mvarresolver.o: nodes/mfreetext.h nodes/mnode.h nodes/mnode.h
-../bld/resolver/mvarresolver.o: nodes/mnodelist.h nodes/mtagnode.h
-../bld/resolver/mvarresolver.o: nodes/mvar.h nodes/mvariterator.h
-../bld/resolver/mvarresolver.o: nodes/mvarlibrary.h nodes/mvarnode.h
+../bld/resolver/mvarresolver.o: nodes/mfilternode.h nodes/mfreetext.h
+../bld/resolver/mvarresolver.o: nodes/mnode.h nodes/mnode.h nodes/mnodelist.h
+../bld/resolver/mvarresolver.o: nodes/mtagnode.h nodes/mvar.h
+../bld/resolver/mvarresolver.o: nodes/mvariterator.h nodes/mvarnode.h
 ../bld/resolver/mvarresolver.o: parser/mparser.h parser/mtokenizer.h
 ../bld/resolver/mvarresolver.o: parser/mtoken.h parser/mtagparser.h
-../bld/resolver/mvarresolver.o: parser/mtagparserlibrary.h parser/mtoken.h
-../bld/resolver/mvarresolver.o: parser/mtokenizer.h parser/mtokenlists.h
-../bld/resolver/mvarresolver.o: renderer/mrenderer.h
+../bld/resolver/mvarresolver.o: parser/mtoken.h parser/mtokenizer.h
+../bld/resolver/mvarresolver.o: parser/mtokenlists.h renderer/mrenderer.h
 ../bld/resolver/mvarresolver.o: resolver/mtemplateloader.h
 ../bld/resolver/mvarresolver.o: resolver/mtmplctx.h resolver/mvarresolver.h
 ../bld/resolver/mvarresolver.o: utils/marraylist.h utils/mlist.h

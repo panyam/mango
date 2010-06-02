@@ -157,7 +157,6 @@ extern const char *mango_prototype_name_for_id(int id);
  * MangoPrototype proto;
  * CHECK(mango_prototype_init(&proto, "Hello"));
  * CHECK_EQUAL(proto.protoID, mango_prototype_id_for_name("Hello", -1));
- * free(proto.name);
  * @endtest
  */
 extern BOOL mango_prototype_init(MangoPrototype *, const char *name);

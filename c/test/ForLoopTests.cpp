@@ -24,7 +24,7 @@ TEST_FIXTURE(ForLoopTestFixture, TestForLoopNodes)
                         mango_number_from_int(1),
                         mango_number_from_int(2),
                         mango_number_from_int(3));
-    mango_tmplctx_set(context, key.get(), array.obj());
+    mango_tmplctx_set(tmplctx, key.get(), array.obj());
     SetUpWithInputString("{%for a in intlist%}Item {{a}},{%endfor%}");
     CheckRenderedOutput("Item 1,Item 2,Item 3,");
 }
@@ -33,14 +33,14 @@ TEST_FIXTURE(ForLoopTestFixture, TestForLoopNodes)
 
 TEST_FIXTURE(ForLoopTestFixture, TestEmptyForLoop)
 {
-    context.setValue("intlist", null);
+    tmplctx.setValue("intlist", null);
     SetUpWithInputString("{%for a in intlist%}Item {{a}},{%empty%}No Output Found{%endfor%}");
     checkRenderedOutput("No Output Found");
 }
 
 TEST_FIXTURE(ForLoopTestFixture, TestForLoopVariables)
 {
-    context.setValue("intlist", Utils.makeArrayList(1, 2, 3));
+    tmplctx.setValue("intlist", Utils.makeArrayList(1, 2, 3));
     SetUpWithInputString("{%for a in intlist%}{{a}} - [{{forloop.counter0}},{{forloop.counter}},{{forloop.first}},{{forloop.last}}]\n{%endfor%}");
     checkRenderedOutput("1 - [0,1,true,false]\n" + 
                        "2 - [1,2,false,false]\n" +
@@ -49,16 +49,16 @@ TEST_FIXTURE(ForLoopTestFixture, TestForLoopVariables)
 
 TEST_FIXTURE(ForLoopTestFixture, TestLoopVariableDiesOutsideLoop)
 {
-    context.setValue("i", Utils.makeArrayList(1, 2, 3));
-    context.setValue("j", Utils.makeArrayList(1, 2, 3));
+    tmplctx.setValue("i", Utils.makeArrayList(1, 2, 3));
+    tmplctx.setValue("j", Utils.makeArrayList(1, 2, 3));
     SetUpWithInputString("{%for a in i%}{{a}}{%endfor%}{{a}}");
     checkRenderedOutput("123");
 }
 
 TEST_FIXTURE(ForLoopTestFixture, TestLoopWithinLoop)
 {
-    context.setValue("i", Utils.makeArrayList(1, 2, 3));
-    context.setValue("j", Utils.makeArrayList(1, 2, 3));
+    tmplctx.setValue("i", Utils.makeArrayList(1, 2, 3));
+    tmplctx.setValue("j", Utils.makeArrayList(1, 2, 3));
     SetUpWithInputString("{%for a in i%}" + 
                             "{%for b in j %}" +
                             "|{{a}},{{b}},{{forloop.parentloop.counter0}},{{forloop.counter0}}|" +

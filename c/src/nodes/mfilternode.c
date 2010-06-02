@@ -150,8 +150,9 @@ MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, Mango
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
 
     MangoString *filtername = mango_stringfactory_from_buffer(msf, token->tokenValue);
-    MangoFilter *filter = mango_filter_library_get(filtername, filterlib);
+    MangoFilter *filter = (MangoFilter *)OBJ_GETSTRATTR(ctx->filter_library, filtername);
     OBJ_DECREF(filtername);
+
     if (filter == NULL)
     {
         mango_error_set(error, -1, "Filter not found: %s", token->tokenValue->buffer);

@@ -8,11 +8,11 @@
 /**
  * Registers an object in a library.
  */
-extern void register_in_library(MangoLibrary *library, const char *key, MangoObject *value, void (*onRegistered)(MangoObject *obj) = NULL);
+extern void register_in_library(MangoContext *context, MangoLibrary *library, const char *key, MangoObject *value, void (*onRegistered)(MangoObject *obj) = NULL);
 
 /**
  * Shortcut for creating a variable.
  */
-extern MangoVar *create_var(const char *value, bool isQuoted, bool isNum, MangoVar *next);
+extern MangoVar *create_var(MangoContext *context, const char *value, bool isQuoted, bool isNum, MangoVar *next);
 
 #endif

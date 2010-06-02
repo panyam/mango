@@ -15,23 +15,18 @@
 class RendererTestFixture
 {
 public:
+    MangoContext *          context;
     MangoTokenizer *        tokenizer;
     MangoParser *           parser;
-    MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
-    MangoStringFactory *    string_factory;
-    MangoParserContext      parser_context;
-    MangoTemplateContext *  context;
+    MangoTemplateContext *  tmplctx;
     MangoVarResolver *      resolver;
 
 public:
     RendererTestFixture();
 
     virtual ~RendererTestFixture();
-
 
     /**
      * Check that the given string matches against the rendered output.

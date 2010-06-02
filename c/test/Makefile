@@ -107,16 +107,14 @@ dep:
 ../bld/./BinTreeTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./BinTreeTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./BinTreeTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./BinTreeTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./BinTreeTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./BinTreeTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./BinTreeTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./BinTreeTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./BinTreeTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./BinTreeTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./BinTreeTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./BinTreeTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./BinTreeTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./BinTreeTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./BinTreeTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./BinTreeTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./BinTreeTests.o: ../src/parser/mtokenizer.h
 ../bld/./BinTreeTests.o: ../src/parser/mtokenlists.h
 ../bld/./BinTreeTests.o: ../src/renderer/mrenderer.h
 ../bld/./BinTreeTests.o: ../src/resolver/mtemplateloader.h
@@ -144,15 +142,13 @@ dep:
 ../bld/./ExprTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
 ../bld/./ExprTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
 ../bld/./ExprTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
-../bld/./ExprTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
-../bld/./ExprTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
-../bld/./ExprTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
-../bld/./ExprTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
-../bld/./ExprTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./ExprTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
+../bld/./ExprTests.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./ExprTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./ExprTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./ExprTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./ExprTests.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
 ../bld/./ExprTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
 ../bld/./ExprTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./ExprTests.o: ../src/parser/mtagparserlibrary.h
 ../bld/./ExprTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
 ../bld/./ExprTests.o: ../src/parser/mtokenlists.h ../src/renderer/mrenderer.h
 ../bld/./ExprTests.o: ../src/resolver/mtemplateloader.h
@@ -183,16 +179,14 @@ dep:
 ../bld/./ForLoopTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./ForLoopTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./ForLoopTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./ForLoopTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./ForLoopTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ForLoopTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ForLoopTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./ForLoopTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./ForLoopTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./ForLoopTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./ForLoopTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./ForLoopTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./ForLoopTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./ForLoopTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./ForLoopTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./ForLoopTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./ForLoopTests.o: ../src/parser/mtokenizer.h
 ../bld/./ForLoopTests.o: ../src/parser/mtokenlists.h
 ../bld/./ForLoopTests.o: ../src/renderer/mrenderer.h
 ../bld/./ForLoopTests.o: ../src/resolver/mtemplateloader.h
@@ -222,15 +216,13 @@ dep:
 ../bld/./ObjectTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
 ../bld/./ObjectTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
 ../bld/./ObjectTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
-../bld/./ObjectTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
-../bld/./ObjectTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
-../bld/./ObjectTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
-../bld/./ObjectTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
-../bld/./ObjectTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./ObjectTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
+../bld/./ObjectTests.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./ObjectTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./ObjectTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./ObjectTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./ObjectTests.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
 ../bld/./ObjectTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
 ../bld/./ObjectTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./ObjectTests.o: ../src/parser/mtagparserlibrary.h
 ../bld/./ObjectTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
 ../bld/./ObjectTests.o: ../src/parser/mtokenlists.h
 ../bld/./ObjectTests.o: ../src/renderer/mrenderer.h
@@ -259,15 +251,13 @@ dep:
 ../bld/./ParserTests.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
 ../bld/./ParserTests.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
 ../bld/./ParserTests.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
-../bld/./ParserTests.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
-../bld/./ParserTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
-../bld/./ParserTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
-../bld/./ParserTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
-../bld/./ParserTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./ParserTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
+../bld/./ParserTests.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./ParserTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./ParserTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./ParserTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./ParserTests.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
 ../bld/./ParserTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
 ../bld/./ParserTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./ParserTests.o: ../src/parser/mtagparserlibrary.h
 ../bld/./ParserTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
 ../bld/./ParserTests.o: ../src/parser/mtokenlists.h
 ../bld/./ParserTests.o: ../src/renderer/mrenderer.h
@@ -299,16 +289,14 @@ dep:
 ../bld/./RawArrayTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./RawArrayTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./RawArrayTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./RawArrayTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RawArrayTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RawArrayTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RawArrayTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./RawArrayTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./RawArrayTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./RawArrayTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./RawArrayTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./RawArrayTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./RawArrayTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./RawArrayTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./RawArrayTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./RawArrayTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./RawArrayTests.o: ../src/parser/mtokenizer.h
 ../bld/./RawArrayTests.o: ../src/parser/mtokenlists.h
 ../bld/./RawArrayTests.o: ../src/renderer/mrenderer.h
 ../bld/./RawArrayTests.o: ../src/resolver/mtemplateloader.h
@@ -337,16 +325,14 @@ dep:
 ../bld/./RawListTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./RawListTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./RawListTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./RawListTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RawListTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RawListTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RawListTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./RawListTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./RawListTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./RawListTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./RawListTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./RawListTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./RawListTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./RawListTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./RawListTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./RawListTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./RawListTests.o: ../src/parser/mtokenizer.h
 ../bld/./RawListTests.o: ../src/parser/mtokenlists.h
 ../bld/./RawListTests.o: ../src/renderer/mrenderer.h
 ../bld/./RawListTests.o: ../src/resolver/mtemplateloader.h
@@ -377,16 +363,14 @@ dep:
 ../bld/./RendererTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./RendererTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./RendererTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./RendererTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./RendererTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./RendererTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./RendererTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./RendererTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./RendererTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./RendererTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./RendererTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./RendererTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./RendererTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./RendererTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./RendererTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./RendererTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./RendererTests.o: ../src/parser/mtokenizer.h
 ../bld/./RendererTests.o: ../src/parser/mtokenlists.h
 ../bld/./RendererTests.o: ../src/renderer/mrenderer.h
 ../bld/./RendererTests.o: ../src/resolver/mtemplateloader.h
@@ -418,16 +402,14 @@ dep:
 ../bld/./ResolverTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./ResolverTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./ResolverTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./ResolverTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./ResolverTests.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
 ../bld/./ResolverTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./ResolverTests.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
 ../bld/./ResolverTests.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./ResolverTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./ResolverTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./ResolverTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./ResolverTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./ResolverTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./ResolverTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./ResolverTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./ResolverTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./ResolverTests.o: ../src/parser/mtokenizer.h
 ../bld/./ResolverTests.o: ../src/parser/mtokenlists.h
 ../bld/./ResolverTests.o: ../src/renderer/mrenderer.h
 ../bld/./ResolverTests.o: ../src/resolver/mtemplateloader.h
@@ -458,17 +440,15 @@ dep:
 ../bld/./stlinputsource.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./stlinputsource.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./stlinputsource.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./stlinputsource.o: ../src/nodes/mfilterlibrary.h
 ../bld/./stlinputsource.o: ../src/nodes/mfilternode.h
 ../bld/./stlinputsource.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
 ../bld/./stlinputsource.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
 ../bld/./stlinputsource.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
 ../bld/./stlinputsource.o: ../src/nodes/mvariterator.h
-../bld/./stlinputsource.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./stlinputsource.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./stlinputsource.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./stlinputsource.o: ../src/parser/mtagparserlibrary.h
-../bld/./stlinputsource.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./stlinputsource.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./stlinputsource.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./stlinputsource.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./stlinputsource.o: ../src/parser/mtokenizer.h
 ../bld/./stlinputsource.o: ../src/parser/mtokenlists.h
 ../bld/./stlinputsource.o: ../src/renderer/mrenderer.h
 ../bld/./stlinputsource.o: ../src/resolver/mtemplateloader.h
@@ -498,18 +478,15 @@ dep:
 ../bld/./StringTableTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./StringTableTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./StringTableTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./StringTableTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./StringTableTests.o: ../src/nodes/mfilternode.h
 ../bld/./StringTableTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
 ../bld/./StringTableTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
 ../bld/./StringTableTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
 ../bld/./StringTableTests.o: ../src/nodes/mvariterator.h
-../bld/./StringTableTests.o: ../src/nodes/mvarlibrary.h
 ../bld/./StringTableTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
 ../bld/./StringTableTests.o: ../src/parser/mtokenizer.h
 ../bld/./StringTableTests.o: ../src/parser/mtoken.h
 ../bld/./StringTableTests.o: ../src/parser/mtagparser.h
-../bld/./StringTableTests.o: ../src/parser/mtagparserlibrary.h
 ../bld/./StringTableTests.o: ../src/parser/mtoken.h
 ../bld/./StringTableTests.o: ../src/parser/mtokenizer.h
 ../bld/./StringTableTests.o: ../src/parser/mtokenlists.h
@@ -549,20 +526,17 @@ dep:
 ../bld/./TemplateContextTests.o: ../src/io/mstroutstream.h
 ../bld/./TemplateContextTests.o: ../src/io/moutstream.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./TemplateContextTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfilternode.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mfreetext.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mnodelist.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mvariterator.h
-../bld/./TemplateContextTests.o: ../src/nodes/mvarlibrary.h
 ../bld/./TemplateContextTests.o: ../src/nodes/mvarnode.h
 ../bld/./TemplateContextTests.o: ../src/parser/mparser.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtokenizer.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtoken.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtagparser.h
-../bld/./TemplateContextTests.o: ../src/parser/mtagparserlibrary.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtoken.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtokenizer.h
 ../bld/./TemplateContextTests.o: ../src/parser/mtokenlists.h
@@ -599,15 +573,13 @@ dep:
 ../bld/./testutils.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
 ../bld/./testutils.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
 ../bld/./testutils.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
-../bld/./testutils.o: ../src/nodes/mvar.h ../src/nodes/mfilterlibrary.h
-../bld/./testutils.o: ../src/nodes/mfilternode.h ../src/nodes/mfreetext.h
-../bld/./testutils.o: ../src/nodes/mnode.h ../src/nodes/mnode.h
-../bld/./testutils.o: ../src/nodes/mnodelist.h ../src/nodes/mtagnode.h
-../bld/./testutils.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
-../bld/./testutils.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
+../bld/./testutils.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./testutils.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./testutils.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./testutils.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./testutils.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
 ../bld/./testutils.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
 ../bld/./testutils.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./testutils.o: ../src/parser/mtagparserlibrary.h
 ../bld/./testutils.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
 ../bld/./testutils.o: ../src/parser/mtokenlists.h ../src/renderer/mrenderer.h
 ../bld/./testutils.o: ../src/resolver/mtemplateloader.h
@@ -637,17 +609,15 @@ dep:
 ../bld/./TokenizerTests.o: ../src/io/minputsource.h ../src/io/moutstream.h
 ../bld/./TokenizerTests.o: ../src/io/mstroutstream.h ../src/io/moutstream.h
 ../bld/./TokenizerTests.o: ../src/nodes/mfilter.h ../src/nodes/mvar.h
-../bld/./TokenizerTests.o: ../src/nodes/mfilterlibrary.h
 ../bld/./TokenizerTests.o: ../src/nodes/mfilternode.h
 ../bld/./TokenizerTests.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
 ../bld/./TokenizerTests.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
 ../bld/./TokenizerTests.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
 ../bld/./TokenizerTests.o: ../src/nodes/mvariterator.h
-../bld/./TokenizerTests.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
-../bld/./TokenizerTests.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./TokenizerTests.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
-../bld/./TokenizerTests.o: ../src/parser/mtagparserlibrary.h
-../bld/./TokenizerTests.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./TokenizerTests.o: ../src/nodes/mvarnode.h ../src/parser/mparser.h
+../bld/./TokenizerTests.o: ../src/parser/mtokenizer.h ../src/parser/mtoken.h
+../bld/./TokenizerTests.o: ../src/parser/mtagparser.h ../src/parser/mtoken.h
+../bld/./TokenizerTests.o: ../src/parser/mtokenizer.h
 ../bld/./TokenizerTests.o: ../src/parser/mtokenlists.h
 ../bld/./TokenizerTests.o: ../src/renderer/mrenderer.h
 ../bld/./TokenizerTests.o: ../src/resolver/mtemplateloader.h

@@ -10,33 +10,24 @@
 class ResolverTestFixture
 {
 protected:
+    MangoContext *          context;
     MangoTokenizer *        tokenizer;
     MangoParser *           parser;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
-    MangoStringFactory *    string_factory;
-    MangoParserContext      parser_context;
-    MangoTemplateContext *  context;
+    MangoTemplateContext *  tmplctx;
     MangoVarResolver *      resolver;
     MangoVar *              var;
 
 public:
     ResolverTestFixture() :
+        context(mango_context_new(NULL, NULL, NULL, NULL, NULL)),
         tokenizer(NULL),
         parser(NULL),
         input_source(NULL),
-        input_string(""),
-        filterLibrary(mango_filter_library_singleton()),
-        tagLibrary(mango_tagparser_library_singleton()),
-        string_factory((MangoStringFactory *)mango_rcstringfactory_default())
+        input_string("")
     {
-        parser_context.filterlib    = filterLibrary;
-        parser_context.taglib       = tagLibrary;
-        parser_context.strfactory   = string_factory;
-        parser_context.loader       = NULL;
-        context                     = mango_tmplctx_new();
+        tmplctx                     = mango_tmplctx_new();
         resolver                    = mango_varresolver_default();
     }
 
@@ -62,11 +53,13 @@ public:
             parser = NULL;
         }
 
-        if (context != NULL)
+        if (tmplctx != NULL)
         {
-            OBJ_DECREF(context);
-            context = NULL;
+            OBJ_DECREF(tmplctx);
+            tmplctx = NULL;
         }
+
+        mango_context_free(context);
     }
 
     void SetupParserAndParseVar(const std::string &input)
@@ -75,16 +68,15 @@ public:
         input_source = new_stl_input_source(new std::istringstream(input));
         tokenizer = mango_tokenizer_new((MangoInputSource *)input_source);
         parser = mango_parser_new(tokenizer);
-        parser_context.parser = parser;
     }
 
     void CheckResolvedVar(const MangoObject *expectedValue)
     {
         MangoError *error = NULL;
         mango_parser_expect_token(parser, TOKEN_OPEN_VARIABLE, false, &error);
-        var = mango_var_extract_with_parser(&parser_context, &error);
+        var = mango_var_extract_with_parser(parser, context, &error);
         mango_parser_expect_token(parser, TOKEN_CLOSE_VARIABLE, false, &error);
-        MangoObject *resolvedValue = mango_varresolver_resolve_chain(resolver, (MangoObject *)context, var);
+        MangoObject *resolvedValue = mango_varresolver_resolve_chain(resolver, (MangoObject *)tmplctx, var);
         CHECK(OBJ_EQUALS(expectedValue, resolvedValue));
     }
 };
@@ -105,20 +97,20 @@ TEST_FIXTURE(ResolverTestFixture, TestUnresolvedVar)
 
 TEST_FIXTURE(ResolverTestFixture, TestNumericVar)
 {
-    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
+    MangoString *key = mango_stringfactory_new_string(context->string_factory, "a", -1);
     SetupParserAndParseVar("{{a}}");
-    mango_tmplctx_set(context, key, (MangoObject *)mango_number_from_int(3));
+    mango_tmplctx_set(tmplctx, key, (MangoObject *)mango_number_from_int(3));
     CheckResolvedVar((MangoObject *)mango_number_from_int(3));
     OBJ_DECREF(key);
 }
 
 TEST_FIXTURE(ResolverTestFixture, TestStringVar)
 {
-    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoString *inval = mango_stringfactory_new_string(string_factory, "Hello World", -1);
-    MangoString *outval = mango_stringfactory_new_string(string_factory, "Hello World", -1);
+    MangoString *key = mango_stringfactory_new_string(context->string_factory, "a", -1);
+    MangoString *inval = mango_stringfactory_new_string(context->string_factory, "Hello World", -1);
+    MangoString *outval = mango_stringfactory_new_string(context->string_factory, "Hello World", -1);
     SetupParserAndParseVar("{{a}}");
-    mango_tmplctx_set(context, key, OBJ(inval));
+    mango_tmplctx_set(tmplctx, key, OBJ(inval));
     CheckResolvedVar(OBJ(outval));
     OBJ_DECREF(key);
     OBJ_DECREF(inval);
@@ -127,13 +119,13 @@ TEST_FIXTURE(ResolverTestFixture, TestStringVar)
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsTable)
 {
-    MangoString *keya = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoString *keyb = mango_stringfactory_new_string(string_factory, "b", -1);
+    MangoString *keya = mango_stringfactory_new_string(context->string_factory, "a", -1);
+    MangoString *keyb = mango_stringfactory_new_string(context->string_factory, "b", -1);
 
     MangoTable *table   = (MangoTable *)mango_treetable_new();
     mango_table_put(table, keyb, OBJ(mango_number_from_int(3)));
 
-    mango_tmplctx_set(context, keya, OBJ(table));
+    mango_tmplctx_set(tmplctx, keya, OBJ(table));
 
     SetupParserAndParseVar("{{a.b}}");
     CheckResolvedVar(OBJ(mango_number_from_int(3)));
@@ -145,8 +137,8 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsTable)
 
 TEST_FIXTURE(ResolverTestFixture, TestValueAsIndex)
 {
-    MangoString *keya = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoString *keyb = mango_stringfactory_new_string(string_factory, "b", -1);
+    MangoString *keya = mango_stringfactory_new_string(context->string_factory, "a", -1);
+    MangoString *keyb = mango_stringfactory_new_string(context->string_factory, "b", -1);
 
 
     MangoArrayList *array = mango_arraylist_new();
@@ -157,7 +149,7 @@ TEST_FIXTURE(ResolverTestFixture, TestValueAsIndex)
     MangoTable *table   = (MangoTable *)mango_treetable_new();
     mango_table_put(table, keyb, OBJ(array));
 
-    mango_tmplctx_set(context, keya, OBJ(table));
+    mango_tmplctx_set(tmplctx, keya, OBJ(table));
 
     SetupParserAndParseVar("{{a.b.0}}");
     CheckResolvedVar((MangoObject *)mango_number_from_int(3));

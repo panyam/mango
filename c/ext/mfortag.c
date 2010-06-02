@@ -394,9 +394,9 @@ MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BO
 MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext)
 {
     // find the first ForLoop anywhere along the node context stack!!
-    int parentsLeft = var->parentCount;
     MangoNodeContext *tempContext = currContext;
 #if 0
+    int parentsLeft = var->parentCount;
     while (parentsLeft >= 0)
     {
         while (tempContext != NULL && !strcmp(tempContext->__prototype__->name, "ForTagContext") == 0)

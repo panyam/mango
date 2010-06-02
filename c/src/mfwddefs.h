@@ -80,6 +80,8 @@ typedef struct MangoVarNode MangoVarNode;
 typedef struct MangoVarPrototype MangoVarPrototype;
 typedef struct MangoVarResolver MangoVarResolver;
 typedef struct MangoVarResolverPrototype MangoVarResolverPrototype;
+typedef struct MangoVarBuilder MangoVarBuilder;
+typedef struct MangoVarBuilderPrototype MangoVarBuilderPrototype;
 
 /**
  * Functions that check whether two items are equal.
