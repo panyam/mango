@@ -120,7 +120,7 @@ extern MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isq
  * \return A MangoVar instance if successful, otherwise NULL with the
  * error var set (if it is supplied).
  */
-extern MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoVar *mango_var_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

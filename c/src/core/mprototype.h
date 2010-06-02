@@ -92,11 +92,6 @@ struct MangoPrototype
     int protoID;
 
     /**
-     * ID of the parent prototype.
-     */
-    int parentProtoID;
-
-    /**
      * Called when reference reaches 0 and the destructor/deallocator needs
      * to be called.
      */
@@ -138,6 +133,34 @@ struct MangoPrototype
      */
     MangoIterator *(*iterFunc)(MangoObject *obj);
 };
+
+/**
+ * Gets the ID for a particular name creating it if requested to.
+ * \param   name    Name of the prototype to search for.
+ * \param   create  If not found whether to create it.
+ * \return  id of the prototype if it exists or was created, -1 otherwise.
+ */
+extern int mango_prototype_id_for_name(const char *name, BOOL create);
+
+/**
+ * Gets the ID for a particular name creating it if requested to.
+ * \param   id      ID of the prototype whose name we want.
+ * \return  The name of a prototype that matches the ID, NULL if none
+ * exist.
+ */
+extern const char *mango_prototype_name_for_id(int id);
+
+/**
+ * Create a new prototype object of a given name.
+ *
+ * @test(TestPrototypeInit)
+ * MangoPrototype proto;
+ * CHECK(mango_prototype_init(&proto, "Hello"));
+ * CHECK_EQUAL(proto.protoID, mango_prototype_id_for_name("Hello", -1));
+ * free(proto.name);
+ * @endtest
+ */
+extern BOOL mango_prototype_init(MangoPrototype *, const char *name);
 
 #ifdef __cplusplus
 }

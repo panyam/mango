@@ -10,12 +10,11 @@ DECLARE_PROTO_FUNC("MangoPrototype", MangoPrototype, mango_object_prototype);
  * Initialises a prototype object with a name and default methods.
  * \param   proto       Prototype type object to initialise.
  * \param   name        Name of the prototype.
- * \param   parentID    ID of the parent prototype.
- * \return  The initialised prototype instance.
+ * \return  true if initialisation went well, false if name is already
+ * registered.
  */
-MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, int parentID)
+BOOL mango_prototype_init(MangoPrototype * proto, const char *name)
 {
-    proto->parentProtoID    = parentID;
     proto->protoID          = mango_prototype_id_for_name(name, true);
     proto->deallocFunc      = NULL;
     proto->equalsFunc       = NULL;
@@ -25,7 +24,7 @@ MangoPrototype *mango_prototype_init(MangoPrototype * proto, const char *name, i
     proto->hasIntAttrFunc   = NULL;
     proto->hasStrAttrFunc   = NULL;
     proto->iterFunc         = NULL;
-    return proto;
+    return true;
 }
 
 /**

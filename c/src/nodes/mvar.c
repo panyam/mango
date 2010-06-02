@@ -160,9 +160,8 @@ MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isquoted)
  * \return A MangoVar instance if successful, otherwise NULL with the
  * error var set (if it is supplied).
  */
-MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoVar *mango_var_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser = ctx->parser;
     MangoVar *firstVar = NULL;
     MangoVar *lastVar = NULL;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
@@ -171,7 +170,7 @@ MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **er
         return NULL;
     }
 
-    MangoStringFactory *msf = ctx->strfactory;
+    MangoStringFactory *msf = ctx->string_factory;
     while (true)
     {
         BOOL isQuoted = token->tokenType == TOKEN_QUOTED_STRING;
@@ -179,7 +178,7 @@ MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **er
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
             // see if the var library returns a "special" var
-            MangoVar *nextVar = isQuoted ? NULL : mango_var_library_new_instance(varValue, ctx->varlib);
+            MangoVar *nextVar = isQuoted ? NULL : mango_var_library_new_instance(varValue, ctx->var_library);
             if (nextVar == NULL)
             {
                 nextVar = mango_var_new(varValue, isQuoted, NULL);

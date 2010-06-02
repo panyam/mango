@@ -18,15 +18,14 @@ MangoTagNode *mango_tagnode_init(MangoTagNode *tagnode, MangoNodePrototype *prot
  *
  * \return  NULL if failure otherwise a MangoNode.
  */
-MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoTagNode *mango_tagnode_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
     if (token == NULL)
         return NULL;
 
-    MangoString *tagname = mango_stringfactory_from_buffer(ctx->strfactory, token->tokenValue);
-    MangoTagParser *tagparser = (MangoTagParser *)mango_tagparser_library_get(tagname, ctx->taglib);
+    MangoString *tagname = mango_stringfactory_from_buffer(ctx->string_factory, token->tokenValue);
+    MangoTagParser *tagparser = (MangoTagParser *)mango_tagparser_library_get(tagname, ctx->tag_library);
     if (tagparser == NULL)
     {
         mango_error_set(error, -1, "Invalid tag type: %s", token->tokenValue);
@@ -34,6 +33,6 @@ MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoEr
         return NULL;
     }
 
-    return tagparser->__prototype__->parserFunc(tagparser, ctx, error);
+    return tagparser->__prototype__->parserFunc(tagparser, parser, ctx, error);
 }
 

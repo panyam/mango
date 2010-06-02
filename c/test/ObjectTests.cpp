@@ -34,7 +34,7 @@ TEST_FIXTURE(ObjectTestFixture, TestPrototypeInit)
 {
     MangoPrototype prototype;
     mango_prototype_init(&prototype, "Hello World");
-    CHECK_EQUAL(prototype.protoID, mango_prototype_name_for_id("Hello World"));
+    CHECK_EQUAL(prototype.protoID, mango_prototype_id_for_name("Hello World", false));
     CHECK(prototype.deallocFunc == NULL);
 }
 

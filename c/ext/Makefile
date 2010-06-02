@@ -97,11 +97,13 @@ dep:
 # DO NOT DELETE
 
 ../bld/./maddfilter.o: ../src/mangopub.h ../src/mfwddefs.h
-../bld/./maddfilter.o: ../src/core/mclasses.h ../src/core/merror.h
-../bld/./maddfilter.o: ../src/core/miterator.h ../src/core/mobject.h
+../bld/./maddfilter.o: ../src/core/mclasses.h ../src/core/mcontext.h
+../bld/./maddfilter.o: ../src/core/merror.h ../src/core/miterator.h
+../bld/./maddfilter.o: ../src/core/mobject.h ../src/core/mprototype.h
 ../bld/./maddfilter.o: ../src/utils/mutils.h ../src/core/mnumber.h
-../bld/./maddfilter.o: ../src/core/mobject.h ../src/core/mrcstring.h
-../bld/./maddfilter.o: ../src/core/mstring.h ../src/core/mrcstringfactory.h
+../bld/./maddfilter.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./maddfilter.o: ../src/core/mrcstring.h ../src/core/mstring.h
+../bld/./maddfilter.o: ../src/core/mrcstringfactory.h
 ../bld/./maddfilter.o: ../src/core/mstringfactory.h
 ../bld/./maddfilter.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
 ../bld/./maddfilter.o: ../src/core/mstringbuffer.h
@@ -115,8 +117,7 @@ dep:
 ../bld/./maddfilter.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
 ../bld/./maddfilter.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
 ../bld/./maddfilter.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./maddfilter.o: ../src/parser/mtoken.h ../src/parser/mparsercontext.h
-../bld/./maddfilter.o: ../src/parser/mtagparser.h
+../bld/./maddfilter.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
 ../bld/./maddfilter.o: ../src/parser/mtagparserlibrary.h
 ../bld/./maddfilter.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
 ../bld/./maddfilter.o: ../src/parser/mtokenlists.h
@@ -133,11 +134,13 @@ dep:
 ../bld/./maddfilter.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
 ../bld/./maddfilter.o: ../src/utils/mtable.h maddfilter.h
 ../bld/./mfortag.o: ../src/mangopub.h ../src/mfwddefs.h
-../bld/./mfortag.o: ../src/core/mclasses.h ../src/core/merror.h
-../bld/./mfortag.o: ../src/core/miterator.h ../src/core/mobject.h
+../bld/./mfortag.o: ../src/core/mclasses.h ../src/core/mcontext.h
+../bld/./mfortag.o: ../src/core/merror.h ../src/core/miterator.h
+../bld/./mfortag.o: ../src/core/mobject.h ../src/core/mprototype.h
 ../bld/./mfortag.o: ../src/utils/mutils.h ../src/core/mnumber.h
-../bld/./mfortag.o: ../src/core/mobject.h ../src/core/mrcstring.h
-../bld/./mfortag.o: ../src/core/mstring.h ../src/core/mrcstringfactory.h
+../bld/./mfortag.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./mfortag.o: ../src/core/mrcstring.h ../src/core/mstring.h
+../bld/./mfortag.o: ../src/core/mrcstringfactory.h
 ../bld/./mfortag.o: ../src/core/mstringfactory.h ../src/core/mrcstringtable.h
 ../bld/./mfortag.o: ../src/core/mstring.h ../src/core/mstringbuffer.h
 ../bld/./mfortag.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
@@ -150,8 +153,7 @@ dep:
 ../bld/./mfortag.o: ../src/nodes/mvar.h ../src/nodes/mvariterator.h
 ../bld/./mfortag.o: ../src/nodes/mvarlibrary.h ../src/nodes/mvarnode.h
 ../bld/./mfortag.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
-../bld/./mfortag.o: ../src/parser/mtoken.h ../src/parser/mparsercontext.h
-../bld/./mfortag.o: ../src/parser/mtagparser.h
+../bld/./mfortag.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
 ../bld/./mfortag.o: ../src/parser/mtagparserlibrary.h ../src/parser/mtoken.h
 ../bld/./mfortag.o: ../src/parser/mtokenizer.h ../src/parser/mtokenlists.h
 ../bld/./mfortag.o: ../src/renderer/mrenderer.h

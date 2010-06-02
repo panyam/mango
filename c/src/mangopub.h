@@ -4,6 +4,7 @@
 
 #include "mfwddefs.h"
 #include "core/mclasses.h"
+#include "core/mcontext.h"
 #include "core/merror.h"
 #include "core/miterator.h"
 #include "core/mnumber.h"
@@ -30,7 +31,6 @@
 #include "nodes/mvarlibrary.h"
 #include "nodes/mvarnode.h"
 #include "parser/mparser.h"
-#include "parser/mparsercontext.h"
 #include "parser/mtagparser.h"
 #include "parser/mtagparserlibrary.h"
 #include "parser/mtoken.h"

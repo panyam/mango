@@ -144,7 +144,10 @@ extern MangoTagParser *mango_fortagparser_default();
  *
  * \return Parsed for-tag node data.
  */
-extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error);
+extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *   tagparser,
+                                                         MangoParser *      parser,
+                                                         MangoContext *     ctx,
+                                                         MangoError **      error);
 
 /**
  * Parse the list of items before the "in".
@@ -154,7 +157,7 @@ extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagpars
  *
  * \returns true if successful, false otherwise.
  */
-extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd, MangoParserContext *ctx, MangoError **error);
+extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd, MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

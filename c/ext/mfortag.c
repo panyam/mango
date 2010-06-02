@@ -175,18 +175,17 @@ MangoTagParser *mango_fortagparser_default()
  *
  * \return Parsed for-tag node data.
  */
-MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error)
+MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser     = ctx->parser;
     MangoForTagNode *ftn    = mango_fortag_new(NULL, NULL, NULL);
-    mango_fortag_parse_item_list(ftn, ctx, error);
+    mango_fortag_parse_item_list(ftn, parser, ctx, error);
 
     // parse the source var and discared the '%}' token
-    ftn->sourceVar = mango_var_extract_with_parser(ctx, error);
+    ftn->sourceVar = mango_var_extract_with_parser(parser, ctx, error);
     mango_parser_expect_token(parser, TOKEN_CLOSE_TAG, false, error);
 
     // parse child nodes till the endfor tag.
-    ftn->childNodes = mango_parser_parse_till(ctx, EMPTY_OR_ENDFOR, error);
+    ftn->childNodes = mango_parser_parse_till(parser, ctx, EMPTY_OR_ENDFOR, error);
 
     if (error == NULL || *error == NULL)
     {
@@ -201,7 +200,7 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
             if (isEmptyTag)
             {
                 // read till end-tag var
-                ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
+                ftn->emptyNodes = mango_parser_parse_till(parser, ctx, ENDFOR, error);
                 token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
                 mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
             }
@@ -220,13 +219,13 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
  *
  * \returns true if successful, false otherwise.
  */
-BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
-                                  MangoParserContext *ctx,
-                                  MangoError **error)
+BOOL mango_fortag_parse_item_list(MangoForTagNode * ftd,
+                                  MangoParser *     parser,
+                                  MangoContext *    ctx,
+                                  MangoError **     error)
 {
     // now read the tokens
-    MangoParser *parser     = ctx->parser;
-    MangoStringFactory *msf = ctx->strfactory;
+    MangoStringFactory *msf = ctx->string_factory;
     const MangoToken *token = mango_parser_expect_token_in_list(parser, IDENT_OR_OPEN_PAREN, false, error);
     if (token->tokenType == TOKEN_OPEN_PAREN)
     {

@@ -76,7 +76,7 @@ extern void mango_filternode_add_arg(MangoFilterNode *fnode, MangoVar *mvar);
  * output list will still contain extracted filters upto the point of error
  * and it is the caller's responsibility to destroy the read filters.
  */
-extern BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
+extern BOOL mango_filternode_extract_filter_list(MangoParser *parser, MangoContext *ctx,
                                                  MangoList *filters,
                                                  MangoError **error);
 
@@ -95,7 +95,7 @@ extern BOOL mango_filternode_extract_filter_list(MangoParserContext *ctx,
  *
  * \return A filternode instance on success, otherwise NULL.
  */
-extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext *ctx,
+extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParser *parser, MangoContext *ctx,
                                                              MangoError **error);
 
 /**
@@ -110,7 +110,8 @@ extern MangoFilterNode *mango_filternode_extract_with_parser(MangoParserContext 
  * \return TRUE if one or more arguments were added to the filter node,
  * false otherwise.
  */
-extern BOOL mango_filternode_parse_filter_args(MangoParserContext *ctx,
+extern BOOL mango_filternode_parse_filter_args(MangoParser *parser,
+                                               MangoContext *ctx,
                                                MangoFilterNode *filternode,
                                                MangoError **error);
 

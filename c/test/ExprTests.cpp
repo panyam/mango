@@ -15,37 +15,25 @@
 class ExprTestFixture
 {
 public:
+    MangoContext *          context;
     MangoTokenizer *        tokenizer;
     MangoParser *           parser;
-    MangoTemplateLoader *   loader;
     StlInputSource *        input_source;
     std::string             input_string;
-    MangoLibrary *          filterLibrary;
-    MangoLibrary *          tagLibrary;
-    MangoStringFactory *    string_factory;
-    MangoParserContext      parser_context;
 
 public:
     ExprTestFixture() :
+        context(mango_context_new(NULL, NULL, NULL, NULL, NULL)),
         tokenizer(NULL),
         parser(NULL),
-        loader(NULL),
         input_source(NULL),
-        input_string(""),
-        filterLibrary(mango_filter_library_singleton()),
-        tagLibrary(mango_tagparser_library_singleton()),
-        string_factory((MangoStringFactory *)mango_rcstringfactory_default())
+        input_string("")
     {
-        parser_context.filterlib    = filterLibrary;
-        parser_context.taglib       = tagLibrary;
-        parser_context.strfactory   = string_factory;
-        parser_context.loader       = NULL;
-
         // register filters
-        register_in_library(filterLibrary, "add", (MangoObject *)mango_addfilter_default());
+        register_in_library(context->filter_library, "add", (MangoObject *)mango_addfilter_default());
 
         // and register the "for" tag
-        register_in_library(tagLibrary, "for", (MangoObject *)mango_fortagparser_default());
+        register_in_library(context->tag_library, "for", (MangoObject *)mango_fortagparser_default());
     }
 
     virtual ~ExprTestFixture()
@@ -58,29 +46,19 @@ public:
             input_source = NULL;
         }
 
-        if (tokenizer != NULL) 
-        {
-            mango_tokenizer_free(tokenizer);
-            tokenizer = NULL;
-        }
-
         if (parser != NULL) 
         {
             mango_parser_free(parser);
             parser = NULL;
         }
 
-        if (loader != NULL) 
+        if (tokenizer != NULL) 
         {
-            delete loader;
-            loader = NULL;
+            mango_tokenizer_free(tokenizer);
+            tokenizer = NULL;
         }
 
-        if (string_factory != NULL)
-        {
-            // string_factory(mango_rcstringfactory_new())
-            string_factory = NULL;
-        }
+        mango_context_free(context);
     }
 
     MangoVar *create_var(const char *value,
