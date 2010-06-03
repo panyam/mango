@@ -9,7 +9,7 @@
 MangoObject *mango_object_alloc(size_t objSize, MangoPrototype *proto)
 {
     if (proto == NULL)
-        proto = mango_object_prototype();
+        proto = mango_default_prototype();
 
     MangoObject *obj    = (MangoObject *)malloc(objSize);
     mango_object_init(obj, proto);

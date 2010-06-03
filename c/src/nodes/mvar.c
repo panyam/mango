@@ -4,7 +4,7 @@
 /**
  * The prototype for the MangoVar.
  */
-DECLARE_PROTO_FUNC("Var", MangoVarPrototype, mango_var_prototype,
+DECLARE_BASE_PROTO_FUNC(mango_var_prototype, MangoPrototype, MangoVarPrototype, 
     mango_var_prototype_init(&__proto__);
 );
 

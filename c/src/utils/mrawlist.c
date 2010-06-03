@@ -1,6 +1,6 @@
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("MangoRawList", MangoPrototype, mango_rawlist_prototype,
+DECLARE_PROTO_FUNC(mango_rawlist_prototype, MangoPrototype, MangoRawListPrototype, 
 );
 
 /**

@@ -116,23 +116,42 @@ struct MangoPrototype
     }
 
 /**
- * Macro for generating a function that returns a specific prototype
- * object.
+ * Macro for generating a function that returns a prototype that is
+ * inheriting another prototype.
  */
-#define DECLARE_PROTO_FUNC(VAR_FUNC, VAR_TYPE, PARENT_TYPE, ...)        \
-    VAR_TYPE *VAR_FUNC() {                                              \
-        static VAR_TYPE __proto__;                                      \
-        static BOOL initialised = false;                                \
-        if (!initialised)                                               \
-        {                                                               \
-            bzero(&__proto__, sizeof(__proto__));                       \
-            mango_prototype_init((MangoPrototype *)(&__proto__),        \
-                                 #VAR_TYPE, #PARENT_TYPE);              \
-            __VA_ARGS__                                                 \
-            initialised = true;                                         \
-        }                                                               \
-        return &__proto__;                                              \
-    }                                                                   \
+#define DECLARE_BASE_PROTO_FUNC(VAR_FUNC, BASE_PROTO_TYPE, VAR_TYPE, ...)   \
+    VAR_TYPE *VAR_FUNC() {                                                  \
+        static VAR_TYPE __proto__;                                          \
+        static BOOL initialised = false;                                    \
+        if (!initialised)                                                   \
+        {                                                                   \
+            bzero(&__proto__, sizeof(__proto__));                           \
+            mango_prototype_init((MangoPrototype *)(&__proto__),            \
+                                 #VAR_TYPE, #BASE_PROTO_TYPE);              \
+            __VA_ARGS__                                                     \
+            initialised = true;                                             \
+        }                                                                   \
+        return &__proto__;                                                  \
+    }                                                                       \
+
+/**
+ * Macro for generating a function that returns a prototype that is
+ * not inheriting but only overriding certain methods of a prototype.
+ */
+#define DECLARE_PROTO_FUNC(VAR_FUNC, VAR_TYPE, NEW_PROTO_TYPE, ...)         \
+    VAR_TYPE *VAR_FUNC() {                                                  \
+        static VAR_TYPE __proto__;                                          \
+        static BOOL initialised = false;                                    \
+        if (!initialised)                                                   \
+        {                                                                   \
+            bzero(&__proto__, sizeof(__proto__));                           \
+            mango_prototype_init((MangoPrototype *)(&__proto__),            \
+                                 #NEW_PROTO_TYPE, #VAR_TYPE);               \
+            __VA_ARGS__                                                     \
+            initialised = true;                                             \
+        }                                                                   \
+        return &__proto__;                                                  \
+    }                                                                       \
 
 /**
  * Returns the default mango prototype.
@@ -144,11 +163,10 @@ extern MangoPrototype *mango_default_prototype();
  *
  * @test(TestPrototypeInit)
  * MangoPrototype proto;
- * CHECK(mango_prototype_init(&proto, "Hello"));
- * CHECK_EQUAL(proto.protoID, mango_prototype_id_for_name("Hello", -1));
+ * CHECK(mango_prototype_init(&proto, "Hello", "World"));
  * @endtest
  */
-extern BOOL mango_prototype_init(MangoPrototype *proto, const char *name);
+extern BOOL mango_prototype_init(MangoPrototype *proto, const char *name, const char *parent);
 
 /**
  * Gets the ID for a particular name creating it if requested to.

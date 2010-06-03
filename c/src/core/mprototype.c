@@ -27,6 +27,9 @@ struct MangoPrototypeInfo
  */
 static MangoBinTree *   mango_protos_by_name = NULL;
 
+MangoPrototypeInfo *mango_protoinfo_new(const char *name, const char *parent);
+MangoPrototypeInfo *mango_protoinfo_for_name(const char *name);
+
 /**
  * Creates a new mango prototype info.
  * \param   name    Name of the new prototype to create.
@@ -36,6 +39,12 @@ static MangoBinTree *   mango_protos_by_name = NULL;
  */
 MangoPrototypeInfo *mango_protoinfo_new(const char *name, const char *parent)
 {
+    if (mango_protoinfo_for_name(name) != NULL)
+    {
+        assert("Prototype is already registered.  Please use a different name." && false);
+        return NULL;
+    }
+
     if (mango_protos_by_name == NULL)
     {
         mango_protos_by_name = mango_bintree_new();
@@ -45,20 +54,23 @@ MangoPrototypeInfo *mango_protoinfo_new(const char *name, const char *parent)
 }
 
 /**
- * Gets the ID of the parent of a given prototype.
- * \return  -1 if proto has not parent, otherwise the parent's id.
+ * Return the prototype corresponding to a particular name.
  */
-extern int mango_prototype_parent(MangoPrototype *proto);
+MangoPrototypeInfo *mango_protoinfo_for_name(const char *name)
+{
+    return NULL;
+}
 
 /**
  * Returns the default mango prototype.
  */
 MangoPrototype *mango_default_prototype()
 {
-    static MangoPrototype *__proto__;
+    static MangoPrototype __proto__;
+    static BOOL initialised = false;
     if (!initialised)
     {
-        bzero(&__proto__);
+        memset(&__proto__, 0, sizeof(__proto__));
         __proto__.protoinfo = mango_protoinfo_new("MangoPrototype", NULL);
         initialised = true;
     }
@@ -74,19 +86,7 @@ MangoPrototype *mango_default_prototype()
  */
 BOOL mango_prototype_init(MangoPrototype * proto, const char *name, const char *parent)
 {
-    if (mango_prototype_info_for_name(name, false) >= 0)
-    {
-        assert("Prototype is already registered.  Please use a different name." && false);
-        return false;
-    }
-
-    if (parent != NULL)
-    {
-        int parentID = mango_prototype_id_for_name(parent, false);
-        assert("Parent prototype is invalid." && parentID >= 0);
-    }
-
-    proto->protoID          = mango_prototype_id_for_name(name, true);
+    proto->protoinfo        = mango_protoinfo_new(name, parent);
     proto->deallocFunc      = NULL;
     proto->equalsFunc       = NULL;
     proto->compareFunc      = NULL;
@@ -118,15 +118,6 @@ int mango_prototype_id_for_name(const char *name, BOOL create)
 const char *mango_prototype_name_for_id(int id)
 {
     return NULL;
-}
-
-/**
- * Gets the ID of the parent of a given prototype.
- * \return  -1 if proto has not parent, otherwise the parent's id.
- */
-int mango_prototype_parent(int id)
-{
-    return -1;
 }
 
 /**

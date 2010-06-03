@@ -36,7 +36,7 @@ MangoNodeContext *mango_nodecontext_init(MangoNodeContext *context,
 /**
  * Prototype for the mango node.
  */
-DECLARE_PROTO_FUNC("Node", MangoNodePrototype, mango_node_prototype,
+DECLARE_BASE_PROTO_FUNC(mango_node_prototype, MangoPrototype, MangoNodePrototype, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_node_dealloc;
 );
 

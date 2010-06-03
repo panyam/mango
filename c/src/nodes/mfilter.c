@@ -4,7 +4,7 @@
 /**
  * Returns the mango filter prototype.
  */
-DECLARE_PROTO_FUNC("Filter", MangoFilterPrototype, mango_filter_prototype,
+DECLARE_BASE_PROTO_FUNC(mango_filter_prototype, MangoPrototype, MangoFilterPrototype, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_filter_dealloc;
     __proto__.makeInvocationContextFunc = NULL;
     __proto__.makeInstanceContextFunc   = NULL;

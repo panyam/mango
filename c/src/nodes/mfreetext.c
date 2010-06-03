@@ -4,7 +4,7 @@
 /**
  * The prototype for mango node lists.
  */
-DECLARE_PROTO_FUNC("FreeText", MangoNodePrototype, mango_freetext_prototype,
+DECLARE_PROTO_FUNC(mango_freetext_prototype, MangoNodePrototype, MangoFreeTextNodePrototype, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_freetext_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_freetext_are_equal;
     ((MangoPrototype *)&__proto__)->compareFunc = (ObjectCompareFunc)mango_freetext_compare;

@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("MangoFilterNode", MangoPrototype, mango_filternode_prototype,
+DECLARE_PROTO_FUNC(mango_filternode_prototype, MangoPrototype, MangoFilterNodePrototype, 
     __proto__.deallocFunc   = (ObjectDeallocFunc)mango_filternode_dealloc;
     __proto__.equalsFunc    = (ObjectEqualsFunc)mango_filternodes_are_equal;
 );

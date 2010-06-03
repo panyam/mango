@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("MangoList", MangoListPrototype, mango_list_prototype,
+DECLARE_BASE_PROTO_FUNC(mango_list_prototype, MangoCollectionPrototype, MangoListPrototype, 
     __proto__.setAtFunc         = NULL;
     __proto__.removeAtFunc      = NULL;
     __proto__.indexOfFunc       = NULL;

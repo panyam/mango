@@ -1,7 +1,7 @@
 
 #include "moutstream.h"
 
-DECLARE_PROTO_FUNC(mango_outstream_prototype, MangoOutStreamPrototype, MangoPrototype,
+DECLARE_BASE_PROTO_FUNC(mango_outstream_prototype, MangoPrototype, MangoOutStreamPrototype, 
     __proto__.writeFunc = NULL;
     __proto__.writeFormatFunc = NULL;
 );

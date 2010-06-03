@@ -4,7 +4,7 @@
 /**
  * The prototype for mango node lists.
  */
-DECLARE_PROTO_FUNC("MangoNodeList", MangoNodePrototype, mango_nodelist_prototype,
+DECLARE_PROTO_FUNC(mango_nodelist_prototype, MangoNodePrototype, MangoNodeListPrototype, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_nodelist_dealloc;
 );
 

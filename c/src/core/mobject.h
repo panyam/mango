@@ -37,7 +37,7 @@ extern void mango_object_dealloc(MangoObject *obj);
  * \return  Pointer to the same object to simplify copy semantics.
  *
  * @test(TestObjectIncDecRef, suite = "ObjectTests")
- * MangoObject *obj = OBJ_ALLOC(MangoObject, mango_object_prototype());
+ * MangoObject *obj = OBJ_ALLOC(MangoObject, mango_default_prototype());
  * CHECK_EQUAL(1, OBJ_REFCOUNT(obj));
  * CHECK_EQUAL(2, OBJ_REFCOUNT(OBJ_INCREF(obj)));
  * CHECK_EQUAL(3, OBJ_REFCOUNT(OBJ_INCREF(obj)));

@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC(mango_rcstringfactory_prototype, MangoStringFactoryPrototype, MangoPrototype,
+DECLARE_PROTO_FUNC(mango_rcstringfactory_prototype, MangoStringFactoryPrototype, MangoRCStringFactoryPrototype, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstringfactory_dealloc;
     __proto__.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
     __proto__.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
