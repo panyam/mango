@@ -46,6 +46,18 @@ INHERIT_STRUCT(MangoForTagContext, MangoNodeContext,
 );
 typedef struct MangoForTagContext MangoForTagContext;
 
+/**
+ * Special forloop specific variables.
+ */
+INHERIT_STRUCT(MangoForLoopVar, MangoVar,
+	/**
+	 * Tells how many grandparents are we looking up.
+	 * 0 Implies immediate parent.
+	 */
+    int parentCount;
+);
+typedef struct MangoForLoopVar MangoForLoopVar;
+
 ///////////////////////////////////////////////////////////////////////////
 //      Tag data specific methods
 ///////////////////////////////////////////////////////////////////////////

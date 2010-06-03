@@ -1,6 +1,8 @@
 
 #include "mangopub.h"
 
+DECLARE_PROTO_FUNC(mango_iterator_prototype, MangoIteratorPrototype, mango_default_prototype());
+
 /**
  * Deallocs an iterator
  * \param   miter   Iterator to be dealloced.

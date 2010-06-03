@@ -187,6 +187,6 @@ MangoIterator *mango_object_iterator(MangoObject *obj)
  */
 BOOL mango_object_implements(MangoObject *obj, MangoPrototype *proto)
 {
-    return false;
+    return mango_prototype_implements(PROTO(obj), proto);
 }
 

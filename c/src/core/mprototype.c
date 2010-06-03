@@ -22,6 +22,11 @@ struct MangoPrototypeInfo
     size_t              protoSize;
 
     /**
+     * Level in the prototype hiearchy starting from the root.
+     */
+    int                 protoLevel;
+
+    /**
      * ID of the parent prototype if any.
      */
     MangoPrototypeInfo *parent;
@@ -43,9 +48,10 @@ MangoPrototypeInfo *mango_protoinfo_new(size_t size, MangoPrototypeInfo *parent)
 {
     MangoPrototypeInfo *proto   = ZNEW(MangoPrototypeInfo);
     proto->name                 = NULL;
+    proto->parent               = parent;
     proto->protoID              = numPrototypes++;
     proto->protoSize            = size;
-    proto->parent               = parent;
+    proto->protoLevel           = parent == NULL ? 0 : parent->protoLevel + 1;
     return proto;
 }
 
@@ -68,5 +74,35 @@ void mango_prototype_inherit(MangoPrototype *proto, size_t size, MangoPrototype 
         memcpy(proto, parent, parent->protoinfo->protoSize);
     }
     proto->protoinfo        = mango_protoinfo_new(size, parent == NULL ? NULL : parent->protoinfo);
+}
+
+
+/**
+ * Tells if two prototypes can be casted to each other.
+ *
+ * \param   proto1  First prototype.
+ * \param   proto2  Second prototype.
+ * \return  true if proto1 and proto2 can be casted to each other.
+ */
+BOOL mango_prototype_implements(MangoPrototype *proto1, MangoPrototype *proto2)
+{
+    MangoPrototypeInfo *protoInfo1 = proto1->protoinfo;
+    MangoPrototypeInfo *protoInfo2 = proto2->protoinfo;
+
+    if (protoInfo1->protoLevel < protoInfo2->protoLevel)
+    {
+        MangoPrototypeInfo *ptemp = protoInfo1;
+        protoInfo1 = protoInfo2;
+        protoInfo2 = ptemp;
+    }
+
+    // only bother doing this if level of first proto is lower than
+    // level of second proto
+    for (MangoPrototypeInfo *temp = protoInfo1; temp != NULL && temp->protoLevel >= protoInfo2->protoLevel;temp = temp->parent)
+    {
+        if (temp == protoInfo2)
+            return true;
+    }
+    return false;
 }
 

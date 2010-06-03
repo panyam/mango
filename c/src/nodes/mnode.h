@@ -8,9 +8,19 @@
 extern "C" {
 #endif
 
-typedef MangoNodeContext *(*NodeContextCreateFunc)(MangoNode *node,
+typedef MangoNodeContext *(*NodeCreateContextFunc)(MangoNode *node,
                                                    MangoTemplateContext *templateContext,
                                                    MangoNodeContext *topContext);
+typedef MangoNode *(*NodeRenderBitMoreFunc)(MangoNode *node,
+                                            MangoOutStream *outstream,
+                                            MangoTemplateContext *templateContext,
+                                            MangoNodeContext *topContext,
+                                            MangoError **error);
+typedef MangoNode *(*NodeChildExitedFunc)(MangoNode *node, 
+                                          MangoNode *childNode,
+                                          MangoTemplateContext *templateContext,
+                                          MangoNodeContext *topContext,
+                                          MangoError **error);
 
 /**
  * Declare empty node prototype.

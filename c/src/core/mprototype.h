@@ -145,22 +145,43 @@ extern MangoPrototype *mango_default_prototype();
  * \param   proto       Prototype type object to initialise.
  * \param   size        Size of the prototype.
  * \param   parent      Parent of the prototype if any.
- *
- * @test(TestPrototypeInherit)
- * MangoPrototype proto;
- * mango_prototype_inherit(&proto, sizeof(proto), NULL);
- * CHECK(proto.deallocFunc == NULL);
- * @endtest
  */
 extern void mango_prototype_inherit(MangoPrototype *proto, size_t size, MangoPrototype *parent);
 
 /**
- * Gets the ID for a particular name creating it if requested to.
- * \param   name    Name of the prototype to search for.
- * \param   create  If not found whether to create it.
- * \return  id of the prototype if it exists or was created, -1 otherwise.
+ * Tells if two prototypes can be casted to each other.
+ *
+ * \param   proto1  First prototype.
+ * \param   proto2  Second prototype.
+ * \return  true if proto1 and proto2 can be casted to each other.
+ *
+ * @test(__VERB__)
+ *  DECLARE_PROTO_FUNC(mango_proto1, MangoPrototype, NULL);
+ *  DECLARE_PROTO_FUNC(mango_proto2, MangoPrototype, mango_proto1());
+ *  DECLARE_PROTO_FUNC(mango_proto2a, MangoPrototype, mango_proto1());
+ *  DECLARE_PROTO_FUNC(mango_proto2b, MangoPrototype, mango_proto1());
+ *  DECLARE_PROTO_FUNC(mango_proto3a, MangoPrototype, mango_proto2a());
+ *  DECLARE_PROTO_FUNC(mango_proto3b, MangoPrototype, mango_proto2a());
+ *  DECLARE_PROTO_FUNC(mango_proto3c, MangoPrototype, mango_proto2b());
+ *  DECLARE_PROTO_FUNC(mango_proto3d, MangoPrototype, mango_proto2b());
+ * @endtest
+ *
+ * @test(TestPrototypeInherit)
+ *  MangoPrototype *proto1 = mango_proto1();
+ *  MangoPrototype *proto2a= mango_proto2a();
+ *  MangoPrototype *proto2b= mango_proto2b();
+ *  MangoPrototype *proto3a= mango_proto3a();
+ *  MangoPrototype *proto3b= mango_proto3b();
+ *  MangoPrototype *proto3c= mango_proto3c();
+ *  MangoPrototype *proto3d= mango_proto3d();
+ *  CHECK(mango_prototype_implements(proto3b, proto3b));
+ *  CHECK(mango_prototype_implements(proto3c, proto1));
+ *  CHECK(mango_prototype_implements(proto3d, proto1));
+ *  CHECK( ! mango_prototype_implements(proto3c, proto2a));
+ *  CHECK( ! mango_prototype_implements(proto3a, proto2b));
+ * @endtest
  */
-extern int mango_prototype_id_for_name(const char *name, BOOL create);
+extern BOOL mango_prototype_implements(MangoPrototype *proto1, MangoPrototype *proto2);
 
 #ifdef __cplusplus
 }

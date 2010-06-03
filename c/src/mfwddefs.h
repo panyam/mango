@@ -22,6 +22,7 @@ typedef int BOOL;
 
 typedef struct MangoArray MangoArray;
 typedef struct MangoArrayList MangoArrayList;
+typedef struct MangoArrayListIterator MangoArrayListIterator;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
 typedef struct MangoContext MangoContext;
@@ -37,6 +38,7 @@ typedef struct MangoIterator MangoIterator;
 typedef struct MangoIteratorPrototype MangoIteratorPrototype;
 typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoLinkedList MangoLinkedList;
+typedef struct MangoLinkedListIterator MangoLinkedListIterator;
 typedef struct MangoLinkedListNode MangoLinkedListNode;
 typedef struct MangoList MangoList;
 typedef struct MangoListPrototype MangoListPrototype;

@@ -79,7 +79,7 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
 /**
  * Tells if an object is instance of a particular prototype.
  */
-#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)(obj), (const MangoPrototype *)proto)
+#define OBJ_IMPLEMENTS(obj, proto)  mango_object_implements((MangoObject *)(obj), PROTO(proto))
 
 /**
  * Gets attribute of an object given an integer index.
