@@ -53,7 +53,6 @@ DECLARE_PROTO_FUNC(mango_fortagctx_prototype, MangoPrototype, NULL,
  * Prototype for the forloop variable.
  */
 DECLARE_PROTO_FUNC(mango_forloopvar_prototype, MangoVarPrototype, mango_var_prototype(), 
-    mango_var_prototype_init(&__proto__);
     __proto__.setNextVarFunc    = (VarSetNextFunc)mango_forloopvar_set_next;
     __proto__.resolveFunc       = (VarResolveFunc)mango_forloopvar_resolve;
 );

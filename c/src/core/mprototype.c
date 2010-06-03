@@ -62,11 +62,11 @@ DECLARE_PROTO_FUNC(mango_default_prototype, MangoPrototype, NULL);
  */
 void mango_prototype_inherit(MangoPrototype *proto, size_t size, MangoPrototype *parent)
 {
-    if (proto != NULL)
+    if (parent != NULL)
     {
         // copy all methods from the parent to the child prototype
         memcpy(proto, parent, parent->protoinfo->protoSize);
     }
-    proto->protoinfo        = mango_protoinfo_new(size, parent->protoinfo);
+    proto->protoinfo        = mango_protoinfo_new(size, parent == NULL ? NULL : parent->protoinfo);
 }
 

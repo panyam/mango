@@ -50,6 +50,11 @@ INHERIT_STRUCT(MangoStringPrototype, MangoPrototype,
 DECLARE_CLASS(MangoString, MangoStringPrototype);
 
 /**
+ * Default string prototype.
+ */
+MangoStringPrototype *mango_string_prototype();
+
+/**
  * Gets the buffer value of the string.
  */
 extern const char *mango_string_buffer(const MangoString *mstr);

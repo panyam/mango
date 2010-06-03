@@ -30,11 +30,6 @@ DECLARE_CLASS(MangoOutStream, MangoOutStreamPrototype);
 extern MangoOutStreamPrototype *mango_outstream_prototype();
 
 /**
- * Initialises the output stream prototype.
- */
-MangoOutStreamPrototype *mango_outstream_prototype_init(MangoOutStreamPrototype *proto);
-
-/**
  * Write data to an output stream.
  */
 int mango_outstream_write(MangoOutStream *outstream, void *data, size_t length);

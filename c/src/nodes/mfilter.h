@@ -52,11 +52,6 @@ DECLARE_CLASS(MangoFilter, MangoFilterPrototype);
 extern MangoFilterPrototype *mango_filter_prototype();
 
 /**
- * Initialises a mango filter prototype.
- */
-MangoFilterPrototype *mango_filter_prototype_init(MangoFilterPrototype *proto, const char *name);
-
-/**
  * Destroys a filter created with mango_filter_new.
  */
 extern void mango_filter_dealloc(MangoFilter *filter);

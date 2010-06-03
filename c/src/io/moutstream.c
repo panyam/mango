@@ -1,21 +1,7 @@
 
 #include "moutstream.h"
 
-DECLARE_PROTO_FUNC(mango_outstream_prototype, MangoOutStreamPrototype, NULL, 
-    __proto__.writeFunc = NULL;
-    __proto__.writeFormatFunc = NULL;
-);
-
-/**
- * Initialises the output stream prototype.
- */
-MangoOutStreamPrototype *mango_outstream_prototype_init(MangoOutStreamPrototype *proto)
-{
-    proto->writeFunc = NULL;
-    proto->writeFormatFunc = NULL;
-    return proto;
-}
-
+DECLARE_PROTO_FUNC(mango_outstream_prototype, MangoOutStreamPrototype, NULL);
 
 /**
  * Write data to an output stream.

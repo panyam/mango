@@ -1,5 +1,7 @@
 #include "mangopub.h"
 
+DECLARE_PROTO_FUNC(mango_table_prototype, MangoTablePrototype, mango_collection_prototype());
+
 /**
  * Puts multiple values into a table.  Values are entered as key and value
  * pairs and terminated by the first NULL key argument.

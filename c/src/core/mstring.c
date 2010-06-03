@@ -2,6 +2,11 @@
 #include "mangopub.h"
 
 /**
+ * Default string prototype.
+ */
+DECLARE_PROTO_FUNC(mango_string_prototype, MangoStringPrototype, NULL);
+
+/**
  * Gets the buffer value of the string.
  */
 const char *mango_string_buffer(const MangoString *mstr)
