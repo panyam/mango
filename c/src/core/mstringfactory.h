@@ -31,6 +31,11 @@ INHERIT_STRUCT(MangoStringFactoryPrototype, MangoPrototype,
 DECLARE_CLASS(MangoStringFactory, MangoStringFactoryPrototype);
 
 /**
+ * Default string factory prototype.
+ */
+extern MangoStringFactoryPrototype *mango_stringfactory_prototype();
+
+/**
  * String factory's dealloc method called when refcount reaches 0.
  */
 extern void mango_stringfactory_dealloc(MangoStringFactory *factory);

@@ -15,7 +15,7 @@ BOOL mango_arraylists_are_equal(const MangoArrayList *list1, const MangoArrayLis
 /**
  * The default array prototype.
  */
-DECLARE_PROTO_FUNC(mango_arraylist_prototype, MangoListPrototype, MangoArrayListPrototype, 
+DECLARE_PROTO_FUNC(mango_arraylist_prototype, MangoListPrototype, mango_list_prototype(), 
     ((MangoPrototype *)&__proto__)->deallocFunc             = (ObjectDeallocFunc)mango_arraylist_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc              = (ObjectEqualsFunc)mango_arraylists_are_equal;
     ((MangoPrototype *)&__proto__)->getIntAttrFunc          = (ObjectGetIntAttrFunc)mango_arraylist_get_int_attr;

@@ -1,7 +1,7 @@
 #include "mangopub.h"
 
 
-DECLARE_PROTO_FUNC(mango_number_prototype, MangoPrototype, MangoNumberPrototype, 
+DECLARE_PROTO_FUNC(mango_number_prototype, MangoPrototype, NULL, 
     ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_numbers_are_equal;
     ((MangoPrototype *)&__proto__)->compareFunc = (ObjectCompareFunc)mango_number_compare;
 );

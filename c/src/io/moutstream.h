@@ -25,6 +25,11 @@ INHERIT_STRUCT(MangoOutStreamPrototype, MangoPrototype,
 DECLARE_CLASS(MangoOutStream, MangoOutStreamPrototype);
 
 /**
+ * Default prototype for output stream.
+ */
+extern MangoOutStreamPrototype *mango_outstream_prototype();
+
+/**
  * Initialises the output stream prototype.
  */
 MangoOutStreamPrototype *mango_outstream_prototype_init(MangoOutStreamPrototype *proto);

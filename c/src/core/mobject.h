@@ -106,6 +106,12 @@ BOOL mango_object_has_str_attr(const MangoObject *obj, const MangoString *key);
 extern MangoIterator *mango_object_iterator(MangoObject *obj);
 
 /**
+ * Tells if a object implements a particular prototype anywhere up its
+ * inheritance chain.
+ */
+extern BOOL mango_object_implements(MangoObject *obj, MangoPrototype *proto);
+
+/**
  * Utils on the object stuff.
  */
 #include "utils/mutils.h"

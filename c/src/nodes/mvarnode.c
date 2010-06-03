@@ -4,7 +4,7 @@
 /**
  * The prototype for mango var nodes.
  */
-DECLARE_PROTO_FUNC(mango_varnode_prototype, MangoNodePrototype, MangoVarNodePrototype, 
+DECLARE_PROTO_FUNC(mango_varnode_prototype, MangoNodePrototype, mango_node_prototype(),
     ((MangoPrototype *)&__proto__)->deallocFunc  = (ObjectDeallocFunc)mango_varnode_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc   = (ObjectEqualsFunc)mango_varnode_are_equal;
 );

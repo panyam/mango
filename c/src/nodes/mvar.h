@@ -53,9 +53,9 @@ DECLARE_CLASS(MangoVar, MangoVarPrototype,
 extern MangoVar *mango_var_new(MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
- * Initialises a variable prototype.
+ * Return the default variable prototype.
  */
-extern MangoVarPrototype *mango_var_prototype_init(MangoVarPrototype *proto);
+extern MangoVarPrototype *mango_var_prototype();
 
 /**
  * Initialises a mango var.

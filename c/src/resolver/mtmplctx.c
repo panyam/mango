@@ -3,7 +3,7 @@
 
 MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
 
-DECLARE_BASE_PROTO_FUNC(mango_tmplctx_prototype, MangoPrototype, MangoTemplateContextPrototype, 
+DECLARE_PROTO_FUNC(mango_tmplctx_prototype, MangoTemplateContextPrototype, NULL, 
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_tmplctx_dealloc;
     ((MangoPrototype *)&__proto__)->getStrAttrFunc  = (ObjectGetStrAttrFunc)mango_tmplctx_get;
     ((MangoPrototype *)&__proto__)->hasStrAttrFunc  = (ObjectHasStrAttrFunc)mango_tmplctx_contains;

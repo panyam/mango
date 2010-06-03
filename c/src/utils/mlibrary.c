@@ -3,7 +3,7 @@
 
 void mango_library_dealloc(MangoLibrary *library);
 
-DECLARE_PROTO_FUNC(mango_library_prototype, MangoPrototype, MangoLibraryPrototype, 
+DECLARE_PROTO_FUNC(mango_library_prototype, MangoPrototype, NULL, 
     __proto__.deallocFunc       = (ObjectDeallocFunc)mango_library_dealloc;
     __proto__.getStrAttrFunc    = (ObjectGetStrAttrFunc)mango_library_get;
 );

@@ -111,6 +111,11 @@ extern MangoNode *mango_node_init(MangoNode *node, MangoNodePrototype *prototype
 extern void mango_node_dealloc(MangoNode *node);
 
 /**
+ * Return the default node prototype.
+ */
+extern MangoNodePrototype *mango_node_prototype();
+
+/**
  * Creates node renderer context data for this node.
  */
 extern MangoNodeContext *mango_node_create_context(MangoNode *node,

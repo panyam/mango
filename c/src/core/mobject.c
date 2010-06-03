@@ -181,3 +181,12 @@ MangoIterator *mango_object_iterator(MangoObject *obj)
     return NULL;
 }
 
+/**
+ * Tells if a object implements a particular prototype anywhere up its
+ * inheritance chain.
+ */
+BOOL mango_object_implements(MangoObject *obj, MangoPrototype *proto)
+{
+    return false;
+}
+

@@ -13,7 +13,7 @@ void mango_fortagctx_dealloc(MangoForTagContext *fortagctx);
 /**
  * Get the prototype for the fortag.
  */
-DECLARE_PROTO_FUNC(mango_fortag_prototype, MangoNodePrototype, MangoForTagNodePrototype, 
+DECLARE_PROTO_FUNC(mango_fortag_prototype, MangoNodePrototype, mango_node_prototype(),
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_fortag_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc      = (ObjectEqualsFunc)mango_fortags_are_equal;
     __proto__.createContextFunc                     = (NodeContextCreateFunc)mango_fortag_create_context;
@@ -38,21 +38,21 @@ MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext
 /**
  * Prototype for the for tag parser.
  */
-DECLARE_PROTO_FUNC(mango_fortagparser_prototype, MangoTagParserPrototype, MangoForTagParserPrototype, 
+DECLARE_PROTO_FUNC(mango_fortagparser_prototype, MangoTagParserPrototype, mango_default_prototype(),
     __proto__.parserFunc = (TagParserFunc)mango_fortag_extract_with_parser;
 );
 
 /**
  * Prototype for tag for the for tag context.
  */
-DECLARE_PROTO_FUNC(mango_fortagctx_prototype, MangoPrototype, MangoForTagContextPrototype, 
+DECLARE_PROTO_FUNC(mango_fortagctx_prototype, MangoPrototype, NULL, 
     __proto__.deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
 );
 
 /**
  * Prototype for the forloop variable.
  */
-DECLARE_PROTO_FUNC(mango_forloopvar_prototype, MangoVarPrototype, MangoForLoopVarPrototype, 
+DECLARE_PROTO_FUNC(mango_forloopvar_prototype, MangoVarPrototype, mango_var_prototype(), 
     mango_var_prototype_init(&__proto__);
     __proto__.setNextVarFunc    = (VarSetNextFunc)mango_forloopvar_set_next;
     __proto__.resolveFunc       = (VarResolveFunc)mango_forloopvar_resolve;

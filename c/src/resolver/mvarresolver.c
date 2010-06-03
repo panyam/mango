@@ -6,7 +6,7 @@
  */
 MangoObject *default_resolver_func(MangoVarResolver *resolver, MangoObject *source, MangoVar *var);
 
-DECLARE_BASE_PROTO_FUNC(mango_varresolver_prototype, MangoPrototype, MangoVarResolverPrototype, 
+DECLARE_PROTO_FUNC(mango_varresolver_prototype, MangoVarResolverPrototype, NULL, 
     __proto__.resolveFunc = default_resolver_func;
 );
 

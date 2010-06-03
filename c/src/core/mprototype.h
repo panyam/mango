@@ -117,41 +117,23 @@ struct MangoPrototype
 
 /**
  * Macro for generating a function that returns a prototype that is
- * inheriting another prototype.
- */
-#define DECLARE_BASE_PROTO_FUNC(VAR_FUNC, BASE_PROTO_TYPE, VAR_TYPE, ...)   \
-    VAR_TYPE *VAR_FUNC() {                                                  \
-        static VAR_TYPE __proto__;                                          \
-        static BOOL initialised = false;                                    \
-        if (!initialised)                                                   \
-        {                                                                   \
-            bzero(&__proto__, sizeof(__proto__));                           \
-            mango_prototype_init((MangoPrototype *)(&__proto__),            \
-                                 #VAR_TYPE, #BASE_PROTO_TYPE);              \
-            __VA_ARGS__                                                     \
-            initialised = true;                                             \
-        }                                                                   \
-        return &__proto__;                                                  \
-    }                                                                       \
-
-/**
- * Macro for generating a function that returns a prototype that is
  * not inheriting but only overriding certain methods of a prototype.
  */
-#define DECLARE_PROTO_FUNC(VAR_FUNC, VAR_TYPE, NEW_PROTO_TYPE, ...)         \
-    VAR_TYPE *VAR_FUNC() {                                                  \
-        static VAR_TYPE __proto__;                                          \
-        static BOOL initialised = false;                                    \
-        if (!initialised)                                                   \
-        {                                                                   \
-            bzero(&__proto__, sizeof(__proto__));                           \
-            mango_prototype_init((MangoPrototype *)(&__proto__),            \
-                                 #NEW_PROTO_TYPE, #VAR_TYPE);               \
-            __VA_ARGS__                                                     \
-            initialised = true;                                             \
-        }                                                                   \
-        return &__proto__;                                                  \
-    }                                                                       \
+#define DECLARE_PROTO_FUNC(FUNC_NAME, PROTO_TYPE, PROTO_PARENT, ...)                    \
+    PROTO_TYPE *FUNC_NAME() {                                                           \
+        static PROTO_TYPE __proto__;                                                    \
+        static BOOL initialised = false;                                                \
+        if (!initialised)                                                               \
+        {                                                                               \
+            bzero(&__proto__, sizeof(__proto__));                                       \
+            mango_prototype_inherit((MangoPrototype *)(&__proto__),                     \
+                                     sizeof(__proto__),                                 \
+                                     (MangoPrototype *)PROTO_PARENT);                   \
+            __VA_ARGS__                                                                 \
+            initialised = true;                                                         \
+        }                                                                               \
+        return &__proto__;                                                              \
+    }                                                                                   \
 
 /**
  * Returns the default mango prototype.
@@ -159,14 +141,18 @@ struct MangoPrototype
 extern MangoPrototype *mango_default_prototype();
 
 /**
- * Create a new prototype object of a given name.
+ * Initialises a prototype object with a name and default methods.
+ * \param   proto       Prototype type object to initialise.
+ * \param   size        Size of the prototype.
+ * \param   parent      Parent of the prototype if any.
  *
- * @test(TestPrototypeInit)
+ * @test(TestPrototypeInherit)
  * MangoPrototype proto;
- * CHECK(mango_prototype_init(&proto, "Hello", "World"));
+ * mango_prototype_inherit(&proto, sizeof(proto), NULL);
+ * CHECK(proto.deallocFunc == NULL);
  * @endtest
  */
-extern BOOL mango_prototype_init(MangoPrototype *proto, const char *name, const char *parent);
+extern void mango_prototype_inherit(MangoPrototype *proto, size_t size, MangoPrototype *parent);
 
 /**
  * Gets the ID for a particular name creating it if requested to.
@@ -175,11 +161,6 @@ extern BOOL mango_prototype_init(MangoPrototype *proto, const char *name, const 
  * \return  id of the prototype if it exists or was created, -1 otherwise.
  */
 extern int mango_prototype_id_for_name(const char *name, BOOL create);
-
-/**
- * Tells if a prototype is either a base or a child of a given prototype.
- */
-extern BOOL mango_prototype_is_of_type(MangoPrototype *proto, const char *name);
 
 #ifdef __cplusplus
 }
