@@ -1,4 +1,4 @@
-package com.panyam.mango.templates.core.expressions;
+(package com.panyam.mango.templates.core.expressions;
 
 import com.panyam.mango.templates.parser.*;
 import com.panyam.mango.templates.utils.*;
@@ -114,12 +114,6 @@ public class ExpressionParser
     		out = parseExpression(parser, 0);
     		parser.expectToken(TokenType.TOKEN_CLOSE_PAREN);
     	}
-    	else if (token.tokenType == TokenType.TOKEN_OPEN_PAREN)
-    	{
-    		parser.getToken();	// consume the "("
-    		out = parseExpression(parser, 0);
-    		parser.expectToken(TokenType.TOKEN_CLOSE_PAREN);
-    	}
     	else if (token.tokenType == TokenType.TOKEN_NOT)
     	{
     		parser.getToken();	// consume the "!"
@@ -178,8 +172,8 @@ public class ExpressionParser
     {
     	if (PRECEDENCES == null)
     	{
-    		PRECEDENCES = new int[TokenType.TOKEN_LAST.ordinal() + 1];
-    		for (int i = 0;i < TokenType.TOKEN_LAST.ordinal();i++)
+    		PRECEDENCES = new int[TokenType.TOKEN_COUNT.ordinal() + 1];
+    		for (int i = 0;i < TokenType.TOKEN_COUNT.ordinal();i++)
     		{
     			PRECEDENCES[i] = 0;
     		}
@@ -207,8 +201,8 @@ public class ExpressionParser
     {
     	if (OPERATORS == null)
     	{
-    		OPERATORS = new Operator[TokenType.TOKEN_LAST.ordinal() + 1];
-    		for (int i = 0;i < TokenType.TOKEN_LAST.ordinal();i++)
+    		OPERATORS = new Operator[TokenType.TOKEN_COUNT.ordinal() + 1];
+    		for (int i = 0;i < TokenType.TOKEN_COUNT.ordinal();i++)
     		{
     			OPERATORS[i] = Operator.OP_NONE;
     		}

@@ -2,6 +2,7 @@
 #include <UnitTest++.h>
 #include "mangopub.h"
 #include "stlinputsource.h"
+#include "objptr.h"
 #include <vector>
 #include <sstream>
 #include <string.h>
@@ -108,26 +109,26 @@ TEST_FIXTURE(TemplateContextTestFixture, TestDelete)
     // context.deleteValue("a");
     // CheckResolvedVar(NULL);
 
-    MangoString *key = mango_stringfactory_new_string(string_factory, "a", -1);
-    MangoNumber *v1 = mango_number_from_int(1);
-    MangoNumber *v2 = mango_number_from_int(2);
-    MangoNumber *v3 = mango_number_from_int(3);
+    objptr<MangoString> key(mango_stringfactory_new_string(string_factory, "a", -1));
+    objptr<MangoNumber> v1(mango_number_from_int(1));
+    objptr<MangoNumber> v2(mango_number_from_int(2));
+    objptr<MangoNumber> v3(mango_number_from_int(3));
 
-    mango_tmplctx_push(context, key, OBJ(v1));
-    mango_tmplctx_push(context, key, OBJ(v2));
-    mango_tmplctx_push(context, key, OBJ(v3));
+    mango_tmplctx_push(context, key(), OBJ(v1()));
+    mango_tmplctx_push(context, key(), OBJ(v2()));
+    mango_tmplctx_push(context, key(), OBJ(v3()));
 
-    MangoList *values = mango_tmplctx_get_values(context, key, false);
+    MangoList *values = mango_tmplctx_get_values(context, key.get(), false);
     CHECK_EQUAL(3, COLLECTION_SIZE(values));
 
     // erase it now
-    mango_tmplctx_delete(context, key);
+    mango_tmplctx_delete(context, key());
     // ensure refcount is 2 - one for creation and one for using as a key
     // in the context (even though there have been 3 pushes)
-    CHECK_EQUAL(1, OBJ_REFCOUNT(key));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v1));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v2));
-    CHECK_EQUAL(1, OBJ_REFCOUNT(v3));
+    CHECK_EQUAL(1, key.refcount());
+    CHECK_EQUAL(1, v1.refcount());
+    CHECK_EQUAL(1, v2.refcount());
+    CHECK_EQUAL(1, v3.refcount());
 
     // delete the object now
 }

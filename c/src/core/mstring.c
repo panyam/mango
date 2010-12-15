@@ -2,31 +2,9 @@
 #include "mangopub.h"
 
 /**
- * Copies another mango string.
- * \param   mstr    String to be copied.
- * \return  A new instance of the immutable string.
+ * Default string prototype.
  */
-void mango_string_copy_to(const MangoString *mstr, MangoString *another)
-{
-    /*
-    mstr->__prototype__->copyFunc(mstr, another);
-    */
-}
-
-/**
- * Returns a copy of a string.
- * \param   mstr    String to be copied.
- * \return  The new copy of the string.
- */
-MangoString *mango_string_copy(MangoString *mstr)
-{
-    /*
-    MangoString *newstr = OBJ_ALLOC(MangoString, MangoStringPrototype);
-    mstr->__prototype__->copyFunc(mstr, newstr);
-    return newstr;
-    */
-    return NULL;
-}
+DECLARE_PROTO_FUNC(mango_string_prototype, MangoStringPrototype, NULL);
 
 /**
  * Gets the buffer value of the string.
@@ -45,28 +23,16 @@ size_t mango_string_length(const MangoString *mstr)
 }
 
 /**
- * Compares two strings to see if they are equal.
+ * Compares a string with the contents of a buffer.
  *
- * \param   str1    First str in the comparison.
- * \param   str2    Second str in the comparison.
+ * \param   str     String being compared.
+ * \param   buff    Value being compared to.
+ * \param   length  Length of the buffer.  If -ve, then buff is null terminated.
  *
- * \return  true if Strings are equal false otherwise.
+ * \return  -ve if str < buff, 0 if they are equal, +ve otherwise
  */
-BOOL mango_strings_are_equal(const MangoString *str1, const MangoString *str2)
+int mango_string_compare_to_buffer(const MangoString *str, const char *buffer, int length)
 {
-    return mango_objects_are_equal((const MangoObject *)str1, (const MangoObject *)str2);
-}
-
-/**
- * Compares two objects to check their relative order.
- *
- * \param   str1    First str in the comparison.
- * \param   str2    Second str in the comparison.
- *
- * \return  -ve if str1 < str2, 0 if they are equal, +ve otherwise
- */
-int mango_string_compare(const MangoString *str1, const MangoString *str2)
-{
-    return mango_object_compare((const MangoObject *)str1, (const MangoObject *)str2);
+    return str->__prototype__->compareToBufferFunc(str, buffer, length);
 }
 

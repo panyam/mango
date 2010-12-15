@@ -162,20 +162,20 @@ void mango_parser_discard_till_token(MangoParser *parser,
         token = mango_parser_next_token(parser, false, error);
 }
 
-
 /**
- * Parses a node.
+ * Parses an input stream and returns a list of nodes.
  *
- * \param   ctx     Parser context containing necessary items.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   error   Error to be set if any.
  *
  * \return  A Node instance.
  */
-MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
+MangoNode *mango_parser_parse(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
     MangoLinkedList *   nodeList    = NULL;
     MangoNode *         firstNode   = NULL;
-    MangoNode *         nextNode    = mango_parser_parse_node(ctx, error);
+    MangoNode *         nextNode    = mango_parser_parse_node(parser, ctx, error);
     int                 nodeCount   = 0;
     while (nextNode != NULL)
     {
@@ -193,7 +193,7 @@ MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
             LIST_PUSH_BACK(nodeList, nextNode);
         }
         nodeCount++;
-        nextNode    = mango_parser_parse_node(ctx, error);
+        nextNode    = mango_parser_parse_node(parser, ctx, error);
     }
 
     // just an optimisation to directly return a node if 
@@ -211,26 +211,25 @@ MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error)
 /**
  * Parses the next node off the stream.
  *
- * \param   ctx     Parser context containing necessary items.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   error   Error to be set if any.
  *
- * \return  The node read off the stream, NULL if none exist.
+ * \return  A Node instance.
  */
-MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
+MangoNode *mango_parser_parse_node(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_get_token(parser, error);
     if (token != NULL)
     {
         if (token->tokenType == TOKEN_FREETEXT)
         {
-            // easy
-            MangoString *val = mango_stringfactory_from_buffer(ctx->strfactory, token->tokenValue);
+            MangoString *val = mango_stringfactory_from_buffer(ctx->string_factory, token->tokenValue);
             return (MangoNode *)mango_freetext_new(val);
         }
         else if (token->tokenType == TOKEN_OPEN_VARIABLE)
         {
-            return (MangoNode *)mango_varnode_extract_with_parser(ctx, error);
+            return (MangoNode *)mango_varnode_extract_with_parser(parser, ctx, error);
         }
         else if (token->tokenType == TOKEN_OPEN_TAG)
         {
@@ -250,7 +249,7 @@ MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
                 }
             }
             // its a normal (non-end) tag so extract it as usual
-            return (MangoNode *)mango_tagnode_extract_with_parser(ctx, error);
+            return (MangoNode *)mango_tagnode_extract_with_parser(parser, ctx, error);
         }
         mango_error_set(error, -1, "Invalid token found: %d", token->tokenType);
     }
@@ -268,18 +267,19 @@ MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error)
  * then the first empty (or end) node that is encountered must be given to the 
  * second forloop and not the first one.
  *
- * \param   ctx     Parser context containing necessary items.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   names   NULL terminated list of names that can act as terminal nodes.
  * \param   error   Error value to be written to in case of error.
  */
-MangoNode *mango_parser_parse_till(MangoParserContext *ctx,
-                                   const char **names,
+MangoNode *mango_parser_parse_till(MangoParser *parser,
+                                   MangoContext *ctx,
+                                   const char **name_list,
                                    MangoError **error)
 {
-    MangoParser *parser = ctx->parser;
     int stackSize = parser->endNodeStack->size;
-    mango_rawlist_push_front(parser->endNodeStack, names);
-    MangoNode *parsedNodes = mango_parser_parse(ctx, error);
+    mango_rawlist_push_front(parser->endNodeStack, name_list);
+    MangoNode *parsedNodes = mango_parser_parse(parser, ctx, error);
     if (stackSize != parser->endNodeStack->size)	// if the end node was not popped the sizes wont match!
     {
         if (parsedNodes != NULL)

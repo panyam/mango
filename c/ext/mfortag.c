@@ -2,19 +2,71 @@
 #include "mangopub.h"
 #include "mfortag.h"
 
-static const char *EMPTY_OR_ENDFOR[3] = { "empty", "endfor", NULL };
-static const char *ENDFOR[2] = { "endfor", NULL };
+static const char *EMPTY_OR_ENDFOR[3]   = { "empty", "endfor", NULL };
+static const char *ENDFOR[2]            = { "endfor", NULL };
+
+MangoForTagContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+                                                MangoTemplateContext *  tmplCtx,
+                                                MangoNodeContext *      topCtx);
+MangoNode *mango_fortag_render_bit_more(MangoForTagNode *       fortag,
+                                        MangoOutStream *        outstream,
+                                        MangoTemplateContext *  context,
+                                        MangoNodeContext *      currContext,
+                                        MangoError **           error);
+MangoNode *mango_fortag_child_exited(MangoForTagNode *      fortag,
+                                     MangoNode *            childNode,
+                                     MangoTemplateContext * context,
+                                     MangoNodeContext *     currContext,
+                                     MangoError **          error);
+MangoNode *mango_fortag_node_entered(MangoForTagNode *      fortag,
+                                     MangoTemplateContext * context,
+                                     MangoForTagContext *   ftnContext,
+                                     MangoNode *            fromNode,
+                                     MangoError **          error);
+void mango_fortagctx_dealloc(MangoForTagContext *fortagctx);
+
+/**
+ * Sets the source var for the for-tag render context.
+ * \param   ftc     For tag context to be udpated.
+ * \param   source  Source var to set.
+ */
+extern void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoObject *source);
+
+////    For Loop related variables
+MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BOOL isquoted);
+MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext);
 
 /**
  * Get the prototype for the fortag.
  */
-DECLARE_PROTO_FUNC("ForTag", MangoNodePrototype, mango_fortag_prototype,
-    ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_fortag_dealloc;
-    ((MangoPrototype *)&__proto__)->equalsFunc = (ObjectEqualsFunc)mango_fortags_are_equal;
+DECLARE_PROTO_FUNC(mango_fortag_prototype, MangoNodePrototype, mango_node_prototype(),
+    ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_fortag_dealloc;
+    ((MangoPrototype *)&__proto__)->equalsFunc      = (ObjectEqualsFunc)mango_fortags_are_equal;
+    __proto__.createContextFunc                     = (NodeCreateContextFunc)mango_fortag_create_context;
+    __proto__.renderBitMoreFunc                     = (NodeRenderBitMoreFunc)mango_fortag_render_bit_more;
+    __proto__.childExitedFunc                       = (NodeChildExitedFunc)mango_fortag_child_exited;
 );
 
-DECLARE_PROTO_FUNC("ForTagParser", MangoTagParserPrototype, mango_fortagparser_prototype,
+/**
+ * Prototype for the for tag parser.
+ */
+DECLARE_PROTO_FUNC(mango_fortagparser_prototype, MangoTagParserPrototype, mango_default_prototype(),
     __proto__.parserFunc = (TagParserFunc)mango_fortag_extract_with_parser;
+);
+
+/**
+ * Prototype for tag for the for tag context.
+ */
+DECLARE_PROTO_FUNC(mango_fortagctx_prototype, MangoPrototype, NULL, 
+    __proto__.deallocFunc = (ObjectDeallocFunc)mango_fortagctx_dealloc;
+);
+
+/**
+ * Prototype for the forloop variable.
+ */
+DECLARE_PROTO_FUNC(mango_forloopvar_prototype, MangoVarPrototype, mango_var_prototype(), 
+    __proto__.setNextVarFunc    = (VarSetNextFunc)mango_forloopvar_set_next;
+    __proto__.resolveFunc       = (VarResolveFunc)mango_forloopvar_resolve;
 );
 
 /**
@@ -54,7 +106,7 @@ MangoForTagNode *mango_fortag_init(MangoForTagNode *mftnode,
         proto = mango_fortag_prototype();
     mango_tagnode_init((MangoTagNode *)mftnode, proto);
     mftnode->items          = NULL;
-    mftnode->sourceVar = source;
+    mftnode->sourceVar      = source;
     mftnode->childNodes     = childNode;
     mftnode->emptyNodes     = emptyNode;
     return mftnode;
@@ -134,18 +186,17 @@ MangoTagParser *mango_fortagparser_default()
  *
  * \return Parsed for-tag node data.
  */
-MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error)
+MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser     = ctx->parser;
     MangoForTagNode *ftn    = mango_fortag_new(NULL, NULL, NULL);
-    mango_fortag_parse_item_list(ftn, ctx, error);
+    mango_fortag_parse_item_list(ftn, parser, ctx, error);
 
     // parse the source var and discared the '%}' token
-    ftn->sourceVar = mango_var_extract_with_parser(ctx, error);
+    ftn->sourceVar = mango_var_extract_with_parser(parser, ctx, error);
     mango_parser_expect_token(parser, TOKEN_CLOSE_TAG, false, error);
 
     // parse child nodes till the endfor tag.
-    ftn->childNodes = mango_parser_parse_till(ctx, EMPTY_OR_ENDFOR, error);
+    ftn->childNodes = mango_parser_parse_till(parser, ctx, EMPTY_OR_ENDFOR, error);
 
     if (error == NULL || *error == NULL)
     {
@@ -160,7 +211,7 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
             if (isEmptyTag)
             {
                 // read till end-tag var
-                ftn->emptyNodes = mango_parser_parse_till(ctx, ENDFOR, error);
+                ftn->emptyNodes = mango_parser_parse_till(parser, ctx, ENDFOR, error);
                 token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
                 mango_parser_discard_till_token(parser, TOKEN_CLOSE_TAG, error);
             }
@@ -179,13 +230,13 @@ MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, Man
  *
  * \returns true if successful, false otherwise.
  */
-BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd,
-                                  MangoParserContext *ctx,
-                                  MangoError **error)
+BOOL mango_fortag_parse_item_list(MangoForTagNode * ftd,
+                                  MangoParser *     parser,
+                                  MangoContext *    ctx,
+                                  MangoError **     error)
 {
     // now read the tokens
-    MangoParser *parser     = ctx->parser;
-    MangoStringFactory *msf = ctx->strfactory;
+    MangoStringFactory *msf = ctx->string_factory;
     const MangoToken *token = mango_parser_expect_token_in_list(parser, IDENT_OR_OPEN_PAREN, false, error);
     if (token->tokenType == TOKEN_OPEN_PAREN)
     {
@@ -236,25 +287,158 @@ void mango_fortag_add_item(MangoForTagNode *ftd, MangoVar *var)
     LIST_PUSH_BACK(ftd->items, var);
 }
 
-#if 0
+/**
+ * Create the for tag node rendering context when required.
+ */
+MangoForTagContext *mango_fortag_create_context(MangoForTagNode *       ftNode,
+                                                    MangoTemplateContext *  tmplCtx,
+                                                    MangoNodeContext *      topCtx)
+{
+    MangoForTagContext *ftnContext = NULL;
+    if (ftNode->sourceVar != NULL && ftNode->items != NULL)
+    {
+        ftnContext = mango_fortagctx_new((MangoNode *)ftNode, topCtx);
+        mango_fortagctx_set_source(ftnContext, mango_var_resolve(ftNode->sourceVar, tmplCtx, topCtx));
+        
+        // push NULL values on the context stack for the vars referred by the items
+        MangoIterator *iter = OBJ_ITERATOR(ftNode->items);
+        while (mango_iterator_has_next(iter))
+        {
+            MangoVar *nextvar = (MangoVar *)mango_iterator_next(iter);
+            mango_tmplctx_push(tmplCtx, nextvar->value, NULL);
+        }
+        OBJ_DECREF(iter);
+    }
+    return ftnContext;
+}
+
+/**
+ * Renders a bit more content from this node.
+ */
+MangoNode *mango_fortag_render_bit_more(MangoForTagNode *       fortag,
+                                        MangoOutStream *        outstream,
+                                        MangoTemplateContext *  context,
+                                        MangoNodeContext *      currContext,
+                                        MangoError **           error)
+{
+    if (OBJ_IMPLEMENTS(currContext, mango_fortagctx_prototype()))
+    {
+        MangoForTagContext *ftnContext = (MangoForTagContext *)currContext;
+    
+        // see if the context can unpack the number of values 
+        // as we have in the items array.
+        return mango_fortag_node_entered(fortag, context, ftnContext, NULL, error);
+    }
+    return NULL;
+}
+
+/**
+ * Called when a child node (that was returned in renderBitMore) was exited having completed.
+ * By doing this we are giving the parent node a chance to tell the renderer what the next 
+ * node will be.
+ * \param   fortag  Fortag being currently rendered.
+ * \param   childNode   Child node being exited during the rendering process.
+ * \param   context     Value store
+ * \param   currContext Top of the context stack.
+ * \param   error       Error to be set on failure.
+ * \return NULL if this node is ALSO to be exited, otherwise a new child node to be pushed 
+ * onto the renderer stack.
+ */
+MangoNode *mango_fortag_child_exited(MangoForTagNode *      fortag,
+                                     MangoNode *            childNode,
+                                     MangoTemplateContext * context,
+                                     MangoNodeContext *     currContext,
+                                     MangoError **          error) 
+{
+    if (OBJ_IMPLEMENTS(currContext, mango_fortagctx_prototype()))
+        return mango_fortag_node_entered(fortag, context, (MangoForTagContext *)currContext, childNode, error);
+    return NULL;
+}
+
+/**
+ * "Enters" the node either from a parent node or a child node.
+ * 
+ * \param   fortag      Tag being entered.
+ * \param   context     Value store
+ * \param   ftnContex   Render context for the for tag.
+ * \param   fromNode    Where we are entering (NULL is an exit from a child).
+ * \param   error       Error to be set incase of failure.
+ * \return  The next node to enter for rendering, NULL, if we need to exit
+ * this node as well (ie the node has been completely rendered).
+ */
+MangoNode *mango_fortag_node_entered(MangoForTagNode *      fortag,
+                                     MangoTemplateContext * context,
+                                     MangoForTagContext *   ftnContext,
+                                     MangoNode *            fromNode,
+                                     MangoError **          error)
+{
+    if (ftnContext->isEmpty)
+    {
+        if (fromNode == NULL)
+            return fortag->emptyNodes;
+    }
+    else
+    {
+        // update the values of all values in the items
+        int numVars = mango_fortagctx_unpack_values(ftnContext, COLLECTION_SIZE(fortag->items));
+        if (numVars > 0)
+        {
+            // push all the values onto the context stack
+            for (int i = 0;i < numVars;i++)
+            {
+                MangoObject *itemValue  = (MangoObject *)OBJ_GETINTATTR(ftnContext->itemValues, i);
+                MangoVar *var           = (MangoVar *)OBJ_GETINTATTR(fortag->items, i);
+                mango_tmplctx_set(context, var->value, itemValue);
+            }
+            return fortag->childNodes;
+        }
+
+        // we are exiting the node so pop the values out of the context
+        MangoIterator *iter = OBJ_ITERATOR(fortag->items);
+        for (;mango_iterator_has_next(iter);)
+        {
+            MangoVar *var = (MangoVar *)mango_iterator_next(iter);
+            mango_tmplctx_pop(context, var->value);
+        }
+        OBJ_DECREF(iter);
+    }
+    return NULL;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //              ForTag Render Context related methods
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Deallocs the for tag node context when ref count reaches 0.
+ */
+void mango_fortagctx_dealloc(MangoForTagContext *fortagctx)
+{
+    OBJ_DECREF(fortagctx->valIterator);   // delete the old iterator
+    mango_object_dealloc(OBJ(fortagctx));
+}
+
 /**
  * Creates a new node context object.
  * \param   node    Node data for the for tag node.
  * \param   parent  The parent node context.
- * \param   ctxdata Context data
  *
  * \return  A new instance of the node context data.
  */
-MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
-                                        MangoTemplateContext *  tmplCtx,
-                                        MangoNodeContext *      topCtx)
+MangoForTagContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent)
 {
     MangoForTagContext *ftc = ZNEW(MangoForTagContext);
-    mango_fortagctx_set_source(ftc, NULL_VALUE);
+    mango_nodecontext_init((MangoNodeContext *)ftc,
+                           (MangoPrototype *)mango_fortagctx_prototype(),
+                           node, parent);
+    ftc->isFirst        = false;
+    ftc->isLast         = false;
+    ftc->currIndex      = 0;
+    ftc->isEmpty        = true;
+    ftc->itemValues     = NULL;
+    ftc->valIterator    = NULL;
+    ftc->itemValues     = NULL;
+    mango_fortagctx_set_source(ftc, NULL);
     return ftc;
 }
 
@@ -263,63 +447,96 @@ MangoForTagContext *mango_fortagctx_new(MangoForTagNode *       nodedata,
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoValue source)
+void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoObject *source)
 {
-    ftc->isEmpty = true;
-    if (mango_value_is_valid(&source))
-    {
-        ftc->isFirst        = true;
-        ftc->isLast         = false;
-        ftc->currIndex      = 0;
-        ftc->valIterator    = mango_valueiterator_new(source);
-        ftc->isEmpty        = !mango_valueiterator_has_next(ftc->valIterator);
-    }
+    ftc->isEmpty        = true;
+    ftc->isFirst        = true;
+    ftc->isLast         = false;
+    ftc->currIndex      = 0;
+
+    OBJ_DECREF(ftc->valIterator);   // delete the old iterator
+    ftc->valIterator    = OBJ_ITERATOR(source);
+    ftc->isEmpty        = !mango_iterator_has_next(ftc->valIterator);
 }
     
+///////////////////////////////////////////////////////////////////////////////////
+//                      ForLoop Variable specific methods
+///////////////////////////////////////////////////////////////////////////////////
+
 /**
- * Unpacks numvals values from the next value in the iterator and
- * returns the number of values unpacked.
- * \param   ftc     Fortag context to be rendered.
- * \param   numvals Number of values to be unpacked.
- * \return number of values "really" unpacked.
+ * Creates a new forloop variable.
  */
-int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
+MangoForLoopVar *mango_forloopvar_new()
 {
-    if (ftc->valIterator == NULL || !mango_valueiterator_has_next(ftc->valIterator))
-    {
-        // reached the end of the line so return 0;
-        return 0;
-    }
-
-    if (ftc->itemValues == NULL)
-    {
-        ftc->isFirst = true;
-        ftc->currIndex = 0;
-        ftc->itemValues = mango_rawarray_new();
-    }
-    else
-    {
-        ftc->isFirst = false;
-        ftc->currIndex++;
-    }
-
-    int count = ftc->itemValues->length;
-    for (int i = 0;i < count;i++)
-        mango_rawarray_set_itemat(ftc->itemValues, i, NULL);
-
-    for (int i = count; i < numvals;i++)
-        mango_rawarray_insert(ftc->itemValues, NULL, -1);
-    
-    int outCount = mango_valueiterator_unpack(ftc->valIterator, numvals, ftc->itemValues);
-
-    if (!mango_valiterator_has_next(ftc->valIterator))
-        ftc->isLast = true;
-
-    // clear the item values and reset them to NULL
-    return outCount;
+    MangoForLoopVar *flv = ZNEW(MangoForLoopVar);
+    mango_var_init((MangoVar *)flv, mango_forloopvar_prototype(), NULL, false, NULL);
+    flv->parentCount = 0;
+    return flv;
 }
 
-#endif 
+/**
+ * Sets the value of the next variable.  If the value is "parentloop" then
+ * simply stores the parent count so that we can look up the nth context
+ * from now.
+ */
+MangoVar *mango_forloopvar_set_next(MangoForLoopVar *var, MangoString *value, BOOL isquoted)
+{
+    if (mango_string_compare_to_buffer(value, "parentloop", -1) == 0)
+    {
+        var->parentCount++;
+        return NULL;
+    }
+
+    // call super class method
+    return mango_var_set_next((MangoVar *)var, value, isquoted);
+}
+
+/**
+ * Resolves the value of the forloop variable by traversing parent
+ * contexts.
+ */
+MangoObject *mango_forloopvar_resolve(MangoForLoopVar *var, MangoTemplateContext *context, MangoNodeContext *currContext)
+{
+    // find the first ForLoop anywhere along the node context stack!!
+    MangoNodeContext *tempContext = currContext;
+    int parentsLeft = var->parentCount;
+    while (parentsLeft >= 0)
+    {
+        while (tempContext != NULL && OBJ_IMPLEMENTS(tempContext, mango_fortagctx_prototype()))
+            tempContext = tempContext->parent;
+
+        if (tempContext != NULL)
+        {
+            parentsLeft--;
+            if (parentsLeft >= 0)
+                tempContext = tempContext->parent;
+        }
+    }
+
+    MangoVar *nextVar = ((MangoVar *)var)->next;
+    if (tempContext != NULL && nextVar != NULL)
+    {
+        MangoForTagContext *ftnContext = (MangoForTagContext *)tempContext;
+        if (mango_string_compare_to_buffer(nextVar->value, "counter", -1) == 0)
+        {
+            return OBJ(mango_number_from_int(ftnContext->currIndex + 1));
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "counter0", -1) == 0)
+        {
+            return OBJ(mango_number_from_int(ftnContext->currIndex));
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "first", -1) == 0)
+        {
+            return OBJ(mango_number_from_int(ftnContext->isFirst));
+        }
+        else if (mango_string_compare_to_buffer(nextVar->value, "last", -1) == 0)
+        {
+            return OBJ(mango_number_from_int(ftnContext->isLast));
+        }
+        return OBJ(mango_number_from_int(0));
+    }
+    return NULL;
+}
 
 #if 0
     /**
@@ -335,172 +552,48 @@ int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
         VarLibrary.getSharedInstance().registerObjectClass("forloop", ForLoopVar.class);
     }
 
-    public NodeContext createNodeContext(TemplateContext context, NodeContext parentContext)
-    {
-    	ForTagContext ftnContext = NULL;
-    	if (sourceVar != NULL && items != NULL)
-    	{
-        	ftnContext = new ForTagContext(this, parentContext);
-    		ftnContext.setSource(sourceVar.resolve(context, parentContext));
-    		
-    		// push NULL values on the context stack for the vars referred by the items
-			for (Iterator<Var> iter = items.iterator(); iter.hasNext();)
-			{
-				Var var = iter.next();
-				context.pushValue(var.value(), NULL);
-			}
-    	}
-    	return ftnContext;
-    }
-
-    /**
-     * Renders the for loop.
-     */
-    public Node renderBitMore(Writer writer, TemplateContext context, NodeContext currContext) throws IOException
-    {
-    	if (currContext instanceof ForTagContext)
-    	{
-    		ForTagContext ftnContext = (ForTagContext)currContext;
-    	
-    		// see if the context can unpack the number of values 
-    		// as we have in the items array.
-    		return nodeEntered(context, ftnContext, NULL);
-    	}
-    	return NULL;
-    }
-
-    /**
-     * Called when a child node (that was returned in renderBitMore) was exited having completed.
-     * By doing this we are giving the parent node a chance to tell the renderer what the next 
-     * node will be.
-     * @param childNode
-     * @param context
-     * @param currContext
-     * @return NULL if this node is ALSO to be exited, otherwise a new child node to be pushed 
-     * onto the renderer stack.
-     */
-	public Node childExited(Node childNode, TemplateContext context, NodeContext currContext) 
-	{
-		if (currContext instanceof ForTagContext)
-			return nodeEntered(context, (ForTagContext)currContext, childNode);
-		return NULL;
-	}
-
-	/**
-     * "Enters" the node either from a parent node or a child node.
-     * 
-     * @param context
-     * @param ftnContext
-     * @param fromNode
-     * @return
-     */
-    protected Node nodeEntered(TemplateContext context, ForTagContext ftnContext, Node fromNode)
-    {
-    	if (ftnContext.isEmpty)
-    	{
-    		if (fromNode == NULL)
-    			return emptyNodes;
-    	}
-    	else
-    	{
-	    	// update the values of all values in the items
-			int numVars = ftnContext.unpackValues(items.size()); 
-			if (numVars > 0)
-			{
-				// push all the values onto the context stack
-				for (int i = 0, count = items.size();i < count;i++)
-				{
-					Object itemValue = ftnContext.itemValues.get(i);
-					Var var = items.get(i);
-					context.setValue(var.value(), itemValue);
-				}
-				return childNodes;
-			}
-	
-			// we are exiting the node so pop the values out of the context
-			for (Iterator<Var> iter = items.iterator(); iter.hasNext();)
-			{
-				Var var = iter.next();
-				context.popValue(var.value());
-			}
-    	}
-		return NULL;
-    }
-}
-
+#endif
 
 /**
- * Special vars to extract info about the for loops.
- * 
- * @author Sri Panyam
+ * Unpacks numvals values from the next value in the iterator and
+ * returns the number of values unpacked.
+ * \param   ftc     Fortag context to be rendered.
+ * \param   numvals Number of values to be unpacked.
+ * \return number of values "really" unpacked.
  */
-class ForLoopVar extends Var
+int mango_fortagctx_unpack_values(MangoForTagContext *ftc, int numvals)
 {
-	/**
-	 * Tells how many grandparents are we looking up.
-	 * 0 Implies immediate parent.
-	 */
-	int parentCount;
-	
-	public ForLoopVar()
-	{
-		parentCount = 0;
-	}
-	
-	/**
-	 * Does a bit of optimisation on the value of the "next" var 
-	 * by folding all parentloops into a counter.
-	 */
-    public MangoVar *setNextVar(String value, boolean isquoted)
+    if (ftc->valIterator == NULL || !mango_iterator_has_next(ftc->valIterator))
     {
-    	if (value.equals("parentloop"))
-    	{
-    		parentCount++;
-    		return NULL;
-    	}
-    	return super.setNextVar(value, isquoted);
+        // reached the end of the line so return 0;
+        return 0;
     }
-	
-    public Object resolve(TemplateContext context, NodeContext currContext)
-    {
-    	// find the first ForLoop anywhere along the node context stack!!
-    	int parentsLeft = parentCount;
-    	MangoNodeContext *tempContext = currContext;
-    	while (parentsLeft >= 0)
-    	{
-	    	while (tempContext != NULL && !(tempContext instanceof ForTagContext))
-	    		tempContext = tempContext.parent;
-	    	if (tempContext != NULL)
-	    	{
-	    		parentsLeft--;
-	    		if (parentsLeft >= 0)
-	    			tempContext = tempContext.parent;
-	    	}
-    	}
 
-    	if (tempContext != NULL && nextVar != NULL)
-        {
-            ForTagContext ftnContext = (ForTagContext)tempContext;
-            if (nextVar.value().equals("counter"))
-            {
-                return ftnContext.getOneBasedCounter();
-            }
-            else if (nextVar.value().equals("counter0"))
-            {
-                return ftnContext.getCounter();
-            }
-            else if (nextVar.value().equals("first"))
-            {
-                return ftnContext.isFirst();
-            }
-            else if (nextVar.value().equals("last"))
-            {
-                return ftnContext.isLast();
-            }
-            return 0;
-        }
-        return NULL;
+    if (ftc->itemValues == NULL)
+    {
+        ftc->isFirst = true;
+        ftc->currIndex = 0;
+        ftc->itemValues = (MangoList *)mango_arraylist_new();
     }
+    else
+    {
+        ftc->isFirst = false;
+        ftc->currIndex++;
+    }
+
+    int count = COLLECTION_SIZE(ftc->itemValues);
+    for (int i = 0;i < count;i++)
+        LIST_SET_AT(ftc->itemValues, i, NULL);
+
+    for (int i = count; i < numvals;i++)
+        LIST_PUSH_BACK(ftc->itemValues, NULL);
+    
+    int outCount = mango_valueiterator_unpack(ftc->valIterator, numvals, ftc->itemValues);
+
+    if (!mango_iterator_has_next(ftc->valIterator))
+        ftc->isLast = true;
+
+    // clear the item values and reset them to NULL
+    return outCount;
 }
 
-#endif

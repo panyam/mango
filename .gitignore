@@ -12,6 +12,7 @@
 *.o
 tags.*
 c/bld/*
+c/test/gen/*
 objc/build/*
 android/bin/*
 android/test/bin/*

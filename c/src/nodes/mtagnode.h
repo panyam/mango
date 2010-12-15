@@ -27,7 +27,7 @@ extern MangoTagNode *mango_tagnode_init(MangoTagNode *tagnode, MangoNodePrototyp
  *
  * \return  NULL if failure otherwise a MangoNode.
  */
-extern MangoTagNode *mango_tagnode_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoTagNode *mango_tagnode_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

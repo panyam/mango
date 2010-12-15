@@ -11,7 +11,7 @@
  */
 int mango_render_node(MangoNode *node,
                       MangoTemplateContext *context, 
-                      MangoOutputStream *outstream,
+                      MangoOutStream *outstream,
                       MangoError **error)
 {
     MangoNode *currNode             = NULL;
@@ -27,7 +27,7 @@ int mango_render_node(MangoNode *node,
             nextNode = currNode = (MangoNode *)LIST_POP_FRONT(inputNodes);
             MangoNodeContext *newContext = mango_node_create_context(currNode, context, currContext);
             if (newContext == NULL)
-                newContext = mango_nodecontext_new(currNode, currContext);
+                newContext = mango_nodecontext_new(NULL, currNode, currContext);
             currContext = newContext;
         }
   

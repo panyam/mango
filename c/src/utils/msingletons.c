@@ -3,13 +3,13 @@
 /**
  * Get the shared filter library instance.
  */
-MangoTable *mango_filter_library_singleton()
+MangoLibrary *mango_filter_library_singleton()
 {
-    static MangoTable *filter_library = NULL;
+    static MangoLibrary *filter_library = NULL;
 
     if (filter_library == NULL)
     {
-        filter_library = (MangoTable *)mango_treetable_new();
+        filter_library = (MangoLibrary *)mango_library_new();
     }
 
     return filter_library;
@@ -18,13 +18,13 @@ MangoTable *mango_filter_library_singleton()
 /**
  * Get the shared tag parser library instance.
  */
-MangoTable *mango_tagparser_library_singleton()
+MangoLibrary *mango_tagparser_library_singleton()
 {
-    static MangoTable *tag_parser_library = NULL;
+    static MangoLibrary *tag_parser_library = NULL;
 
     if (tag_parser_library == NULL)
     {
-        tag_parser_library = (MangoTable *)mango_treetable_new();
+        tag_parser_library = (MangoLibrary *)mango_library_new();
     }
 
     return tag_parser_library;
@@ -33,13 +33,13 @@ MangoTable *mango_tagparser_library_singleton()
 /**
  * Get the shared var library instance.
  */
-MangoTable *mango_var_library_singleton()
+MangoLibrary *mango_var_library_singleton()
 {
-    static MangoTable *var_library = NULL;
+    static MangoLibrary *var_library = NULL;
 
     if (var_library == NULL)
     {
-        var_library = (MangoTable *)mango_treetable_new();
+        var_library = (MangoLibrary *)mango_library_new();
     }
 
     return var_library;

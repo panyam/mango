@@ -13,7 +13,7 @@ void mango_linkedlist_set_at(MangoLinkedList *mlist, int index, MangoObject *obj
 /**
  * The default array prototype.
  */
-DECLARE_PROTO_FUNC("MangoLinkedList", MangoListPrototype, mango_linkedlist_prototype,
+DECLARE_PROTO_FUNC(mango_linkedlist_prototype, MangoListPrototype, mango_list_prototype(), 
     ((MangoPrototype *)&__proto__)->deallocFunc             = (ObjectDeallocFunc)mango_linkedlist_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc              = (ObjectEqualsFunc)mango_linkedlists_are_equal;
     ((MangoPrototype *)&__proto__)->getIntAttrFunc          = (ObjectGetIntAttrFunc)mango_linkedlist_item_at;

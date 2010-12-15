@@ -5,6 +5,13 @@
  * Create a new string with a given capacity.
  *
  * \param   capacity    Capacity of the string.
+ *
+ * @test(TestStringBufferCreateWithCapacity)
+ * MangoStringBuffer *mstr = mango_stringbuffer_with_capacity(32);
+ * CHECK(32 == mstr->capacity);
+ * CHECK(0 == mstr->length);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
 MangoStringBuffer *mango_stringbuffer_with_capacity(unsigned capacity)
 {
@@ -22,6 +29,14 @@ MangoStringBuffer *mango_stringbuffer_with_capacity(unsigned capacity)
  * \param   length  Length of the buffer.  If length < 0, then buffer is
  *                  null terminated.
  * \return A new string instance.
+ *
+ * @test(TestStringBufferCreateFromBuffer)
+ * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
+ * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
+ * CHECK_EQUAL(strlen("Hello World"), mstr->length);
+ * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
 MangoStringBuffer *mango_stringbuffer_from_buffer(const char *buffer, int length)
 {
@@ -63,6 +78,16 @@ void mango_stringbuffer_free(MangoStringBuffer *mstr)
  * Clears the buffer.
  *
  * \param   mstr    String to be updated.
+ *
+ * @test(TestStringBufferClear)
+ * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
+ * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
+ * CHECK_EQUAL(strlen("Hello World"), mstr->length);
+ * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
+ * mango_stringbuffer_clear(mstr);
+ * CHECK_EQUAL(unsigned(0), mstr->length);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
 void mango_stringbuffer_clear(MangoStringBuffer *mstr)
 {
@@ -75,9 +100,21 @@ void mango_stringbuffer_clear(MangoStringBuffer *mstr)
  * \param   mstr    String to be updated.
  * \param   value   Value to be set to (not necessarily null terminated).
  * \param   length  Length of the input string.
+ *
+ * @test(TestStringBufferSet)
+ * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
+ * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
+ * CHECK_EQUAL(strlen("Hello World"), mstr->length);
+ * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
+ * mango_stringbuffer_set(mstr, "Hello Magnificient World", -1);
+ * CHECK_EQUAL(strlen("Hello Magnificient World"), mstr->length);
+ * CHECK(strcmp("Hello Magnificient World", mstr->buffer) == 0);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
-void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t length)
+void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (length < 0) length = strlen(value);
     mstr->length = 0;
     mango_stringbuffer_append(mstr, value, length);
 }
@@ -87,10 +124,22 @@ void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t l
  *
  * \param   mstr    String to be updated.
  * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
+ * \param   length  Length of the input string (if < 0, value is null terminated).
+ *
+ * @test(TestStringBufferAppend)
+ * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
+ * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
+ * CHECK_EQUAL(strlen("Hello World"), mstr->length);
+ * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
+ * mango_stringbuffer_append(mstr, ", I Love You", -1);
+ * CHECK_EQUAL(strlen("Hello World, I Love You"), mstr->length);
+ * CHECK(strcmp("Hello World, I Love You", mstr->buffer) == 0);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
-void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, size_t length)
+void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (length < 0) length = strlen(value);
     mango_stringbuffer_ensure_capacity(mstr, length + mstr->length + 1);
     memcpy(mstr->buffer + mstr->length, value, length);
     mstr->length += length;
@@ -188,6 +237,16 @@ int mango_stringbuffer_append_format(MangoStringBuffer *mstr, const char *fmt, .
  *
  * \param   mstr    String to be updated.
  * \param   newcap  New capacity to be made available in the string.
+ *
+ * @test(TestStringEnsureCapacity)
+ * MangoStringBuffer *mstr = mango_stringbuffer_from_buffer("Hello World", -1);
+ * CHECK_EQUAL(1 + strlen("Hello World"), mstr->capacity);
+ * CHECK_EQUAL(strlen("Hello World"), mstr->length);
+ * CHECK(strcmp(mstr->buffer, "Hello World") == 0);
+ * mango_stringbuffer_ensure_capacity(mstr, 128);
+ * CHECK_EQUAL(unsigned((128 * 3) / 2), mstr->capacity);
+ * mango_stringbuffer_free(mstr);
+ * @endtest
  */
 void mango_stringbuffer_ensure_capacity(MangoStringBuffer *mstr, size_t newcap)
 {
@@ -208,8 +267,11 @@ void mango_stringbuffer_ensure_capacity(MangoStringBuffer *mstr, size_t newcap)
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, size_t length)
+int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, int length)
 {
+    if (mstr == NULL)
+        return -1;
+    if (length < 0) length = strlen(value);
     int minlen = mstr->length < length ? mstr->length : length;
     for (int i = 0;i < minlen;i++)
     {

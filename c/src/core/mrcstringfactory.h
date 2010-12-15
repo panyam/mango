@@ -19,6 +19,12 @@ INHERIT_STRUCT(MangoRCStringFactory, MangoStringFactory,
 extern MangoRCStringFactory *mango_rcstringfactory_new();
 
 /**
+ * Return the default string factory.
+ * \return  The default RC string factory
+ */
+extern MangoRCStringFactory *mango_rcstringfactory_default();
+
+/**
  * Initialises the string factory.
  */
 extern MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactory);
@@ -26,15 +32,15 @@ extern MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rc
 /**
  * Creates a new string.
  */
-extern MangoString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
-                                                     const char *buffer,
-                                                     int length);
+extern MangoRCString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
+                                                       const char *buffer,
+                                                       int length);
 
 /**
  * Creates a new string from a string buffer.
  */
-extern MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
-                                                      const MangoStringBuffer *buffer);
+extern MangoRCString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
+                                                        const MangoStringBuffer *buffer);
 
 /**
  * Frees a string.

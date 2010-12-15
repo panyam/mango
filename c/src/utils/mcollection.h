@@ -55,9 +55,14 @@ DECLARE_CLASS(MangoCollection, MangoCollectionPrototype);
 #define COLLECTION_CLEAR(coll)      mango_collection_clear((MangoCollection *)coll)
 
 /**
+ * Get the default collection prototype.
+ */
+extern MangoCollectionPrototype *mango_collection_prototype();
+
+/**
  * Initialises a collection.
  */
-MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollectionPrototype *proto);
+extern MangoCollection *mango_collection_init(MangoCollection *collection, MangoCollectionPrototype *proto);
 
 /**
  * Frees the collection.

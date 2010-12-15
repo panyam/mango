@@ -4,9 +4,7 @@
 /**
  * The prototype for the MangoVar.
  */
-DECLARE_PROTO_FUNC("Var", MangoVarPrototype, mango_var_prototype,
-    __proto__.setNextVarFunc = mango_var_set_next;
-    // RCSTRING_PROTOTYPE.copyFunc    = (StringCopyFunc)mango_rcstring_copy;
+DECLARE_PROTO_FUNC(mango_var_prototype, MangoVarPrototype, NULL, 
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_var_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc  = (ObjectEqualsFunc)mango_vars_are_equal;
 );
@@ -21,20 +19,24 @@ DECLARE_PROTO_FUNC("Var", MangoVarPrototype, mango_var_prototype,
 MangoVar *mango_var_new(MangoString *mstr, BOOL isQuoted, MangoVar *next)
 {
     MangoVar *mvar = NEW(MangoVar);
-    return mango_var_init(mvar, mstr, isQuoted, next);
+    return mango_var_init(mvar, NULL, mstr, isQuoted, next);
 }
 
 /**
  * Initialises a mango var.
  * \param   mvar        Var to be initialised.
+ * \param   proto       Prototype to be initialised with.
  * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
  * \param   next        Next var in the chain.
  * \return  The same var.
  */
-MangoVar *mango_var_init(MangoVar *mvar, MangoString *mstr, BOOL isQuoted, MangoVar *next)
+MangoVar *mango_var_init(MangoVar *mvar, MangoVarPrototype *proto,
+                         MangoString *mstr, BOOL isQuoted, MangoVar *next)
 {
-    OBJ_INIT(mvar, mango_var_prototype());
+    if (proto == NULL)
+        proto = mango_var_prototype();
+    OBJ_INIT(mvar, proto);
     mvar->next      = next;
     mvar->isQuoted  = isQuoted;
     mvar->isNumber  = false;
@@ -80,12 +82,16 @@ void mango_var_set_value(MangoVar *mvar, MangoString *value, BOOL isQuoted)
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-int mango_var_resolve(MangoVar *            mvar,
-                      MangoTemplateContext *context,
-                      MangoNodeContext *    topContext,
-                      void **               value)
+MangoObject *mango_var_resolve(MangoVar *            mvar,
+                               MangoTemplateContext *context,
+                               MangoNodeContext *    topContext)
 {
-    return 0;
+    if (mvar->__prototype__->resolveFunc != NULL)
+    {
+        return mvar->__prototype__->resolveFunc(mvar, context, topContext);
+    }
+    // use the default resolver otherwise
+    return mango_varresolver_resolve(mango_varresolver_default(), OBJ(context), mvar);
 }
 
 /**
@@ -121,10 +127,14 @@ BOOL mango_vars_are_equal(const MangoVar *var1, const MangoVar *var2)
  *
  * \return  A new var if it is set.
  */
-MangoVar *mango_var_set_next(MangoVar *mvar,
-                                       MangoString *value,
-                                       BOOL isquoted)
+MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isquoted)
 {
+    if (mvar->__prototype__->setNextVarFunc != NULL)
+    {
+        return mvar->__prototype__->setNextVarFunc(mvar, value, isquoted);
+    }
+
+    // fall back to default
     MangoVar *nextVar = mango_var_new(value, isquoted, NULL);
     mvar->next = nextVar;
     return nextVar;
@@ -139,9 +149,8 @@ MangoVar *mango_var_set_next(MangoVar *mvar,
  * \return A MangoVar instance if successful, otherwise NULL with the
  * error var set (if it is supplied).
  */
-MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoVar *mango_var_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoParser *parser = ctx->parser;
     MangoVar *firstVar = NULL;
     MangoVar *lastVar = NULL;
     const MangoToken *token = mango_parser_expect_token(parser, TOKEN_IDENTIFIER, false, error);
@@ -150,15 +159,22 @@ MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **er
         return NULL;
     }
 
-    MangoStringFactory *msf = ctx->strfactory;
+    MangoStringFactory *msf = ctx->string_factory;
     while (true)
     {
         BOOL isQuoted = token->tokenType == TOKEN_QUOTED_STRING;
         if (firstVar == NULL)
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            // see if the var library returns a "special" var
-            MangoVar *nextVar = isQuoted ? NULL : mango_var_library_new_instance(varValue, ctx->varlib);
+            MangoVar *nextVar = NULL;
+            if (!isQuoted)
+            {
+                // see if the var library returns a "special" var
+                MangoVarBuilder *varbuilder = (MangoVarBuilder *)OBJ_GETSTRATTR(ctx->var_library, varValue);
+                if (varbuilder != NULL)
+                    mango_varbuilder_new_var(varbuilder, ctx, varValue);
+            }
+
             if (nextVar == NULL)
             {
                 nextVar = mango_var_new(varValue, isQuoted, NULL);
@@ -168,7 +184,7 @@ MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **er
         else
         {
             MangoString *varValue = mango_stringfactory_from_buffer(msf, token->tokenValue);
-            MangoVar *nextVar = lastVar->__prototype__->setNextVarFunc(lastVar, varValue, isQuoted);
+            MangoVar *nextVar = mango_var_set_next(lastVar, varValue, isQuoted);
             if (nextVar != NULL)
             {
                 lastVar = nextVar;

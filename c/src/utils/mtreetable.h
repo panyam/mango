@@ -43,11 +43,8 @@ extern void mango_treetable_erase(MangoTreeTable *table, MangoString *key);
  * \param   table   Table into which the value is to be set.
  * \param   key     Key for which the value is to be set.
  * \param   value   Value to be set to.
- * 
- * \return  NULL if the key does not already exist, otherwise the old
- * value.  Also the value is increfed.
  */
-extern MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value);
+extern void mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value);
 
 /**
  * Frees the tree based table

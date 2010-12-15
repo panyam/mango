@@ -96,10 +96,70 @@ dep:
 
 # DO NOT DELETE
 
-../bld/./maddfilter.o: maddfilter.h ../src/nodes/mfilter.h
-../bld/./maddfilter.o: ../src/core/mobject.h ../src/mfwddefs.h
-../bld/./maddfilter.o: ../src/utils/mutils.h ../src/nodes/mvar.h
-../bld/./mfortag.o: mfortag.h ../src/nodes/mtagnode.h ../src/nodes/mnode.h
-../bld/./mfortag.o: ../src/core/mobject.h ../src/mfwddefs.h
-../bld/./mfortag.o: ../src/utils/mutils.h ../src/parser/mtagparser.h
-../bld/./mfortag.o: ../src/nodes/mvar.h
+../bld/./maddfilter.o: ../src/mangopub.h ../src/mfwddefs.h
+../bld/./maddfilter.o: ../src/core/mclasses.h ../src/core/mcontext.h
+../bld/./maddfilter.o: ../src/core/merror.h ../src/core/miterator.h
+../bld/./maddfilter.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./maddfilter.o: ../src/utils/mutils.h ../src/core/mnumber.h
+../bld/./maddfilter.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./maddfilter.o: ../src/core/mrcstring.h ../src/core/mstring.h
+../bld/./maddfilter.o: ../src/core/mrcstringfactory.h
+../bld/./maddfilter.o: ../src/core/mstringfactory.h
+../bld/./maddfilter.o: ../src/core/mrcstringtable.h ../src/core/mstring.h
+../bld/./maddfilter.o: ../src/core/mstringbuffer.h
+../bld/./maddfilter.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
+../bld/./maddfilter.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./maddfilter.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./maddfilter.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./maddfilter.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./maddfilter.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./maddfilter.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./maddfilter.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
+../bld/./maddfilter.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
+../bld/./maddfilter.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
+../bld/./maddfilter.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./maddfilter.o: ../src/parser/mtokenlists.h
+../bld/./maddfilter.o: ../src/renderer/mrenderer.h
+../bld/./maddfilter.o: ../src/resolver/mtemplateloader.h
+../bld/./maddfilter.o: ../src/resolver/mtmplctx.h
+../bld/./maddfilter.o: ../src/resolver/mvarresolver.h
+../bld/./maddfilter.o: ../src/utils/marraylist.h ../src/utils/mlist.h
+../bld/./maddfilter.o: ../src/utils/mcollection.h ../src/utils/mbintree.h
+../bld/./maddfilter.o: ../src/utils/mcollection.h ../src/utils/mlinkedlist.h
+../bld/./maddfilter.o: ../src/utils/mlist.h ../src/utils/mlibrary.h
+../bld/./maddfilter.o: ../src/utils/mmemutils.h ../src/utils/mrawarray.h
+../bld/./maddfilter.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
+../bld/./maddfilter.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
+../bld/./maddfilter.o: ../src/utils/mtable.h maddfilter.h
+../bld/./mfortag.o: ../src/mangopub.h ../src/mfwddefs.h
+../bld/./mfortag.o: ../src/core/mclasses.h ../src/core/mcontext.h
+../bld/./mfortag.o: ../src/core/merror.h ../src/core/miterator.h
+../bld/./mfortag.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./mfortag.o: ../src/utils/mutils.h ../src/core/mnumber.h
+../bld/./mfortag.o: ../src/core/mobject.h ../src/core/mprototype.h
+../bld/./mfortag.o: ../src/core/mrcstring.h ../src/core/mstring.h
+../bld/./mfortag.o: ../src/core/mrcstringfactory.h
+../bld/./mfortag.o: ../src/core/mstringfactory.h ../src/core/mrcstringtable.h
+../bld/./mfortag.o: ../src/core/mstring.h ../src/core/mstringbuffer.h
+../bld/./mfortag.o: ../src/core/mstringfactory.h ../src/io/minputsource.h
+../bld/./mfortag.o: ../src/io/moutstream.h ../src/io/mstroutstream.h
+../bld/./mfortag.o: ../src/io/moutstream.h ../src/nodes/mfilter.h
+../bld/./mfortag.o: ../src/nodes/mvar.h ../src/nodes/mfilternode.h
+../bld/./mfortag.o: ../src/nodes/mfreetext.h ../src/nodes/mnode.h
+../bld/./mfortag.o: ../src/nodes/mnode.h ../src/nodes/mnodelist.h
+../bld/./mfortag.o: ../src/nodes/mtagnode.h ../src/nodes/mvar.h
+../bld/./mfortag.o: ../src/nodes/mvariterator.h ../src/nodes/mvarnode.h
+../bld/./mfortag.o: ../src/parser/mparser.h ../src/parser/mtokenizer.h
+../bld/./mfortag.o: ../src/parser/mtoken.h ../src/parser/mtagparser.h
+../bld/./mfortag.o: ../src/parser/mtoken.h ../src/parser/mtokenizer.h
+../bld/./mfortag.o: ../src/parser/mtokenlists.h ../src/renderer/mrenderer.h
+../bld/./mfortag.o: ../src/resolver/mtemplateloader.h
+../bld/./mfortag.o: ../src/resolver/mtmplctx.h ../src/resolver/mvarresolver.h
+../bld/./mfortag.o: ../src/utils/marraylist.h ../src/utils/mlist.h
+../bld/./mfortag.o: ../src/utils/mcollection.h ../src/utils/mbintree.h
+../bld/./mfortag.o: ../src/utils/mcollection.h ../src/utils/mlinkedlist.h
+../bld/./mfortag.o: ../src/utils/mlist.h ../src/utils/mlibrary.h
+../bld/./mfortag.o: ../src/utils/mmemutils.h ../src/utils/mrawarray.h
+../bld/./mfortag.o: ../src/utils/mrawlist.h ../src/utils/msingletons.h
+../bld/./mfortag.o: ../src/utils/mtable.h ../src/utils/mtreetable.h
+../bld/./mfortag.o: ../src/utils/mtable.h mfortag.h

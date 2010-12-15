@@ -1,0 +1,9 @@
+
+#include <UnitTest++.h>
+#include <vector>
+#include <sstream>
+#include "stlinputsource.h"
+#include "objptr.h"
+#include "mangopub.h"
+#include "mangoextpub.h"
+

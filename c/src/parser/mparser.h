@@ -85,8 +85,9 @@ extern const MangoToken *mango_parser_expect_token_in_list(MangoParser *parser,
 /**
  * Discards tokens till the specified token is found.
  *
- * \param   parser      Parser which will be discarding the tokens.
+ * \param   parser      The parser
  * \param   lastToken   Token to discard until.
+ * \param   error       Error to be set on failure.
  */
 extern void mango_parser_discard_till_token(MangoParser *parser,
                                             MangoTokenType lastToken,
@@ -95,22 +96,24 @@ extern void mango_parser_discard_till_token(MangoParser *parser,
 /**
  * Parses an input stream and returns a list of nodes.
  *
- * \param   ctx     Parser context containing necessary items for parsing.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   error   Error to be set if any.
  *
  * \return  A Node instance.
  */
-extern MangoNode *mango_parser_parse(MangoParserContext *ctx, MangoError **error);
+extern MangoNode *mango_parser_parse(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 /**
  * Parses the next node off the stream.
  *
- * \param   ctx     Parser context containing necessary items.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   error   Error to be set if any.
  *
  * \return  A Node instance.
  */
-extern MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **error);
+extern MangoNode *mango_parser_parse_node(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 /**
  * This is called by a TagNode (or its derivative) to parse "upto" a certain 
@@ -123,11 +126,13 @@ extern MangoNode *mango_parser_parse_node(MangoParserContext *ctx, MangoError **
  * then the first empty (or end) node that is encountered must be given to the 
  * second forloop and not the first one.
  *
- * \param   ctx     Parser context containing necessary items.
+ * \param   parser  The parser
+ * \param   ctx     Mango context containing necessary items.
  * \param   names   NULL terminated list of names that can act as terminal nodes.
  * \param   error   Error value to be written to in case of error.
  */
-extern MangoNode *mango_parser_parse_till(MangoParserContext *ctx,
+extern MangoNode *mango_parser_parse_till(MangoParser *parser,
+                                          MangoContext *ctx,
                                           const char **name_list,
                                           MangoError **error);
 

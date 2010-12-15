@@ -4,7 +4,7 @@
 /**
  * The prototype for mango var nodes.
  */
-DECLARE_PROTO_FUNC("VarNode", MangoNodePrototype, mango_varnode_prototype,
+DECLARE_PROTO_FUNC(mango_varnode_prototype, MangoNodePrototype, mango_node_prototype(),
     ((MangoPrototype *)&__proto__)->deallocFunc  = (ObjectDeallocFunc)mango_varnode_dealloc;
     ((MangoPrototype *)&__proto__)->equalsFunc   = (ObjectEqualsFunc)mango_varnode_are_equal;
 );
@@ -67,14 +67,13 @@ MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVar *mvar, MangoLis
  *
  * \return  A new Var node instance.
  */
-MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError **error)
+MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error)
 {
-    MangoVar *var = mango_var_extract_with_parser(ctx, error);
+    MangoVar *var = mango_var_extract_with_parser(parser, ctx, error);
     if (var == NULL)
         return NULL;
 
     // read the next token - it should be a close or a filter starter
-    MangoParser *parser = ctx->parser;
     const MangoToken *token = mango_parser_peek_token(parser, error);
     if (token == NULL)
         return NULL;
@@ -82,7 +81,7 @@ MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError
     MangoList *filter_nodes = (MangoList *)mango_linkedlist_new();
     if (token->tokenType == TOKEN_FILTER_SEPERATOR)
     {
-        if (mango_filternode_extract_filter_list(ctx, filter_nodes, error))
+        if (mango_filternode_extract_filter_list(parser, ctx, filter_nodes, error))
         {
             token = mango_parser_peek_token(parser, error);
         }

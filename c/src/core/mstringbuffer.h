@@ -66,16 +66,16 @@ extern void mango_stringbuffer_clear(MangoStringBuffer *mstr);
  *
  * \param   mstr    String to be updated.
  */
-extern void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, size_t length);
+extern void mango_stringbuffer_set(MangoStringBuffer *mstr, const char *value, int length);
 
 /**
  * Appends a value to the string buffer.
  *
  * \param   mstr    String to be updated.
  * \param   value   Value to be set to (not necessarily null terminated).
- * \param   length  Length of the input string.
+ * \param   length  Length of the input string (if < 0, value is null terminated).
  */
-extern void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, size_t length);
+extern void mango_stringbuffer_append(MangoStringBuffer *mstr, const char *value, int length);
 
 /**
  * Appends a character.
@@ -137,7 +137,7 @@ extern void mango_stringbuffer_ensure_capacity(MangoStringBuffer *mstr, size_t n
  *
  * \return -1 if mstr < value, 0 if equal else +1
  */
-extern int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, size_t length);
+extern int mango_stringbuffer_compare(const MangoStringBuffer *mstr, const char *value, int length);
 
 /**
  * Tells if two strings are equal.

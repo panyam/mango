@@ -30,6 +30,12 @@ INHERIT_STRUCT(MangoRCString, MangoString,
 );
 
 /**
+ * Creates a mango RC string from a null terminated string in the default
+ * string table.
+ */
+#define MRCSTR(x)   (MangoString *)mango_rcstring_new((x), -1, NULL)
+
+/**
  * Creates a new immutale string.
  * \param   value   Value of the string.
  * \param   lenght  Length of the string.  If -ve then string is null
@@ -39,17 +45,9 @@ INHERIT_STRUCT(MangoRCString, MangoString,
  *
  * \return  A new instance of the immutable string.
  */
-extern MangoString *mango_rcstring_new(const char *value,
-                                       int length,
-                                       MangoRCStringTable *mstable);
+extern MangoRCString *mango_rcstring_new(const char *value, int length,
+                                         MangoRCStringTable *mstable);
                                
-
-/**
- * Copies another mango string.
- * \param   source  String to be copied.
- * \param   another Destination string to be copied to.
- */
-extern void mango_rcstring_copy(const MangoRCString *source, MangoString *another);
 
 /**
  * Destroys a string.
@@ -85,6 +83,17 @@ extern const char *mango_rcstring_buffer(const MangoRCString *mstr);
  * Gets the length of the string.
  */
 extern size_t mango_rcstring_length(const MangoRCString *mstr);
+
+/**
+ * Compares a string with the contents of a buffer.
+ *
+ * \param   str     String being compared.
+ * \param   buff    Value being compared to.
+ * \param   length  Length of the buffer.  If -ve, then buff is null terminated.
+ *
+ * \return  -ve if str < buff, 0 if they are equal, +ve otherwise
+ */
+extern int mango_rcstring_compare_to_buffer(const MangoRCString *str, const char *buffer, int length);
 
 #ifdef __cplusplus
 }

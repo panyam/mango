@@ -36,15 +36,27 @@ typedef struct MangoForTagNode MangoForTagNode;
 /**
  * Context data for the for-tag during rendering.
  */
-INHERIT_STRUCT(MangoForTagRendererContext, MangoNodeContext,
-    BOOL                isFirst;
-    BOOL                isLast;
-    int                 currIndex;
-    BOOL                isEmpty;
-    // MangoValueIterator *valIterator;
-    MangoArray *        itemValues;
+INHERIT_STRUCT(MangoForTagContext, MangoNodeContext,
+    BOOL            isFirst;
+    BOOL            isLast;
+    int             currIndex;
+    BOOL            isEmpty;
+    MangoIterator * valIterator;
+    MangoList *     itemValues;
 );
-typedef struct MangoForTagRendererContext MangoForTagRendererContext;
+typedef struct MangoForTagContext MangoForTagContext;
+
+/**
+ * Special forloop specific variables.
+ */
+INHERIT_STRUCT(MangoForLoopVar, MangoVar,
+	/**
+	 * Tells how many grandparents are we looking up.
+	 * 0 Implies immediate parent.
+	 */
+    int parentCount;
+);
+typedef struct MangoForLoopVar MangoForLoopVar;
 
 ///////////////////////////////////////////////////////////////////////////
 //      Tag data specific methods
@@ -117,16 +129,14 @@ extern BOOL mango_fortags_are_equal(const MangoForTagNode *ftd1, const MangoForT
  *
  * \return  A new instance of the node context data.
  */
-extern MangoForTagRendererContext *mango_fortagctx_new(MangoForTagNode *        nodedata,
-                                                       MangoTemplateContext *   tmplCtx,
-                                                       MangoNodeContext *       topCtx);
+extern MangoForTagContext *mango_fortagctx_new(MangoNode *node, MangoNodeContext *parent);
 
 /**
  * Sets the source var for the for-tag render context.
  * \param   ftc     For tag context to be udpated.
  * \param   source  Source var to set.
  */
-extern void mango_fortagctx_set_source(MangoForTagRendererContext *ftc, MangoObject *source);
+extern void mango_fortagctx_set_source(MangoForTagContext *ftc, MangoObject *source);
 
 ///////////////////////////////////////////////////////////////////////////
 //      Parser specific methods
@@ -146,7 +156,10 @@ extern MangoTagParser *mango_fortagparser_default();
  *
  * \return Parsed for-tag node data.
  */
-extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagparser, MangoParserContext *ctx, MangoError **error);
+extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *   tagparser,
+                                                         MangoParser *      parser,
+                                                         MangoContext *     ctx,
+                                                         MangoError **      error);
 
 /**
  * Parse the list of items before the "in".
@@ -156,7 +169,7 @@ extern MangoForTagNode *mango_fortag_extract_with_parser(MangoTagParser *tagpars
  *
  * \returns true if successful, false otherwise.
  */
-extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd, MangoParserContext *ctx, MangoError **error);
+extern BOOL mango_fortag_parse_item_list(MangoForTagNode *ftd, MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

@@ -8,9 +8,22 @@
 extern "C" {
 #endif
 
+// Simplified typedefs
+typedef MangoVar *(*VarSetNextFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
+typedef MangoObject *(*VarResolveFunc)(MangoVar *               mvar,
+                                       MangoTemplateContext *   context,
+                                       MangoNodeContext *       topContext);
+
 INHERIT_STRUCT(MangoVarPrototype, MangoPrototype,
     //! Child specific setter of the next var
     MangoVar *(*setNextVarFunc)(MangoVar *mvar, MangoString *value, BOOL isquoted);
+
+    /**
+     * Resolve a variable against a template context and an optional node context.
+     */
+    MangoObject *(*resolveFunc)(MangoVar *               mvar,
+                                MangoTemplateContext *   context,
+                                MangoNodeContext *       topContext);
 );
 
 DECLARE_CLASS(MangoVar, MangoVarPrototype,
@@ -40,14 +53,21 @@ DECLARE_CLASS(MangoVar, MangoVarPrototype,
 extern MangoVar *mango_var_new(MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
+ * Return the default variable prototype.
+ */
+extern MangoVarPrototype *mango_var_prototype();
+
+/**
  * Initialises a mango var.
  * \param   mvar        Var to be initialised.
+ * \param   proto       Prototype to be initialised with.
  * \param   mstr        Value of the var.
  * \param   isQuoted    Whether the value is quoted or not.
  * \param   next        Next var in the chain.
- * \return  A new MangoVar instance.
+ * \return  The same var.
  */
-extern MangoVar *mango_var_init(MangoVar *mvar, MangoString *mstr, BOOL isQuoted, MangoVar *next);
+extern MangoVar *mango_var_init(MangoVar *mvar, MangoVarPrototype *proto,
+                                MangoString *mstr, BOOL isQuoted, MangoVar *next);
 
 /**
  * Deallocs a mango var when refcount reaches 0.
@@ -70,10 +90,9 @@ extern void mango_var_set_value(MangoVar *mvar,
  * Resolves the value of a var (for rendering purposes) given the
  * template and node contexts.
  */
-extern int mango_var_resolve(MangoVar *                 mvar,
-                                  MangoTemplateContext *context,
-                                  MangoNodeContext *    topContext,
-                                  void **               value);
+extern MangoObject *mango_var_resolve(MangoVar *            mvar,
+                                      MangoTemplateContext *context,
+                                      MangoNodeContext *    topContext);
 
 /**
  * Returns if two vars are equal.
@@ -101,7 +120,7 @@ extern MangoVar *mango_var_set_next(MangoVar *mvar, MangoString *value, BOOL isq
  * \return A MangoVar instance if successful, otherwise NULL with the
  * error var set (if it is supplied).
  */
-extern MangoVar *mango_var_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoVar *mango_var_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 #ifdef __cplusplus
 }

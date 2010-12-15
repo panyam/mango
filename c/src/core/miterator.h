@@ -8,6 +8,9 @@
 extern "C" {
 #endif
 
+typedef BOOL            (*IteratorHasNextFunc)(MangoIterator *iterator);
+typedef MangoObject *   (*IteratorNextFunc)(MangoIterator *iterator);
+
 /**
  * Prototypes of iterators.
  */
@@ -17,6 +20,11 @@ INHERIT_STRUCT(MangoIteratorPrototype, MangoPrototype,
 );
 
 DECLARE_CLASS(MangoIterator, MangoIteratorPrototype);
+
+/**
+ * The default iterator prototype.
+ */
+extern MangoIteratorPrototype *mango_iterator_prototype();
 
 /**
  * Initialises a new iterator object.

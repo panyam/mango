@@ -8,22 +8,19 @@
 extern "C" {
 #endif
 
-/**
- * When nodes are rendered their rendering state is stored in a context.
- * This struct stores that node specific context.
- */
-DECLARE_CLASS(MangoNodeContext, MangoPrototype,
-    MangoNode *         node;
-    MangoNodeContext *  parent;
-);
-
-/**
- * Create a default node context instance.
- * \param   node    Node whose context is being created.
- * \param   parent  Context of the node's parent node.
- * \return  A NodeContext object.
- */
-extern MangoNodeContext *mango_nodecontext_new(MangoNode *node, MangoNodeContext *parent);
+typedef MangoNodeContext *(*NodeCreateContextFunc)(MangoNode *node,
+                                                   MangoTemplateContext *templateContext,
+                                                   MangoNodeContext *topContext);
+typedef MangoNode *(*NodeRenderBitMoreFunc)(MangoNode *node,
+                                            MangoOutStream *outstream,
+                                            MangoTemplateContext *templateContext,
+                                            MangoNodeContext *topContext,
+                                            MangoError **error);
+typedef MangoNode *(*NodeChildExitedFunc)(MangoNode *node, 
+                                          MangoNode *childNode,
+                                          MangoTemplateContext *templateContext,
+                                          MangoNodeContext *topContext,
+                                          MangoError **error);
 
 /**
  * Declare empty node prototype.
@@ -51,7 +48,7 @@ INHERIT_STRUCT(MangoNodePrototype, MangoPrototype,
      * continued with otherwise a child node to be rendered.
      */
     MangoNode *(*renderBitMoreFunc)(MangoNode *node,
-                                    MangoOutputStream *outstream,
+                                    MangoOutStream *outstream,
                                     MangoTemplateContext *templateContext,
                                     MangoNodeContext *topContext,
                                     MangoError **error);
@@ -78,6 +75,37 @@ INHERIT_STRUCT(MangoNodePrototype, MangoPrototype,
 );
 
 /**
+ * When nodes are rendered their rendering state is stored in a context.
+ * This struct stores that node specific context.
+ */
+DECLARE_CLASS(MangoNodeContext, MangoPrototype,
+    MangoNode *         node;
+    MangoNodeContext *  parent;
+);
+
+/**
+ * Create a default node context instance.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
+ * \return  A NodeContext object.
+ */
+extern MangoNodeContext *mango_nodecontext_new(MangoPrototype *proto, MangoNode *node, MangoNodeContext *parent);
+
+/**
+ * Initialises a node context that was just allocated.
+ * \param   context     Node Context being initialised.
+ * \param   proto       Prototype to associate the context with.
+ * \param   node        The node to which this context belongs to.
+ * \param   parent      Context of the node's parent node.
+ * \return  A NodeContext object.
+ */
+extern MangoNodeContext *mango_nodecontext_init(MangoNodeContext *  context,
+                                                MangoPrototype *    proto,
+                                                MangoNode *         node,
+                                                MangoNodeContext *  parent);
+
+/**
  * A mango node object.
  */
 DECLARE_CLASS(MangoNode, MangoNodePrototype);
@@ -91,6 +119,11 @@ extern MangoNode *mango_node_init(MangoNode *node, MangoNodePrototype *prototype
  * Dealloc's a node.
  */
 extern void mango_node_dealloc(MangoNode *node);
+
+/**
+ * Return the default node prototype.
+ */
+extern MangoNodePrototype *mango_node_prototype();
 
 /**
  * Creates node renderer context data for this node.
@@ -114,7 +147,7 @@ extern MangoNodeContext *mango_node_create_context(MangoNode *node,
  * continued with otherwise a child node to be rendered.
  */
 extern MangoNode *mango_node_render_bit_more(MangoNode *node,
-                                             MangoOutputStream *outstream,
+                                             MangoOutStream *outstream,
                                              MangoTemplateContext *templateContext,
                                              MangoNodeContext *topContext,
                                              MangoError **error);

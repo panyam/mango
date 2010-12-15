@@ -1,5 +1,7 @@
 #include "mangopub.h"
 
+DECLARE_PROTO_FUNC(mango_table_prototype, MangoTablePrototype, mango_collection_prototype());
+
 /**
  * Puts multiple values into a table.  Values are entered as key and value
  * pairs and terminated by the first NULL key argument.
@@ -35,13 +37,12 @@ void mango_table_dealloc(MangoTable *table)
  * \param   value   New value.
  * \return old value if it exists, otherwise NULL.
  */
-MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *value)
+void mango_table_put(MangoTable *table, MangoString *key, MangoObject *value)
 {
     if (table->__prototype__->putFunc != NULL)
     {
         table->__prototype__->putFunc(table, key, value);
     }
-    return NULL;
 }
 
 /**

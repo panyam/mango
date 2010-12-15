@@ -30,30 +30,30 @@ ext: src
 test: libs
 	@cd test ; make
 
-install: 
-	@cd src ; make install
-	@cd test ; make install
-
 .PHONY: clean cleanall distclean package
 clean:
 	@cd src ; make clean
+	@cd ext ; make clean
 	@cd test ; make clean
 	@rm -Rf $(OUTPUT_DIR)
 
 cleanall: clean
 	@cd src ; make cleanall
+	@cd ext ; make cleanall
 	@cd test ; make cleanall
 	@rm -Rf $(OUTPUT_DIR)
 
 distclean: cleanall
 	@cd src ; make distclean
+	@cd ext ; make distclean
 	@cd test ; make distclean
 	@rm -Rf Makefile Makefile.common autom4te.cache config.* configure
 	@rm -Rf $(OUTPUT_DIR)
 
 dep:
-	cd test ; make dep
 	cd src ; make dep
+	cd ext ; make dep
+	cd test ; make dep
 
 PACKAGE_NAME = $(PRODUCT_NAME)-$(MAJOR_VERSION).$(MINOR_VERSION).$(BUILD_VERSION)
 # 
@@ -64,10 +64,10 @@ package:
 	@if [ -d /tmp/$(PACKAGE_NAME) ]; then echo "Error: Directory /tmp/$(PACKAGE_NAME) already exists." ; exit 1 ; fi
 	@autoconf
 	@cp -r `pwd` /tmp/$(PACKAGE_NAME)
-	@rm -Rf `find /tmp/$(PACKAGE_NAME) | grep .svn`
+	@rm -Rf `find /tmp/$(PACKAGE_NAME) | grep .git`
 	@rm -Rf /tmp/$(PACKAGE_NAME)/bld 
 	@rm -Rf /tmp/$(PACKAGE_NAME)/Makefile /tmp/$(PACKAGE_NAME)/Makefile.common
-	@rm -Rf /tmp/$(PACKAGE_NAME)/src/Makefile /tmp/$(PACKAGE_NAME)/test/Makefile
+	@rm -Rf /tmp/$(PACKAGE_NAME)/src/Makefile /tmp/$(PACKAGE_NAME)/test/Makefile /tmp/$(PACKAGE_NAME)/ext/Makefile
 	@rm -Rf /tmp/$(PACKAGE_NAME)/autom4te.cache /tmp/$(PACKAGE_NAME)/config.*
 	@tar -C /tmp -zcvf /tmp/$(PACKAGE_NAME).tgz $(PACKAGE_NAME)
 	@tar -C /tmp -jcvf /tmp/$(PACKAGE_NAME).tar.bz2 $(PACKAGE_NAME)
@@ -85,5 +85,4 @@ help:
 	@echo   "       libs:       Builds static and shared libraries"
 	@echo   "       clean:      Cleans all object files"
 	@echo   "       cleanall:   Cleans all object files and executables"
-	@echo   "       install:    Installs the test executable and libraries"
 	@echo   "       help:       Prints help information about targets and options"

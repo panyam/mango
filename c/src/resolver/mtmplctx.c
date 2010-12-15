@@ -3,7 +3,7 @@
 
 MangoObject *mango_tmplctx_get(MangoTemplateContext *ctx, MangoString *key);
 
-DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_tmplctx_prototype,
+DECLARE_PROTO_FUNC(mango_tmplctx_prototype, MangoTemplateContextPrototype, NULL, 
     ((MangoPrototype *)&__proto__)->deallocFunc     = (ObjectDeallocFunc)mango_tmplctx_dealloc;
     ((MangoPrototype *)&__proto__)->getStrAttrFunc  = (ObjectGetStrAttrFunc)mango_tmplctx_get;
     ((MangoPrototype *)&__proto__)->hasStrAttrFunc  = (ObjectHasStrAttrFunc)mango_tmplctx_contains;
@@ -17,6 +17,13 @@ DECLARE_PROTO_FUNC("MangoTemplateContext", MangoTemplateContextPrototype, mango_
 
 /**
  * Creates a new mango template context.
+ *
+ * @test(TestTmplCtxInit)
+ * MangoTemplateContext *context = mango_tmplctx_new();
+ * CHECK_EQUAL(1, OBJ_REFCOUNT(context));
+ * CHECK_EQUAL(mango_tmplctx_prototype(), context->__prototype__);
+ * OBJ_DECREF(context);
+ * @endtest
  */
 MangoTemplateContext *mango_tmplctx_new()
 {
@@ -71,6 +78,14 @@ void mango_tmplctx_merge(MangoTemplateContext *ctx, MangoTable *dict)
  * \param   create  If the key was not found, this specifies whether a new
  *                  stack it to be created.
  * \return A MangoList of values for the var.
+ *
+ * @test(TestTmplCtx_GetValuesOnEmpty)
+ * MangoTemplateContext *context = mango_tmplctx_new();
+ * MangoString *key = (MangoString *)mango_rcstring_new("key", -1, NULL);
+ * CHECK(NULL == context->values);
+ * CHECK(NULL == mango_tmplctx_get_values(context, key, false));
+ * OBJ_DECREF(context);
+ * @endtest
  */
 MangoList *mango_tmplctx_get_values(MangoTemplateContext *ctx, MangoString *key, BOOL create)
 {

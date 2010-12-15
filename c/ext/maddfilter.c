@@ -9,7 +9,7 @@ MangoObject *mango_addfilter_apply(MangoFilter *filter, const MangoObject *input
 /**
  * Returns the prototype for the add filter.
  */
-DECLARE_PROTO_FUNC("AddFilter", MangoFilterPrototype, mango_addfilter_prototype,
+DECLARE_PROTO_FUNC(mango_addfilter_prototype, MangoFilterPrototype, mango_filter_prototype(), 
     __proto__.applyFunc = mango_addfilter_apply;
 );
 

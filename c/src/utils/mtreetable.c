@@ -9,18 +9,18 @@ typedef struct MangoTableEntry
 
 int tableentry_name_cmp(const MangoString *name1, const MangoTableEntry *mle2)
 {
-    return mango_string_compare(name1, mle2->name);
+    return OBJ_COMPARE(name1, mle2->name);
 }
 
 int tableentry_cmp(const MangoTableEntry *mle1, const MangoTableEntry *mle2)
 {
-    return mango_string_compare(mle1->name, mle2->name);
+    return OBJ_COMPARE(mle1->name, mle2->name);
 }
 
 BOOL mango_treetable_contains(MangoTreeTable *table, MangoString *key);
 MangoObject *mango_treetable_get(MangoTreeTable *table, MangoString *key);
 
-DECLARE_PROTO_FUNC("MangoTreeTable", MangoTablePrototype, mango_treetable_prototype,
+DECLARE_PROTO_FUNC(mango_treetable_prototype, MangoTablePrototype, mango_table_prototype(), 
     ((MangoPrototype *)&__proto__)->deallocFunc         = (ObjectDeallocFunc)mango_treetable_dealloc;
     ((MangoPrototype *)&__proto__)->getStrAttrFunc      = (ObjectGetStrAttrFunc)mango_treetable_get;
     ((MangoPrototype *)&__proto__)->hasStrAttrFunc      = (ObjectHasStrAttrFunc)mango_treetable_contains;
@@ -114,12 +114,8 @@ void mango_treetable_erase(MangoTreeTable *table, MangoString *key)
  * \param   table   Table into which the value is to be set.
  * \param   key     Key for which the value is to be set.
  * \param   value   Value to be set to.
- * 
- * \return  NULL if the key does not already exist, otherwise the old
- * value.  Also the new value is increfed but the old value is NOT
- * decrefed.
  */
-MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value)
+void mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoObject *value)
 {
     if (table->entries == NULL)
         table->entries = mango_bintree_new();
@@ -136,9 +132,12 @@ MangoObject *mango_treetable_put(MangoTreeTable *table, MangoString *key, MangoO
     else
     {
         oldvalue = ((MangoTableEntry *)node->data)->value;
-        ((MangoTableEntry *)node->data)->value = OBJ_INCREF(value);
+        if (oldvalue != value)
+        {
+            OBJ_DECREF(oldvalue);   // erase old value
+            ((MangoTableEntry *)node->data)->value = OBJ_INCREF(value);
+        }
     }
-    return oldvalue;
 }
 
 /**

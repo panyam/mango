@@ -22,8 +22,10 @@ typedef int BOOL;
 
 typedef struct MangoArray MangoArray;
 typedef struct MangoArrayList MangoArrayList;
+typedef struct MangoArrayListIterator MangoArrayListIterator;
 typedef struct MangoBinTree MangoBinTree;
 typedef struct MangoBinTreeNode MangoBinTreeNode;
+typedef struct MangoContext MangoContext;
 typedef struct MangoCollection MangoCollection;
 typedef struct MangoCollectionPrototype MangoCollectionPrototype;
 typedef struct MangoError MangoError;
@@ -34,7 +36,9 @@ typedef struct MangoFreeTextNode MangoFreeTextNode;
 typedef struct MangoInputSource MangoInputSource;
 typedef struct MangoIterator MangoIterator;
 typedef struct MangoIteratorPrototype MangoIteratorPrototype;
+typedef struct MangoLibrary MangoLibrary;
 typedef struct MangoLinkedList MangoLinkedList;
+typedef struct MangoLinkedListIterator MangoLinkedListIterator;
 typedef struct MangoLinkedListNode MangoLinkedListNode;
 typedef struct MangoList MangoList;
 typedef struct MangoListPrototype MangoListPrototype;
@@ -44,10 +48,12 @@ typedef struct MangoNodeList MangoNodeList;
 typedef struct MangoNodePrototype MangoNodePrototype;
 typedef struct MangoNumber MangoNumber;
 typedef struct MangoObject MangoObject;
-typedef struct MangoOutputStream MangoOutputStream;
+typedef struct MangoOutStream MangoOutStream;
+typedef struct MangoOutStreamPrototype MangoOutStreamPrototype;
+typedef struct MangoStrOutStream MangoStrOutStream;
 typedef struct MangoParser MangoParser;
-typedef struct MangoParserContext MangoParserContext;
 typedef struct MangoPrototype MangoPrototype;
+typedef struct MangoPrototypeInfo MangoPrototypeInfo;
 typedef struct MangoRCString MangoRCString;
 typedef struct MangoRCStringFactory MangoRCStringFactory;
 typedef struct MangoRCStringTable MangoRCStringTable;
@@ -77,6 +83,8 @@ typedef struct MangoVarNode MangoVarNode;
 typedef struct MangoVarPrototype MangoVarPrototype;
 typedef struct MangoVarResolver MangoVarResolver;
 typedef struct MangoVarResolverPrototype MangoVarResolverPrototype;
+typedef struct MangoVarBuilder MangoVarBuilder;
+typedef struct MangoVarBuilderPrototype MangoVarBuilderPrototype;
 
 /**
  * Functions that check whether two items are equal.

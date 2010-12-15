@@ -19,6 +19,7 @@ public final class CompareUtils
 			return obj1.equals(obj2);
 		}
 	}
+
 	/**
 	 * Compares two iterable objects.
 	 * @param iter1

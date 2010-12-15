@@ -2,6 +2,11 @@
 #include "mangopub.h"
 
 /**
+ * Default string factory prototype.
+ */
+DECLARE_PROTO_FUNC(mango_stringfactory_prototype, MangoStringFactoryPrototype, NULL);
+
+/**
  * Creates a new string.
  */
 MangoString *mango_stringfactory_new_string(MangoStringFactory *factory,

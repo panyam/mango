@@ -11,6 +11,7 @@ extern "C" {
 typedef const char *(*StringBufferFunc)(const MangoString *str);
 typedef size_t (*StringLengthFunc)(const MangoString *str);
 typedef void (*StringCopyFunc)(const MangoString *str, MangoString *another);
+typedef int (*StringCompareToBufferFunc)(const MangoString *str, const char *buffer, int length);
 
 /**
  * A string prototype is like a class for a string.
@@ -36,6 +37,11 @@ INHERIT_STRUCT(MangoStringPrototype, MangoPrototype,
      * Method to return the character at a given index.
      */
     int (*charAtFunc)(const MangoString *str, unsigned index);
+
+    /**
+     * Method to compare to a buffer.
+     */
+    int (*compareToBufferFunc)(const MangoString *str, const char *buffer, int length);
 );
 
 /**
@@ -44,11 +50,9 @@ INHERIT_STRUCT(MangoStringPrototype, MangoPrototype,
 DECLARE_CLASS(MangoString, MangoStringPrototype);
 
 /**
- * Returns a copy of a string.
- * \param   mstr    String to be copied.
- * \return  The new copy of the string.
+ * Default string prototype.
  */
-extern MangoString *mango_string_copy(MangoString *mstr);
+MangoStringPrototype *mango_string_prototype();
 
 /**
  * Gets the buffer value of the string.
@@ -61,24 +65,15 @@ extern const char *mango_string_buffer(const MangoString *mstr);
 extern size_t mango_string_length(const MangoString *mstr);
 
 /**
- * Compares two strings to see if they are equal.
+ * Compares a string with the contents of a buffer.
  *
- * \param   str1    First str in the comparison.
- * \param   str2    Second str in the comparison.
+ * \param   str     String being compared.
+ * \param   buff    Value being compared to.
+ * \param   length  Length of the buffer.  If -ve, then buff is null terminated.
  *
- * \return  true if Strings are equal false otherwise.
+ * \return  -ve if str < buff, 0 if they are equal, +ve otherwise
  */
-extern BOOL mango_strings_are_equal(const MangoString *str1, const MangoString *str2);
-
-/**
- * Compares two objects to check their relative order.
- *
- * \param   str1    First str in the comparison.
- * \param   str2    Second str in the comparison.
- *
- * \return  -ve if str1 < str2, 0 if they are equal, +ve otherwise
- */
-extern int mango_string_compare(const MangoString *str1, const MangoString *str2);
+extern int mango_string_compare_to_buffer(const MangoString *str1, const char *buffer, int length);
 
 #ifdef __cplusplus
 }

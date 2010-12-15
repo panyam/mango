@@ -10,7 +10,7 @@ extern "C" {
 
 typedef MangoObject *(*TableGetFunc)(MangoTable *table, const MangoString *key);
 typedef BOOL (*TableContainsFunc)(MangoTable *table, const MangoString *key);
-typedef MangoObject *(*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
+typedef void (*TablePutFunc)(MangoTable *table, MangoString *key, MangoObject *value);
 typedef void (*TableEraseFunc)(MangoTable *table, const MangoString *key);
 
 /**
@@ -18,9 +18,9 @@ typedef void (*TableEraseFunc)(MangoTable *table, const MangoString *key);
  */
 INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
     /**
-     * Puts a value by key, replacing and returning the old value if any.
+     * Puts a value by key, replacing the old value if necessary.
      */
-    MangoObject *(*putFunc)(MangoTable *table, MangoString *key, MangoObject *value);
+    void (*putFunc)(MangoTable *table, MangoString *key, MangoObject *value);
 
     /**
      * Erases an element from the table.
@@ -33,7 +33,13 @@ INHERIT_STRUCT(MangoTablePrototype, MangoCollectionPrototype,
  */
 DECLARE_CLASS(MangoTable, MangoTablePrototype);
 
+#define TABLE_PUT(table, key, value)    mango_table_put((MangoTable *)(table), (MangoString *)(key), OBJ(value))
 #define TABLE_PUT_VALUES(table, ...)    mango_table_put_values((MangoTable *)(table), __VA_ARGS__)
+
+/**
+ * Get the default table prototype.
+ */
+extern MangoTablePrototype *mango_table_prototype();
 
 /**
  * Adds multiple values to a table.  Values are entered as key and value
@@ -59,9 +65,8 @@ extern int mango_table_size(MangoTable *table);
  * \param   table   Table to be searched.
  * \param   key     Key by which the element is to be inserted.
  * \param   value   New value.
- * \return old value if it exists, otherwise NULL.
  */
-extern MangoObject *mango_table_put(MangoTable *table, MangoString *key, MangoObject *value);
+extern void mango_table_put(MangoTable *table, MangoString *key, MangoObject *value);
 
 /**
  * Erases an element from the table.

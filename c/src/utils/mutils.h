@@ -41,6 +41,11 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
 #define OBJ(x)      ((MangoObject *)(x))
 
 /**
+ * Get the prototype of an object.
+ */
+#define PROTO(obj)          (OBJ((obj))->__prototype__)
+
+/**
  * Initialises a mango object's refcount and prototype.
  */
 // extern inline MangoObject *OBJ_INIT(void *obj, void *proto) { return mango_object_init(OBJ(obj), (MangoPrototype *)proto); }
@@ -74,7 +79,7 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
 /**
  * Tells if an object is instance of a particular prototype.
  */
-#define OBJ_INSTANCEOF(obj, proto)  mango_object_instanceof((MangoObject *)(obj), (const MangoPrototype *)proto)
+#define OBJ_IMPLEMENTS(obj, proto)  mango_object_implements((MangoObject *)(obj), PROTO(proto))
 
 /**
  * Gets attribute of an object given an integer index.
@@ -95,6 +100,11 @@ extern BOOL is_integer(const char *buffer, int length, int *outValue);
  * Tells whether an attribute of an object given a key exists.
  */
 #define OBJ_HASSTRATTR(obj, key)    mango_object_has_str_attr((MangoObject *)(obj), key)
+
+/**
+ * Get an object's iterator.
+ */
+#define OBJ_ITERATOR(obj)           mango_object_iterator(OBJ(obj))
 
 #ifdef __cplusplus
 }

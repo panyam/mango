@@ -1,7 +1,7 @@
 
 #include "mangopub.h"
 
-DECLARE_PROTO_FUNC("RCStringFactory", MangoStringFactoryPrototype, mango_rcstringfactory_prototype,
+DECLARE_PROTO_FUNC(mango_rcstringfactory_prototype, MangoStringFactoryPrototype, mango_stringfactory_prototype(),
     ((MangoPrototype *)&__proto__)->deallocFunc = (ObjectDeallocFunc)mango_rcstringfactory_dealloc;
     __proto__.newStringFunc    = (MangoStringFactoryNewStringFunc)mango_rcstringfactory_new_string;
     __proto__.fromBufferFunc   = (MangoStringFactoryFromBufferFunc)mango_rcstringfactory_from_buffer;
@@ -18,6 +18,22 @@ MangoRCStringFactory *mango_rcstringfactory_new()
 }
 
 /**
+ * Return the default string factory.
+ * \return  The default RC string factory
+ */
+MangoRCStringFactory *mango_rcstringfactory_default()
+{
+    static MangoRCStringFactory default_factory;
+    static BOOL inited = false;
+    if (!inited)
+    {
+        mango_rcstringfactory_init(&default_factory);
+        inited = true;
+    }
+    return &default_factory;
+}
+
+/**
  * Initialises the string factory.
  */
 MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactory)
@@ -30,7 +46,7 @@ MangoRCStringFactory *mango_rcstringfactory_init(MangoRCStringFactory *rcsfactor
 /**
  * Creates a new string.
  */
-MangoString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
+MangoRCString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
                                               const char *buffer, int length)
 {
     return mango_rcstring_new(buffer, length, mrcsfactory->mrcstable);
@@ -39,7 +55,7 @@ MangoString *mango_rcstringfactory_new_string(MangoRCStringFactory *mrcsfactory,
 /**
  * Creates a new string from a string buffer.
  */
-MangoString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
+MangoRCString *mango_rcstringfactory_from_buffer(MangoRCStringFactory *mrcsfactory,
                                                const MangoStringBuffer *buffer)
 {
     return mango_rcstring_new(buffer->buffer, buffer->length, mrcsfactory->mrcstable);

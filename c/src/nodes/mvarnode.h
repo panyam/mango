@@ -57,7 +57,7 @@ extern MangoVarNode *mango_varnode_init(MangoVarNode *varnode, MangoVar *mvar, M
  *
  * \return  A new Var node instance.
  */
-extern MangoNode *mango_varnode_extract_with_parser(MangoParserContext *ctx, MangoError **error);
+extern MangoNode *mango_varnode_extract_with_parser(MangoParser *parser, MangoContext *ctx, MangoError **error);
 
 /**
  * Adds a new filter node.
