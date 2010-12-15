@@ -43,7 +43,7 @@ LIBS            =
 
 # Implicit rule to build .o into the build directory from .c
 $(OUTPUT_DIR)/src/%.o : %.c
-	@echo Building $@
+	@echo Building src/$<  \-\>  $@ 
 	@$(GCC)  -std=c99 -c $(CFLAGS) $< -o $@
 
 all: base static shared
